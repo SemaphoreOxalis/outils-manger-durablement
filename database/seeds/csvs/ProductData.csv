@@ -1,0 +1,254 @@
+"Bière";1;30 %;"en magasin, prêt à consommer";"2.29";1
+"Café";3;30 %;"poids net en magasin";"1.96";1
+"Eau";1;30 %;;"0.00";1
+"Eau (en bouteille PET, plate, 0,5L)";1;30 %;"en magasin, prêt à consommer";"0.2";1
+"Grand vin / champagne";21;50 %;;"2.74";1
+"Jus d'orange (pur jus)";1;30 %;"en magasin, prêt à consommer";"1.84";1
+"Soda (au cola)";1;30 %;"en magasin, prêt à consommer";"0.71";1
+"Thé (à infuser)";4;30 %;"poids net en magasin";"5.73";1
+"Vin (France)";1;30 %;"en magasin, prêt à consommer";"1.24";1
+"Lait de brebis";5;50 %;"conventionnel, système Roquefort";"1.35";1
+"Lait de chèvre";5;50 %;"conventionnel, système zone fourragère intensive, centre ouest";"0.61";1
+"Lait de vache bio";5;50 %;"biologique, système spécialisé de plaine de l’ouest, herbe (5 à 10% maïs / SFP)";"0.66";1
+"Lait de vache Moyen";5;50 %;"Moyenne nationale (France)";"0.75";1
+"*Non référencé (importé par avion)";4;50 %;;"0.14";2
+"*Non référencé (hors saison)";4;50 %;;"1.07";2
+"*Non référencé (saison)";4;50 %;;"2.07";2
+"Abricot";4;30 %;"Pays du sud";"0.36";2
+"Abricot saison";4;30 %;"de saison, France";"0.14";2
+"Amandes";4;30 %;;"1.76";2
+"Anis - Badiane";4;30 %;;"1.59";2
+"Artichauts";4;30 %;;"0.16";2
+"Asperges";4;30 %;"en boîte, Chine";"1.61";2
+"Aubergine";4;30 %;"serre chauffée";"4.61";2
+"Aubergine saison";4;30 %;"de saison";"0.77";2
+"Avocat";4;30 %;;"0.68";2
+"Banane";4;30 %;;"0.18";2
+"Betterave sucrière";11;50 %;"conventionnelle – Moyenne nationale (France)";"0.04";2
+"Brocoli";4;30 %;"France";"0.22";2
+"Cacao";6;50 %;"conventionnel, Cabruca";"3.29";2
+"Café du Brésil (Robusta)";7;50 %;"sans pulpe, Brésil";"0.93";2
+"Cannelle";4;30 %;;"1.67";2
+"Carotte";6;50 %;"conventionnelle, premier et deuxième choix – Moyenne nationale (France)";"0.07";2
+"Carotte bio";6;50 %;"biologique, premier et deuxième choix, Basse Normandie";"0.06";2
+"Céleri";4;30 %;;"0.63";2
+"Cerise";4;30 %;;"0.32";2
+"Champignons de Paris";4;30 %;;"1.33";2
+"Chou pommé";4;30 %;;"0.29";2
+"Chou-Fleur";4;30 %;;"0.35";2
+"Citron";4;30 %;;"0.2";2
+"Citrouille - Courges -Potiron";4;30 %;;"0.39";2
+"Clémentine (Nour)";6;50 %;"qualité export, Souss";"0.11";2
+"Colza";8;50 %;"conventionnel, 9% humidité – Moyenne nationale (France)";"0.75";2
+"Concombres";4;50 %;"sous serre";"1.56";2
+"Concombres de saison";4;50 %;"de saison";"1.06";2
+"Courgette";4;30 %;;"0.22";2
+"Endive";4;30 %;;"0.56";2
+"Épices";4;30 %;;"1.67";2
+"Épinard";4;30 %;;"0.12";2
+"Féverole";10;50 %;"conventionnelle – Moyenne nationale (France)";"0.18";2
+"Féverole bio";10;50 %;"biologique en culture pure (cas type), région Centre";"0.3";2
+"Féverole de saison";10;50 %;"de printemps, conventionnelle, en conduite allégée";"0.17";2
+"Foin";2;50 %;;"0.15";2
+"Fraises";4;30 %;"hors-saison sous-serre, France";"3.07";2
+"Fraises saison";4;30 %;"saison, France";"0.25";2
+"Frites";4;30 %;"surgelées";"0.27";2
+"Fruit de palmier à huile frais";9;50 %;"conventionnel (qualité industrielle), Sumatra";"0.09";2
+"Haricot blanc";4;30 %;"en conserve (type cassoulet)";"1.4";2
+"Haricots verts";4;30 %;"importés par avion";"0.51";2
+"Lentilles vertes";4;30 %;;"0.7";2
+"Luzerne";12;50 %;"conventionnelle – Moyenne nationale (France)";"0.2";2
+"Maïs";4;30 %;;"0.51";2
+"Mandarine";4;30 %;;"0.43";2
+"Mangue";4;30 %;"importée en bateau";"0.14";2
+"Melon";4;30 %;;"0.14";2
+"Navet";4;30 %;;"0.56";2
+"Noix";4;30 %;"entières";"0.47";2
+"Oignons";4;30 %;;"0.32";2
+"Olives";4;30 %;"Pays du Sud, en boîte";"0.48";2
+"Orange";4;30 %;"fraîche";"0.17";2
+"Pêche";4;30 %;"France";"0.18";2
+"Pêche bio";6;50 %;"biologique – Moyenne nationale (France)";"0.03";2
+"Poire";4;30 %;"Argentine";"0.76";2
+"Poireau";4;30 %;;"0.12";2
+"Pois ";10;50 %;"conventionnel, 15% humidité";"0.22";2
+"Pois conserve";4;30 %;"en conserve, type printemps";"0.54";2
+"Pois surgelés";4;30 %;"surgelés";"0.58";2
+"Poivron";4;30 %;;"0.53";2
+"Pomme ";6;50 %;"mix de production (conventionnelle et biologique) – Moyenne nationale (France), sortie verger";"0.07";2
+"Pomme bio";6;50 %;"biologique – Moyenne nationale (France)";"0.12";2
+"Pomme de terre";4;30 %;;"0.4";2
+"Radis (hors saison)";4;30 %;"serre chauffée";"8.01";2
+"Radis (saison)";4;30 %;"de saison";"0.37";2
+"Raisin";4;30 %;;"0.47";2
+"Raisin vigne ";6;50 %;"biologique, Languedoc Roussillon, tous vins confondus";"0.12";2
+"Raisin vigne bio";6;50 %;"biologique, Mâconnais, vin appellation";"0.43";2
+"Rose fleur coupée hors sol";13;50 %;"mix de production (lutte conventionnelle et intégrée) – Moyenne nationale (France)";"0.87";2
+"Salade";4;30 %;;"0.31";2
+"Salade saison";2;50 %;"de saison";"0.16";2
+"Tomate bio";6;50 %;"biologique, sous abri – Moyenne nationale (France)";"0.04";2
+"Tomate";6;50 %;"conventionnelle, sous abri froid";"0.01";2
+"Vanille";2;50 %;;"2.08";2
+"Biscuit";4;30 %;"au beurre";"4.12";3
+"Blé dur";10;50 %;"conventionnel – Moyenne nationale (France)";"0.35";3
+"Blé tendre";10;50 %;"conventionnel – Moyenne nationale (France)";"0.06";3
+"Céréales";4;30 %;"mélange de";"0.65";3
+"Farine";4;30 %;"de blé";"0.79";3
+"Pain";4;30 %;;"1.14";3
+"Pâte à tarte";4;30 %;;"6.91";3
+"Pâtes";4;30 %;"sèches";"1.1";3
+"Riz ";10;50 %;"Moyenne nationale (Thaïlande)";"3.21";3
+"Semoule";4;30 %;"de blé dur";"1.42";3
+"Agneau";14;50 %;"conventionnel, système Roquefort";"4.08";4
+"Blanc de dinde";4;30 %;;"5.94";4
+"Blanc de poulet";4;30 %;;"4.41";4
+"Bovin viande";14;50 %;"Moyenne nationale (France)";"12.46";4
+"Brebis de réforme";14;50 %;"conventionnel, système Roquefort";"5.67";4
+"Canard à rôtir";14;50 %;"conventionnel (sur caillebotis) (Pays de la Loire, Vendée)";"2.44";4
+"Chèvre de réforme";14;50 %;"conventionnel, système zone fourragère intensive, centre ouest";"5.72";4
+"Chevreau";14;50 %;"conventionnel, système zone fourragère intensive, centre ouest";"5.88";4
+"Côtelettes d'Agneau";4;30 %;;"32.66";4
+"Cuisse de dinde";4;30 %;;"4.96";4
+"Cuisse de poulet";4;30 %;;"3.74";4
+"Dinde";14;50 %;"Moyenne nationale (France)";"2.68";4
+"Dinde label rouge";14;50 %;"Label rouge (Bretagne, Morbihan)";"3.82";4
+"Génisse race à viande";14;50 %;"conventionnel, engraisseur de bœufs ou génisses de race à viande recevant des broutards issus du sys";"14.96";4
+"Lapin";4;30 %;;"4.52";4
+"Lapine de reforme";14;50 %;"conventionnel, en cage";"8.18";4
+"Lardons";4;30 %;;"4.12";4
+"Magret canard";4;30 %;;"5.49";4
+"Œuf";15;50 %;"Moyenne nationale (France)";"1.38";4
+"Œuf";4;30 %;"moyenne nationale";"1.918";4
+"Œuf bio";16;50 %;"biologique (Bretagne)";"1.11";4
+"Œuf plein air";17;50 %;"conventionnel, plein air (Pays de la Loire, Sarthe)";"1.77";4
+"Porc";14;50 %;"conventionnel, Moyenne nationale (France)";"2.08";4
+"Porc bio";14;50 %;"biologique";"3.15";4
+"Porc label rouge";14;50 %;"Label Rouge, bâtiment courette";"2.48";4
+"Porc plein air";14;50 %;"Label Rouge, plein air";"1.87";4
+"Poule bio";18;50 %;"biologique (Bretagne)";"4.85";4
+"Poule de reforme";14;50 %;"Moyenne nationale (France)";"4.64";4
+"Poule de réforme plein air";19;50 %;"conventionnel, plein air (Pays de la Loire, Sarthe)";"5.06";4
+"Poulet de chair";14;50 %;"Moyenne nationale (France)";"1.8";4
+"Poulet de chair bio";14;50 %;"biologique";"1.9";4
+"Poulet de chair label rouge";14;50 %;"Label rouge";"2.58";4
+"Poulet entier";4;30 %;"entier";"3.27";4
+"Saucisse de porc";4;30 %;;"4.05";4
+"Saucisson de porc";4;30 %;;"4.78";4
+"Steak de bœuf";4;30 %;"moyen France";"28.3";4
+"Taurillon race à viande";14;50 %;"conventionnel, engraisseur recevant des broutards issus du système naisseur charolais >= 1,2 UGB/ha,";"10.76";4
+"Taurillon race à viande";14;50 %;"conventionnel, engraisseur spécialisé recevant des broutards issus du système naisseur charolais < 1";"14.86";4
+"Truie bio";14;50 %;"biologique";"5.7";4
+"Truie label rouge";14;50 %;"Label Rouge, bâtiment courette";"9.13";4
+"Truie plein air";14;50 %;"Label rouge, plein air";"5.06";4
+"Veau ";14;50 %;"conventionnel, atelier d’engraissement recevant des veaux de 8 jours issus de systèmes laitiers de p";"8.9";4
+"Veau bio";14;50 %;"biologique, système spécialisé de plaine de l’ouest, herbe (5 à 10% maïs / SFP)";"5.38";4
+"Viande de porc";4;30 %;;"5.55";4
+"Viande de veau";4;30 %;"moyen France";"16.06";4
+"Bar ou Dorade";4;30 %;"d'élevage, en filet";"9.25";5
+"Bar ou dorade";14;50 %;"200 à 500g, conventionnel, en cage, sortie atelier (méditerranée)";"4.09";5
+"Crevettes";21;50 %;;"8.93";5
+"Grande truite";14;50 %;"2 à 4 kg, conventionnel, sortie atelier";"2.74";5
+"Moules - autres crustacés";4;30 %;;"4.99";5
+"Poisson sauvage";4;30 %;"sauvage, en filet";"8.88";5
+"Thon en  boite";4;30 %;"en boîte";"2.82";5
+"Truite entière";4;30 %;"d'élevage, entière";"2.6";5
+"Truite ou saumon en pavé";4;30 %;"d'élevage, en pavé";"4.9";5
+"Truite ou saumon fumé";4;30 %;"fumé, d'élevage";"5.15";5
+"Truite portion";14;50 %;"250-350g, conventionnel, sortie atelier";"2.62";5
+"Chocolat";4;30 %;"noir, en morceau";"4.49";6
+"Glace à la vanille";4;30 %;;"1.13";6
+"Sucre";4;30 %;"de betterave, raffiné";"0.3";6
+"Sucre de canne";4;30 %;"de canne";"0.9";6
+"Viennoiseries";4;30 %;"pain au chocolat";"1.9";6
+"Viennoiseries industrielles";4;30 %;"Brioche industrielle préemballée";"2.49";6
+"Ketchup";4;30 %;;"2.02";7
+"Moutarde";4;30 %;;"2.89";7
+"Sel";4;30 %;;"0.16";7
+"Piment et poivre";4;30 %;"sec";"2.98";7
+"Sauce tomate";4;30 %;;"2.56";7
+"Vinaigre de vin";4;30 %;;"3.79";7
+"Beurre";4;30 %;"doux";"9.32";8
+"Huile de colza";4;30 %;;"1.86";8
+"Huile de tournesol";4;30 %;;"1.24";8
+"Huile d'olive";4;30 %;;"2.22";8
+"Crème";4;30 %;"40% MG, pasteurisée";"3.99";9
+"Fromage à pâte dure";4;30 %;"à pâte dure (type emmental)";"5.428";9
+"Fromage à patte molle";4;30 %;"à pâte molle (type camembert)";"4.108";9
+"Fromage de chèvre";4;30 %;"frais de chèvre";"3.438";9
+"Fromage frais";4;30 %;"frais, 58% MG";"3.338";9
+"Lait";4;30 %;"de vache, semi-écrémé, pasteurisé";"1.048";9
+"Margarine";4;30 %;;"2.568";9
+"Yaourt";4;30 %;;"2.708";9
+"Baba au rhum";20;30 %;;"0.77";10
+"Banana Split";20;30 %;;"2.43";10
+"Blanquette de veau";20;30 %;;"9.26";10
+"Bœuf bourguignon";20;30 %;;"13.03";10
+"Brandade de morue";20;30 %;;"3.64";10
+"Brownie aux Noix entières";20;30 %;"aux noix entières";"3.8";10
+"Cannelé";20;30 %;;"2.00";10
+"Cassoulet";20;30 %;;"5.68";10
+"Cheese cake";20;30 %;;"3.18";10
+"Chili con carne";20;30 %;;"14.84";10
+"Chips";20;30 %;;"0.69";10
+"Choucroute";20;30 %;;"1.15";10
+"Clafoutis aux cerises";20;30 %;;"1.71";10
+"Coquillette au jambon";20;30 %;;"2.3";10
+"Côte de bœuf";20;30 %;;"34.48";10
+"Couscous";20;30 %;;"5.73";10
+"Crème brûlée";20;30 %;;"2.58";10
+"Crêpes";20;30 %;;"1.14";10
+"Crêpes - galette au sarrasin";20;30 %;;"1.14";10
+"Curry au poulet avec riz";20;30 %;;"1.84";10
+"Éclair au chocolat";20;30 %;;"1.75";10
+"Endives au jambon";20;30 %;;"3.03";10
+"Far breton";20;30 %;;"1.14";10
+"Filet mignon de porc";20;30 %;;"4.79";10
+"Fondant au chocolat";20;30 %;;"3.44";10
+"Gigot d'agneau";20;30 %;;"34.19";10
+"Gratin dauphinois";20;30 %;;"1.11";10
+"Gratin de choux fleur sauce béchamel";20;30 %;;"0.86";10
+"Hachis parmentier";20;30 %;;"8.29";10
+"Hamburger";20;30 %;;"14.18";10
+"Île flottante";20;30 %;;"1.44";10
+"Lapin à la moutarde";20;30 %;;"5.78";10
+"Lasagnes (végétarienne) ";20;30 %;"à la viande";"1.38";10
+"Lasagnes (viande)";20;30 %;"végétarienne";"4.68";10
+"Lentille saucisse";20;30 %;;"1.27";10
+"Magret de canard";20;30 %;;"9.13";10
+"Moules-frites";20;30 %;;"3.83";10
+"Mousse au chocolat";20;30 %;;"3.56";10
+"Omelette";20;30 %;;"3.08";10
+"Paëlla";20;30 %;;"3.42";10
+"Pana Cotta";20;30 %;;"3.75";10
+"Pavé de saumon grillé";20;30 %;;"5.69";10
+"Pizza";20;30 %;;"4.79";10
+"Poire belle Hélène";20;30 %;"poire de Belgique";"0.33";10
+"Pommes de terre au confit de canard ";20;30 %;;"4.29";10
+"Pot au feu";20;30 %;;"8.07";10
+"Poulet frites";20;30 %;"frites surgelés";"2.2";10
+"Profiteroles";20;30 %;;"2.08";10
+"Quatre quarts";20;30 %;;"4.78";10
+"Quiche lorraine";20;30 %;;"4.00";10
+"Raclette";20;30 %;;"1.88";10
+"Ratatouille de saison";20;30 %;"de saison";"0.38";10
+"Salade de fruit  (fruits de saison)";20;30 %;"fruits de saison";"0.27";10
+"Salade de tomate de saison";20;30 %;"de saison";"0.47";10
+"Salade de tomate mozzarella de saison";20;30 %;"hors saison, France";"1.45";10
+"Salade niçoise";20;30 %;"de saison";"1.41";10
+"Salade tomate hors saison France";20;30 %;;"2.13";10
+"Salade verte (avec sauce)";20;30 %;"avec sauce";"1.00";10
+"Soupe à l'oignon";20;30 %;;"0.74";10
+"Spaghetti à la bolognaise";20;30 %;;"5.78";10
+"Steak-frites";20;30 %;;"25.09";10
+"Sushis";20;30 %;;"2.05";10
+"Tagliatelles à la carbonara";20;30 %;;"1.29";10
+"Tajine d'agneau";20;30 %;;"14.68";10
+"Tartare de bœuf";20;30 %;;"20.96";10
+"Tarte aux fraises de saison";20;30 %;"de saison";"2.14";10
+"Tarte aux fraises hors saison France";20;30 %;"hors saison";"3.86";10
+"Tarte aux pommes";20;30 %;;"1.33";10
+"Tarte tatin";20;30 %;;"1.62";10
+"Tartiflette";20;30 %;;"1.57";10
+"Tiramisu";20;30 %;;"3.23";10
+"Tomates farcies (hors saison)";20;30 %;"de saison";"2.76";10
+"Tomates farcies (saison)";20;30 %;"hors saison";"1.65";10
