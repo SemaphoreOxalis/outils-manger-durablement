@@ -17,10 +17,10 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('unit_id');
+            $table->foreignId('category_id');
             $table->string('uncertainty')->nullable();
             $table->text('comment')->nullable();
             $table->decimal('emissionFactor',5,2);
-            $table->foreignId('category_id');
 
             $table->foreign('unit_id')
                 ->references('id')

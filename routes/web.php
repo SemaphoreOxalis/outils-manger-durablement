@@ -20,3 +20,4 @@ Route::get('/', function () {
 Auth::routes(['register' => false]);
 
 Route::get('/admin', 'HomeController@index');
+Route::get('/test', 'HomeController@show');
