@@ -1,17 +1,39 @@
 <template>
     <div class="container">
         <div class="row">
+
             <div class="left col-5">
                 <h3>Produits</h3>
-                <div v-for="(product, index) in products">
-                <span class="product">
-                    {{ index }} : {{ product.name }}
-                </span>
-                </div>
+                <draggable v-model="products"
+                           class="dragArea list-group"
+                           :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
+                           @change="log"
+                           :sort="false">
+
+                    <div v-for="(product, index) in products"
+                         class="list-group-item product"
+                         :key="product.id">
+                        {{ index }} : {{ product.name }}
+                    </div>
+
+                </draggable>
             </div>
+
             <div class="right col-5">
                 <h3>Liste de courses</h3>
+                <draggable v-model="shoppingList"
+                           class="dragArea list-group h-100"
+                           group="draggableProducts"
+                           @change="log"
+                           :animation="150">
 
+                    <div v-for="(product, index) in shoppingList"
+                         class="list-group-item product"
+                         :key="product.id">
+                        {{ index }} : {{ product.name }} - qté {{ product.unit.unit }}
+                    </div>
+
+                </draggable>
             </div>
         </div>
     </div>
@@ -19,10 +41,17 @@
 </template>
 
 <script>
+    import draggable from 'vuedraggable'
+
     export default {
+        components: {
+            draggable
+        },
+
         data() {
             return {
-                products: []
+                products: [],
+                shoppingList: []
             }
         },
 
@@ -35,16 +64,15 @@
                 axios.get('/api/test').then((response) => {
                     this.products = response.data;
                 });
+            },
+            log(event) {
+                console.log(event);
             }
         }
     }
 </script>
 
-<style>
-    .flex {
-        display: flex;
-    }
-
+<style scoped>
     .left {
         border: 1px black solid;
     }
@@ -55,6 +83,6 @@
     }
 
     .product {
-        border: 1px black solid;
+        cursor: grab;
     }
 </style>
