@@ -1,19 +1,21 @@
 <template>
-    <div class="flex">
-        <div class="left">
-            <div v-for="(product, index) in products">
+    <div class="container">
+        <div class="row">
+            <div class="left col-5">
+                <h3>Produits</h3>
+                <div v-for="(product, index) in products">
                 <span class="product">
-                    {{ index }} : {{ product.name }} -
-                    {{ product.category.name }} -
-                    kgCO2e/{{ product.unit.unit }} -
-                    {{ product.emissionFactor }}
+                    {{ index }} : {{ product.name }}
                 </span>
+                </div>
+            </div>
+            <div class="right col-5">
+                <h3>Liste de courses</h3>
+
             </div>
         </div>
-        <div class="right">
-
-        </div>
     </div>
+
 </template>
 
 <script>
@@ -50,8 +52,6 @@
     .right {
         border: 1px black solid;
         min-height: 100px;
-        width: auto;
-        min-width: 500px;
     }
 
     .product {

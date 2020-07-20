@@ -1943,6 +1943,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6407,7 +6409,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.flex {\n    display: flex;\n}\n.left {\n    border: 1px black solid;\n}\n.right {\n    border: 1px black solid;\n    min-height: 100px;\n    width: auto;\n    min-width: 500px;\n}\n.product {\n    border: 1px black solid;\n}\n", ""]);
+exports.push([module.i, "\n.flex {\n    display: flex;\n}\n.left {\n    border: 1px black solid;\n}\n.right {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product {\n    border: 1px black solid;\n}\n", ""]);
 
 // exports
 
@@ -38177,36 +38179,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex" }, [
-    _c(
-      "div",
-      { staticClass: "left" },
-      _vm._l(_vm.products, function(product, index) {
-        return _c("div", [
-          _c("span", { staticClass: "product" }, [
-            _vm._v(
-              "\n                " +
-                _vm._s(index) +
-                " : " +
-                _vm._s(product.name) +
-                " -\n                " +
-                _vm._s(product.category.name) +
-                " -\n                kgCO2e/" +
-                _vm._s(product.unit.unit) +
-                " -\n                " +
-                _vm._s(product.emissionFactor) +
-                "\n            "
-            )
-          ])
-        ])
-      }),
-      0
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "right" })
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "left col-5" },
+        [
+          _c("h3", [_vm._v("Produits")]),
+          _vm._v(" "),
+          _vm._l(_vm.products, function(product, index) {
+            return _c("div", [
+              _c("span", { staticClass: "product" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(index) +
+                    " : " +
+                    _vm._s(product.name) +
+                    "\n            "
+                )
+              ])
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "right col-5" }, [
+      _c("h3", [_vm._v("Liste de courses")])
+    ])
+  }
+]
 render._withStripped = true
 
 
