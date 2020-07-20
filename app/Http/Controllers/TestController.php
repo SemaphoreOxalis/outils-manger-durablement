@@ -28,12 +28,6 @@ class TestController extends Controller
 
     public function show()
     {
-        $products = Product::all();
 
-        // dd(json_decode($products));
-
-        return $products;
-
-        return view('test', compact('products'));
     }
 }

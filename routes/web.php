@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/api/test', 'TestController@show');
+Route::get('/api/products', 'ProductsController@index');
+Route::get('/api/origins', 'OriginsController@index');
+
+
 //Auth::routes(['register' => false]);
 Auth::routes();
 
