@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $with = ['category', 'unit'];
+
     public function category()
     {
         return $this->belongsTo(Category::class);

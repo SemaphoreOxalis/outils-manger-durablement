@@ -21,7 +21,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 75px;
             }
 
             .flex-center {
@@ -78,16 +78,15 @@
                     @endauth
                 </div>
             @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="/test">Test</a>
-                </div>
-            </div>
         </div>
+        <test>
+            <div id="app">
+                <router-view></router-view>
+                <hr>
+                <router-link to="/">Home</router-link>
+                <router-link to="/test">Test</router-link>
+            </div>
+        </test>
+        <script src="/js/app.js"></script>
     </body>
 </html>

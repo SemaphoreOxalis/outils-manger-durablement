@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 
-class HomeController extends Controller
+class TestController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -28,9 +28,11 @@ class HomeController extends Controller
 
     public function show()
     {
-        $products = Product::all()->load('category')->load('unit');
+        $products = Product::all();
 
-        // dd(json_decode($data));
+        // dd(json_decode($products));
+
+        return $products;
 
         return view('test', compact('products'));
     }
