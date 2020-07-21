@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/api/products', 'ProductsController@index');
 Route::get('/api/origins', 'OriginsController@index');
+Route::get('/api/categories', 'CategoriesController@index');
 
 
 //Auth::routes(['register' => false]);

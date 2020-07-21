@@ -1986,6 +1986,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1995,28 +2010,50 @@ __webpack_require__.r(__webpack_exports__);
     return {
       products: [],
       origins: [],
-      shoppingList: []
+      categories: [],
+      shoppingList: [],
+      selectedCategoryId: null
     };
   },
+  computed: {
+    filteredProducts: function filteredProducts() {
+      var _this = this;
+
+      if (this.selectedCategoryId === null) {
+        return this.products;
+      } else {
+        return this.products.filter(function (product) {
+          return product.category.id === _this.selectedCategoryId;
+        });
+      }
+    }
+  },
   created: function created() {
+    this.fetchCategoriesData();
     this.fetchProductsData();
     this.fetchOriginsData();
   },
   methods: {
     fetchProductsData: function fetchProductsData() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/api/products').then(function (response) {
-        _this.products = response.data;
+        _this2.products = response.data;
       });
     },
     fetchOriginsData: function fetchOriginsData() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/api/origins').then(function (response) {
-        _this2.origins = response.data;
+        _this3.origins = response.data;
       });
-      console.log(this.origins);
+    },
+    fetchCategoriesData: function fetchCategoriesData() {
+      var _this4 = this;
+
+      axios.get('/api/categories').then(function (response) {
+        _this4.categories = response.data;
+      });
     },
     addProduct: function addProduct(_ref) {
       var id = _ref.id,
@@ -2028,11 +2065,15 @@ __webpack_require__.r(__webpack_exports__);
         name: name,
         unit: unit,
         category: category,
-        origin: 'France'
+        origin: this.origins[2] // France
+
       };
     },
-    updateOrigin: function updateOrigin(value) {
-      console.log(value.target.selectedOptions[0].value);
+    filterProducts: function filterProducts(categoryId) {
+      this.selectedCategoryId = categoryId;
+    },
+    getClasses: function getClasses(categoryId) {
+      return ['list-group-item', 'category', categoryId === this.selectedCategoryId ? 'selected' : ''];
     }
   }
 });
@@ -6481,7 +6522,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.left[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.right[data-v-5f45227d] {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product[data-v-5f45227d] {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\ninput[data-v-5f45227d] {\n    width: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.left[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.middle[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.right[data-v-5f45227d] {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product[data-v-5f45227d] {\n    cursor: -webkit-grab;\n    cursor: grab;\n    /* TODO : grabbing when grabbing */\n}\n.category[data-v-5f45227d] {\n    cursor: pointer;\n}\n.selected[data-v-5f45227d] {\n    background-color: lime;\n}\ninput[data-v-5f45227d] {\n    width: 50px;\n}\n", ""]);
 
 // exports
 
@@ -41967,10 +42008,43 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "left col-6" },
+        { staticClass: "left col-2" },
+        [
+          _c("h3", [_vm._v("Catégories")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(category) {
+            return _c(
+              "div",
+              {
+                key: category.id,
+                class: _vm.getClasses(category.id),
+                on: {
+                  click: function($event) {
+                    return _vm.filterProducts(category.id)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n\n                " +
+                    _vm._s(category.name) +
+                    "\n\n            "
+                )
+              ]
+            )
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "middle col-4" },
         [
           _c("h3", [_vm._v("Produits")]),
           _vm._v(" "),
@@ -41984,14 +42058,14 @@ var render = function() {
                 clone: _vm.addProduct
               },
               model: {
-                value: _vm.products,
+                value: _vm.filteredProducts,
                 callback: function($$v) {
-                  _vm.products = $$v
+                  _vm.filteredProducts = $$v
                 },
-                expression: "products"
+                expression: "filteredProducts"
               }
             },
-            _vm._l(_vm.products, function(product, index) {
+            _vm._l(_vm.filteredProducts, function(product) {
               return _c(
                 "div",
                 { key: product.id, staticClass: "list-group-item product" },
@@ -42031,7 +42105,7 @@ var render = function() {
                 expression: "shoppingList"
               }
             },
-            _vm._l(_vm.shoppingList, function(product, index) {
+            _vm._l(_vm.shoppingList, function(product) {
               return _c(
                 "div",
                 { key: product.id, staticClass: "list-group-item product" },
@@ -42062,26 +42136,43 @@ var render = function() {
                     ),
                     _c(
                       "select",
-                      { on: { change: _vm.updateOrigin } },
-                      _vm._l(_vm.origins, function(origin) {
-                        return _c(
-                          "option",
+                      {
+                        directives: [
                           {
-                            key: origin.id,
-                            domProps: {
-                              value: origin.from,
-                              selected:
-                                origin.from === "France" ? "selected" : ""
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(origin.from) +
-                                "\n                            "
+                            name: "model",
+                            rawName: "v-model",
+                            value: product.origin,
+                            expression: "product.origin"
+                          }
+                        ],
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              product,
+                              "origin",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
                             )
-                          ]
-                        )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.origins, function(origin) {
+                        return _c("option", { domProps: { value: origin } }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(origin.from) +
+                              "\n                            "
+                          )
+                        ])
                       }),
                       0
                     )
@@ -42097,7 +42188,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "search mb-4" }, [
+      _c("input", { attrs: { type: "", placeholder: "search" } })
+    ])
+  }
+]
 render._withStripped = true
 
 

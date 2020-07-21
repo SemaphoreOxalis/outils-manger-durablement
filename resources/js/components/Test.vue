@@ -1,16 +1,32 @@
 <template>
     <div class="container">
+        <div class="search mb-4">
+            <input type="" placeholder="search">
+        </div>
+
         <div class="row">
 
-            <div class="left col-6">
+            <div class="left col-2">
+                <h3>Catégories</h3>
+                <div v-for="category in categories"
+                     :class="getClasses(category.id)"
+                     :key="category.id"
+                     @click="filterProducts(category.id)">
+
+                    {{ category.name }}
+
+                </div>
+            </div>
+
+            <div class="middle col-4">
                 <h3>Produits</h3>
-                <draggable v-model="products"
+                <draggable v-model="filteredProducts"
                            class="dragArea list-group"
                            :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
                            :sort="false"
                            :clone="addProduct">
 
-                    <div v-for="(product, index) in products"
+                    <div v-for="product in filteredProducts"
                          class="list-group-item product"
                          :key="product.id">
 
@@ -28,21 +44,20 @@
                            group="draggableProducts"
                            :animation="150">
 
-                    <div v-for="(product, index) in shoppingList"
+                    <div v-for="product in shoppingList"
                          class="list-group-item product"
                          :key="product.id">
 
                         <p>
                             {{ product.id }} : {{ product.name }} -
-                            <input type="number" :id="'shopping-item-' + product.id" placeholder="1"> {{ product.unit.unit }}
+                            <input type="number" :id="'shopping-item-' + product.id" placeholder="1"> {{
+                            product.unit.unit }}
                         </p>
                         <p>
                             Origine :
-                            <select @change="updateOrigin">
+                            <select v-model="product.origin">
                                 <option v-for="origin in origins"
-                                        :value="origin.from"
-                                        :key="origin.id"
-                                        :selected="origin.from === 'France' ? 'selected' : ''">
+                                        v-bind:value="origin">
                                     {{ origin.from }}
                                 </option>
                             </select>
@@ -69,11 +84,26 @@
             return {
                 products: [],
                 origins: [],
-                shoppingList: []
+                categories: [],
+                shoppingList: [],
+                selectedCategoryId: null
+            }
+        },
+
+        computed: {
+            filteredProducts() {
+                if(this.selectedCategoryId === null) {
+                    return this.products;
+                } else {
+                    return this.products.filter(product => {
+                        return product.category.id === this.selectedCategoryId;
+                    });
+                }
             }
         },
 
         created() {
+            this.fetchCategoriesData();
             this.fetchProductsData();
             this.fetchOriginsData();
         },
@@ -88,7 +118,11 @@
                 axios.get('/api/origins').then((response) => {
                     this.origins = response.data;
                 });
-                console.log(this.origins);
+            },
+            fetchCategoriesData() {
+                axios.get('/api/categories').then((response) => {
+                    this.categories = response.data;
+                });
             },
             addProduct({id, name, unit, category}) {
                 return {
@@ -96,12 +130,18 @@
                     name: name,
                     unit: unit,
                     category: category,
-                    origin: 'France'
+                    origin: this.origins[2] // France
                 }
             },
-            updateOrigin(value) {
-                console.log(value.target.selectedOptions[0].value);
-
+            filterProducts(categoryId) {
+                this.selectedCategoryId = categoryId;
+            },
+            getClasses(categoryId) {
+                return [
+                    'list-group-item',
+                    'category',
+                    categoryId === this.selectedCategoryId ? 'selected' : ''
+                ];
             }
         }
     }
@@ -112,6 +152,10 @@
         border: 1px black solid;
     }
 
+    .middle {
+        border: 1px black solid;
+    }
+
     .right {
         border: 1px black solid;
         min-height: 100px;
@@ -119,6 +163,15 @@
 
     .product {
         cursor: grab;
+        /* TODO : grabbing when grabbing */
+    }
+
+    .category {
+        cursor: pointer;
+    }
+
+    .selected {
+        background-color: lime;
     }
 
     input {
