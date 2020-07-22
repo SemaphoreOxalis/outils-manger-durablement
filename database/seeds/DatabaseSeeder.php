@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnitSeeder::class);
         $this->call(CategorySeeder::class);
         $this->call(ProductSeeder::class);
+        $this->call(WasteReferenceValueSeeder::class);
     }
 }

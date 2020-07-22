@@ -2001,6 +2001,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2061,11 +2062,11 @@ __webpack_require__.r(__webpack_exports__);
           unit = _ref.unit,
           category = _ref.category;
       return {
-        id: id,
+        oldId: id,
         name: name,
         unit: unit,
         category: category,
-        origin: this.origins[2] // France
+        origin: this.origins[2] // France par défautphp artisan serve
 
       };
     },
@@ -6522,7 +6523,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.left[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.middle[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.right[data-v-5f45227d] {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product[data-v-5f45227d] {\n    cursor: -webkit-grab;\n    cursor: grab;\n    /* TODO : grabbing when grabbing */\n}\n.category[data-v-5f45227d] {\n    cursor: pointer;\n}\n.selected[data-v-5f45227d] {\n    background-color: lime;\n}\ninput[data-v-5f45227d] {\n    width: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.left[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.middle[data-v-5f45227d] {\n    border: 1px black solid;\n}\n.right[data-v-5f45227d] {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product[data-v-5f45227d] {\n    cursor: -webkit-grab;\n    cursor: grab;\n    /* TODO : grabbing when grabbing */\n}\n.moving[data-v-5f45227d] {\n    background-color: #1f6fb2;\n}\n.category[data-v-5f45227d] {\n    cursor: pointer;\n}\n.selected[data-v-5f45227d] {\n    background-color: lime;\n}\ninput[data-v-5f45227d] {\n    width: 50px;\n}\n", ""]);
 
 // exports
 
@@ -42055,6 +42056,7 @@ var render = function() {
               attrs: {
                 group: { name: "draggableProducts", pull: "clone", put: false },
                 sort: false,
+                chosenClass: "moving",
                 clone: _vm.addProduct
               },
               model: {

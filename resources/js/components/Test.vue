@@ -24,6 +24,7 @@
                            class="dragArea list-group"
                            :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
                            :sort="false"
+                           chosenClass="moving"
                            :clone="addProduct">
 
                     <div v-for="product in filteredProducts"
@@ -126,11 +127,12 @@
             },
             addProduct({id, name, unit, category}) {
                 return {
-                    id: id,
+                    oldId: id,
                     name: name,
                     unit: unit,
                     category: category,
-                    origin: this.origins[2] // France
+                    origin: this.origins[2] // France par défautphp artisan serve
+
                 }
             },
             filterProducts(categoryId) {
@@ -164,6 +166,10 @@
     .product {
         cursor: grab;
         /* TODO : grabbing when grabbing */
+    }
+
+    .moving {
+        background-color: #1f6fb2;
     }
 
     .category {

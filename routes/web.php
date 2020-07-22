@@ -18,12 +18,12 @@ Route::get('/api/origins', 'OriginsController@index');
 Route::get('/api/categories', 'CategoriesController@index');
 
 
-//Auth::routes(['register' => false]);
-Auth::routes();
+Auth::routes(['register' => false]);
+Route::get('/admin', 'TestController@index');
 
 Route::get('/{any?}', function () {
-    return view('welcome');
+    return view('homepage');
 })->where('any', '.*');
 
-Route::get('/admin', 'TestController@index');
+
 
