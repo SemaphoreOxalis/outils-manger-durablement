@@ -17,9 +17,11 @@ Route::get('/api/products', 'ProductsController@index');
 Route::get('/api/origins', 'OriginsController@index');
 Route::get('/api/categories', 'CategoriesController@index');
 
+Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
+Route::patch('/api/waste-values/{waste-value}', 'WasteReferenceValuesController@update');
 
 Auth::routes(['register' => false]);
-Route::get('/admin', 'TestController@index');
+
 
 Route::get('/{any?}', function () {
     return view('homepage');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\WasteReferenceValue;
 
 class TestController extends Controller
 {
@@ -23,7 +24,10 @@ class TestController extends Controller
      */
     public function index()
     {
-        return view('admin.adminPanel');
+        $values = Product::all();
+
+        // dd($values);
+        return view('admin.adminPanel', ['values' => $values]);
     }
 
     public function show()

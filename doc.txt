@@ -1,0 +1,1 @@
+- On init : create one user, then disable registering

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="search mb-4">
-            <input type="" placeholder="search">
+            <input type="text" placeholder="search">
         </div>
 
         <div class="row">
@@ -131,7 +131,7 @@
                     name: name,
                     unit: unit,
                     category: category,
-                    origin: this.origins[2] // France par défautphp artisan serve
+                    origin: this.origins[2] // France par défaut
 
                 }
             },
