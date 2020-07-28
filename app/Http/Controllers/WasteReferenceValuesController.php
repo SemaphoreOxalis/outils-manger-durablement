@@ -9,7 +9,7 @@ class WasteReferenceValuesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index', 'update');
+        $this->middleware('auth')->except('index');
     }
 
     public function index()
@@ -20,7 +20,7 @@ class WasteReferenceValuesController extends Controller
     public function update(Request $request, WasteReferenceValue $wasteReferenceValue)
     {
         $request->validate([
-            'value' => 'required'
+            'value' => 'required|numeric|between:0,100'
         ]);
         $wasteReferenceValue->update(request(['value']));
     }
