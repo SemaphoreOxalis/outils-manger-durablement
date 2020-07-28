@@ -1,9 +1,34 @@
 <template>
-    <h1>Home</h1>
+    <div class="py-4 px-4">
+        <h1>Accueil</h1>
+        <div>
+            <p>
+                Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière
+                fois en date du 15/12/2020
+            </p>
+            <div class="d-flex justify-content-around">
+                <button class="btn btn-primary">Les consulter</button>
+                <button class="btn btn-danger">Les effacer</button>
+            </div>
+        </div>
+
+        <p>Pour réaliser votre première simulation, vous aurez besoin :</p>
+        <ul>
+            <li>du nombre de repas produits dans votre établissement (par an)</li>
+            <li>du coût de revient unitaire d'un repas</li>
+            <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
+            <li>du coût de traitement des déchets (en euros par tonne)</li>
+        </ul>
+        <p>Grâce à ces données, vous obtiendrez une estimation économique et quantitative du gaspillage alimentaire de
+            votre établissement en 15 minutes</p>
+        <p>Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est réalisé
+            uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur</p>
+        <router-link to="/input" tag="span">
+            <button class="btn btn-primary btn-lg btn-block py-4">Je suis prêt.e</button>
+        </router-link>
+    </div>
 </template>
 
 <script>
-    export default {
-
-    }
+    export default {}
 </script>
