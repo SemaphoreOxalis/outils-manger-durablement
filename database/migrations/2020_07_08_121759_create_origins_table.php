@@ -19,6 +19,7 @@ class CreateOriginsTable extends Migration
             $table->integer('distance');
             $table->decimal('carbonImpact', 10, 5);
             $table->decimal('carbonImpactPerKg', 10, 5);
+            $table->timestamps();
         });
     }
 

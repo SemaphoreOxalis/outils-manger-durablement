@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->string('uncertainty')->nullable();
             $table->text('comment')->nullable();
             $table->decimal('emissionFactor',5,2);
+            $table->timestamps();
 
             $table->foreign('unit_id')
                 ->references('id')

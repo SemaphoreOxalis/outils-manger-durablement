@@ -18,8 +18,9 @@ Route::get('/api/origins', 'OriginsController@index');
 Route::get('/api/categories', 'CategoriesController@index');
 
 Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
-Route::patch('/api/waste-values/{waste-value}', 'WasteReferenceValuesController@update');
+Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesController@update');
 
+//Auth::routes();
 Auth::routes(['register' => false]);
 
 

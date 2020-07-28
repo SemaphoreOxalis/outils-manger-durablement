@@ -3,11 +3,15 @@
         <div v-if="signedIn">
             <h1>Admin Panel</h1>
             <div v-for="value in values"
-                 :key="value.id">
+                 :key="value.id"
+                 class="mx-5">
 
-                {{ value.key }} - {{ value.value }}
-
+                {{ value.key }}
+                <div class="form-group">
+                    <input class="form-control" type="number" v-model="value.value" @focusout="update(value)" required min="0" max="100">
+                </div>
             </div>
+
         </div>
         <div v-else>
             Vous n'avez pas l'autorisation d'être ici
@@ -17,10 +21,6 @@
 
 <script>
     export default {
-        props: [
-            'user'
-        ],
-
         data() {
             return {
                 values: []
@@ -41,6 +41,15 @@
             fetchWasteReferenceValues() {
                 axios.get('/api/waste-values').then((response) => {
                     this.values = response.data;
+                });
+            },
+            update(value) {
+                axios.patch('/api/waste-values/' + value.id, {
+                    value: value.value
+                }).then(response => {
+                    console.log(response)
+                }).catch(error => {
+                   console.log(error.response.data)
                 });
             }
         }

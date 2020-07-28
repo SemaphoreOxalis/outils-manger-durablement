@@ -1925,8 +1925,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
   data: function data() {
     return {
       values: []
@@ -1946,6 +1949,15 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/waste-values').then(function (response) {
         _this.values = response.data;
+      });
+    },
+    update: function update(value) {
+      axios.patch('/api/waste-values/' + value.id, {
+        value: value.value
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error.response.data);
       });
     }
   }
@@ -42046,14 +42058,41 @@ var render = function() {
             _c("h1", [_vm._v("Admin Panel")]),
             _vm._v(" "),
             _vm._l(_vm.values, function(value) {
-              return _c("div", { key: value.id }, [
+              return _c("div", { key: value.id, staticClass: "mx-5" }, [
                 _vm._v(
-                  "\n\n            " +
-                    _vm._s(value.key) +
-                    " - " +
-                    _vm._s(value.value) +
-                    "\n\n        "
-                )
+                  "\n\n            " + _vm._s(value.key) + "\n            "
+                ),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: value.value,
+                        expression: "value.value"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      required: "",
+                      min: "0",
+                      max: "100"
+                    },
+                    domProps: { value: value.value },
+                    on: {
+                      focusout: function($event) {
+                        return _vm.update(value)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(value, "value", $event.target.value)
+                      }
+                    }
+                  })
+                ])
               ])
             })
           ],

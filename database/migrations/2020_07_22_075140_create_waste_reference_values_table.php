@@ -17,6 +17,7 @@ class CreateWasteReferenceValuesTable extends Migration
             $table->id();
             $table->string('key');
             $table->decimal('value', 5, 3);
+            $table->timestamps();
         });
     }
 
