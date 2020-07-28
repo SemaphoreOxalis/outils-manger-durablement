@@ -1,15 +1,14 @@
 <template>
-    <div>
+    <div class="mx-5">
         <div v-if="signedIn">
             <h1>Admin Panel</h1>
             <div v-for="value in values"
-                 :key="value.id"
-                 class="mx-5">
+                 :key="value.id">
 
-                {{ value.key }}
+                {{ value.label }}
                 <div class="form-group">
-                    <input class="form-control" type="number" v-model="value.value" @change="update(value)" required
-                           min="0" max="100">
+                    <input type="number" v-model="value.value" @change="update(value)" required
+                           min="0" max="100"> <span> %</span>
                 </div>
             </div>
 

@@ -16,6 +16,7 @@ class CreateWasteReferenceValuesTable extends Migration
         Schema::create('waste_reference_values', function (Blueprint $table) {
             $table->id();
             $table->string('key');
+            $table->string('label');
             $table->decimal('value', 5, 3);
             $table->timestamps();
         });

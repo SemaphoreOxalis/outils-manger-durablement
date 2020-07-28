@@ -1929,7 +1929,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -42157,7 +42156,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mx-5" }, [
     _vm.signedIn
       ? _c(
           "div",
@@ -42165,9 +42164,9 @@ var render = function() {
             _c("h1", [_vm._v("Admin Panel")]),
             _vm._v(" "),
             _vm._l(_vm.values, function(value) {
-              return _c("div", { key: value.id, staticClass: "mx-5" }, [
+              return _c("div", { key: value.id }, [
                 _vm._v(
-                  "\n\n            " + _vm._s(value.key) + "\n            "
+                  "\n\n            " + _vm._s(value.label) + "\n            "
                 ),
                 _c("div", { staticClass: "form-group" }, [
                   _c("input", {
@@ -42179,7 +42178,6 @@ var render = function() {
                         expression: "value.value"
                       }
                     ],
-                    staticClass: "form-control",
                     attrs: {
                       type: "number",
                       required: "",
@@ -42198,7 +42196,9 @@ var render = function() {
                         _vm.$set(value, "value", $event.target.value)
                       }
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(" %")])
                 ])
               ])
             })

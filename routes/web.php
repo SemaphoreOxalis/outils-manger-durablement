@@ -20,8 +20,8 @@ Route::get('/api/categories', 'CategoriesController@index');
 Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
 Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesController@update');
 
-//Auth::routes();
-Auth::routes(['register' => false]);
+Auth::routes();
+//Auth::routes(['register' => false]);
 
 
 Route::get('/{any?}', function () {
