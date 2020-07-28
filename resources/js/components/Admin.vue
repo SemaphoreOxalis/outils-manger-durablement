@@ -46,8 +46,8 @@
             update(value) {
                 axios.patch('/api/waste-values/' + value.id, {
                     value: value.value
-                }).then(response => {
-                    console.log(response)
+                }).then(() => {
+                    window.events.$emit('flash', 'Vos modifications ont été enregistrées');
                 }).catch(error => {
                    console.log(error.response.data)
                 });

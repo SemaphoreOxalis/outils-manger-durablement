@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\WasteReferenceValue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class WasteReferenceValuesController extends Controller
 {
