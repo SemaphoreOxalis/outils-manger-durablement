@@ -1,5 +1,6 @@
 <template>
     <div class="py-4 px-4">
+        <help-modal v-if="showModal" @close="showModal = false"></help-modal>
         <h1>Accueil</h1>
         <div>
             <p>
@@ -15,7 +16,7 @@
         <p>Pour réaliser votre première simulation, vous aurez besoin :</p>
         <ul>
             <li>du nombre de repas produits dans votre établissement (par an)</li>
-            <li>du coût de revient unitaire d'un repas</li>
+            <li>du coût de revient unitaire d'un repas <button id="help" @click="showModal = true">?</button></li>
             <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
             <li>du coût de traitement des déchets (en euros par tonne)</li>
         </ul>
@@ -24,11 +25,42 @@
         <p>Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est réalisé
             uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur</p>
         <router-link to="/input" tag="span">
-            <button class="btn btn-primary btn-lg btn-block py-4">Je suis prêt.e</button>
+            <button class="btn btn-primary btn-lg btn-block py-4" id="im-ready-button">Je suis prêt.e</button>
         </router-link>
     </div>
 </template>
 
 <script>
-    export default {}
+    import HelpModal from "./HelpModal";
+
+    export default {
+        components: {
+            HelpModal
+        },
+
+        data() {
+            return {
+                showModal: false
+            }
+        }
+    }
 </script>
+
+<style>
+    #im-ready-button {
+        display: block;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    #help {
+        display: inline-block;
+        background-color: #343a40;
+        color: white;
+        border-radius: 50%;
+        width: 1.5em;
+        height: 1.5em;
+        text-align: center;
+        border-style: none;
+    }
+</style>
