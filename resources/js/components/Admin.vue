@@ -7,8 +7,8 @@
 
                 {{ value.label }}
                 <div class="form-group">
-                    <input type="number" v-model="value.value" @change="update(value)" required
-                           min="0" max="100"> <span> %</span>
+                    <input class="validity" type="number" v-model="value.value" @change="update(value)" required
+                           min="0" max="100" step="0.01"> <span> %</span>
                 </div>
             </div>
 
@@ -55,3 +55,9 @@
         }
     }
 </script>
+
+<style>
+    input:invalid {
+        background-color: lightpink;
+    }
+</style>
