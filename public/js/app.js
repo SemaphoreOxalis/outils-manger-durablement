@@ -1929,6 +1929,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1954,10 +1955,10 @@ __webpack_require__.r(__webpack_exports__);
     update: function update(value) {
       axios.patch('/api/waste-values/' + value.id, {
         value: value.value
-      }).then(function () {
-        window.events.$emit('flash', 'Vos modifications ont été enregistrées');
+      }).then(function (response) {
+        flash(response.data);
       })["catch"](function (error) {
-        console.log(error.response.data);
+        flash(error.response.data, 'danger');
       });
     }
   }
@@ -1980,11 +1981,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['message'],
   data: function data() {
     return {
       body: '',
+      level: 'success',
       show: false
     };
   },
@@ -1995,13 +2000,14 @@ __webpack_require__.r(__webpack_exports__);
       this.flash(this.message);
     }
 
-    window.events.$on('flash', function (message) {
-      _this.flash(message);
+    window.events.$on('flash', function (data) {
+      _this.flash(data);
     });
   },
   methods: {
-    flash: function flash(message) {
-      this.body = message;
+    flash: function flash(data) {
+      this.body = data.message;
+      this.level = data.level;
       this.show = true;
       this.hide();
     },
@@ -42182,7 +42188,7 @@ var render = function() {
                     },
                     domProps: { value: value.value },
                     on: {
-                      focusout: function($event) {
+                      change: function($event) {
                         return _vm.update(value)
                       },
                       input: function($event) {
@@ -42226,17 +42232,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      directives: [
-        { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
-      ],
-      staticClass: "alert alert-flash alert-success fade show",
-      attrs: { role: "alert" }
-    },
-    [_vm._v("\n    " + _vm._s(_vm.body) + "\n")]
-  )
+  return _c("div", {
+    directives: [
+      { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
+    ],
+    staticClass: "alert alert-flash fade show",
+    class: "alert-" + _vm.level,
+    attrs: { role: "alert" },
+    domProps: { textContent: _vm._s(_vm.body) }
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -60183,7 +60187,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('flash', __webpack_require_
 window.events = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 
 window.flash = function (message) {
-  window.events.$emit('flash', message);
+  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';
+  window.events.$emit('flash', {
+    message: message,
+    level: level
+  });
 };
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({

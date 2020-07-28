@@ -8,7 +8,8 @@
 
                 {{ value.key }}
                 <div class="form-group">
-                    <input class="form-control" type="number" v-model="value.value" @focusout="update(value)" required min="0" max="100">
+                    <input class="form-control" type="number" v-model="value.value" @change="update(value)" required
+                           min="0" max="100">
                 </div>
             </div>
 
@@ -46,10 +47,10 @@
             update(value) {
                 axios.patch('/api/waste-values/' + value.id, {
                     value: value.value
-                }).then(() => {
-                    window.events.$emit('flash', 'Vos modifications ont été enregistrées');
+                }).then(response => {
+                    flash(response.data);
                 }).catch(error => {
-                   console.log(error.response.data)
+                    flash(error.response.data, 'danger');
                 });
             }
         }
