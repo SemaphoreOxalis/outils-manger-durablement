@@ -1,3 +1,6 @@
+// Permet des arrondis qui restent précis
+// From https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
+
 export default {
     methods: {
         roundToOneDecimal(number) {

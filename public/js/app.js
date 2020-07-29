@@ -1930,20 +1930,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // initialisation des données utilisées par le composant
   data: function data() {
     return {
       values: []
     };
   },
+  // A la création du composent (i.e quand on arrive sur la "page")
   created: function created() {
+    // Va chercher les valeurs de référence dans la BDD
     this.fetchWasteReferenceValues();
   },
+  // Valeurs calculées à la volée
   computed: {
+    // L'utilisateur est-il bien authentifié ?
     signedIn: function signedIn() {
       return window.App.signedIn;
     }
   },
+  // Fonctions utilisées par le composant
   methods: {
+    // Va chercher les valeurs de référence depuis la BDD
     fetchWasteReferenceValues: function fetchWasteReferenceValues() {
       var _this = this;
 
@@ -1951,9 +1958,12 @@ __webpack_require__.r(__webpack_exports__);
         _this.values = response.data;
       });
     },
+    // Met à jour les valeurs de référence dans la BDD
     update: function update(value) {
+      // Appel AJAX
       axios.patch('/api/waste-values/' + value.id, {
-        value: value.value
+        value: value.value // Puis feedback visuel
+
       }).then(function (response) {
         flash(response.data);
       })["catch"](function (error) {
@@ -2065,6 +2075,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    // nécessaire pour notifier le composant parent (Home.vue)
     close: function close() {
       this.$emit('close');
     }
@@ -2115,13 +2126,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+// fenêtre modale d'aide
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // Déclaration de la parenté de ce composant
   components: {
     HelpModal: _HelpModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  // initialisation des données utilisées par le composant
   data: function data() {
     return {
+      // par défaut, la fenêtre modale est masquée
       showModal: false
     };
   }
@@ -2261,18 +2281,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// Petite bibliothèque de fonctions bien pratiques
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // déclaration de la dépendance à ce mixin
   mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  // A la création du composent (i.e quand on arrive sur la "page")
   created: function created() {
+    // Va chercher les valeurs de référence, cf. methods ci-dessous
     this.checkWasteReferenceValues();
   },
+  // initialisation des données utilisées par le composant
   data: function data() {
     return {
+      // Valeurs de référence
       referenceValues: {
         foodLeftoversVolumeInGlobalWaste: 0,
         actualFoodLeftoversInFoodWaste: 0
       },
+      // Champs à remplir
       userInput: {
         dishesNumber: 1,
         // précis à 1
@@ -2285,10 +2312,14 @@ __webpack_require__.r(__webpack_exports__);
         startDate: null,
         endDate: null
       },
+      // Booléen servant au feedback visuel lorsqu'on édite les valeurs de référence
       editingReferenceValues: false
     };
   },
+  // Données calculées en fonction des sonnées saisies
   computed: {
+    // VALIDATION - empêche de continuer si les données saisies ne sont pas pertinentes
+    // validation des données saisies pour l'audit ( supérieures à 0 + dates valables )
     areThereInvalidData: function areThereInvalidData() {
       if (this.areThereInvalidValues) {
         return true;
@@ -2304,6 +2335,7 @@ __webpack_require__.r(__webpack_exports__);
 
       return false;
     },
+    // validation des valeurs de référence ( entre 0 et 100 %)
     areThereInvalidValues: function areThereInvalidValues() {
       if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 || this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
         return true;
@@ -2315,21 +2347,29 @@ __webpack_require__.r(__webpack_exports__);
 
       return false;
     },
+    // CALCULS - "soit dans votre cas ..... tonnes"
+    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
     foodLeftoversVolumeInGlobalWasteInYourCase: function foodLeftoversVolumeInGlobalWasteInYourCase() {
       return this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 * this.userInput.globalWasteVolume;
     },
+    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
     actualFoodLeftoversInFoodWasteInYourCase: function actualFoodLeftoversInFoodWasteInYourCase() {
       return this.referenceValues.actualFoodLeftoversInFoodWaste / 100 * this.foodLeftoversVolumeInGlobalWasteInYourCase;
     }
   },
+  // Fonctions utilisées par le composant
   methods: {
+    // Va chercher les valeurs de référence
     checkWasteReferenceValues: function checkWasteReferenceValues() {
+      // Soit dans le local Storage (valeurs personnalisées)
       if (localStorage.getItem('localReferenceValues')) {
         this.fetchWasteReferenceValuesFromLocalStorage();
-      } else {
-        this.fetchWasteReferenceValuesFromDB();
-      }
+      } // Sinon en BDD (valeurs par défaut)
+      else {
+          this.fetchWasteReferenceValuesFromDB();
+        }
     },
+    // Va chercher les valeurs de référence depuis la BDD
     fetchWasteReferenceValuesFromDB: function fetchWasteReferenceValuesFromDB() {
       var _this = this;
 
@@ -2339,15 +2379,18 @@ __webpack_require__.r(__webpack_exports__);
         _this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
       });
     },
+    // Va chercher les valeurs de référence depuis le localStorage
     fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
       this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
     },
+    // Enregistre en localStorage les valeurs personnalisées de l'utilisateur
     saveLocalReferenceValues: function saveLocalReferenceValues() {
       var parsed = JSON.stringify(this.referenceValues);
       localStorage.setItem('localReferenceValues', parsed);
       this.editingReferenceValues = false;
       flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
     },
+    // Réinitialise les valeurs de référence à leurs valeurs par défaut depuis la BDD
     resetReferenceValues: function resetReferenceValues() {
       this.fetchWasteReferenceValuesFromDB();
       flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
@@ -62200,6 +62243,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+// Permet des arrondis qui restent précis
+// From https://stackoverflow.com/questions/11832914/round-to-at-most-2-decimal-places-only-if-necessary
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     roundToOneDecimal: function roundToOneDecimal(number) {

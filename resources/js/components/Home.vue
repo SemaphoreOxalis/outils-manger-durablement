@@ -1,6 +1,9 @@
 <template>
     <div class="py-4 px-4">
+
+        <!-- fenêtre modale d'aide (HelpModal.vue) -->
         <help-modal v-if="showModal" @close="showModal = false"></help-modal>
+
         <h1>Accueil</h1>
         <div>
             <p>
@@ -24,6 +27,8 @@
             votre établissement en 15 minutes</p>
         <p>Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est réalisé
             uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur</p>
+
+
         <router-link to="/input" tag="span">
             <button class="btn btn-primary btn-lg btn-block py-4" id="im-ready-button">Je suis prêt.e</button>
         </router-link>
@@ -31,15 +36,21 @@
 </template>
 
 <script>
+    // fenêtre modale d'aide
     import HelpModal from "./HelpModal";
 
     export default {
+
+        // Déclaration de la parenté de ce composant
         components: {
             HelpModal
         },
 
+        // initialisation des données utilisées par le composant
         data() {
             return {
+
+                // par défaut, la fenêtre modale est masquée
                 showModal: false
             }
         },

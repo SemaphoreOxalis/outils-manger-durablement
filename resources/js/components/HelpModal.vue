@@ -33,6 +33,7 @@
 <script>
     export default {
         methods: {
+            // nécessaire pour notifier le composant parent (Home.vue)
             close() {
                 this.$emit('close');
             }

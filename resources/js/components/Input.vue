@@ -121,23 +121,34 @@
 </template>
 
 <script>
+    // Petite bibliothèque de fonctions bien pratiques
     import NumberRounder from "../helpers/NumberRounder";
 
     export default {
+
+        // déclaration de la dépendance à ce mixin
         mixins: [
             NumberRounder
         ],
 
+        // A la création du composent (i.e quand on arrive sur la "page")
         created() {
+
+            // Va chercher les valeurs de référence, cf. methods ci-dessous
             this.checkWasteReferenceValues();
         },
 
+        // initialisation des données utilisées par le composant
         data() {
             return {
+
+                // Valeurs de référence
                 referenceValues: {
                     foodLeftoversVolumeInGlobalWaste: 0,
                     actualFoodLeftoversInFoodWaste: 0
                 },
+
+                // Champs à remplir
                 userInput: {
                     dishesNumber: 1,        // précis à 1
                     dishCost: 1,            // précis à 0.01
@@ -146,11 +157,18 @@
                     startDate: null,
                     endDate: null
                 },
+
+                // Booléen servant au feedback visuel lorsqu'on édite les valeurs de référence
                 editingReferenceValues: false
             }
         },
 
+        // Données calculées en fonction des sonnées saisies
         computed: {
+
+            // VALIDATION - empêche de continuer si les données saisies ne sont pas pertinentes
+
+            // validation des données saisies pour l'audit ( supérieures à 0 + dates valables )
             areThereInvalidData: function () {
                 if (this.areThereInvalidValues) {
                     return true;
@@ -169,6 +187,7 @@
                 return false;
             },
 
+            // validation des valeurs de référence ( entre 0 et 100 %)
             areThereInvalidValues: function () {
                 if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 ||
                     this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
@@ -181,24 +200,36 @@
                 return false;
             },
 
+            // CALCULS - "soit dans votre cas ..... tonnes"
+
+            // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
             foodLeftoversVolumeInGlobalWasteInYourCase: function() {
                 return ( this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 ) * this.userInput.globalWasteVolume;
             },
 
+            // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
             actualFoodLeftoversInFoodWasteInYourCase: function() {
                 return ( this.referenceValues.actualFoodLeftoversInFoodWaste / 100 ) * this.foodLeftoversVolumeInGlobalWasteInYourCase;
             },
         },
 
+        // Fonctions utilisées par le composant
         methods: {
+
+            // Va chercher les valeurs de référence
             checkWasteReferenceValues() {
+
+                // Soit dans le local Storage (valeurs personnalisées)
                 if (localStorage.getItem('localReferenceValues')) {
                     this.fetchWasteReferenceValuesFromLocalStorage()
-                } else {
+                }
+                // Sinon en BDD (valeurs par défaut)
+                else {
                     this.fetchWasteReferenceValuesFromDB();
                 }
             },
 
+            // Va chercher les valeurs de référence depuis la BDD
             fetchWasteReferenceValuesFromDB() {
                 axios.get('/api/waste-values').then((response) => {
                     localStorage.removeItem('localReferenceValues');
@@ -208,10 +239,12 @@
                 });
             },
 
+            // Va chercher les valeurs de référence depuis le localStorage
             fetchWasteReferenceValuesFromLocalStorage() {
                 this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
             },
 
+            // Enregistre en localStorage les valeurs personnalisées de l'utilisateur
             saveLocalReferenceValues() {
                 const parsed = JSON.stringify(this.referenceValues);
                 localStorage.setItem('localReferenceValues', parsed);
@@ -220,6 +253,7 @@
                 flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
             },
 
+            // Réinitialise les valeurs de référence à leurs valeurs par défaut depuis la BDD
             resetReferenceValues() {
                 this.fetchWasteReferenceValuesFromDB();
                 flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
