@@ -2260,8 +2260,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.checkWasteReferenceValues();
@@ -2313,6 +2311,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return false;
+    },
+    foodLeftoversVolumeInGlobalWasteInYourCase: function foodLeftoversVolumeInGlobalWasteInYourCase() {
+      return this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 * this.userInput.globalWasteVolume;
+    },
+    actualFoodLeftoversInFoodWasteInYourCase: function actualFoodLeftoversInFoodWasteInYourCase() {
+      return this.referenceValues.actualFoodLeftoversInFoodWaste / 100 * this.foodLeftoversVolumeInGlobalWasteInYourCase;
     }
   },
   methods: {
@@ -43234,9 +43238,14 @@ var render = function() {
                     )
                   ]),
               _vm._v(
-                "\n                % du volume global des ordures ménagères, soit dans votre cas "
+                "\n                % du volume global des ordures ménagères, soit dans votre cas\n                "
               ),
-              _c("strong", [_vm._v("..... tonnes")])
+              _c("strong", [
+                _vm._v(
+                  _vm._s(_vm.foodLeftoversVolumeInGlobalWasteInYourCase) +
+                    " tonnes"
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("p", [
@@ -43290,9 +43299,14 @@ var render = function() {
                     )
                   ]),
               _vm._v(
-                "\n                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas "
+                "\n                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas\n                "
               ),
-              _c("strong", [_vm._v(".....\n                    tonnes")])
+              _c("strong", [
+                _vm._v(
+                  _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
+                    " tonnes"
+                )
+              ])
             ]),
             _vm._v(" "),
             _vm.editingReferenceValues
@@ -43313,7 +43327,7 @@ var render = function() {
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis,\n            n'hésitez pas à\n            "
+            "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à\n            "
           ),
           _c(
             "a",
@@ -43334,11 +43348,7 @@ var render = function() {
               attrs: { href: "#reference-values" },
               on: { click: _vm.resetReferenceValues }
             },
-            [
-              _vm._v(
-                "les réinitialiser à leurs valeur par\n                défaut"
-              )
-            ]
+            [_vm._v("les réinitialiser à leurs valeur par défaut")]
           ),
           _vm._v(")\n        ")
         ]),
@@ -43416,7 +43426,7 @@ var staticRenderFns = [
       _vm._v(
         "Saisissez les informations sur les déchets (hors déchets médicaux pour les structures médicales) "
       ),
-      _c("strong", [_vm._v("sur\n            la même période")])
+      _c("strong", [_vm._v("sur la même période")])
     ])
   },
   function() {

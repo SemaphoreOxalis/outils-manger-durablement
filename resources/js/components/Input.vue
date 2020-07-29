@@ -46,8 +46,7 @@
         </div>
 
         <div id="reference-values">
-            <p>Saisissez les informations sur les déchets (hors déchets médicaux pour les structures médicales) <strong>sur
-                la même période</strong></p>
+            <p>Saisissez les informations sur les déchets (hors déchets médicaux pour les structures médicales) <strong>sur la même période</strong></p>
             <p><a href="#">En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets</a></p>
 
             <label for="global-waste-volume">Volume constaté (en tonnes)</label>
@@ -72,7 +71,8 @@
                     <span v-else>
                         {{ referenceValues.foodLeftoversVolumeInGlobalWaste }}
                     </span>
-                    % du volume global des ordures ménagères, soit dans votre cas <strong>..... tonnes</strong>
+                    % du volume global des ordures ménagères, soit dans votre cas
+                    <strong>{{ foodLeftoversVolumeInGlobalWasteInYourCase }} tonnes</strong>
                 </p>
 
                 <p>Sans action particulière,
@@ -86,8 +86,8 @@
                     <span v-else>
                         {{ referenceValues.actualFoodLeftoversInFoodWaste }}
                     </span>
-                    % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas <strong>.....
-                        tonnes</strong>
+                    % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas
+                    <strong>{{ actualFoodLeftoversInFoodWasteInYourCase }} tonnes</strong>
                 </p>
                 <button v-if="editingReferenceValues"
                         :disabled="areThereInvalidValues"
@@ -97,11 +97,9 @@
             </div>
 
             <br>
-            <p>Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis,
-                n'hésitez pas à
+            <p>Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à
                 <a href="#reference-values" @click="editingReferenceValues = true">modifier ces valeurs</a>
-                (ou à <a href="#reference-values" @click="resetReferenceValues">les réinitialiser à leurs valeur par
-                    défaut</a>)
+                (ou à <a href="#reference-values" @click="resetReferenceValues">les réinitialiser à leurs valeur par défaut</a>)
             </p>
 
             <label for="waste-treatment-cost">Coût de traitement par tonne (en €) :</label>
@@ -166,14 +164,24 @@
             },
 
             areThereInvalidValues: function () {
-                if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 || this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
+                if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 ||
+                    this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
                     return true;
                 }
-                if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 || this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
+                if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 ||
+                    this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
                     return true;
                 }
                 return false;
-            }
+            },
+
+            foodLeftoversVolumeInGlobalWasteInYourCase: function() {
+                return ( this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 ) * this.userInput.globalWasteVolume;
+            },
+
+            actualFoodLeftoversInFoodWasteInYourCase: function() {
+                return ( this.referenceValues.actualFoodLeftoversInFoodWaste / 100 ) * this.foodLeftoversVolumeInGlobalWasteInYourCase;
+            },
         },
 
         methods: {
