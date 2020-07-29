@@ -72,7 +72,7 @@
                         {{ referenceValues.foodLeftoversVolumeInGlobalWaste }}
                     </span>
                     % du volume global des ordures ménagères, soit dans votre cas
-                    <strong>{{ foodLeftoversVolumeInGlobalWasteInYourCase }} tonnes</strong>
+                    <strong>{{ roundToThreeDecimal(foodLeftoversVolumeInGlobalWasteInYourCase) }} tonnes</strong>
                 </p>
 
                 <p>Sans action particulière,
@@ -87,7 +87,7 @@
                         {{ referenceValues.actualFoodLeftoversInFoodWaste }}
                     </span>
                     % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas
-                    <strong>{{ actualFoodLeftoversInFoodWasteInYourCase }} tonnes</strong>
+                    <strong>{{ roundToThreeDecimal(actualFoodLeftoversInFoodWasteInYourCase) }} tonnes</strong>
                 </p>
                 <button v-if="editingReferenceValues"
                         :disabled="areThereInvalidValues"
@@ -121,7 +121,13 @@
 </template>
 
 <script>
+    import NumberRounder from "../helpers/NumberRounder";
+
     export default {
+        mixins: [
+            NumberRounder
+        ],
+
         created() {
             this.checkWasteReferenceValues();
         },

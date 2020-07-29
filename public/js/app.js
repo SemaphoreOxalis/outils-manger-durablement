@@ -2138,6 +2138,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
 //
 //
 //
@@ -2260,7 +2261,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
   created: function created() {
     this.checkWasteReferenceValues();
   },
@@ -43242,8 +43245,11 @@ var render = function() {
               ),
               _c("strong", [
                 _vm._v(
-                  _vm._s(_vm.foodLeftoversVolumeInGlobalWasteInYourCase) +
-                    " tonnes"
+                  _vm._s(
+                    _vm.roundToThreeDecimal(
+                      _vm.foodLeftoversVolumeInGlobalWasteInYourCase
+                    )
+                  ) + " tonnes"
                 )
               ])
             ]),
@@ -43303,8 +43309,11 @@ var render = function() {
               ),
               _c("strong", [
                 _vm._v(
-                  _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
-                    " tonnes"
+                  _vm._s(
+                    _vm.roundToThreeDecimal(
+                      _vm.actualFoodLeftoversInFoodWasteInYourCase
+                    )
+                  ) + " tonnes"
                 )
               ])
             ]),
@@ -62053,6 +62062,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Test_vue_vue_type_template_id_5f45227d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/NumberRounder.js":
+/*!***********************************************!*\
+  !*** ./resources/js/helpers/NumberRounder.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    roundToOneDecimal: function roundToOneDecimal(number) {
+      return Math.round((number + Number.EPSILON) * 10) / 10;
+    },
+    roundToTwoDecimal: function roundToTwoDecimal(number) {
+      return Math.round((number + Number.EPSILON) * 100) / 100;
+    },
+    roundToThreeDecimal: function roundToThreeDecimal(number) {
+      return Math.round((number + Number.EPSILON) * 1000) / 1000;
+    }
+  }
+});
 
 /***/ }),
 
