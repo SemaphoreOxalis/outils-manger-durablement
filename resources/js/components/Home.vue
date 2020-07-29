@@ -42,7 +42,7 @@
             return {
                 showModal: false
             }
-        }
+        },
     }
 </script>
 

@@ -2192,6 +2192,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      usedData: {
+        foodLeftoversVolumeInGlobalWaste: 0,
+        actualFoodLeftoversInFoodWaste: 0
+      },
+      editingReferenceValues: false
+    };
+  },
+  created: function created() {
+    this.checkWasteReferenceValues();
+  },
+  methods: {
+    checkWasteReferenceValues: function checkWasteReferenceValues() {
+      if (localStorage.getItem('localReferenceValues')) {
+        console.log(localStorage.getItem('localReferenceValues'));
+      } else {
+        this.fetchWasteReferenceValuesFromDB();
+      }
+    },
+    fetchWasteReferenceValuesFromDB: function fetchWasteReferenceValuesFromDB() {
+      var _this = this;
+
+      axios.get('/api/waste-values').then(function (response) {
+        _this.usedData.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
+        _this.usedData.actualFoodLeftoversInFoodWaste = response.data[1].value;
+      });
+    },
+    saveLocalReferenceValues: function saveLocalReferenceValues() {
+      this.editingReferenceValues = false;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Results.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -6879,7 +6981,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.detail {\n    display: inline-block;\n    max-width: 500px;\n}\n#launching-audit-button {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n", ""]);
+exports.push([module.i, "\n.detail {\n    display: inline-block;\n    max-width: 500px;\n}\n#launching-audit-button {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n.input:invalid {\n    background-color: lightpink;\n}\n.editingReferenceValues {\n    padding: 10px;\n    background-color: #98dfb6;\n}\n", ""]);
 
 // exports
 
@@ -42531,7 +42633,6 @@ var render = function() {
                         expression: "value.value"
                       }
                     ],
-                    staticClass: "validity",
                     attrs: {
                       type: "number",
                       required: "",
@@ -42823,6 +42924,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
+      { attrs: { id: "reference-values" } },
       [
         _vm._m(2),
         _vm._v(" "),
@@ -42833,47 +42935,190 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
+          staticClass: "input",
           attrs: {
             id: "global-waste-volume",
             type: "number",
             required: "",
             min: "0",
-            step: "1"
+            step: "0.001",
+            value: "0"
           }
         }),
         _vm._v(" "),
-        _vm._m(4),
-        _vm._v(" "),
-        _vm._m(5),
-        _vm._v(" "),
-        _vm._m(6),
+        _c(
+          "div",
+          { class: _vm.editingReferenceValues ? "editingReferenceValues" : "" },
+          [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Il a été constaté que la part des restes alimentaires représente environ\n                "
+              ),
+              _vm.editingReferenceValues
+                ? _c("span", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.usedData.foodLeftoversVolumeInGlobalWaste,
+                          expression:
+                            "usedData.foodLeftoversVolumeInGlobalWaste"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: {
+                        type: "number",
+                        required: "",
+                        min: "0",
+                        max: "100",
+                        step: "0.01"
+                      },
+                      domProps: {
+                        value: _vm.usedData.foodLeftoversVolumeInGlobalWaste
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.usedData,
+                            "foodLeftoversVolumeInGlobalWaste",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                : _c("span", [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.usedData.foodLeftoversVolumeInGlobalWaste) +
+                        "\n            "
+                    )
+                  ]),
+              _vm._v(
+                "\n                % du volume global des ordures ménagères, soit dans votre cas "
+              ),
+              _c("strong", [_vm._v("..... tonnes")])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("Sans action particulière,\n                "),
+              _vm.editingReferenceValues
+                ? _c("span", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.usedData.actualFoodLeftoversInFoodWaste,
+                          expression: "usedData.actualFoodLeftoversInFoodWaste"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: {
+                        type: "number",
+                        required: "",
+                        min: "0",
+                        max: "100",
+                        step: "0.01"
+                      },
+                      domProps: {
+                        value: _vm.usedData.actualFoodLeftoversInFoodWaste
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.usedData,
+                            "actualFoodLeftoversInFoodWaste",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                : _c("span", [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.usedData.actualFoodLeftoversInFoodWaste) +
+                        "\n            "
+                    )
+                  ]),
+              _vm._v(
+                "\n                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas "
+              ),
+              _c("strong", [_vm._v(".....\n                    tonnes")]),
+              _vm._v(" "),
+              _vm.editingReferenceValues
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      on: { click: _vm.saveLocalReferenceValues }
+                    },
+                    [_vm._v("OK\n                ")]
+                  )
+                : _vm._e()
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _vm._m(7),
+        _c("p", [
+          _vm._v(
+            "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis,\n            n'hésitez pas à\n            "
+          ),
+          _c(
+            "a",
+            {
+              attrs: { href: "#reference-values" },
+              on: {
+                click: function($event) {
+                  _vm.editingReferenceValues = true
+                }
+              }
+            },
+            [_vm._v("modifier ces valeurs")]
+          ),
+          _vm._v("\n            (ou à "),
+          _c("a", { attrs: { href: "#" } }, [
+            _vm._v("les réinitialiser à leurs valeur par défaut")
+          ]),
+          _vm._v(")\n        ")
+        ]),
         _vm._v(" "),
         _c("label", { attrs: { for: "waste-treatment-cost" } }, [
           _vm._v("Coût de traitement par tonne (en €) :")
         ]),
         _vm._v(" "),
         _c("input", {
+          staticClass: "input",
           attrs: {
             id: "waste-treatment-cost",
             type: "number",
             required: "",
             min: "0",
-            step: "1"
+            step: "0.01",
+            value: "0"
           }
         }),
         _vm._v(" "),
-        _c("router-link", { attrs: { to: "/", tag: "span" } }, [
+        _c("router-link", { attrs: { to: "/results", tag: "span" } }, [
           _c(
             "button",
             {
               staticClass: "btn btn-primary btn-lg btn-block py-4",
               attrs: { id: "launching-audit-button" }
             },
-            [_vm._v("Je lance ma simulation")]
+            [_vm._v("Je lance ma\n                simulation\n            ")]
           )
         ])
       ],
@@ -42893,11 +43138,11 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("label", { attrs: { for: "start" } }, [_vm._v("Du ")]),
       _vm._v(" "),
-      _c("input", { attrs: { type: "date", id: "start" } }),
+      _c("input", { attrs: { type: "date", id: "start", required: "" } }),
       _vm._v(" "),
       _c("label", { attrs: { for: "end" } }, [_vm._v("au ")]),
       _vm._v(" "),
-      _c("input", { attrs: { type: "date", id: "end" } })
+      _c("input", { attrs: { type: "date", id: "end", required: "" } })
     ])
   },
   function() {
@@ -42916,12 +43161,14 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("input", {
+        staticClass: "input",
         attrs: {
           id: "dishes-number",
           type: "number",
           required: "",
           min: "0",
-          step: "1"
+          step: "1",
+          value: "0"
         }
       }),
       _vm._v(" "),
@@ -42932,18 +43179,20 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("input", {
+        staticClass: "input",
         attrs: {
           id: "dish-cost",
           type: "number",
           required: "",
           min: "0",
-          step: "1"
+          step: "0.01",
+          value: "0"
         }
       }),
       _vm._v(" "),
       _c("span", { staticClass: "detail" }, [
         _vm._v(
-          "\n            Le pix de revient d'un repas peut être calculé grâce à la formule suivante :\n            [(montant total des achats aimentaires (matière première) + masse salariale de l'équipe de restauration + investissements + coût de l'énergie) "
+          "\n            Le pix de revient d'un repas peut être calculé grâce à la formule suivante :\n            [(montant total des achats alimentaires (matière première) + masse salariale de l'équipe de restauration + investissements + coût de l'énergie) "
         ),
         _c("strong", [_vm._v("ou")]),
         _vm._v(
@@ -42985,43 +43234,38 @@ var staticRenderFns = [
         _vm._v("caractérisation des déchets du C.H de Niort,")
       ])
     ])
-  },
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v(
-        "Il a été constaté que la part des restes alimentaires représente environ 25% du volume global des ordures\n            ménagères, soit dans votre cas "
-      ),
-      _c("strong", [_vm._v("..... tonnes")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v(
-        "Sans action particulière, 75% de ces restes sont considérés comme des déchets issus du gaspillage, soit\n            dans votre cas "
-      ),
-      _c("strong", [_vm._v("..... tonnes")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v(
-        "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis,\n            n'hésitez pas à\n            "
-      ),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("modifier ces valeurs")]),
-      _vm._v(" (ou à "),
-      _c("a", { attrs: { href: "#" } }, [
-        _vm._v("les réinitialiser à leurs valeur par défaut")
-      ]),
-      _vm._v(")\n        ")
+    return _c("div", { staticClass: "py-4 px-4" }, [
+      _c("h1", [_vm._v("Results")])
     ])
   }
 ]
@@ -61439,6 +61683,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Results.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/Results.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Results.vue?vue&type=template&id=8ef50b4a& */ "./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a&");
+/* harmony import */ var _Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Results.vue?vue&type=script&lang=js& */ "./resources/js/components/Results.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Results.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Results.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/Results.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Results.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Results.vue?vue&type=template&id=8ef50b4a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Test.vue":
 /*!******************************************!*\
   !*** ./resources/js/components/Test.vue ***!
@@ -61539,6 +61852,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Home */ "./resources/js/components/Home.vue");
 /* harmony import */ var _components_Admin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Admin */ "./resources/js/components/Admin.vue");
 /* harmony import */ var _components_Input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Input */ "./resources/js/components/Input.vue");
+/* harmony import */ var _components_Results__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Results */ "./resources/js/components/Results.vue");
+
 
 
 
@@ -61558,13 +61873,16 @@ __webpack_require__.r(__webpack_exports__);
     path: '/input',
     component: _components_Input__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
+    path: '/results',
+    component: _components_Results__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, {
     path: '/test',
     component: _components_Test__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
     path: '/admin',
     component: _components_Admin__WEBPACK_IMPORTED_MODULE_2__["default"],
     props: {
-      'user': window.app.user
+      'user': window.App.user
     }
   }]
 });

@@ -7,7 +7,7 @@
 
                 {{ value.label }}
                 <div class="form-group admin">
-                    <input class="validity" type="number" v-model="value.value" @change="update(value)" required
+                    <input v-model="value.value" @change="update(value)" type="number" required
                            min="0" max="100" step="0.01"> <span> %</span>
                 </div>
             </div>
