@@ -2247,18 +2247,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.checkWasteReferenceValues();
+  },
   data: function data() {
     return {
-      usedData: {
+      referenceValues: {
         foodLeftoversVolumeInGlobalWaste: 0,
         actualFoodLeftoversInFoodWaste: 0
+      },
+      userInput: {
+        dishesNumber: 1,
+        // précis à 1
+        dishCost: 1,
+        // précis à 0.01
+        globalWasteVolume: 1,
+        // précis à 0.001
+        wasteTreatmentCost: 1,
+        // précis à 0.01
+        startDate: null,
+        endDate: null
       },
       editingReferenceValues: false
     };
   },
-  created: function created() {
-    this.checkWasteReferenceValues();
+  computed: {
+    areThereInvalidData: function areThereInvalidData() {
+      if (this.areThereInvalidValues) {
+        return true;
+      }
+
+      if (this.userInput.dishesNumber < 1 || this.userInput.dishCost < 0.01 || this.userInput.globalWasteVolume < 0.001 || this.userInput.wasteTreatmentCost < 0.01) {
+        return true;
+      }
+
+      if (!this.userInput.startDate || !this.userInput.endDate || this.userInput.startDate > this.userInput.endDate) {
+        return true;
+      }
+
+      return false;
+    },
+    areThereInvalidValues: function areThereInvalidValues() {
+      if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 || this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
+        return true;
+      }
+
+      if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 || this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
+        return true;
+      }
+
+      return false;
+    }
   },
   methods: {
     checkWasteReferenceValues: function checkWasteReferenceValues() {
@@ -2273,17 +2328,22 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get('/api/waste-values').then(function (response) {
         localStorage.removeItem('localReferenceValues');
-        _this.usedData.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
-        _this.usedData.actualFoodLeftoversInFoodWaste = response.data[1].value;
+        _this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
+        _this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
       });
     },
     fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
-      this.usedData = JSON.parse(localStorage.getItem('localReferenceValues'));
+      this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
     },
     saveLocalReferenceValues: function saveLocalReferenceValues() {
-      var parsed = JSON.stringify(this.usedData);
+      var parsed = JSON.stringify(this.referenceValues);
       localStorage.setItem('localReferenceValues', parsed);
       this.editingReferenceValues = false;
+      flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
+    },
+    resetReferenceValues: function resetReferenceValues() {
+      this.fetchWasteReferenceValuesFromDB();
+      flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
     }
   }
 });
@@ -42933,35 +42993,185 @@ var render = function() {
     _vm._v(" "),
     _c("h1", [_vm._v("Etape 1/2: saisie des données")]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", [
+      _c("p", [
+        _vm._v("Précisez la période sur laquelle vos données vont porter")
+      ]),
+      _vm._v(" "),
+      _c("label", { attrs: { for: "start" } }, [_vm._v("Du ")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.userInput.startDate,
+            expression: "userInput.startDate"
+          }
+        ],
+        attrs: {
+          type: "date",
+          id: "start",
+          required: "",
+          max: _vm.userInput.endDate
+        },
+        domProps: { value: _vm.userInput.startDate },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.userInput, "startDate", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("label", { attrs: { for: "end" } }, [_vm._v("au ")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.userInput.endDate,
+            expression: "userInput.endDate"
+          }
+        ],
+        attrs: {
+          type: "date",
+          id: "end",
+          required: "",
+          min: _vm.userInput.startDate
+        },
+        domProps: { value: _vm.userInput.endDate },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.userInput, "endDate", $event.target.value)
+          }
+        }
+      })
+    ]),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", [
+      _c("p", [
+        _vm._v(
+          "Saisissez les informations sur les repas produits/commandés par votre cuisine sur cette période"
+        )
+      ]),
+      _vm._v(" "),
+      _c("label", { attrs: { for: "dishes-number" } }, [
+        _vm._v("Nombre de repas :")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.userInput.dishesNumber,
+            expression: "userInput.dishesNumber"
+          }
+        ],
+        staticClass: "input",
+        attrs: {
+          id: "dishes-number",
+          type: "number",
+          required: "",
+          min: "1",
+          step: "1"
+        },
+        domProps: { value: _vm.userInput.dishesNumber },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.userInput, "dishesNumber", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("label", { attrs: { for: "dish-cost" } }, [
+        _vm._v("Coût de revient d'un repas (en €) :")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.userInput.dishCost,
+            expression: "userInput.dishCost"
+          }
+        ],
+        staticClass: "input",
+        attrs: {
+          id: "dish-cost",
+          type: "number",
+          required: "",
+          min: "0.01",
+          step: "0.01"
+        },
+        domProps: { value: _vm.userInput.dishCost },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.userInput, "dishCost", $event.target.value)
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm._m(0)
+    ]),
     _vm._v(" "),
     _c(
       "div",
       { attrs: { id: "reference-values" } },
       [
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
-        _vm._m(3),
+        _vm._m(2),
         _vm._v(" "),
         _c("label", { attrs: { for: "global-waste-volume" } }, [
           _vm._v("Volume constaté (en tonnes)")
         ]),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.userInput.globalWasteVolume,
+              expression: "userInput.globalWasteVolume"
+            }
+          ],
           staticClass: "input",
           attrs: {
             id: "global-waste-volume",
             type: "number",
             required: "",
-            min: "0",
-            step: "0.001",
-            value: "0"
+            min: "0.001",
+            step: "0.001"
+          },
+          domProps: { value: _vm.userInput.globalWasteVolume },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.userInput, "globalWasteVolume", $event.target.value)
+            }
           }
         }),
         _vm._v(" "),
-        _vm._m(4),
+        _vm._m(3),
         _vm._v(" "),
         _c(
           "div",
@@ -42981,21 +43191,24 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.usedData.foodLeftoversVolumeInGlobalWaste,
+                          value:
+                            _vm.referenceValues
+                              .foodLeftoversVolumeInGlobalWaste,
                           expression:
-                            "usedData.foodLeftoversVolumeInGlobalWaste"
+                            "referenceValues.foodLeftoversVolumeInGlobalWaste"
                         }
                       ],
                       staticClass: "input",
                       attrs: {
                         type: "number",
                         required: "",
-                        min: "0",
+                        min: "0.01",
                         max: "100",
                         step: "0.01"
                       },
                       domProps: {
-                        value: _vm.usedData.foodLeftoversVolumeInGlobalWaste
+                        value:
+                          _vm.referenceValues.foodLeftoversVolumeInGlobalWaste
                       },
                       on: {
                         input: function($event) {
@@ -43003,7 +43216,7 @@ var render = function() {
                             return
                           }
                           _vm.$set(
-                            _vm.usedData,
+                            _vm.referenceValues,
                             "foodLeftoversVolumeInGlobalWaste",
                             $event.target.value
                           )
@@ -43013,8 +43226,10 @@ var render = function() {
                   ])
                 : _c("span", [
                     _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.usedData.foodLeftoversVolumeInGlobalWaste) +
+                      "\n                    " +
+                        _vm._s(
+                          _vm.referenceValues.foodLeftoversVolumeInGlobalWaste
+                        ) +
                         "\n                "
                     )
                   ]),
@@ -43033,20 +43248,23 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.usedData.actualFoodLeftoversInFoodWaste,
-                          expression: "usedData.actualFoodLeftoversInFoodWaste"
+                          value:
+                            _vm.referenceValues.actualFoodLeftoversInFoodWaste,
+                          expression:
+                            "referenceValues.actualFoodLeftoversInFoodWaste"
                         }
                       ],
                       staticClass: "input",
                       attrs: {
                         type: "number",
                         required: "",
-                        min: "0",
+                        min: "0.01",
                         max: "100",
                         step: "0.01"
                       },
                       domProps: {
-                        value: _vm.usedData.actualFoodLeftoversInFoodWaste
+                        value:
+                          _vm.referenceValues.actualFoodLeftoversInFoodWaste
                       },
                       on: {
                         input: function($event) {
@@ -43054,7 +43272,7 @@ var render = function() {
                             return
                           }
                           _vm.$set(
-                            _vm.usedData,
+                            _vm.referenceValues,
                             "actualFoodLeftoversInFoodWaste",
                             $event.target.value
                           )
@@ -43064,8 +43282,10 @@ var render = function() {
                   ])
                 : _c("span", [
                     _vm._v(
-                      "\n                " +
-                        _vm._s(_vm.usedData.actualFoodLeftoversInFoodWaste) +
+                      "\n                    " +
+                        _vm._s(
+                          _vm.referenceValues.actualFoodLeftoversInFoodWaste
+                        ) +
                         "\n                "
                     )
                   ]),
@@ -43080,6 +43300,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary btn-sm",
+                    attrs: { disabled: _vm.areThereInvalidValues },
                     on: { click: _vm.saveLocalReferenceValues }
                   },
                   [_vm._v("OK\n            ")]
@@ -43111,11 +43332,11 @@ var render = function() {
             "a",
             {
               attrs: { href: "#reference-values" },
-              on: { click: _vm.fetchWasteReferenceValuesFromDB }
+              on: { click: _vm.resetReferenceValues }
             },
             [
               _vm._v(
-                "les réinitialiser à leurs\n                valeur par défaut"
+                "les réinitialiser à leurs valeur par\n                défaut"
               )
             ]
           ),
@@ -43127,14 +43348,30 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.userInput.wasteTreatmentCost,
+              expression: "userInput.wasteTreatmentCost"
+            }
+          ],
           staticClass: "input",
           attrs: {
             id: "waste-treatment-cost",
             type: "number",
             required: "",
-            min: "0",
-            step: "0.01",
-            value: "0"
+            min: "0.01",
+            step: "0.01"
+          },
+          domProps: { value: _vm.userInput.wasteTreatmentCost },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.userInput, "wasteTreatmentCost", $event.target.value)
+            }
           }
         }),
         _vm._v(" "),
@@ -43143,9 +43380,12 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary btn-lg btn-block py-4",
-              attrs: { id: "launching-audit-button" }
+              attrs: {
+                disabled: _vm.areThereInvalidData,
+                id: "launching-audit-button"
+              }
             },
-            [_vm._v("Je lance ma\n                simulation\n            ")]
+            [_vm._v("\n                Je lance ma simulation\n            ")]
           )
         ])
       ],
@@ -43158,74 +43398,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("p", [
-        _vm._v("Précisez la période sur laquelle vos données vont porter")
-      ]),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "start" } }, [_vm._v("Du ")]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "date", id: "start", required: "" } }),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "end" } }, [_vm._v("au ")]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "date", id: "end", required: "" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("p", [
-        _vm._v(
-          "Saisissez les informations sur les repas produits/commandés par votre cuisine sur cette période"
-        )
-      ]),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "dishes-number" } }, [
-        _vm._v("Nombre de repas :")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "input",
-        attrs: {
-          id: "dishes-number",
-          type: "number",
-          required: "",
-          min: "0",
-          step: "1",
-          value: "0"
-        }
-      }),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "dish-cost" } }, [
-        _vm._v("Coût de revient d'un repas (en €) :")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "input",
-        attrs: {
-          id: "dish-cost",
-          type: "number",
-          required: "",
-          min: "0",
-          step: "0.01",
-          value: "0"
-        }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "detail" }, [
-        _vm._v(
-          "\n            Le pix de revient d'un repas peut être calculé grâce à la formule suivante :\n            [(montant total des achats alimentaires (matière première) + masse salariale de l'équipe de restauration + investissements + coût de l'énergie) "
-        ),
-        _c("strong", [_vm._v("ou")]),
-        _vm._v(
-          " (en cas d'externalisation, coût facturé)] / nombre de repas produits\n        "
-        )
-      ])
+    return _c("span", { staticClass: "detail" }, [
+      _vm._v(
+        "\n            Le pix de revient d'un repas peut être calculé grâce à la formule suivante :\n            [(montant total des achats alimentaires (matière première) + masse salariale de l'équipe de restauration + investissements + coût de l'énergie) "
+      ),
+      _c("strong", [_vm._v("ou")]),
+      _vm._v(
+        " (en cas d'externalisation, coût facturé)] / nombre de repas produits\n        "
+      )
     ])
   },
   function() {

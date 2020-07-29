@@ -6,9 +6,17 @@
         <div>
             <p>Précisez la période sur laquelle vos données vont porter</p>
             <label for="start">Du </label>
-            <input type="date" id="start" required>
+            <input type="date"
+                   id="start"
+                   required
+                   v-model="userInput.startDate"
+                   :max="userInput.endDate">
             <label for="end">au </label>
-            <input type="date" id="end" required>
+            <input type="date"
+                   id="end"
+                   required
+                   v-model="userInput.endDate"
+                   :min="userInput.startDate">
         </div>
 
         <div>
@@ -16,17 +24,19 @@
 
             <label for="dishes-number">Nombre de repas :</label>
             <input id="dishes-number"
+                   v-model="userInput.dishesNumber"
                    type="number"
                    required
-                   min="0" step="1" value="0"
+                   min="1" step="1"
                    class="input">
 
             <br>
             <label for="dish-cost">Coût de revient d'un repas (en €) :</label>
             <input id="dish-cost"
+                   v-model="userInput.dishCost"
                    type="number"
                    required
-                   min="0" step="0.01" value="0"
+                   min="0.01" step="0.01"
                    class="input">
 
             <span class="detail">
@@ -42,9 +52,10 @@
 
             <label for="global-waste-volume">Volume constaté (en tonnes)</label>
             <input id="global-waste-volume"
+                   v-model="userInput.globalWasteVolume"
                    type="number"
                    required
-                   min="0" step="0.001" value="0"
+                   min="0.001" step="0.001"
                    class="input">
 
 
@@ -54,12 +65,12 @@
                     <span v-if="editingReferenceValues">
                         <input type="number"
                                required
-                               min="0" max="100" step="0.01"
+                               min="0.01" max="100" step="0.01"
                                class="input"
-                               v-model="usedData.foodLeftoversVolumeInGlobalWaste">
+                               v-model="referenceValues.foodLeftoversVolumeInGlobalWaste">
                     </span>
                     <span v-else>
-                    {{ usedData.foodLeftoversVolumeInGlobalWaste }}
+                        {{ referenceValues.foodLeftoversVolumeInGlobalWaste }}
                     </span>
                     % du volume global des ordures ménagères, soit dans votre cas <strong>..... tonnes</strong>
                 </p>
@@ -68,17 +79,19 @@
                     <span v-if="editingReferenceValues">
                         <input type="number"
                                required
-                               min="0" max="100" step="0.01"
+                               min="0.01" max="100" step="0.01"
                                class="input"
-                               v-model="usedData.actualFoodLeftoversInFoodWaste">
+                               v-model="referenceValues.actualFoodLeftoversInFoodWaste">
                     </span>
                     <span v-else>
-                    {{ usedData.actualFoodLeftoversInFoodWaste }}
+                        {{ referenceValues.actualFoodLeftoversInFoodWaste }}
                     </span>
                     % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas <strong>.....
                         tonnes</strong>
                 </p>
-                <button v-if="editingReferenceValues" @click="saveLocalReferenceValues"
+                <button v-if="editingReferenceValues"
+                        :disabled="areThereInvalidValues"
+                        @click="saveLocalReferenceValues"
                         class="btn btn-primary btn-sm">OK
                 </button>
             </div>
@@ -87,20 +100,22 @@
             <p>Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis,
                 n'hésitez pas à
                 <a href="#reference-values" @click="editingReferenceValues = true">modifier ces valeurs</a>
-                (ou à <a href="#reference-values" @click="fetchWasteReferenceValuesFromDB">les réinitialiser à leurs
-                    valeur par défaut</a>)
+                (ou à <a href="#reference-values" @click="resetReferenceValues">les réinitialiser à leurs valeur par
+                    défaut</a>)
             </p>
 
             <label for="waste-treatment-cost">Coût de traitement par tonne (en €) :</label>
             <input id="waste-treatment-cost"
+                   v-model="userInput.wasteTreatmentCost"
                    type="number"
                    required
-                   min="0" step="0.01" value="0"
+                   min="0.01" step="0.01"
                    class="input">
 
             <router-link to="/results" tag="span">
-                <button class="btn btn-primary btn-lg btn-block py-4" id="launching-audit-button">Je lance ma
-                    simulation
+                <button :disabled="areThereInvalidData" class="btn btn-primary btn-lg btn-block py-4"
+                        id="launching-audit-button">
+                    Je lance ma simulation
                 </button>
             </router-link>
         </div>
@@ -109,18 +124,56 @@
 
 <script>
     export default {
+        created() {
+            this.checkWasteReferenceValues();
+        },
+
         data() {
             return {
-                usedData: {
+                referenceValues: {
                     foodLeftoversVolumeInGlobalWaste: 0,
                     actualFoodLeftoversInFoodWaste: 0
+                },
+                userInput: {
+                    dishesNumber: 1,        // précis à 1
+                    dishCost: 1,            // précis à 0.01
+                    globalWasteVolume: 1,   // précis à 0.001
+                    wasteTreatmentCost: 1,  // précis à 0.01
+                    startDate: null,
+                    endDate: null
                 },
                 editingReferenceValues: false
             }
         },
 
-        created() {
-            this.checkWasteReferenceValues();
+        computed: {
+            areThereInvalidData: function () {
+                if (this.areThereInvalidValues) {
+                    return true;
+                }
+                if (this.userInput.dishesNumber < 1 ||
+                    this.userInput.dishCost < 0.01 ||
+                    this.userInput.globalWasteVolume < 0.001 ||
+                    this.userInput.wasteTreatmentCost < 0.01) {
+                    return true;
+                }
+                if (!this.userInput.startDate ||
+                    !this.userInput.endDate ||
+                    this.userInput.startDate > this.userInput.endDate) {
+                    return true;
+                }
+                return false;
+            },
+
+            areThereInvalidValues: function () {
+                if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 || this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
+                    return true;
+                }
+                if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 || this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
+                    return true;
+                }
+                return false;
+            }
         },
 
         methods: {
@@ -136,20 +189,26 @@
                 axios.get('/api/waste-values').then((response) => {
                     localStorage.removeItem('localReferenceValues');
 
-                    this.usedData.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
-                    this.usedData.actualFoodLeftoversInFoodWaste = response.data[1].value;
+                    this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
+                    this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
                 });
             },
 
             fetchWasteReferenceValuesFromLocalStorage() {
-                this.usedData = JSON.parse(localStorage.getItem('localReferenceValues'));
+                this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
             },
 
             saveLocalReferenceValues() {
-                const parsed = JSON.stringify(this.usedData);
+                const parsed = JSON.stringify(this.referenceValues);
                 localStorage.setItem('localReferenceValues', parsed);
 
                 this.editingReferenceValues = false;
+                flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
+            },
+
+            resetReferenceValues() {
+                this.fetchWasteReferenceValuesFromDB();
+                flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
             }
         }
     }
