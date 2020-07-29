@@ -10928,6 +10928,8 @@ a.text-dark:focus {
   }
 }
 
+/* Ce fichier sera compilé et inclus dans public/css/app.css */
+
 /* FOOTER */
 
 #logos img {

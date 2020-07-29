@@ -7,9 +7,10 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 
-
+// principalement bootstrap et Axios pour les appels AJAX
 require('./bootstrap');
 
+// Remplace le routeur de Laravel pour les URLS concernés par Vue (SPA)
 Vue.use(VueRouter);
 
 window.Vue = require('vue');
@@ -31,14 +32,20 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+// Composants enfants généraux à toute l'application
 Vue.component('flash', require('./components/Flash.vue').default);
 
 window.events = new Vue();
 
+// permet de pouvoir faire
+// flash('message', warning) ou
+// flash('message')
+// depuis n'importe où dans l'application
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', { message, level});
 }
 
+// Initialisation de Vue
 const app = new Vue({
     el: '#app',
     router: new VueRouter(routes)
