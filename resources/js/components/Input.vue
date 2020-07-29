@@ -1,5 +1,6 @@
 <template>
     <div class="py-4 px-4">
+        <div v-if="editingReferenceValues" class="editing-mask"></div>
         <h1>Etape 1/2: saisie des données</h1>
 
         <div>
@@ -46,44 +47,48 @@
                    min="0" step="0.001" value="0"
                    class="input">
 
-            <div :class="editingReferenceValues ? 'editingReferenceValues' : ''">
-                <p>Suite à la <a href="#">caractérisation des déchets du C.H de Niort,</a></p>
+
+            <p>Suite à la <a href="#">caractérisation des déchets du C.H de Niort,</a></p>
+            <div :class="editingReferenceValues ? 'editing-reference-values' : ''" class="px-2 py-2">
                 <p>Il a été constaté que la part des restes alimentaires représente environ
                     <span v-if="editingReferenceValues">
-                    <input type="number"
-                           required
-                           min="0" max="100" step="0.01"
-                           class="input"
-                           v-model="usedData.foodLeftoversVolumeInGlobalWaste">
-                </span>
+                        <input type="number"
+                               required
+                               min="0" max="100" step="0.01"
+                               class="input"
+                               v-model="usedData.foodLeftoversVolumeInGlobalWaste">
+                    </span>
                     <span v-else>
                     {{ usedData.foodLeftoversVolumeInGlobalWaste }}
-                </span>
-                    % du volume global des ordures ménagères, soit dans votre cas <strong>..... tonnes</strong></p>
+                    </span>
+                    % du volume global des ordures ménagères, soit dans votre cas <strong>..... tonnes</strong>
+                </p>
+
                 <p>Sans action particulière,
                     <span v-if="editingReferenceValues">
-                    <input type="number"
-                           required
-                           min="0" max="100" step="0.01"
-                           class="input"
-                           v-model="usedData.actualFoodLeftoversInFoodWaste">
-                </span>
+                        <input type="number"
+                               required
+                               min="0" max="100" step="0.01"
+                               class="input"
+                               v-model="usedData.actualFoodLeftoversInFoodWaste">
+                    </span>
                     <span v-else>
                     {{ usedData.actualFoodLeftoversInFoodWaste }}
-                </span>
+                    </span>
                     % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas <strong>.....
                         tonnes</strong>
-                    <button v-if="editingReferenceValues" @click="saveLocalReferenceValues"
-                            class="btn btn-primary btn-sm">OK
-                    </button>
                 </p>
+                <button v-if="editingReferenceValues" @click="saveLocalReferenceValues"
+                        class="btn btn-primary btn-sm">OK
+                </button>
             </div>
 
             <br>
             <p>Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis,
                 n'hésitez pas à
                 <a href="#reference-values" @click="editingReferenceValues = true">modifier ces valeurs</a>
-                (ou à <a href="#">les réinitialiser à leurs valeur par défaut</a>)
+                (ou à <a href="#reference-values" @click="fetchWasteReferenceValuesFromDB">les réinitialiser à leurs
+                    valeur par défaut</a>)
             </p>
 
             <label for="waste-treatment-cost">Coût de traitement par tonne (en €) :</label>
@@ -121,7 +126,7 @@
         methods: {
             checkWasteReferenceValues() {
                 if (localStorage.getItem('localReferenceValues')) {
-                    console.log(localStorage.getItem('localReferenceValues'));
+                    this.fetchWasteReferenceValuesFromLocalStorage()
                 } else {
                     this.fetchWasteReferenceValuesFromDB();
                 }
@@ -129,12 +134,21 @@
 
             fetchWasteReferenceValuesFromDB() {
                 axios.get('/api/waste-values').then((response) => {
+                    localStorage.removeItem('localReferenceValues');
+
                     this.usedData.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
                     this.usedData.actualFoodLeftoversInFoodWaste = response.data[1].value;
                 });
             },
 
+            fetchWasteReferenceValuesFromLocalStorage() {
+                this.usedData = JSON.parse(localStorage.getItem('localReferenceValues'));
+            },
+
             saveLocalReferenceValues() {
+                const parsed = JSON.stringify(this.usedData);
+                localStorage.setItem('localReferenceValues', parsed);
+
                 this.editingReferenceValues = false;
             }
         }
@@ -157,8 +171,19 @@
         background-color: lightpink;
     }
 
-    .editingReferenceValues {
-        padding: 10px;
-        background-color: #98dfb6;
+    .editing-reference-values {
+        position: relative;
+        background-color: white;
+        z-index: 999;
+    }
+
+    .editing-mask {
+        position: fixed;
+        z-index: 666;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
     }
 </style>

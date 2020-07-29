@@ -2242,6 +2242,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2258,7 +2263,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     checkWasteReferenceValues: function checkWasteReferenceValues() {
       if (localStorage.getItem('localReferenceValues')) {
-        console.log(localStorage.getItem('localReferenceValues'));
+        this.fetchWasteReferenceValuesFromLocalStorage();
       } else {
         this.fetchWasteReferenceValuesFromDB();
       }
@@ -2267,11 +2272,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/api/waste-values').then(function (response) {
+        localStorage.removeItem('localReferenceValues');
         _this.usedData.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
         _this.usedData.actualFoodLeftoversInFoodWaste = response.data[1].value;
       });
     },
+    fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
+      this.usedData = JSON.parse(localStorage.getItem('localReferenceValues'));
+    },
     saveLocalReferenceValues: function saveLocalReferenceValues() {
+      var parsed = JSON.stringify(this.usedData);
+      localStorage.setItem('localReferenceValues', parsed);
       this.editingReferenceValues = false;
     }
   }
@@ -6981,7 +6992,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.detail {\n    display: inline-block;\n    max-width: 500px;\n}\n#launching-audit-button {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n.input:invalid {\n    background-color: lightpink;\n}\n.editingReferenceValues {\n    padding: 10px;\n    background-color: #98dfb6;\n}\n", ""]);
+exports.push([module.i, "\n.detail {\n    display: inline-block;\n    max-width: 500px;\n}\n#launching-audit-button {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n.input:invalid {\n    background-color: lightpink;\n}\n.editing-reference-values {\n    position: relative;\n    background-color: white;\n    z-index: 999;\n}\n.editing-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n}\n", ""]);
 
 // exports
 
@@ -42916,6 +42927,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "py-4 px-4" }, [
+    _vm.editingReferenceValues
+      ? _c("div", { staticClass: "editing-mask" })
+      : _vm._e(),
+    _vm._v(" "),
     _c("h1", [_vm._v("Etape 1/2: saisie des données")]),
     _vm._v(" "),
     _vm._m(0),
@@ -42946,12 +42961,15 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _vm._m(4),
+        _vm._v(" "),
         _c(
           "div",
-          { class: _vm.editingReferenceValues ? "editingReferenceValues" : "" },
+          {
+            staticClass: "px-2 py-2",
+            class: _vm.editingReferenceValues ? "editing-reference-values" : ""
+          },
           [
-            _vm._m(4),
-            _vm._v(" "),
             _c("p", [
               _vm._v(
                 "Il a été constaté que la part des restes alimentaires représente environ\n                "
@@ -42997,7 +43015,7 @@ var render = function() {
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.usedData.foodLeftoversVolumeInGlobalWaste) +
-                        "\n            "
+                        "\n                "
                     )
                   ]),
               _vm._v(
@@ -43048,25 +43066,25 @@ var render = function() {
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.usedData.actualFoodLeftoversInFoodWaste) +
-                        "\n            "
+                        "\n                "
                     )
                   ]),
               _vm._v(
                 "\n                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas "
               ),
-              _c("strong", [_vm._v(".....\n                    tonnes")]),
-              _vm._v(" "),
-              _vm.editingReferenceValues
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm",
-                      on: { click: _vm.saveLocalReferenceValues }
-                    },
-                    [_vm._v("OK\n                ")]
-                  )
-                : _vm._e()
-            ])
+              _c("strong", [_vm._v(".....\n                    tonnes")])
+            ]),
+            _vm._v(" "),
+            _vm.editingReferenceValues
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-sm",
+                    on: { click: _vm.saveLocalReferenceValues }
+                  },
+                  [_vm._v("OK\n            ")]
+                )
+              : _vm._e()
           ]
         ),
         _vm._v(" "),
@@ -43089,9 +43107,18 @@ var render = function() {
             [_vm._v("modifier ces valeurs")]
           ),
           _vm._v("\n            (ou à "),
-          _c("a", { attrs: { href: "#" } }, [
-            _vm._v("les réinitialiser à leurs valeur par défaut")
-          ]),
+          _c(
+            "a",
+            {
+              attrs: { href: "#reference-values" },
+              on: { click: _vm.fetchWasteReferenceValuesFromDB }
+            },
+            [
+              _vm._v(
+                "les réinitialiser à leurs\n                valeur par défaut"
+              )
+            ]
+          ),
           _vm._v(")\n        ")
         ]),
         _vm._v(" "),
