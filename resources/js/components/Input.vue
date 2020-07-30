@@ -121,7 +121,7 @@
 </template>
 
 <script>
-    // Petite bibliothèque de fonctions bien pratiques
+    // Petite bibliothèque de fonctions bien pratique
     import NumberRounder from "../helpers/NumberRounder";
 
     export default {
