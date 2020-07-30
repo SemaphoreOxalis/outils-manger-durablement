@@ -8,7 +8,7 @@
         <div>
             <p>
                 Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière
-                fois en date du 15/12/2020
+                fois en date du ?????
             </p>
             <div class="d-flex justify-content-around">
                 <button class="btn btn-primary">Les consulter</button>

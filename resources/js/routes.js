@@ -20,11 +20,13 @@ export default {
     routes: [
         {
             path: '/',
-            component: Home
+            component: Home,
+            name: 'home'
         },
         {
             path: '/input',
-            component: Input
+            component: Input,
+            name: 'input'
         },
         {
             path: '/results',

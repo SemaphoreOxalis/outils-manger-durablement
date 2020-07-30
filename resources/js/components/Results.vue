@@ -31,17 +31,8 @@
 
             <audit v-bind:audit-data="this.auditData"></audit>
 
-            <div class="d-flex text-center">
-                <div class="p-2 w-25">Simulation 1</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-0"><i class="fas fa-trash-alt"></i></div>
-            </div>
+            <simulations></simulations>
+
         </div>
 
         <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a></p>
@@ -58,12 +49,14 @@
 
     // import des composants enfants
     import Audit from "./Audit"
+    import Simulations from "./Simulations";
 
     export default {
 
         // déclaration des composants enfants
         components: {
-            Audit
+            Audit,
+            Simulations
         },
 
         // données à récupérer de la page Input
@@ -82,8 +75,29 @@
         // A l'initialisation du composant (i.e quand on arrive sur la "page")
         created() {
 
-            // On récupère les données saisies lors de la phase d'audit
-            this.auditData = {...this.userInput, ... this.referenceValues};
+            // Si on vient de la page de saisie
+            if (this.userInput) {
+
+                // On cleare le localStorage
+                localStorage.removeItem('audit');
+
+                // On récupère les données saisies lors de la phase de saisie
+                this.auditData = {...this.userInput, ... this.referenceValues};
+
+                // et on les enregistre dans le localStorage
+                const parsed = JSON.stringify(this.auditData);
+                localStorage.setItem('audit', parsed);
+            }
+
+            // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
+            else if (localStorage.getItem('audit')) {
+                this.auditData = JSON.parse(localStorage.getItem('audit'))
+            }
+
+            // et si on arrive de nulle part, redirection vers la homepage
+            else {
+                this.$router.push({name: 'home'})
+            }
         }
     }
 </script>
