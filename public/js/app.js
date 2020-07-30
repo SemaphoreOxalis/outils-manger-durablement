@@ -2430,6 +2430,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2504,9 +2505,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 // Petite bibliothèque de fonctions bien pratique
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ce mixin
-  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // données à récupérer de la page Input
   props: ['userInput', 'referenceValues'],
   // initialisation des données utilisées par le composant
@@ -43712,9 +43714,9 @@ var render = function() {
         _c("div", { staticClass: "p-2 w-25" }, [
           _vm._v(
             "Référence du " +
-              _vm._s(this.auditData.startDate) +
+              _vm._s(this.formatToFrench(this.auditData.startDate)) +
               " au " +
-              _vm._s(this.auditData.endDate)
+              _vm._s(this.formatToFrench(this.auditData.endDate))
           )
         ]),
         _vm._v(" "),
@@ -62566,6 +62568,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Test_vue_vue_type_template_id_5f45227d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/DateFormatter.js":
+/*!***********************************************!*\
+  !*** ./resources/js/helpers/DateFormatter.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Petit helper pour formatter les dates en français
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    formatToFrench: function formatToFrench(date) {
+      var formattedDate = new Date(date);
+      return formattedDate.toLocaleDateString();
+    }
+  }
+});
 
 /***/ }),
 

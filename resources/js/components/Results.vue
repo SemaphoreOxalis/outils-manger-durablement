@@ -30,7 +30,7 @@
             </div>
 
             <div class="d-flex text-center">
-                <div class="p-2 w-25">Référence du {{ this.auditData.startDate }} au {{ this.auditData.endDate }}</div>
+                <div class="p-2 w-25">Référence du {{ this.formatToFrench(this.auditData.startDate) }} au {{ this.formatToFrench(this.auditData.endDate) }}</div>
                 <div class="p-2 flex-grow-1">{{ this.auditData.dishesNumber }}</div>
                 <div class="p-2 flex-grow-1">{{ this.auditData.dishCost }}</div>
                 <div class="p-2 flex-grow-1">{{ this.auditData.wasteTreatmentCost }}</div>
@@ -67,12 +67,14 @@
 <script>
     // Petite bibliothèque de fonctions bien pratique
     import NumberRounder from "../helpers/NumberRounder";
+    import DateFormatter from "../helpers/DateFormatter";
 
     export default {
 
         // déclaration de la dépendance à ce mixin
         mixins: [
-            NumberRounder
+            NumberRounder,
+            DateFormatter
         ],
 
         // données à récupérer de la page Input
@@ -124,7 +126,7 @@
                 return this.roundToOneDecimal(
                     this.foodWasteCost / this.auditData.dishCost
                 );
-            }
+            },
         },
 
         // A l'initialisation du composant (i.e quand on arrive sur la "page")
