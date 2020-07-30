@@ -30,14 +30,14 @@
             </div>
 
             <div class="d-flex text-center">
-                <div class="p-2 w-25">Référence du 10/12/2019 au 10/12/2020</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 w-25">Référence du {{ this.auditData.startDate }} au {{ this.auditData.endDate }}</div>
+                <div class="p-2 flex-grow-1">{{ this.auditData.dishesNumber }}</div>
+                <div class="p-2 flex-grow-1">{{ this.auditData.dishCost }}</div>
+                <div class="p-2 flex-grow-1">{{ this.auditData.wasteTreatmentCost }}</div>
+                <div class="p-2 flex-grow-1">{{ this.foodWasteVolume }}</div>
+                <div class="p-2 flex-grow-1">{{ this.wasteCostPerDish }}</div>
+                <div class="p-2 flex-grow-1">{{ this.foodWasteCost }}</div>
+                <div class="p-2 flex-grow-1">{{ this.amountOfDishesWasted }}</div>
                 <div class="p-2 flex-grow-0"></div>
             </div>
 
@@ -65,24 +65,73 @@
 </template>
 
 <script>
+    // Petite bibliothèque de fonctions bien pratique
+    import NumberRounder from "../helpers/NumberRounder";
+
     export default {
+
+        // déclaration de la dépendance à ce mixin
+        mixins: [
+            NumberRounder
+        ],
+
+        // données à récupérer de la page Input
         props: [
             'userInput',
             'referenceValues'
         ],
 
+        // initialisation des données utilisées par le composant
         data() {
             return {
-                data: {
-                    userInput: {},
-                    referenceValues: {}
-                }
+                auditData: {}
             }
         },
 
+        // données calculées
+        computed: {
+
+            // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
+            globalFoodWasteVolume: function() {
+                return this.roundToThreeDecimal(
+                    ( this.auditData.foodLeftoversVolumeInGlobalWaste / 100 ) * this.auditData.globalWasteVolume
+                );
+            },
+
+            // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
+            foodWasteVolume: function() {
+                return this.roundToThreeDecimal(
+                    ( this.auditData.actualFoodLeftoversInFoodWaste / 100 ) * this.globalFoodWasteVolume
+                );
+            },
+
+            // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
+            foodWasteCost: function() {
+                return this.roundToTwoDecimal(
+                    this.foodWasteVolume * this.auditData.wasteTreatmentCost
+                );
+            },
+
+            // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
+            wasteCostPerDish: function() {
+                return this.roundToTwoDecimal(
+                    this.foodWasteCost / this.auditData.dishesNumber
+                );
+            },
+
+            // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
+            amountOfDishesWasted: function() {
+                return this.roundToOneDecimal(
+                    this.foodWasteCost / this.auditData.dishCost
+                );
+            }
+        },
+
+        // A l'initialisation du composant (i.e quand on arrive sur la "page")
         mounted() {
-            this.data.userInput = this.userInput;
-            this.data.referenceValues = this.referenceValues;
+
+            // On récupère les données saisies lors de la phase d'audit
+            this.auditData = {...this.userInput, ... this.referenceValues};
         }
     }
 </script>

@@ -2289,7 +2289,7 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
   // A la création du composent (i.e quand on arrive sur la "page")
   created: function created() {
-    // Va chercher les valeurs de référence, cf. methods ci-dessous
+    // Va chercher les valeurs de référence, cf. méthodes ci-dessous
     this.checkWasteReferenceValues();
   },
   // initialisation des données utilisées par le composant
@@ -2351,11 +2351,11 @@ __webpack_require__.r(__webpack_exports__);
     // CALCULS - "soit dans votre cas ..... tonnes"
     // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
     foodLeftoversVolumeInGlobalWasteInYourCase: function foodLeftoversVolumeInGlobalWasteInYourCase() {
-      return this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 * this.userInput.globalWasteVolume;
+      return this.roundToThreeDecimal(this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 * this.userInput.globalWasteVolume);
     },
     // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
     actualFoodLeftoversInFoodWasteInYourCase: function actualFoodLeftoversInFoodWasteInYourCase() {
-      return this.referenceValues.actualFoodLeftoversInFoodWaste / 100 * this.foodLeftoversVolumeInGlobalWasteInYourCase;
+      return this.roundToThreeDecimal(this.referenceValues.actualFoodLeftoversInFoodWaste / 100 * this.foodLeftoversVolumeInGlobalWasteInYourCase);
     }
   },
   // Fonctions utilisées par le composant
@@ -2429,6 +2429,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2495,19 +2502,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// Petite bibliothèque de fonctions bien pratique
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // déclaration de la dépendance à ce mixin
+  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  // données à récupérer de la page Input
   props: ['userInput', 'referenceValues'],
+  // initialisation des données utilisées par le composant
   data: function data() {
     return {
-      data: {
-        userInput: {},
-        referenceValues: {}
-      }
+      auditData: {}
     };
   },
+  // données calculées
+  computed: {
+    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
+    globalFoodWasteVolume: function globalFoodWasteVolume() {
+      return this.roundToThreeDecimal(this.auditData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditData.globalWasteVolume);
+    },
+    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
+    foodWasteVolume: function foodWasteVolume() {
+      return this.roundToThreeDecimal(this.auditData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
+    },
+    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
+    foodWasteCost: function foodWasteCost() {
+      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditData.wasteTreatmentCost);
+    },
+    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
+    wasteCostPerDish: function wasteCostPerDish() {
+      return this.roundToTwoDecimal(this.foodWasteCost / this.auditData.dishesNumber);
+    },
+    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      return this.roundToOneDecimal(this.foodWasteCost / this.auditData.dishCost);
+    }
+  },
+  // A l'initialisation du composant (i.e quand on arrive sur la "page")
   mounted: function mounted() {
-    this.data.userInput = this.userInput;
-    this.data.referenceValues = this.referenceValues;
+    // On récupère les données saisies lors de la phase d'audit
+    this.auditData = _objectSpread(_objectSpread({}, this.userInput), this.referenceValues);
   }
 });
 
@@ -43382,11 +43416,8 @@ var render = function() {
               ),
               _c("strong", [
                 _vm._v(
-                  _vm._s(
-                    _vm.roundToThreeDecimal(
-                      _vm.foodLeftoversVolumeInGlobalWasteInYourCase
-                    )
-                  ) + " tonnes"
+                  _vm._s(_vm.foodLeftoversVolumeInGlobalWasteInYourCase) +
+                    " tonnes"
                 )
               ])
             ]),
@@ -43446,11 +43477,8 @@ var render = function() {
               ),
               _c("strong", [
                 _vm._v(
-                  _vm._s(
-                    _vm.roundToThreeDecimal(
-                      _vm.actualFoodLeftoversInFoodWasteInYourCase
-                    )
-                  ) + " tonnes"
+                  _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
+                    " tonnes"
                 )
               ])
             ]),
@@ -43668,178 +43696,231 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "py-4 px-4" }, [
+    _c("h1", [
+      _vm._v("Etape 2/2 : Résultats et comparaisons de vos simulations")
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("div", [
+      _vm._m(2),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex text-center" }, [
+        _c("div", { staticClass: "p-2 w-25" }, [
+          _vm._v(
+            "Référence du " +
+              _vm._s(this.auditData.startDate) +
+              " au " +
+              _vm._s(this.auditData.endDate)
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.auditData.dishesNumber))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.auditData.dishCost))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.auditData.wasteTreatmentCost))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.foodWasteVolume))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.wasteCostPerDish))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.foodWasteCost))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _vm._v(_vm._s(this.amountOfDishesWasted))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-2 flex-grow-0" })
+      ]),
+      _vm._v(" "),
+      _vm._m(3)
+    ]),
+    _vm._v(" "),
+    _vm._m(4),
+    _vm._v(" "),
+    _vm._m(5),
+    _vm._v(" "),
+    _vm._m(6)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "py-4 px-4" }, [
-      _c("h1", [
-        _vm._v("Etape 2/2 : Résultats et comparaisons de vos simulations")
-      ]),
-      _vm._v(" "),
-      _c("div", [
-        _c("p", [
-          _vm._v(
-            "Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous"
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
-          )
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Chaque simulation est comparée avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "p-3", staticStyle: { border: "1px solid black" } },
-        [
-          _c("p", [
-            _c("i", { staticClass: "fas fa-arrows-alt mr-2" }),
-            _vm._v(
-              " Vous pouvez réorganiser les simulations en les faisant glisser"
-            )
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _c("i", { staticClass: "fas fa-pencil-alt mr-2" }),
-            _vm._v(" Les valeurs modifiables sont indiquées par ce symbole")
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _c("i", { staticClass: "fas fa-trash-alt mr-2" }),
-            _vm._v(" Vous pouvez également supprimer les simulations inutiles")
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _c("i", { staticClass: "fas fa-file-export mr-2" }),
-            _vm._v(
-              ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
-            )
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", [
-        _c("div", { staticClass: "d-flex text-center" }, [
-          _c("div", { staticClass: "p-2 w-50" }, [
-            _vm._v("Nom de la simulation")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Nombre de repas produits")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Coût de revient d'un repas")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Coût de traitement par tonne (€)")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Volume de gaspillage alimentaire (tonnes)")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Coût de traitement des déchets d'un repas")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Coûts de gaspillage alimentaire")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-            _vm._v("Equivalence en nombre de repas")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "d-flex text-center" }, [
-          _c("div", { staticClass: "p-2 w-25" }, [
-            _vm._v("Référence du 10/12/2019 au 10/12/2020")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-0" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "d-flex text-center" }, [
-          _c("div", { staticClass: "p-2 w-25" }, [_vm._v("Simulation 1")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-0" }, [
-            _c("i", { staticClass: "fas fa-trash-alt" })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "mt-5" }, [
+    return _c("div", [
+      _c("p", [
         _vm._v(
-          "Bravo, vous venez de franchir la première étape de la démarche de "
-        ),
-        _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
+          "Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous"
+        )
       ]),
       _vm._v(" "),
       _c("p", [
-        _vm._v("Que faire de ces résultats ? Rendez vous sur le "),
-        _c("a", { attrs: { href: "#" } }, [
-          _vm._v(
-            "site ressource de l'ANAP pour découvrir les actions réalisables"
-          )
-        ])
+        _vm._v(
+          "Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
+        )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
-        _c("button", { staticClass: "btn btn-primary" }, [
-          _c("i", { staticClass: "fas fa-file-export mr-2" }),
-          _vm._v("Exporter le rapport de simulation")
+      _c("br"),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Chaque simulation est comparée avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "p-3", staticStyle: { border: "1px solid black" } },
+      [
+        _c("p", [
+          _c("i", { staticClass: "fas fa-arrows-alt mr-2" }),
+          _vm._v(
+            " Vous pouvez réorganiser les simulations en les faisant glisser"
+          )
         ]),
         _vm._v(" "),
-        _c("button", { staticClass: "btn btn-danger" }, [
-          _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
-          _vm._v("Je réinitialise toutes mes simulations")
+        _c("p", [
+          _c("i", { staticClass: "fas fa-pencil-alt mr-2" }),
+          _vm._v(" Les valeurs modifiables sont indiquées par ce symbole")
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _c("i", { staticClass: "fas fa-trash-alt mr-2" }),
+          _vm._v(" Vous pouvez également supprimer les simulations inutiles")
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _c("i", { staticClass: "fas fa-file-export mr-2" }),
+          _vm._v(
+            ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
+          )
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex text-center" }, [
+      _c("div", { staticClass: "p-2 w-50" }, [_vm._v("Nom de la simulation")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Nombre de repas produits")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coût de revient d'un repas")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coût de traitement par tonne (€)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Volume de gaspillage alimentaire (tonnes)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coût de traitement des déchets d'un repas")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coûts de gaspillage alimentaire")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Equivalence en nombre de repas")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex text-center" }, [
+      _c("div", { staticClass: "p-2 w-25" }, [_vm._v("Simulation 1")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-0" }, [
+        _c("i", { staticClass: "fas fa-trash-alt" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-5" }, [
+      _vm._v(
+        "Bravo, vous venez de franchir la première étape de la démarche de "
+      ),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Que faire de ces résultats ? Rendez vous sur le "),
+      _c("a", { attrs: { href: "#" } }, [
+        _vm._v(
+          "site ressource de l'ANAP pour découvrir les actions réalisables"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("button", { staticClass: "btn btn-primary" }, [
+        _c("i", { staticClass: "fas fa-file-export mr-2" }),
+        _vm._v("Exporter le rapport de simulation")
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-danger" }, [
+        _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
+        _vm._v("Je réinitialise toutes mes simulations")
       ])
     ])
   }

@@ -72,7 +72,7 @@
                         {{ referenceValues.foodLeftoversVolumeInGlobalWaste }}
                     </span>
                     % du volume global des ordures ménagères, soit dans votre cas
-                    <strong>{{ roundToThreeDecimal(foodLeftoversVolumeInGlobalWasteInYourCase) }} tonnes</strong>
+                    <strong>{{ foodLeftoversVolumeInGlobalWasteInYourCase }} tonnes</strong>
                 </p>
 
                 <p>Sans action particulière,
@@ -87,7 +87,7 @@
                         {{ referenceValues.actualFoodLeftoversInFoodWaste }}
                     </span>
                     % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas
-                    <strong>{{ roundToThreeDecimal(actualFoodLeftoversInFoodWasteInYourCase) }} tonnes</strong>
+                    <strong>{{ actualFoodLeftoversInFoodWasteInYourCase }} tonnes</strong>
                 </p>
                 <button v-if="editingReferenceValues"
                         :disabled="areThereInvalidValues"
@@ -135,7 +135,7 @@
         // A la création du composent (i.e quand on arrive sur la "page")
         created() {
 
-            // Va chercher les valeurs de référence, cf. methods ci-dessous
+            // Va chercher les valeurs de référence, cf. méthodes ci-dessous
             this.checkWasteReferenceValues();
         },
 
@@ -205,12 +205,16 @@
 
             // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
             foodLeftoversVolumeInGlobalWasteInYourCase: function() {
-                return ( this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 ) * this.userInput.globalWasteVolume;
+                return this.roundToThreeDecimal(
+                    ( this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 ) * this.userInput.globalWasteVolume
+                );
             },
 
             // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
             actualFoodLeftoversInFoodWasteInYourCase: function() {
-                return ( this.referenceValues.actualFoodLeftoversInFoodWaste / 100 ) * this.foodLeftoversVolumeInGlobalWasteInYourCase;
+                return this.roundToThreeDecimal(
+                    ( this.referenceValues.actualFoodLeftoversInFoodWaste / 100 ) * this.foodLeftoversVolumeInGlobalWasteInYourCase
+                );
             },
         },
 
