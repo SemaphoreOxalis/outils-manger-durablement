@@ -38,7 +38,7 @@
                 <div class="p-2 flex-grow-1">2.32</div>
                 <div class="p-2 flex-grow-1">2.32</div>
                 <div class="p-2 flex-grow-1">2.32</div>
-                <div class="p-2 flex-grow-0"><i class="fas fa-trash-alt"></i></div>
+                <div class="p-2 flex-grow-0"></div>
             </div>
 
             <div class="d-flex text-center">
@@ -66,6 +66,23 @@
 
 <script>
     export default {
+        props: [
+            'userInput',
+            'referenceValues'
+        ],
 
+        data() {
+            return {
+                data: {
+                    userInput: {},
+                    referenceValues: {}
+                }
+            }
+        },
+
+        mounted() {
+            this.data.userInput = this.userInput;
+            this.data.referenceValues = this.referenceValues;
+        }
     }
 </script>

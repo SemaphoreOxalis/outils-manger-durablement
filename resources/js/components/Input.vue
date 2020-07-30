@@ -110,8 +110,9 @@
                    min="0.01" step="0.01"
                    class="input">
 
-            <router-link to="/results" tag="span">
-                <button :disabled="areThereInvalidData" class="btn btn-primary btn-lg btn-block py-4"
+            <router-link :to="{ name: 'results', params: { userInput, referenceValues }}" tag="span">
+                <button :disabled="areThereInvalidData"
+                        class="btn btn-primary btn-lg btn-block py-4"
                         id="launching-audit-button">
                     Je lance ma simulation
                 </button>

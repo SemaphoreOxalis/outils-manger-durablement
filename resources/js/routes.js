@@ -28,7 +28,9 @@ export default {
         },
         {
             path: '/results',
-            component: Results
+            component: Results,
+            name: 'results',
+            props: true
         },
         {
             path: '/test',

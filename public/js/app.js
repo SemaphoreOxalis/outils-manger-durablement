@@ -2281,6 +2281,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // Petite bibliothèque de fonctions bien pratique
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2494,7 +2495,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['userInput', 'referenceValues'],
+  data: function data() {
+    return {
+      data: {
+        userInput: {},
+        referenceValues: {}
+      }
+    };
+  },
+  mounted: function mounted() {
+    this.data.userInput = this.userInput;
+    this.data.referenceValues = this.referenceValues;
+  }
+});
 
 /***/ }),
 
@@ -43516,19 +43531,34 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("router-link", { attrs: { to: "/results", tag: "span" } }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary btn-lg btn-block py-4",
-              attrs: {
-                disabled: _vm.areThereInvalidData,
-                id: "launching-audit-button"
-              }
-            },
-            [_vm._v("\n                Je lance ma simulation\n            ")]
-          )
-        ])
+        _c(
+          "router-link",
+          {
+            attrs: {
+              to: {
+                name: "results",
+                params: {
+                  userInput: _vm.userInput,
+                  referenceValues: _vm.referenceValues
+                }
+              },
+              tag: "span"
+            }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-lg btn-block py-4",
+                attrs: {
+                  disabled: _vm.areThereInvalidData,
+                  id: "launching-audit-button"
+                }
+              },
+              [_vm._v("\n                Je lance ma simulation\n            ")]
+            )
+          ]
+        )
       ],
       1
     )
@@ -43758,9 +43788,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-2 flex-grow-0" }, [
-            _c("i", { staticClass: "fas fa-trash-alt" })
-          ])
+          _c("div", { staticClass: "p-2 flex-grow-0" })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex text-center" }, [
@@ -62528,7 +62556,9 @@ __webpack_require__.r(__webpack_exports__);
     component: _components_Input__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, {
     path: '/results',
-    component: _components_Results__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _components_Results__WEBPACK_IMPORTED_MODULE_4__["default"],
+    name: 'results',
+    props: true
   }, {
     path: '/test',
     component: _components_Test__WEBPACK_IMPORTED_MODULE_0__["default"]
