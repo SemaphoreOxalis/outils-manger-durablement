@@ -82,7 +82,7 @@
                 localStorage.removeItem('audit');
 
                 // On récupère les données saisies lors de la phase de saisie
-                this.auditData = {...this.userInput, ... this.referenceValues};
+                this.auditData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
 
                 // et on les enregistre dans le localStorage
                 const parsed = JSON.stringify(this.auditData);
@@ -90,7 +90,7 @@
             }
 
             // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
-            else if (localStorage.getItem('audit')) {
+            else if (localStorage.hasOwnProperty('audit')) {
                 this.auditData = JSON.parse(localStorage.getItem('audit'))
             }
 

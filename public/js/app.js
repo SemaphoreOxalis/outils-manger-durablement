@@ -2164,6 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HelpModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelpModal */ "./resources/js/components/HelpModal.vue");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 //
 //
 //
@@ -2203,17 +2204,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 // fenêtre modale d'aide
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Déclaration de la parenté de ce composant
   components: {
     HelpModal: _HelpModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
       // par défaut, la fenêtre modale est masquée
-      showModal: false
+      showModal: false,
+      previousAuditDetectedInLocalStorage: false,
+      previousAuditDate: null
     };
+  },
+  methods: {
+    goToPreviousAudit: function goToPreviousAudit() {
+      this.$router.push({
+        name: 'results'
+      });
+    },
+    deletePreviousAudit: function deletePreviousAudit() {
+      localStorage.removeItem('audit');
+      this.previousAuditDetectedInLocalStorage = false;
+      flash("Vos simulations ont bien été supprimées");
+    }
+  },
+  created: function created() {
+    if (localStorage.hasOwnProperty('audit')) {
+      this.previousAuditDetectedInLocalStorage = true;
+      this.previousAuditDate = this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
+    }
   }
 });
 
@@ -2582,12 +2605,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // On cleare le localStorage
       localStorage.removeItem('audit'); // On récupère les données saisies lors de la phase de saisie
 
-      this.auditData = _objectSpread(_objectSpread({}, this.userInput), this.referenceValues); // et on les enregistre dans le localStorage
+      this.auditData = _objectSpread(_objectSpread(_objectSpread({}, this.userInput), this.referenceValues), {}, {
+        auditDate: Date.now()
+      }); // et on les enregistre dans le localStorage
 
       var parsed = JSON.stringify(this.auditData);
       localStorage.setItem('audit', parsed);
     } // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
-    else if (localStorage.getItem('audit')) {
+    else if (localStorage.hasOwnProperty('audit')) {
         this.auditData = JSON.parse(localStorage.getItem('audit'));
       } // et si on arrive de nulle part, redirection vers la homepage
       else {
@@ -43198,7 +43223,37 @@ var render = function() {
       _vm._v(" "),
       _c("h1", [_vm._v("Accueil")]),
       _vm._v(" "),
-      _vm._m(0),
+      _vm.previousAuditDetectedInLocalStorage
+        ? _c("div", [
+            _c("p", [
+              _vm._v(
+                "\n            Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière\n            fois en date du " +
+                  _vm._s(this.previousAuditDate) +
+                  "\n        "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex justify-content-around" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.goToPreviousAudit }
+                },
+                [_vm._v("Les consulter")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-danger",
+                  on: { click: _vm.deletePreviousAudit }
+                },
+                [_vm._v("Les effacer")]
+              )
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("p", [
         _vm._v("Pour réaliser votre première simulation, vous aurez besoin :")
@@ -43264,28 +43319,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("p", [
-        _vm._v(
-          "\n            Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière\n            fois en date du ?????\n        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
-        _c("button", { staticClass: "btn btn-primary" }, [
-          _vm._v("Les consulter")
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn btn-danger" }, [_vm._v("Les effacer")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

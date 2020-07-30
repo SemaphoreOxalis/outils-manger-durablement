@@ -5,14 +5,14 @@
         <help-modal v-if="showModal" @close="showModal = false"></help-modal>
 
         <h1>Accueil</h1>
-        <div>
+        <div v-if="previousAuditDetectedInLocalStorage">
             <p>
                 Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière
-                fois en date du ?????
+                fois en date du {{ this.previousAuditDate }}
             </p>
             <div class="d-flex justify-content-around">
-                <button class="btn btn-primary">Les consulter</button>
-                <button class="btn btn-danger">Les effacer</button>
+                <button class="btn btn-primary" @click="goToPreviousAudit">Les consulter</button>
+                <button class="btn btn-danger" @click="deletePreviousAudit">Les effacer</button>
             </div>
         </div>
 
@@ -38,6 +38,7 @@
 <script>
     // fenêtre modale d'aide
     import HelpModal from "./HelpModal";
+    import DateFormatter from "../helpers/DateFormatter";
 
     export default {
 
@@ -46,14 +47,41 @@
             HelpModal
         },
 
+        mixins: [
+            DateFormatter
+        ],
+
         // initialisation des données utilisées par le composant
         data() {
             return {
 
                 // par défaut, la fenêtre modale est masquée
-                showModal: false
+                showModal: false,
+                previousAuditDetectedInLocalStorage: false,
+                previousAuditDate: null
             }
         },
+
+        methods: {
+            goToPreviousAudit() {
+                this.$router.push({name: 'results'})
+            },
+
+            deletePreviousAudit() {
+                localStorage.removeItem('audit');
+                this.previousAuditDetectedInLocalStorage = false;
+
+                flash("Vos simulations ont bien été supprimées");
+            }
+        },
+
+        created() {
+            if (localStorage.hasOwnProperty('audit')) {
+                this.previousAuditDetectedInLocalStorage = true;
+
+                this.previousAuditDate = this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
+            }
+        }
     }
 </script>
 
