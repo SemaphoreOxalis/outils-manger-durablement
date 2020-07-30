@@ -18,7 +18,7 @@
 
         <div>
             <div class="d-flex text-center">
-                <div class="p-2 flex-grow-1">Nom de la simulation</div>
+                <div class="p-2 w-50">Nom de la simulation</div>
                 <div class="p-2 flex-shrink-1">Nombre de repas produits</div>
                 <div class="p-2 flex-shrink-1">Coût de revient d'un repas</div>
                 <div class="p-2 flex-shrink-1">Coût de traitement par tonne (€)</div>
@@ -27,6 +27,30 @@
                 <div class="p-2 flex-shrink-1">Coûts de gaspillage alimentaire</div>
                 <div class="p-2 flex-shrink-1">Equivalence en nombre de repas</div>
                 <div class="p-2 flex-grow-1"></div>
+            </div>
+
+            <div class="d-flex text-center">
+                <div class="p-2 w-25">Référence du 10/12/2019 au 10/12/2020</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-0"><i class="fas fa-trash-alt"></i></div>
+            </div>
+
+            <div class="d-flex text-center">
+                <div class="p-2 w-25">Simulation 1</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-1">2.32</div>
+                <div class="p-2 flex-grow-0"><i class="fas fa-trash-alt"></i></div>
             </div>
         </div>
 

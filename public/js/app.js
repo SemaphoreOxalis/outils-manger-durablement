@@ -2470,6 +2470,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -43680,7 +43704,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", [
         _c("div", { staticClass: "d-flex text-center" }, [
-          _c("div", { staticClass: "p-2 flex-grow-1" }, [
+          _c("div", { staticClass: "p-2 w-50" }, [
             _vm._v("Nom de la simulation")
           ]),
           _vm._v(" "),
@@ -43713,6 +43737,52 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-2 flex-grow-1" })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex text-center" }, [
+          _c("div", { staticClass: "p-2 w-25" }, [
+            _vm._v("Référence du 10/12/2019 au 10/12/2020")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-0" }, [
+            _c("i", { staticClass: "fas fa-trash-alt" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex text-center" }, [
+          _c("div", { staticClass: "p-2 w-25" }, [_vm._v("Simulation 1")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-1" }, [_vm._v("2.32")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-2 flex-grow-0" }, [
+            _c("i", { staticClass: "fas fa-trash-alt" })
+          ])
         ])
       ]),
       _vm._v(" "),
