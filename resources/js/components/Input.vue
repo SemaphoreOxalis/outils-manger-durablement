@@ -58,7 +58,7 @@
                    class="input">
 
 
-            <p>Suite à la <a href="#">caractérisation des déchets du C.H de Niort,</a></p>
+            <p v-if="defaultValues">Suite à la <a href="#">caractérisation des déchets du C.H de Niort,</a></p>
             <div :class="editingReferenceValues ? 'editing-reference-values' : ''" class="px-2 py-2">
                 <p>Il a été constaté que la part des restes alimentaires représente environ
                     <span v-if="editingReferenceValues">
@@ -159,8 +159,9 @@
                     endDate: null
                 },
 
-                // Booléen servant au feedback visuel lorsqu'on édite les valeurs de référence
-                editingReferenceValues: false
+                // Booléens servant au feedback visuel lorsqu'on édite les valeurs de référence
+                editingReferenceValues: false,
+                defaultValues: true
             }
         },
 
@@ -226,7 +227,7 @@
 
                 // Soit dans le local Storage (valeurs personnalisées)
                 if (localStorage.getItem('localReferenceValues')) {
-                    this.fetchWasteReferenceValuesFromLocalStorage()
+                    this.fetchWasteReferenceValuesFromLocalStorage();
                 }
                 // Sinon en BDD (valeurs par défaut)
                 else {
@@ -241,12 +242,16 @@
 
                     this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
                     this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
+
+                    this.defaultValues = true;
                 });
             },
 
             // Va chercher les valeurs de référence depuis le localStorage
             fetchWasteReferenceValuesFromLocalStorage() {
                 this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
+
+                this.defaultValues = false;
             },
 
             // Enregistre en localStorage les valeurs personnalisées de l'utilisateur
@@ -255,12 +260,15 @@
                 localStorage.setItem('localReferenceValues', parsed);
 
                 this.editingReferenceValues = false;
+                this.defaultValues = false;
+
                 flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
             },
 
             // Réinitialise les valeurs de référence à leurs valeurs par défaut depuis la BDD
             resetReferenceValues() {
                 this.fetchWasteReferenceValuesFromDB();
+
                 flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
             }
         }

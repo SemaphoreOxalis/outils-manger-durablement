@@ -2383,8 +2383,9 @@ __webpack_require__.r(__webpack_exports__);
         startDate: null,
         endDate: null
       },
-      // Booléen servant au feedback visuel lorsqu'on édite les valeurs de référence
-      editingReferenceValues: false
+      // Booléens servant au feedback visuel lorsqu'on édite les valeurs de référence
+      editingReferenceValues: false,
+      defaultValues: true
     };
   },
   // Données calculées en fonction des sonnées saisies
@@ -2448,17 +2449,20 @@ __webpack_require__.r(__webpack_exports__);
         localStorage.removeItem('localReferenceValues');
         _this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
         _this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
+        _this.defaultValues = true;
       });
     },
     // Va chercher les valeurs de référence depuis le localStorage
     fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
       this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
+      this.defaultValues = false;
     },
     // Enregistre en localStorage les valeurs personnalisées de l'utilisateur
     saveLocalReferenceValues: function saveLocalReferenceValues() {
       var parsed = JSON.stringify(this.referenceValues);
       localStorage.setItem('localReferenceValues', parsed);
       this.editingReferenceValues = false;
+      this.defaultValues = false;
       flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
     },
     // Réinitialise les valeurs de référence à leurs valeurs par défaut depuis la BDD
@@ -43488,7 +43492,14 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm._m(3),
+        _vm.defaultValues
+          ? _c("p", [
+              _vm._v("Suite à la "),
+              _c("a", { attrs: { href: "#" } }, [
+                _vm._v("caractérisation des déchets du C.H de Niort,")
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
@@ -43766,17 +43777,6 @@ var staticRenderFns = [
         _vm._v(
           "En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets"
         )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Suite à la "),
-      _c("a", { attrs: { href: "#" } }, [
-        _vm._v("caractérisation des déchets du C.H de Niort,")
       ])
     ])
   }
