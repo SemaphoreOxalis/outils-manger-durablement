@@ -29,17 +29,7 @@
                 <div class="p-2 flex-grow-1"></div>
             </div>
 
-            <div class="d-flex text-center">
-                <div class="p-2 w-25">Référence du {{ this.formatToFrench(this.auditData.startDate) }} au {{ this.formatToFrench(this.auditData.endDate) }}</div>
-                <div class="p-2 flex-grow-1">{{ this.auditData.dishesNumber }}</div>
-                <div class="p-2 flex-grow-1">{{ this.auditData.dishCost }}</div>
-                <div class="p-2 flex-grow-1">{{ this.auditData.wasteTreatmentCost }}</div>
-                <div class="p-2 flex-grow-1">{{ this.foodWasteVolume }}</div>
-                <div class="p-2 flex-grow-1">{{ this.wasteCostPerDish }}</div>
-                <div class="p-2 flex-grow-1">{{ this.foodWasteCost }}</div>
-                <div class="p-2 flex-grow-1">{{ this.amountOfDishesWasted }}</div>
-                <div class="p-2 flex-grow-0"></div>
-            </div>
+            <audit v-bind:audit-data="this.auditData"></audit>
 
             <div class="d-flex text-center">
                 <div class="p-2 w-25">Simulation 1</div>
@@ -65,17 +55,16 @@
 </template>
 
 <script>
-    // Petite bibliothèque de fonctions bien pratique
-    import NumberRounder from "../helpers/NumberRounder";
-    import DateFormatter from "../helpers/DateFormatter";
+
+    // import des composants enfants
+    import Audit from "./Audit"
 
     export default {
 
-        // déclaration de la dépendance à ce mixin
-        mixins: [
-            NumberRounder,
-            DateFormatter
-        ],
+        // déclaration des composants enfants
+        components: {
+            Audit
+        },
 
         // données à récupérer de la page Input
         props: [
@@ -90,47 +79,8 @@
             }
         },
 
-        // données calculées
-        computed: {
-
-            // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
-            globalFoodWasteVolume: function() {
-                return this.roundToThreeDecimal(
-                    ( this.auditData.foodLeftoversVolumeInGlobalWaste / 100 ) * this.auditData.globalWasteVolume
-                );
-            },
-
-            // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
-            foodWasteVolume: function() {
-                return this.roundToThreeDecimal(
-                    ( this.auditData.actualFoodLeftoversInFoodWaste / 100 ) * this.globalFoodWasteVolume
-                );
-            },
-
-            // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
-            foodWasteCost: function() {
-                return this.roundToTwoDecimal(
-                    this.foodWasteVolume * this.auditData.wasteTreatmentCost
-                );
-            },
-
-            // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
-            wasteCostPerDish: function() {
-                return this.roundToTwoDecimal(
-                    this.foodWasteCost / this.auditData.dishesNumber
-                );
-            },
-
-            // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
-            amountOfDishesWasted: function() {
-                return this.roundToOneDecimal(
-                    this.foodWasteCost / this.auditData.dishCost
-                );
-            },
-        },
-
         // A l'initialisation du composant (i.e quand on arrive sur la "page")
-        mounted() {
+        created() {
 
             // On récupère les données saisies lors de la phase d'audit
             this.auditData = {...this.userInput, ... this.referenceValues};

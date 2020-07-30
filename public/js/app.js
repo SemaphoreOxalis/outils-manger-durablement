@@ -1975,6 +1975,76 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Audit.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Audit.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Petite bibliothèque de fonctions bien pratique
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // déclaration de la dépendance à ce mixin
+  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  // données récupérées du composant parent (Results.vue)
+  props: ['auditData'],
+  // données utilisées par ce composant
+  data: function data() {
+    return {
+      input: {}
+    };
+  },
+  // données calculées
+  computed: {
+    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
+    globalFoodWasteVolume: function globalFoodWasteVolume() {
+      return this.roundToThreeDecimal(this.auditData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditData.globalWasteVolume);
+    },
+    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
+    foodWasteVolume: function foodWasteVolume() {
+      return this.roundToThreeDecimal(this.auditData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
+    },
+    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
+    foodWasteCost: function foodWasteCost() {
+      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditData.wasteTreatmentCost);
+    },
+    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
+    wasteCostPerDish: function wasteCostPerDish() {
+      return this.roundToTwoDecimal(this.foodWasteCost / this.auditData.dishesNumber);
+    },
+    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      return this.roundToOneDecimal(this.foodWasteCost / this.auditData.dishCost);
+    }
+  },
+  // A l'initialisation du composant, on récupère les données du parent
+  mounted: function mounted() {
+    this.input = this.auditData;
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Flash.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Flash.vue?vue&type=script&lang=js& ***!
@@ -2429,8 +2499,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _Audit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Audit */ "./resources/js/components/Audit.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2493,22 +2562,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// Petite bibliothèque de fonctions bien pratique
-
+// import des composants enfants
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // déclaration de la dépendance à ce mixin
-  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  // déclaration des composants enfants
+  components: {
+    Audit: _Audit__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   // données à récupérer de la page Input
   props: ['userInput', 'referenceValues'],
   // initialisation des données utilisées par le composant
@@ -2517,31 +2577,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       auditData: {}
     };
   },
-  // données calculées
-  computed: {
-    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
-    globalFoodWasteVolume: function globalFoodWasteVolume() {
-      return this.roundToThreeDecimal(this.auditData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditData.globalWasteVolume);
-    },
-    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
-    foodWasteVolume: function foodWasteVolume() {
-      return this.roundToThreeDecimal(this.auditData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
-    },
-    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
-    foodWasteCost: function foodWasteCost() {
-      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditData.wasteTreatmentCost);
-    },
-    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
-    wasteCostPerDish: function wasteCostPerDish() {
-      return this.roundToTwoDecimal(this.foodWasteCost / this.auditData.dishesNumber);
-    },
-    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
-    amountOfDishesWasted: function amountOfDishesWasted() {
-      return this.roundToOneDecimal(this.foodWasteCost / this.auditData.dishCost);
-    }
-  },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
-  mounted: function mounted() {
+  created: function created() {
     // On récupère les données saisies lors de la phase d'audit
     this.auditData = _objectSpread(_objectSpread({}, this.userInput), this.referenceValues);
   }
@@ -42924,6 +42961,69 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Audit.vue?vue&type=template&id=4456a200&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Audit.vue?vue&type=template&id=4456a200& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "d-flex text-center" }, [
+    _c("div", { staticClass: "p-2 w-25" }, [
+      _vm._v(
+        "Référence du " +
+          _vm._s(this.formatToFrench(this.input.startDate)) +
+          " au " +
+          _vm._s(this.formatToFrench(this.input.endDate))
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.input.dishesNumber))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.input.dishCost))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.input.wasteTreatmentCost))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.foodWasteVolume))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.wasteCostPerDish))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.foodWasteCost))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _vm._v(_vm._s(this.amountOfDishesWasted))
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-0" })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Flash.vue?vue&type=template&id=e4161ed6&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Flash.vue?vue&type=template&id=e4161ed6& ***!
@@ -43707,52 +43807,17 @@ var render = function() {
     _vm._v(" "),
     _vm._m(1),
     _vm._v(" "),
-    _c("div", [
-      _vm._m(2),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex text-center" }, [
-        _c("div", { staticClass: "p-2 w-25" }, [
-          _vm._v(
-            "Référence du " +
-              _vm._s(this.formatToFrench(this.auditData.startDate)) +
-              " au " +
-              _vm._s(this.formatToFrench(this.auditData.endDate))
-          )
-        ]),
+    _c(
+      "div",
+      [
+        _vm._m(2),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.auditData.dishesNumber))
-        ]),
+        _c("audit", { attrs: { "audit-data": this.auditData } }),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.auditData.dishCost))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.auditData.wasteTreatmentCost))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.foodWasteVolume))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.wasteCostPerDish))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.foodWasteCost))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.amountOfDishesWasted))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-0" })
-      ]),
-      _vm._v(" "),
-      _vm._m(3)
-    ]),
+        _vm._m(3)
+      ],
+      1
+    ),
     _vm._v(" "),
     _vm._m(4),
     _vm._v(" "),
@@ -61993,6 +62058,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admin_vue_vue_type_template_id_58b78718___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Admin_vue_vue_type_template_id_58b78718___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Audit.vue":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Audit.vue ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Audit_vue_vue_type_template_id_4456a200___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Audit.vue?vue&type=template&id=4456a200& */ "./resources/js/components/Audit.vue?vue&type=template&id=4456a200&");
+/* harmony import */ var _Audit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Audit.vue?vue&type=script&lang=js& */ "./resources/js/components/Audit.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Audit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Audit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Audit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Audit_vue_vue_type_template_id_4456a200___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Audit_vue_vue_type_template_id_4456a200___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Audit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Audit.vue?vue&type=script&lang=js&":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/Audit.vue?vue&type=script&lang=js& ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Audit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Audit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Audit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Audit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Audit.vue?vue&type=template&id=4456a200&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/Audit.vue?vue&type=template&id=4456a200& ***!
+  \**************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Audit_vue_vue_type_template_id_4456a200___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Audit.vue?vue&type=template&id=4456a200& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Audit.vue?vue&type=template&id=4456a200&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Audit_vue_vue_type_template_id_4456a200___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Audit_vue_vue_type_template_id_4456a200___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
