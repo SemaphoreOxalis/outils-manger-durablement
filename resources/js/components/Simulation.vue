@@ -1,21 +1,73 @@
 <template>
     <div class="d-flex text-center">
-        <div class="p-2 w-25">{{ simulation.name }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.dishesNumber }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.dishCost }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.wasteTreatmentCost }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.foodWasteVolume }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.wasteCostPerDish }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.foodWasteCost }}</div>
-        <div class="p-2 flex-grow-1">{{ simulation.amountOfDishesWasted }}</div>
-        <div class="p-2 flex-grow-0"><i class="fas fa-trash-alt"></i></div>
+        <div class="p-2 w-25">
+            <div>{{ simulation.name }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.dishesNumber }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.dishCost }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.wasteTreatmentCost }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.foodWasteVolume }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.wasteCostPerDish }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.foodWasteCost }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-1">
+            <div><small>+2</small></div>
+            <div><small>+2.3 %</small></div>
+            <div>{{ simulation.amountOfDishesWasted }}</div>
+
+        </div>
+        <div class="p-2 flex-grow-0">
+            <div>
+                <button @click="remove(index)">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+
+        </div>
     </div>
 </template>
 
 <script>
     export default {
         props: [
-            'simulation'
-        ]
+            'simulation',
+            'index'
+        ],
+
+        methods: {
+            'remove': function(index) {
+                this.$emit('delete-simulation', index);
+            }
+        }
     }
 </script>

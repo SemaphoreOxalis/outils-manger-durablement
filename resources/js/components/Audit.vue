@@ -1,14 +1,20 @@
 <template>
-    <div class="d-flex text-center">
-        <div class="p-2 w-25">Référence du {{ this.formatToFrench(this.input.startDate) }} au {{ this.formatToFrench(this.input.endDate) }}</div>
-        <div class="p-2 flex-grow-1">{{ this.input.dishesNumber }}</div>
-        <div class="p-2 flex-grow-1">{{ this.input.dishCost }}</div>
-        <div class="p-2 flex-grow-1">{{ this.input.wasteTreatmentCost }}</div>
-        <div class="p-2 flex-grow-1">{{ this.foodWasteVolume }}</div>
-        <div class="p-2 flex-grow-1">{{ this.wasteCostPerDish }}</div>
-        <div class="p-2 flex-grow-1">{{ this.foodWasteCost }}</div>
-        <div class="p-2 flex-grow-1">{{ this.amountOfDishesWasted }}</div>
-        <div class="p-2 flex-grow-0"></div>
+    <div>
+        <div class="d-flex text-center">
+            <div class="p-2 w-25">Référence du {{ this.formatToFrench(this.input.startDate) }} au {{
+                this.formatToFrench(this.input.endDate) }}
+            </div>
+            <div class="p-2 flex-grow-1">{{ this.input.dishesNumber }}</div>
+            <div class="p-2 flex-grow-1">{{ this.input.dishCost }}</div>
+            <div class="p-2 flex-grow-1">{{ this.input.wasteTreatmentCost }}</div>
+            <div class="p-2 flex-grow-1">{{ this.foodWasteVolume }}</div>
+            <div class="p-2 flex-grow-1">{{ this.wasteCostPerDish }}</div>
+            <div class="p-2 flex-grow-1">{{ this.foodWasteCost }}</div>
+            <div class="p-2 flex-grow-1">{{ this.amountOfDishesWasted }}</div>
+            <div class="p-2 flex-grow-0"></div>
+        </div>
+
+        <simulations></simulations>
     </div>
 </template>
 
@@ -16,6 +22,7 @@
     // Petite bibliothèque de fonctions bien pratique
     import NumberRounder from "../helpers/NumberRounder";
     import DateFormatter from "../helpers/DateFormatter";
+    import Simulations from "./Simulations";
 
     export default {
 
@@ -24,6 +31,10 @@
             NumberRounder,
             DateFormatter
         ],
+
+        components: {
+            Simulations
+        },
 
         // données récupérées du composant parent (Results.vue)
         props: [

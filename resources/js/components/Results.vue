@@ -31,8 +31,6 @@
 
             <audit v-bind:audit-data="this.auditData"></audit>
 
-            <simulations></simulations>
-
         </div>
 
         <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a></p>
@@ -49,14 +47,12 @@
 
     // import des composants enfants
     import Audit from "./Audit"
-    import Simulations from "./Simulations";
 
     export default {
 
         // déclaration des composants enfants
         components: {
-            Audit,
-            Simulations
+            Audit
         },
 
         // données à récupérer de la page Input
@@ -85,13 +81,15 @@
                 this.auditData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
 
                 // et on les enregistre dans le localStorage
-                const parsed = JSON.stringify(this.auditData);
-                localStorage.setItem('audit', parsed);
+                const audit = JSON.stringify(this.auditData);
+                localStorage.setItem('audit', audit);
             }
 
             // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
             else if (localStorage.hasOwnProperty('audit')) {
                 this.auditData = JSON.parse(localStorage.getItem('audit'))
+
+
             }
 
             // et si on arrive de nulle part, redirection vers la homepage
