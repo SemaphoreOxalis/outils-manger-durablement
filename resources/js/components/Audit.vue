@@ -63,7 +63,7 @@
 
             // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
             wasteCostPerDish: function () {
-                return this.roundToTwoDecimal(
+                return this.roundToThreeDecimal(
                     this.foodWasteCost / this.auditData.dishesNumber
                 );
             },
