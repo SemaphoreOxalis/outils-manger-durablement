@@ -16,7 +16,15 @@
             <p><i class="fas fa-file-export mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</p>
         </div>
 
-        <audit v-bind:audit-data="this.auditData"></audit>
+        <audit v-bind:audit-raw-data="this.auditRawData"></audit>
+
+        <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a></p>
+        <p>Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les actions réalisables</a></p>
+
+        <div class="d-flex justify-content-around">
+            <button class="btn btn-primary"><i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation</button>
+            <button class="btn btn-danger"><i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations</button>
+        </div>
 
     </div>
 </template>
@@ -42,7 +50,7 @@
         // initialisation des données utilisées par le composant
         data() {
             return {
-                auditData: {}
+                auditRawData: {}
             }
         },
 
@@ -56,16 +64,16 @@
                 localStorage.removeItem('audit');
 
                 // On récupère les données saisies lors de la phase de saisie
-                this.auditData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
+                this.auditRawData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
 
                 // et on les enregistre dans le localStorage
-                const audit = JSON.stringify(this.auditData);
+                const audit = JSON.stringify(this.auditRawData);
                 localStorage.setItem('audit', audit);
             }
 
             // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
             else if (localStorage.hasOwnProperty('audit')) {
-                this.auditData = JSON.parse(localStorage.getItem('audit'))
+                this.auditRawData = JSON.parse(localStorage.getItem('audit'))
             }
 
             // et si on arrive de nulle part, redirection vers la homepage

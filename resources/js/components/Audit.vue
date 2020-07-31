@@ -26,7 +26,10 @@
             <div class="p-2 flex-grow-0"></div>
         </div>
 
-        <simulations></simulations>
+        <simulations
+            v-bind:audit-data="this.auditData"
+        ></simulations>
+
     </div>
 </template>
 
@@ -50,13 +53,15 @@
 
         // données récupérées du composant parent (Results.vue)
         props: [
-            'auditData'
+            'auditRawData'
         ],
 
         // données utilisées par ce composant
         data() {
             return {
-                input: {}
+                input: {},
+                computedValues: {},
+                auditData: {}
             }
         },
 
@@ -66,42 +71,55 @@
             // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
             globalFoodWasteVolume: function () {
                 return this.roundToThreeDecimal(
-                    (this.auditData.foodLeftoversVolumeInGlobalWaste / 100) * this.auditData.globalWasteVolume
+                    (this.auditRawData.foodLeftoversVolumeInGlobalWaste / 100) * this.auditRawData.globalWasteVolume
                 );
             },
 
             // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
             foodWasteVolume: function () {
                 return this.roundToThreeDecimal(
-                    (this.auditData.actualFoodLeftoversInFoodWaste / 100) * this.globalFoodWasteVolume
+                    (this.auditRawData.actualFoodLeftoversInFoodWaste / 100) * this.globalFoodWasteVolume
                 );
             },
 
             // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
             foodWasteCost: function () {
                 return this.roundToTwoDecimal(
-                    this.foodWasteVolume * this.auditData.wasteTreatmentCost
+                    this.foodWasteVolume * this.auditRawData.wasteTreatmentCost
                 );
             },
 
             // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
             wasteCostPerDish: function () {
                 return this.roundToThreeDecimal(
-                    this.foodWasteCost / this.auditData.dishesNumber
+                    this.foodWasteCost / this.auditRawData.dishesNumber
                 );
             },
 
             // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
             amountOfDishesWasted: function () {
                 return this.roundToOneDecimal(
-                    this.foodWasteCost / this.auditData.dishCost
+                    this.foodWasteCost / this.auditRawData.dishCost
                 );
             },
         },
 
-        // A l'initialisation du composant, on récupère les données du parent
+        // A l'initialisation du composant
         mounted() {
-            this.input = this.auditData;
+
+            // on récupère les données du parent (Results.vue)
+            this.input = this.auditRawData;
+
+            // et on initialise un objet qui va servir pour les composants enfants (Simulations.vue)
+            this.computedValues = {
+                globalFoodWasteVolume: this.globalFoodWasteVolume,
+                foodWasteVolume: this.foodWasteVolume,
+                foodWasteCost: this.foodWasteCost,
+                wasteCostPerDish: this.wasteCostPerDish,
+                amountOfDishesWasted: this.amountOfDishesWasted
+            };
+
+            this.auditData = {...this.input, ...this.computedValues};
         }
     }
 </script>

@@ -1987,6 +1987,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 /* harmony import */ var _Simulations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Simulations */ "./resources/js/components/Simulations.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
 //
 //
 //
@@ -2030,39 +2039,51 @@ __webpack_require__.r(__webpack_exports__);
     Simulations: _Simulations__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   // données récupérées du composant parent (Results.vue)
-  props: ['auditData'],
+  props: ['auditRawData'],
   // données utilisées par ce composant
   data: function data() {
     return {
-      input: {}
+      input: {},
+      computedValues: {},
+      auditData: {}
     };
   },
   // données calculées
   computed: {
     // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
     globalFoodWasteVolume: function globalFoodWasteVolume() {
-      return this.roundToThreeDecimal(this.auditData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditData.globalWasteVolume);
+      return this.roundToThreeDecimal(this.auditRawData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditRawData.globalWasteVolume);
     },
     // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
     foodWasteVolume: function foodWasteVolume() {
-      return this.roundToThreeDecimal(this.auditData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
+      return this.roundToThreeDecimal(this.auditRawData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
     },
     // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
     foodWasteCost: function foodWasteCost() {
-      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditData.wasteTreatmentCost);
+      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditRawData.wasteTreatmentCost);
     },
     // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
     wasteCostPerDish: function wasteCostPerDish() {
-      return this.roundToThreeDecimal(this.foodWasteCost / this.auditData.dishesNumber);
+      return this.roundToThreeDecimal(this.foodWasteCost / this.auditRawData.dishesNumber);
     },
     // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
     amountOfDishesWasted: function amountOfDishesWasted() {
-      return this.roundToOneDecimal(this.foodWasteCost / this.auditData.dishCost);
+      return this.roundToOneDecimal(this.foodWasteCost / this.auditRawData.dishCost);
     }
   },
-  // A l'initialisation du composant, on récupère les données du parent
+  // A l'initialisation du composant
   mounted: function mounted() {
-    this.input = this.auditData;
+    // on récupère les données du parent (Results.vue)
+    this.input = this.auditRawData; // et on initialise un objet qui va servir pour les composants enfants (Simulations.vue)
+
+    this.computedValues = {
+      globalFoodWasteVolume: this.globalFoodWasteVolume,
+      foodWasteVolume: this.foodWasteVolume,
+      foodWasteCost: this.foodWasteCost,
+      wasteCostPerDish: this.wasteCostPerDish,
+      amountOfDishesWasted: this.amountOfDishesWasted
+    };
+    this.auditData = _objectSpread(_objectSpread({}, this.input), this.computedValues);
   }
 });
 
@@ -2579,6 +2600,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 // import des composants enfants
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2591,7 +2620,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
-      auditData: {}
+      auditRawData: {}
     };
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
@@ -2601,15 +2630,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // On cleare le localStorage
       localStorage.removeItem('audit'); // On récupère les données saisies lors de la phase de saisie
 
-      this.auditData = _objectSpread(_objectSpread(_objectSpread({}, this.userInput), this.referenceValues), {}, {
+      this.auditRawData = _objectSpread(_objectSpread(_objectSpread({}, this.userInput), this.referenceValues), {}, {
         auditDate: Date.now()
       }); // et on les enregistre dans le localStorage
 
-      var audit = JSON.stringify(this.auditData);
+      var audit = JSON.stringify(this.auditRawData);
       localStorage.setItem('audit', audit);
     } // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
     else if (localStorage.hasOwnProperty('audit')) {
-        this.auditData = JSON.parse(localStorage.getItem('audit'));
+        this.auditRawData = JSON.parse(localStorage.getItem('audit'));
       } // et si on arrive de nulle part, redirection vers la homepage
       else {
           this.$router.push({
@@ -2690,9 +2719,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['simulation', 'index'],
+  props: ['simulation', 'index', 'auditData'],
   methods: {
-    'remove': function remove(index) {
+    remove: function remove(index) {
       this.$emit('delete-simulation', index);
     }
   }
@@ -2729,21 +2758,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  props: ['auditData'],
   data: function data() {
     return {
       simulations: [{
         id: 1,
-        name: 'sim1',
+        name: 'sim3',
         dishesNumber: 15000,
         dishCost: 3,
         wasteTreatmentCost: 5,
@@ -2751,22 +2776,28 @@ __webpack_require__.r(__webpack_exports__);
         wasteCostPerDish: 1.15,
         foodWasteCost: 150,
         amountOfDishesWasted: 42
-      }, {
-        id: 2,
-        name: 'sim2',
-        dishesNumber: 15000,
-        dishCost: 3,
-        wasteTreatmentCost: 5,
-        foodWasteVolume: 27.2,
-        wasteCostPerDish: 1.15,
-        foodWasteCost: 150,
-        amountOfDishesWasted: 42
-      }]
+      }],
+      counter: 0
     };
   },
   methods: {
     deleteSimulation: function deleteSimulation(index) {
-      console.log('sims ' + index);
+      this.simulations.splice(index, 1);
+    },
+    addSimulation: function addSimulation() {
+      this.counter = this.simulations.length;
+      this.counter++;
+      this.simulations.push({
+        id: this.counter,
+        name: 'sim3',
+        dishesNumber: 15000,
+        dishCost: 3,
+        wasteTreatmentCost: 5,
+        foodWasteVolume: 27.2,
+        wasteCostPerDish: 1.15,
+        foodWasteCost: 150,
+        amountOfDishesWasted: 42
+      });
     }
   }
 });
@@ -43259,7 +43290,7 @@ var render = function() {
         _c("div", { staticClass: "p-2 flex-grow-0" })
       ]),
       _vm._v(" "),
-      _c("simulations")
+      _c("simulations", { attrs: { "audit-data": this.auditData } })
     ],
     1
   )
@@ -44101,7 +44132,13 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("audit", { attrs: { "audit-data": this.auditData } })
+      _c("audit", { attrs: { "audit-raw-data": this.auditRawData } }),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4)
     ],
     1
   )
@@ -44166,6 +44203,46 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-5" }, [
+      _vm._v(
+        "Bravo, vous venez de franchir la première étape de la démarche de "
+      ),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Que faire de ces résultats ? Rendez vous sur le "),
+      _c("a", { attrs: { href: "#" } }, [
+        _vm._v(
+          "site ressource de l'ANAP pour découvrir les actions réalisables"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("button", { staticClass: "btn btn-primary" }, [
+        _c("i", { staticClass: "fas fa-file-export mr-2" }),
+        _vm._v("Exporter le rapport de simulation")
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-danger" }, [
+        _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
+        _vm._v("Je réinitialise toutes mes simulations")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -44380,80 +44457,32 @@ var render = function() {
       _vm._l(_vm.simulations, function(simulation, index) {
         return _c("simulation", {
           key: simulation.id,
-          attrs: { simulation: simulation, index: index },
+          attrs: {
+            simulation: simulation,
+            index: index,
+            "audit-data": _vm.auditData
+          },
           on: { "delete-simulation": _vm.deleteSimulation }
         })
       }),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm._m(2),
-      _vm._v(" "),
-      _vm._m(3)
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary btn-lg btn-block py-4 my-2",
+          attrs: { id: "addSimulation" },
+          on: { click: _vm.addSimulation }
+        },
+        [
+          _c("i", { staticClass: "fas fa-plus-circle mr-2" }),
+          _vm._v("Ajouter une simulation\n    ")
+        ]
+      )
     ],
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-primary btn-lg btn-block py-4 my-2",
-        attrs: { id: "addSimulation" }
-      },
-      [
-        _c("i", { staticClass: "fas fa-plus-circle mr-2" }),
-        _vm._v("Ajouter une simulation\n    ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mt-5" }, [
-      _vm._v(
-        "Bravo, vous venez de franchir la première étape de la démarche de "
-      ),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Que faire de ces résultats ? Rendez vous sur le "),
-      _c("a", { attrs: { href: "#" } }, [
-        _vm._v(
-          "site ressource de l'ANAP pour découvrir les actions réalisables"
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex justify-content-around" }, [
-      _c("button", { staticClass: "btn btn-primary" }, [
-        _c("i", { staticClass: "fas fa-file-export mr-2" }),
-        _vm._v("Exporter le rapport de simulation")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger" }, [
-        _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
-        _vm._v("Je réinitialise toutes mes simulations")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

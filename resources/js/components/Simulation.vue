@@ -61,11 +61,12 @@
     export default {
         props: [
             'simulation',
-            'index'
+            'index',
+            'auditData'
         ],
 
         methods: {
-            'remove': function(index) {
+            remove: function(index) {
                 this.$emit('delete-simulation', index);
             }
         }
