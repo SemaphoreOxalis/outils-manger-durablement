@@ -2007,6 +2007,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // Petite bibliothèque de fonctions bien pratique
 
 
@@ -2567,28 +2579,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 // import des composants enfants
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2720,6 +2710,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -43217,6 +43215,8 @@ var render = function() {
   return _c(
     "div",
     [
+      _vm._m(0),
+      _vm._v(" "),
       _c("div", { staticClass: "d-flex text-center" }, [
         _c("div", { staticClass: "p-2 w-25" }, [
           _vm._v(
@@ -43264,7 +43264,46 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex text-center" }, [
+      _c("div", { staticClass: "p-2 w-50" }, [_vm._v("Nom de la simulation")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Nombre de repas produits")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coût de revient d'un repas")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coût de traitement par tonne (€)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Volume de gaspillage alimentaire (tonnes)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coût de traitement des déchets d'un repas")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Coûts de gaspillage alimentaire")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
+        _vm._v("Equivalence en nombre de repas")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-2 flex-grow-1" })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -44050,31 +44089,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "py-4 px-4" }, [
-    _c("h1", [
-      _vm._v("Etape 2/2 : Résultats et comparaisons de vos simulations")
-    ]),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c(
-      "div",
-      [
-        _vm._m(2),
-        _vm._v(" "),
-        _c("audit", { attrs: { "audit-data": this.auditData } })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _vm._m(4),
-    _vm._v(" "),
-    _vm._m(5)
-  ])
+  return _c(
+    "div",
+    { staticClass: "py-4 px-4" },
+    [
+      _c("h1", [
+        _vm._v("Etape 2/2 : Résultats et comparaisons de vos simulations")
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("audit", { attrs: { "audit-data": this.auditData } })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -44136,84 +44166,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex text-center" }, [
-      _c("div", { staticClass: "p-2 w-50" }, [_vm._v("Nom de la simulation")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Nombre de repas produits")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coût de revient d'un repas")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coût de traitement par tonne (€)")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Volume de gaspillage alimentaire (tonnes)")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coût de traitement des déchets d'un repas")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coûts de gaspillage alimentaire")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Equivalence en nombre de repas")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-grow-1" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mt-5" }, [
-      _vm._v(
-        "Bravo, vous venez de franchir la première étape de la démarche de "
-      ),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Que faire de ces résultats ? Rendez vous sur le "),
-      _c("a", { attrs: { href: "#" } }, [
-        _vm._v(
-          "site ressource de l'ANAP pour découvrir les actions réalisables"
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex justify-content-around" }, [
-      _c("button", { staticClass: "btn btn-primary" }, [
-        _c("i", { staticClass: "fas fa-file-export mr-2" }),
-        _vm._v("Exporter le rapport de simulation")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger" }, [
-        _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
-        _vm._v("Je réinitialise toutes mes simulations")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -44433,7 +44385,13 @@ var render = function() {
         })
       }),
       _vm._v(" "),
-      _vm._m(0)
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _vm._m(2),
+      _vm._v(" "),
+      _vm._m(3)
     ],
     2
   )
@@ -44454,6 +44412,46 @@ var staticRenderFns = [
         _vm._v("Ajouter une simulation\n    ")
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "mt-5" }, [
+      _vm._v(
+        "Bravo, vous venez de franchir la première étape de la démarche de "
+      ),
+      _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Que faire de ces résultats ? Rendez vous sur le "),
+      _c("a", { attrs: { href: "#" } }, [
+        _vm._v(
+          "site ressource de l'ANAP pour découvrir les actions réalisables"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("button", { staticClass: "btn btn-primary" }, [
+        _c("i", { staticClass: "fas fa-file-export mr-2" }),
+        _vm._v("Exporter le rapport de simulation")
+      ]),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-danger" }, [
+        _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
+        _vm._v("Je réinitialise toutes mes simulations")
+      ])
+    ])
   }
 ]
 render._withStripped = true

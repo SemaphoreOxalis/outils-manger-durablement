@@ -1,6 +1,18 @@
 <template>
     <div>
         <div class="d-flex text-center">
+            <div class="p-2 w-50">Nom de la simulation</div>
+            <div class="p-2 flex-shrink-1">Nombre de repas produits</div>
+            <div class="p-2 flex-shrink-1">Coût de revient d'un repas</div>
+            <div class="p-2 flex-shrink-1">Coût de traitement par tonne (€)</div>
+            <div class="p-2 flex-shrink-1">Volume de gaspillage alimentaire (tonnes)</div>
+            <div class="p-2 flex-shrink-1">Coût de traitement des déchets d'un repas</div>
+            <div class="p-2 flex-shrink-1">Coûts de gaspillage alimentaire</div>
+            <div class="p-2 flex-shrink-1">Equivalence en nombre de repas</div>
+            <div class="p-2 flex-grow-1"></div>
+        </div>
+
+        <div class="d-flex text-center">
             <div class="p-2 w-25">Référence du {{ this.formatToFrench(this.input.startDate) }} au {{
                 this.formatToFrench(this.input.endDate) }}
             </div>

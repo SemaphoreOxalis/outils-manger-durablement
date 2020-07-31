@@ -16,30 +16,8 @@
             <p><i class="fas fa-file-export mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</p>
         </div>
 
-        <div>
-            <div class="d-flex text-center">
-                <div class="p-2 w-50">Nom de la simulation</div>
-                <div class="p-2 flex-shrink-1">Nombre de repas produits</div>
-                <div class="p-2 flex-shrink-1">Coût de revient d'un repas</div>
-                <div class="p-2 flex-shrink-1">Coût de traitement par tonne (€)</div>
-                <div class="p-2 flex-shrink-1">Volume de gaspillage alimentaire (tonnes)</div>
-                <div class="p-2 flex-shrink-1">Coût de traitement des déchets d'un repas</div>
-                <div class="p-2 flex-shrink-1">Coûts de gaspillage alimentaire</div>
-                <div class="p-2 flex-shrink-1">Equivalence en nombre de repas</div>
-                <div class="p-2 flex-grow-1"></div>
-            </div>
+        <audit v-bind:audit-data="this.auditData"></audit>
 
-            <audit v-bind:audit-data="this.auditData"></audit>
-
-        </div>
-
-        <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a></p>
-        <p>Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les actions réalisables</a></p>
-
-        <div class="d-flex justify-content-around">
-            <button class="btn btn-primary"><i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation</button>
-            <button class="btn btn-danger"><i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations</button>
-        </div>
     </div>
 </template>
 
@@ -88,8 +66,6 @@
             // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
             else if (localStorage.hasOwnProperty('audit')) {
                 this.auditData = JSON.parse(localStorage.getItem('audit'))
-
-
             }
 
             // et si on arrive de nulle part, redirection vers la homepage
