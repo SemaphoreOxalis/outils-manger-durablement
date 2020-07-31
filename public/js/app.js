@@ -2272,6 +2272,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     deletePreviousAudit: function deletePreviousAudit() {
       localStorage.removeItem('audit');
+      localStorage.removeItem('simulations');
       this.previousAuditDetectedInLocalStorage = false;
       flash("Vos simulations ont bien été supprimées");
     }
@@ -2628,7 +2629,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // Si on vient de la page de saisie
     if (this.userInput) {
       // On cleare le localStorage
-      localStorage.removeItem('audit'); // On récupère les données saisies lors de la phase de saisie
+      localStorage.removeItem('audit');
+      localStorage.removeItem('simulations'); // On récupère les données saisies lors de la phase de saisie
 
       this.auditRawData = _objectSpread(_objectSpread(_objectSpread({}, this.userInput), this.referenceValues), {}, {
         auditDate: Date.now()
@@ -2766,38 +2768,47 @@ __webpack_require__.r(__webpack_exports__);
   props: ['auditData'],
   data: function data() {
     return {
-      simulations: [{
-        id: 1,
-        name: 'sim3',
-        dishesNumber: 15000,
-        dishCost: 3,
-        wasteTreatmentCost: 5,
-        foodWasteVolume: 27.2,
-        wasteCostPerDish: 1.15,
-        foodWasteCost: 150,
-        amountOfDishesWasted: 42
-      }],
+      simulations: [],
       counter: 0
     };
   },
   methods: {
     deleteSimulation: function deleteSimulation(index) {
       this.simulations.splice(index, 1);
+      this.refreshCounter();
+      this.saveChangesToLocalStorage();
     },
     addSimulation: function addSimulation() {
-      this.counter = this.simulations.length;
       this.counter++;
       this.simulations.push({
         id: this.counter,
-        name: 'sim3',
-        dishesNumber: 15000,
-        dishCost: 3,
-        wasteTreatmentCost: 5,
-        foodWasteVolume: 27.2,
-        wasteCostPerDish: 1.15,
-        foodWasteCost: 150,
-        amountOfDishesWasted: 42
+        name: 'simulation ' + this.counter,
+        dishesNumber: this.auditData.dishesNumber,
+        dishCost: this.auditData.dishCost,
+        wasteTreatmentCost: this.auditData.wasteTreatmentCost,
+        foodWasteVolume: this.auditData.foodWasteVolume,
+        wasteCostPerDish: this.auditData.wasteCostPerDish,
+        foodWasteCost: this.auditData.foodWasteCost,
+        amountOfDishesWasted: this.auditData.amountOfDishesWasted
       });
+      this.saveChangesToLocalStorage();
+    },
+    saveChangesToLocalStorage: function saveChangesToLocalStorage() {
+      var sims = JSON.stringify(this.simulations);
+      localStorage.setItem('simulations', sims);
+    },
+    refreshCounter: function refreshCounter() {
+      if (this.simulations.length > 0) {
+        this.counter = this.simulations[this.simulations.length - 1].id;
+      } else {
+        this.counter = 0;
+      }
+    }
+  },
+  mounted: function mounted() {
+    if (localStorage.hasOwnProperty('simulations')) {
+      this.simulations = JSON.parse(localStorage.getItem('simulations'));
+      this.refreshCounter();
     }
   }
 });

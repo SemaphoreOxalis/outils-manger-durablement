@@ -62,6 +62,7 @@
 
                 // On cleare le localStorage
                 localStorage.removeItem('audit');
+                localStorage.removeItem('simulations');
 
                 // On récupère les données saisies lors de la phase de saisie
                 this.auditRawData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};

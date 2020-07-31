@@ -69,6 +69,7 @@
 
             deletePreviousAudit() {
                 localStorage.removeItem('audit');
+                localStorage.removeItem('simulations');
                 this.previousAuditDetectedInLocalStorage = false;
 
                 flash("Vos simulations ont bien été supprimées");
