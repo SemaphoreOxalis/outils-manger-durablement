@@ -3,6 +3,9 @@
         <div class="p-2 w-25">
             <i class="fa fa-arrows-alt simulation"></i>
             <input v-model="simulation.name" @blur="saveChanges">
+            <div>
+                <p>{{ this.previousSim }}</p>
+            </div>
         </div>
 
         <div class="p-2 flex-grow-1">
@@ -63,17 +66,24 @@ export default {
     props: [
         'simulation',
         'index',
-        'auditData'
+        'auditData',
+        'previousSimulation'
     ],
 
     computed: {
-        first() {
+        isFirst() {
             if(this.index === 0) {
                 return true;
             } else {
                 return false;
             }
-        }
+        },
+    },
+
+    data() {
+      return {
+          previousSim: null
+      }
     },
 
     methods: {
@@ -87,11 +97,11 @@ export default {
         },
 
         updateSimulationsValues() {
-            this.getClasses();
+            this.getPreviousSim();
         },
 
         getClasses() {
-            if (this.first) {
+            if (this.isFirst) {
                 return [
                     'd-flex',
                     'text-center',
@@ -103,11 +113,21 @@ export default {
                     'text-center'
                 ]
             }
+        },
+
+        getPreviousSim() {
+            if(!this.isFirst) {
+                this.previousSim = this.previousSimulation.name;
+            } else {
+                this.previousSim = this.auditData;
+            }
         }
     },
 
     created() {
         this.updateSimulationsValues();
+        this.getPreviousSim();
+
         events.$on('update-simulations-values', this.updateSimulationsValues);
     }
 }

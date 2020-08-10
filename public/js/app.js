@@ -2726,16 +2726,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['simulation', 'index', 'auditData'],
+  props: ['simulation', 'index', 'auditData', 'previousSimulation'],
   computed: {
-    first: function first() {
+    isFirst: function isFirst() {
       if (this.index === 0) {
         return true;
       } else {
         return false;
       }
     }
+  },
+  data: function data() {
+    return {
+      previousSim: null
+    };
   },
   methods: {
     remove: function remove(index) {
@@ -2746,18 +2754,26 @@ __webpack_require__.r(__webpack_exports__);
       flash('Vos modifications ont été sauvegardées');
     },
     updateSimulationsValues: function updateSimulationsValues() {
-      this.getClasses();
+      this.getPreviousSim();
     },
     getClasses: function getClasses() {
-      if (this.first) {
+      if (this.isFirst) {
         return ['d-flex', 'text-center', 'highlighted'];
       } else {
         return ['d-flex', 'text-center'];
+      }
+    },
+    getPreviousSim: function getPreviousSim() {
+      if (!this.isFirst) {
+        this.previousSim = this.previousSimulation.name;
+      } else {
+        this.previousSim = this.auditData;
       }
     }
   },
   created: function created() {
     this.updateSimulationsValues();
+    this.getPreviousSim();
     events.$on('update-simulations-values', this.updateSimulationsValues);
   }
 });
@@ -2806,6 +2822,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2820,6 +2837,7 @@ __webpack_require__.r(__webpack_exports__);
       counter: 0
     };
   },
+  computed: {},
   methods: {
     deleteSimulation: function deleteSimulation(index) {
       this.simulations.splice(index, 1);
@@ -2829,6 +2847,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateSimulationsValues: function updateSimulationsValues() {
       events.$emit('update-simulations-values');
+      this.saveChangesToLocalStorage();
     },
     addSimulation: function addSimulation() {
       this.counter++;
@@ -2851,6 +2870,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     refreshCounter: function refreshCounter() {
       if (this.simulations.length > 0) {
+        // TODO : change that cos bugs
         this.counter = this.simulations[this.simulations.length - 1].id;
       } else {
         this.counter = 0;
@@ -2860,6 +2880,11 @@ __webpack_require__.r(__webpack_exports__);
       localStorage.removeItem('simulations');
       this.simulations = [];
       this.counter = 0;
+    },
+    previousSimulation: function previousSimulation(index) {
+      if (index > 0) {
+        return this.simulations[index - 1];
+      }
     }
   },
   mounted: function mounted() {
@@ -44415,7 +44440,9 @@ var render = function() {
             _vm.$set(_vm.simulation, "name", $event.target.value)
           }
         }
-      })
+      }),
+      _vm._v(" "),
+      _c("div", [_c("p", [_vm._v(_vm._s(this.previousSim))])])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44621,7 +44648,8 @@ var render = function() {
             attrs: {
               simulation: simulation,
               index: index,
-              "audit-data": _vm.auditData
+              "audit-data": _vm.auditData,
+              "previous-simulation": _vm.previousSimulation(index)
             },
             on: {
               "delete-simulation": _vm.deleteSimulation,

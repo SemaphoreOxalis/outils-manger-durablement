@@ -12,6 +12,7 @@
                 v-bind:simulation="simulation"
                 v-bind:index="index"
                 v-bind:audit-data="auditData"
+                v-bind:previous-simulation="previousSimulation(index)"
                 @delete-simulation="deleteSimulation"
                 @save-changes="saveChangesToLocalStorage"
             >
@@ -49,6 +50,10 @@
             }
         },
 
+        computed: {
+
+        },
+
         methods: {
             deleteSimulation: function (index) {
                 this.simulations.splice(index, 1);
@@ -59,6 +64,7 @@
 
             updateSimulationsValues() {
                 events.$emit('update-simulations-values');
+                this.saveChangesToLocalStorage();
             },
 
             addSimulation() {
@@ -87,6 +93,7 @@
 
             refreshCounter() {
                 if (this.simulations.length > 0) {
+                    // TODO : change that cos bugs
                     this.counter = this.simulations[this.simulations.length - 1].id;
                 } else {
                     this.counter = 0;
@@ -98,6 +105,12 @@
                 localStorage.removeItem('simulations');
                 this.simulations = [];
                 this.counter = 0;
+            },
+
+            previousSimulation(index) {
+                if(index > 0) {
+                    return this.simulations[index -1];
+                }
             }
         },
 
