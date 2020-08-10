@@ -1,9 +1,11 @@
 <template>
     <div class="d-flex text-center">
         <div class="p-2 w-25">
-            <div>{{ simulation.name }}</div>
-
+            <div>
+                <input v-model="simulation.name" @blur="saveChanges">
+            </div>
         </div>
+
         <div class="p-2 flex-grow-1">
             <div><small>+2</small></div>
             <div><small>+2.3 %</small></div>
@@ -68,6 +70,11 @@
         methods: {
             remove: function(index) {
                 this.$emit('delete-simulation', index);
+            },
+
+            saveChanges() {
+                this.$emit('save-changes');
+                flash('Vos modifications ont été sauvegardées');
             }
         }
     }

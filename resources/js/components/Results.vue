@@ -23,7 +23,7 @@
 
         <div class="d-flex justify-content-around">
             <button class="btn btn-primary"><i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation</button>
-            <button class="btn btn-danger"><i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations</button>
+            <button class="btn btn-danger" @click="resetSimulations"><i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations</button>
         </div>
 
     </div>
@@ -80,6 +80,12 @@
             // et si on arrive de nulle part, redirection vers la homepage
             else {
                 this.$router.push({name: 'home'})
+            }
+        },
+
+        methods: {
+            resetSimulations() {
+                events.$emit('reset-simulations');
             }
         }
     }

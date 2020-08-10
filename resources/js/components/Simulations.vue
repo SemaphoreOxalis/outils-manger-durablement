@@ -7,6 +7,7 @@
             v-bind:index="index"
             v-bind:audit-data="auditData"
             @delete-simulation="deleteSimulation"
+            @save-changes="saveChangesToLocalStorage"
         >
         </simulation>
 
@@ -74,6 +75,12 @@
                     this.counter = 0;
                 }
 
+            },
+
+            resetSimulations() {
+                localStorage.removeItem('simulations');
+                this.simulations = [];
+                this.counter = 0;
             }
         },
 
@@ -82,6 +89,8 @@
                 this.simulations = JSON.parse(localStorage.getItem('simulations'));
                 this.refreshCounter();
             }
+
+            events.$on('reset-simulations', this.resetSimulations)
         }
     }
 </script>

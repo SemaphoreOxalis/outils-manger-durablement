@@ -2647,6 +2647,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             name: 'home'
           });
         }
+  },
+  methods: {
+    resetSimulations: function resetSimulations() {
+      events.$emit('reset-simulations');
+    }
   }
 });
 
@@ -2720,11 +2725,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['simulation', 'index', 'auditData'],
   methods: {
     remove: function remove(index) {
       this.$emit('delete-simulation', index);
+    },
+    saveChanges: function saveChanges() {
+      this.$emit('save-changes');
+      flash('Vos modifications ont été sauvegardées');
     }
   }
 });
@@ -2741,6 +2752,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
+//
 //
 //
 //
@@ -2803,6 +2815,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.counter = 0;
       }
+    },
+    resetSimulations: function resetSimulations() {
+      localStorage.removeItem('simulations');
+      this.simulations = [];
+      this.counter = 0;
     }
   },
   mounted: function mounted() {
@@ -2810,6 +2827,8 @@ __webpack_require__.r(__webpack_exports__);
       this.simulations = JSON.parse(localStorage.getItem('simulations'));
       this.refreshCounter();
     }
+
+    events.$on('reset-simulations', this.resetSimulations);
   }
 });
 
@@ -44149,7 +44168,21 @@ var render = function() {
       _vm._v(" "),
       _vm._m(3),
       _vm._v(" "),
-      _vm._m(4)
+      _c("div", { staticClass: "d-flex justify-content-around" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-danger",
+            on: { click: _vm.resetSimulations }
+          },
+          [
+            _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
+            _vm._v("Je réinitialise toutes mes simulations")
+          ]
+        )
+      ])
     ],
     1
   )
@@ -44243,16 +44276,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex justify-content-around" }, [
-      _c("button", { staticClass: "btn btn-primary" }, [
-        _c("i", { staticClass: "fas fa-file-export mr-2" }),
-        _vm._v("Exporter le rapport de simulation")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger" }, [
-        _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
-        _vm._v("Je réinitialise toutes mes simulations")
-      ])
+    return _c("button", { staticClass: "btn btn-primary" }, [
+      _c("i", { staticClass: "fas fa-file-export mr-2" }),
+      _vm._v("Exporter le rapport de simulation")
     ])
   }
 ]
@@ -44279,7 +44305,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "d-flex text-center" }, [
     _c("div", { staticClass: "p-2 w-25" }, [
-      _c("div", [_vm._v(_vm._s(_vm.simulation.name))])
+      _c("div", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.simulation.name,
+              expression: "simulation.name"
+            }
+          ],
+          domProps: { value: _vm.simulation.name },
+          on: {
+            blur: _vm.saveChanges,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.simulation, "name", $event.target.value)
+            }
+          }
+        })
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44473,7 +44520,10 @@ var render = function() {
             index: index,
             "audit-data": _vm.auditData
           },
-          on: { "delete-simulation": _vm.deleteSimulation }
+          on: {
+            "delete-simulation": _vm.deleteSimulation,
+            "save-changes": _vm.saveChangesToLocalStorage
+          }
         })
       }),
       _vm._v(" "),
