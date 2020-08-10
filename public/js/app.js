@@ -2726,9 +2726,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['simulation', 'index', 'auditData'],
+  computed: {
+    first: function first() {
+      if (this.index === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   methods: {
     remove: function remove(index) {
       this.$emit('delete-simulation', index);
@@ -2736,7 +2744,21 @@ __webpack_require__.r(__webpack_exports__);
     saveChanges: function saveChanges() {
       this.$emit('save-changes');
       flash('Vos modifications ont été sauvegardées');
+    },
+    updateSimulationsValues: function updateSimulationsValues() {
+      this.getClasses();
+    },
+    getClasses: function getClasses() {
+      if (this.first) {
+        return ['d-flex', 'text-center', 'highlighted'];
+      } else {
+        return ['d-flex', 'text-center'];
+      }
     }
+  },
+  created: function created() {
+    this.updateSimulationsValues();
+    events.$on('update-simulations-values', this.updateSimulationsValues);
   }
 });
 
@@ -2803,9 +2825,10 @@ __webpack_require__.r(__webpack_exports__);
       this.simulations.splice(index, 1);
       this.refreshCounter();
       this.saveChangesToLocalStorage();
+      this.updateSimulationsValues();
     },
-    log: function log(event) {
-      console.log(event);
+    updateSimulationsValues: function updateSimulationsValues() {
+      events.$emit('update-simulations-values');
     },
     addSimulation: function addSimulation() {
       this.counter++;
@@ -7553,7 +7576,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.simulation {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n", ""]);
+exports.push([module.i, "\n.simulation {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.highlighted {\n    background-color: #2fa360;\n}\n", ""]);
 
 // exports
 
@@ -44369,30 +44392,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "d-flex text-center simulation" }, [
+  return _c("div", { class: _vm.getClasses() }, [
     _c("div", { staticClass: "p-2 w-25" }, [
-      _c("div", [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.simulation.name,
-              expression: "simulation.name"
-            }
-          ],
-          domProps: { value: _vm.simulation.name },
-          on: {
-            blur: _vm.saveChanges,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.simulation, "name", $event.target.value)
-            }
+      _c("i", { staticClass: "fa fa-arrows-alt simulation" }),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.simulation.name,
+            expression: "simulation.name"
           }
-        })
-      ])
+        ],
+        domProps: { value: _vm.simulation.name },
+        on: {
+          blur: _vm.saveChanges,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.simulation, "name", $event.target.value)
+          }
+        }
+      })
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44583,7 +44606,7 @@ var render = function() {
         {
           staticClass: "dragArea",
           attrs: { animation: 150 },
-          on: { change: _vm.log },
+          on: { change: _vm.updateSimulationsValues },
           model: {
             value: _vm.simulations,
             callback: function($$v) {

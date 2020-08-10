@@ -1,9 +1,8 @@
 <template>
-    <div class="d-flex text-center simulation">
+    <div :class="getClasses()">
         <div class="p-2 w-25">
-            <div>
-                <input v-model="simulation.name" @blur="saveChanges">
-            </div>
+            <i class="fa fa-arrows-alt simulation"></i>
+            <input v-model="simulation.name" @blur="saveChanges">
         </div>
 
         <div class="p-2 flex-grow-1">
@@ -60,28 +59,66 @@
 </template>
 
 <script>
-    export default {
-        props: [
-            'simulation',
-            'index',
-            'auditData'
-        ],
+export default {
+    props: [
+        'simulation',
+        'index',
+        'auditData'
+    ],
 
-        methods: {
-            remove: function(index) {
-                this.$emit('delete-simulation', index);
-            },
-
-            saveChanges() {
-                this.$emit('save-changes');
-                flash('Vos modifications ont été sauvegardées');
+    computed: {
+        first() {
+            if(this.index === 0) {
+                return true;
+            } else {
+                return false;
             }
         }
+    },
+
+    methods: {
+        remove: function (index) {
+            this.$emit('delete-simulation', index);
+        },
+
+        saveChanges() {
+            this.$emit('save-changes');
+            flash('Vos modifications ont été sauvegardées');
+        },
+
+        updateSimulationsValues() {
+            this.getClasses();
+        },
+
+        getClasses() {
+            if (this.first) {
+                return [
+                    'd-flex',
+                    'text-center',
+                    'highlighted'
+                ]
+            } else {
+                return [
+                    'd-flex',
+                    'text-center'
+                ]
+            }
+        }
+    },
+
+    created() {
+        this.updateSimulationsValues();
+        events.$on('update-simulations-values', this.updateSimulationsValues);
     }
+}
 </script>
 
 <style>
     .simulation {
         cursor: grab;
+    }
+
+    .highlighted {
+        background-color: #2fa360;
     }
 </style>

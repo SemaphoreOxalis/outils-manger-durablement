@@ -2,7 +2,7 @@
     <div>
         <draggable v-model="simulations"
                    class="dragArea"
-                   @change="log"
+                   @change="updateSimulationsValues"
                    :animation="150"
         >
 
@@ -54,10 +54,11 @@
                 this.simulations.splice(index, 1);
                 this.refreshCounter();
                 this.saveChangesToLocalStorage();
+                this.updateSimulationsValues();
             },
 
-            log(event) {
-                console.log(event);
+            updateSimulationsValues() {
+                events.$emit('update-simulations-values');
             },
 
             addSimulation() {
@@ -106,7 +107,7 @@
                 this.refreshCounter();
             }
 
-            events.$on('reset-simulations', this.resetSimulations)
+            events.$on('reset-simulations', this.resetSimulations);
         }
     }
 </script>
