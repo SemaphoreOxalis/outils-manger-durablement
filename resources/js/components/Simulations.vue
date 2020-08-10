@@ -1,15 +1,25 @@
 <template>
     <div>
-        <simulation
-            v-for="(simulation, index) in simulations"
-            v-bind:key="simulation.id"
-            v-bind:simulation="simulation"
-            v-bind:index="index"
-            v-bind:audit-data="auditData"
-            @delete-simulation="deleteSimulation"
-            @save-changes="saveChangesToLocalStorage"
+        <draggable v-model="simulations"
+                   class="dragArea"
+                   @change="log"
+                   :animation="150"
         >
-        </simulation>
+
+            <simulation
+                v-for="(simulation, index) in simulations"
+                v-bind:key="simulation.id"
+                v-bind:simulation="simulation"
+                v-bind:index="index"
+                v-bind:audit-data="auditData"
+                @delete-simulation="deleteSimulation"
+                @save-changes="saveChangesToLocalStorage"
+            >
+            </simulation>
+
+        </draggable>
+
+
 
         <button class="btn btn-primary btn-lg btn-block py-4 my-2" id="addSimulation" @click="addSimulation">
             <i class="fas fa-plus-circle mr-2"></i>Ajouter une simulation
@@ -20,10 +30,12 @@
 
 <script>
     import Simulation from "./Simulation";
+    import draggable from 'vuedraggable'
 
     export default {
         components: {
-            Simulation
+            Simulation,
+            draggable
         },
 
         props: [
@@ -42,6 +54,10 @@
                 this.simulations.splice(index, 1);
                 this.refreshCounter();
                 this.saveChangesToLocalStorage();
+            },
+
+            log(event) {
+                console.log(event);
             },
 
             addSimulation() {

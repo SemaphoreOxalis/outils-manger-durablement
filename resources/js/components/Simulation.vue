@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex text-center">
+    <div class="d-flex text-center simulation">
         <div class="p-2 w-25">
             <div>
                 <input v-model="simulation.name" @blur="saveChanges">
@@ -79,3 +79,9 @@
         }
     }
 </script>
+
+<style>
+    .simulation {
+        cursor: grab;
+    }
+</style>
