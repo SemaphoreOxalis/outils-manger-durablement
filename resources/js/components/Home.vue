@@ -46,7 +46,7 @@
         components: {
             HelpModal
         },
-
+        
         mixins: [
             DateFormatter
         ],

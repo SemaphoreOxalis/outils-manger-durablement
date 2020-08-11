@@ -93,8 +93,8 @@
 
             refreshCounter() {
                 if (this.simulations.length > 0) {
-                    // TODO : change that cos bugs
-                    this.counter = this.simulations[this.simulations.length - 1].id;
+                    // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
+                    this.counter = Math.max(...this.simulations.map(simulation => simulation.id));
                 } else {
                     this.counter = 0;
                 }
