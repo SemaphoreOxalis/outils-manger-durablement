@@ -2873,7 +2873,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   data: function data() {
     return {
       simulations: [],
-      counter: 0
+      counter: 0,
+      dataSource: {}
     };
   },
   // Fonction inhérentes au composant
@@ -2892,17 +2893,23 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     // Ajoute une simulation
     addSimulation: function addSimulation() {
+      if (this.simulations.length === 0) {
+        this.dataSource = this.auditData;
+      } else {
+        this.dataSource = this.simulations[this.counter - 1];
+      }
+
       this.counter++;
       this.simulations.push({
         id: this.counter,
         name: 'simulation ' + this.counter,
-        dishesNumber: this.auditData.dishesNumber,
-        dishCost: this.auditData.dishCost,
-        wasteTreatmentCost: this.auditData.wasteTreatmentCost,
-        foodWasteVolume: this.auditData.foodWasteVolume,
-        wasteCostPerDish: this.auditData.wasteCostPerDish,
-        foodWasteCost: this.auditData.foodWasteCost,
-        amountOfDishesWasted: this.auditData.amountOfDishesWasted
+        dishesNumber: this.dataSource.dishesNumber,
+        dishCost: this.dataSource.dishCost,
+        wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
+        foodWasteVolume: this.dataSource.foodWasteVolume,
+        wasteCostPerDish: this.dataSource.wasteCostPerDish,
+        foodWasteCost: this.dataSource.foodWasteCost,
+        amountOfDishesWasted: this.dataSource.amountOfDishesWasted
       });
       this.saveChangesToLocalStorage();
     },
