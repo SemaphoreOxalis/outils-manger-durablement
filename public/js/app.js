@@ -2746,11 +2746,7 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
     isFirst: function isFirst() {
-      if (this.index === 0) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.index === 0;
     }
   },
   // Initialisation des données et propriétés utilisées par ce composant
@@ -2857,7 +2853,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
 // import des dépendances
 
 
@@ -2874,7 +2869,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return {
       simulations: [],
       counter: 0,
-      dataSource: {}
+      dataSource: null
     };
   },
   // Fonction inhérentes au composant
@@ -2891,14 +2886,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       events.$emit('update-simulations-values');
       this.saveChangesToLocalStorage();
     },
-    // Ajoute une simulation
-    addSimulation: function addSimulation() {
+    getDataSourceForNewSimulation: function getDataSourceForNewSimulation() {
       if (this.simulations.length === 0) {
         this.dataSource = this.auditData;
       } else {
-        this.dataSource = this.simulations[this.counter - 1];
+        this.dataSource = this.simulations[this.simulations.length - 1];
       }
-
+    },
+    // Ajoute une simulation
+    addSimulation: function addSimulation() {
+      this.getDataSourceForNewSimulation();
       this.counter++;
       this.simulations.push({
         id: this.counter,
@@ -2953,6 +2950,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
     events.$on('reset-simulations', this.resetSimulations);
+    this.getDataSourceForNewSimulation();
   }
 });
 

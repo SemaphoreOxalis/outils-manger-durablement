@@ -77,19 +77,15 @@ export default {
 
         // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
         isFirst() {
-            if(this.index === 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return this.index === 0;
         },
     },
 
     // Initialisation des données et propriétés utilisées par ce composant
     data() {
-      return {
-          previousSim: null
-      }
+        return {
+            previousSim: null
+        }
     },
 
     // Fonctions inhérentes au composant
@@ -133,7 +129,7 @@ export default {
 
         // Par souci de practicité, chaque simulation a une "previousSim" qui s'avère être l'audit si elle est en première position
         getPreviousSim() {
-            if(!this.isFirst) {
+            if (!this.isFirst) {
                 this.previousSim = this.previousSimulation.name;
             } else {
                 this.previousSim = this.auditData;
@@ -152,11 +148,11 @@ export default {
 </script>
 
 <style>
-    .simulation {
-        cursor: grab;
-    }
+.simulation {
+    cursor: grab;
+}
 
-    .highlighted {
-        background-color: #2fa360;
-    }
+.highlighted {
+    background-color: #2fa360;
+}
 </style>
