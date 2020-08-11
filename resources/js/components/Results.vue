@@ -83,7 +83,10 @@
             }
         },
 
+        // Fonctions inhérentes au composant
         methods: {
+
+            // Efface les simulations (pas l'audit)
             resetSimulations() {
                 events.$emit('reset-simulations');
             }

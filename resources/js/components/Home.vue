@@ -46,7 +46,8 @@
         components: {
             HelpModal
         },
-        
+
+        // Bibliothèqye de fonctions custom
         mixins: [
             DateFormatter
         ],
@@ -62,11 +63,15 @@
             }
         },
 
+        // Fonctions inhérentes au composant
         methods: {
+
+            // Si un audit a été effectué, possibilité de s'y rendre directement
             goToPreviousAudit() {
                 this.$router.push({name: 'results'})
             },
 
+            // Self-explanatory
             deletePreviousAudit() {
                 localStorage.removeItem('audit');
                 localStorage.removeItem('simulations');
@@ -76,7 +81,10 @@
             }
         },
 
+        // A l'initialisation du composant
         created() {
+
+            // On récupère l'audit stocké en localStorage s'il y en a un
             if (localStorage.hasOwnProperty('audit')) {
                 this.previousAuditDetectedInLocalStorage = true;
 

@@ -63,6 +63,8 @@
 
 <script>
 export default {
+
+    // données récupérées du composant parent (Simulations.vue)
     props: [
         'simulation',
         'index',
@@ -70,7 +72,10 @@ export default {
         'previousSimulation'
     ],
 
+    // Propriétés calculées du composant
     computed: {
+
+        // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
         isFirst() {
             if(this.index === 0) {
                 return true;
@@ -80,26 +85,37 @@ export default {
         },
     },
 
+    // Initialisation des données et propriétés utilisées par ce composant
     data() {
       return {
           previousSim: null
       }
     },
 
+    // Fonctions inhérentes au composant
     methods: {
+
+        // Effacer une simulation
         remove: function (index) {
+
+            // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
             this.$emit('delete-simulation', index);
         },
 
+        // Sauvegarder les modifications faites à la simulation
         saveChanges() {
+
+            // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
             this.$emit('save-changes');
             flash('Vos modifications ont été sauvegardées');
         },
 
+        // Met à jour les données utilisées par la simulation lors du drag'n'drop
         updateSimulationsValues() {
             this.getPreviousSim();
         },
 
+        // Classes CSS appliquées en fonction de la position de la simulation
         getClasses() {
             if (this.isFirst) {
                 return [
@@ -115,6 +131,7 @@ export default {
             }
         },
 
+        // Par souci de practicité, chaque simulation a une "previousSim" qui s'avère être l'audit si elle est en première position
         getPreviousSim() {
             if(!this.isFirst) {
                 this.previousSim = this.previousSimulation.name;
@@ -124,6 +141,7 @@ export default {
         }
     },
 
+    // A l'initialisation du composant
     created() {
         this.updateSimulationsValues();
         this.getPreviousSim();

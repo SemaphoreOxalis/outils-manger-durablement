@@ -2028,13 +2028,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-// Petite bibliothèque de fonctions bien pratique
+// Imports des dépendances
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ce mixin
   mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  // Déclaration des composants enfants
   components: {
     Simulations: _Simulations__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
@@ -2082,7 +2083,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       foodWasteCost: this.foodWasteCost,
       wasteCostPerDish: this.wasteCostPerDish,
       amountOfDishesWasted: this.amountOfDishesWasted
-    };
+    }; // Par souci de practicité, on stocke tout dans un unique objet
+
     this.auditData = _objectSpread(_objectSpread({}, this.input), this.computedValues);
   }
 });
@@ -2254,6 +2256,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     HelpModal: _HelpModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  // Bibliothèqye de fonctions custom
   mixins: [_helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
@@ -2264,12 +2267,15 @@ __webpack_require__.r(__webpack_exports__);
       previousAuditDate: null
     };
   },
+  // Fonctions inhérentes au composant
   methods: {
+    // Si un audit a été effectué, possibilité de s'y rendre directement
     goToPreviousAudit: function goToPreviousAudit() {
       this.$router.push({
         name: 'results'
       });
     },
+    // Self-explanatory
     deletePreviousAudit: function deletePreviousAudit() {
       localStorage.removeItem('audit');
       localStorage.removeItem('simulations');
@@ -2277,7 +2283,9 @@ __webpack_require__.r(__webpack_exports__);
       flash("Vos simulations ont bien été supprimées");
     }
   },
+  // A l'initialisation du composant
   created: function created() {
+    // On récupère l'audit stocké en localStorage s'il y en a un
     if (localStorage.hasOwnProperty('audit')) {
       this.previousAuditDetectedInLocalStorage = true;
       this.previousAuditDate = this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
@@ -2648,7 +2656,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
   },
+  // Fonctions inhérentes au composant
   methods: {
+    // Efface les simulations (pas l'audit)
     resetSimulations: function resetSimulations() {
       events.$emit('reset-simulations');
     }
@@ -2730,8 +2740,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // données récupérées du composant parent (Simulations.vue)
   props: ['simulation', 'index', 'auditData', 'previousSimulation'],
+  // Propriétés calculées du composant
   computed: {
+    // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
     isFirst: function isFirst() {
       if (this.index === 0) {
         return true;
@@ -2740,22 +2753,30 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  // Initialisation des données et propriétés utilisées par ce composant
   data: function data() {
     return {
       previousSim: null
     };
   },
+  // Fonctions inhérentes au composant
   methods: {
+    // Effacer une simulation
     remove: function remove(index) {
+      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
       this.$emit('delete-simulation', index);
     },
+    // Sauvegarder les modifications faites à la simulation
     saveChanges: function saveChanges() {
+      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
       this.$emit('save-changes');
       flash('Vos modifications ont été sauvegardées');
     },
+    // Met à jour les données utilisées par la simulation lors du drag'n'drop
     updateSimulationsValues: function updateSimulationsValues() {
       this.getPreviousSim();
     },
+    // Classes CSS appliquées en fonction de la position de la simulation
     getClasses: function getClasses() {
       if (this.isFirst) {
         return ['d-flex', 'text-center', 'highlighted'];
@@ -2763,6 +2784,7 @@ __webpack_require__.r(__webpack_exports__);
         return ['d-flex', 'text-center'];
       }
     },
+    // Par souci de practicité, chaque simulation a une "previousSim" qui s'avère être l'audit si elle est en première position
     getPreviousSim: function getPreviousSim() {
       if (!this.isFirst) {
         this.previousSim = this.previousSimulation.name;
@@ -2771,6 +2793,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  // A l'initialisation du composant
   created: function created() {
     this.updateSimulationsValues();
     this.getPreviousSim();
@@ -2835,32 +2858,39 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+// import des dépendances
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // Composants enfants
   components: {
     Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_0__["default"],
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a
   },
+  // Données reçues du composant parent (Audit.vue)
   props: ['auditData'],
+  // Initialisation des données utilisées par le composant
   data: function data() {
     return {
       simulations: [],
       counter: 0
     };
   },
-  computed: {},
+  // Fonction inhérentes au composant
   methods: {
+    // Efface une simulation
     deleteSimulation: function deleteSimulation(index) {
       this.simulations.splice(index, 1);
       this.refreshCounter();
       this.saveChangesToLocalStorage();
       this.updateSimulationsValues();
     },
+    // Lors du drag'n'drop des simulations, il faut mettre à jour les données qu'elles reçoivent
     updateSimulationsValues: function updateSimulationsValues() {
       events.$emit('update-simulations-values');
       this.saveChangesToLocalStorage();
     },
+    // Ajoute une simulation
     addSimulation: function addSimulation() {
       this.counter++;
       this.simulations.push({
@@ -2876,13 +2906,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       });
       this.saveChangesToLocalStorage();
     },
+    // Sauvegarde les changements des simulations en localStorage
     saveChangesToLocalStorage: function saveChangesToLocalStorage() {
       var sims = JSON.stringify(this.simulations);
       localStorage.setItem('simulations', sims);
     },
+    // Met à jour le compteur qui sert à incrémenter les id des simulations
     refreshCounter: function refreshCounter() {
       if (this.simulations.length > 0) {
         // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
+        // Plus efficace qu'un loop basique
         this.counter = Math.max.apply(Math, _toConsumableArray(this.simulations.map(function (simulation) {
           return simulation.id;
         })));
@@ -2890,22 +2923,27 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         this.counter = 0;
       }
     },
+    // Remet à zéro les simulations (pas l'audit)
     resetSimulations: function resetSimulations() {
       localStorage.removeItem('simulations');
       this.simulations = [];
       this.counter = 0;
     },
+    // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
     previousSimulation: function previousSimulation(index) {
       if (index > 0) {
         return this.simulations[index - 1];
       }
     }
   },
+  // A l'initialisation du composant
   mounted: function mounted() {
+    // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
     if (localStorage.hasOwnProperty('simulations')) {
       this.simulations = JSON.parse(localStorage.getItem('simulations'));
       this.refreshCounter();
-    }
+    } // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
+
 
     events.$on('reset-simulations', this.resetSimulations);
   }

@@ -34,7 +34,8 @@
 </template>
 
 <script>
-    // Petite bibliothèque de fonctions bien pratique
+
+    // Imports des dépendances
     import NumberRounder from "../helpers/NumberRounder";
     import DateFormatter from "../helpers/DateFormatter";
     import Simulations from "./Simulations";
@@ -47,6 +48,7 @@
             DateFormatter
         ],
 
+        // Déclaration des composants enfants
         components: {
             Simulations
         },
@@ -119,6 +121,7 @@
                 amountOfDishesWasted: this.amountOfDishesWasted
             };
 
+            // Par souci de practicité, on stocke tout dans un unique objet
             this.auditData = {...this.input, ...this.computedValues};
         }
     }
