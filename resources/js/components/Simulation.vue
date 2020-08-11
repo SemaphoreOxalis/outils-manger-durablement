@@ -1,8 +1,8 @@
 <template>
     <div :class="getClasses()">
         <div class="p-2 w-25">
-            <i class="fa fa-arrows-alt simulation"></i>
-            <input v-model="simulation.name" @blur="saveChanges">
+            <i class="fa fa-arrows-alt"></i>
+            <input v-model="simulation.name" @blur="saveChanges" class="inputs">
             <div>
                 <p>{{ this.previousSim }}</p>
             </div>
@@ -117,12 +117,14 @@ export default {
                 return [
                     'd-flex',
                     'text-center',
+                    'handle',
                     'highlighted'
                 ]
             } else {
                 return [
                     'd-flex',
-                    'text-center'
+                    'text-center',
+                    'handle'
                 ]
             }
         },
@@ -132,7 +134,7 @@ export default {
             if (!this.isFirst) {
                 this.previousSim = this.previousSimulation.name;
             } else {
-                this.previousSim = this.auditData;
+                this.previousSim = this.auditData.auditDate;
             }
         }
     },
@@ -148,10 +150,6 @@ export default {
 </script>
 
 <style>
-.simulation {
-    cursor: grab;
-}
-
 .highlighted {
     background-color: #2fa360;
 }

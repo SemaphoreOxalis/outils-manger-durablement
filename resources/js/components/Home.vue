@@ -58,6 +58,8 @@
 
                 // par défaut, la fenêtre modale est masquée
                 showModal: false,
+
+                // propriétés utilisées pour afficher (ou non) la possibilité de se rendre directement à l'audit enregistré en localStorage
                 previousAuditDetectedInLocalStorage: false,
                 previousAuditDate: null
             }
@@ -71,7 +73,7 @@
                 this.$router.push({name: 'results'})
             },
 
-            // Self-explanatory
+            // Efface l'audit enregistré en localStorage ainsi que les simulations associées
             deletePreviousAudit() {
                 localStorage.removeItem('audit');
                 localStorage.removeItem('simulations');
@@ -87,7 +89,6 @@
             // On récupère l'audit stocké en localStorage s'il y en a un
             if (localStorage.hasOwnProperty('audit')) {
                 this.previousAuditDetectedInLocalStorage = true;
-
                 this.previousAuditDate = this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
             }
         }

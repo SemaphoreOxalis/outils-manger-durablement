@@ -2263,6 +2263,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       // par défaut, la fenêtre modale est masquée
       showModal: false,
+      // propriétés utilisées pour afficher (ou non) la possibilité de se rendre directement à l'audit enregistré en localStorage
       previousAuditDetectedInLocalStorage: false,
       previousAuditDate: null
     };
@@ -2275,7 +2276,7 @@ __webpack_require__.r(__webpack_exports__);
         name: 'results'
       });
     },
-    // Self-explanatory
+    // Efface l'audit enregistré en localStorage ainsi que les simulations associées
     deletePreviousAudit: function deletePreviousAudit() {
       localStorage.removeItem('audit');
       localStorage.removeItem('simulations');
@@ -2775,9 +2776,9 @@ __webpack_require__.r(__webpack_exports__);
     // Classes CSS appliquées en fonction de la position de la simulation
     getClasses: function getClasses() {
       if (this.isFirst) {
-        return ['d-flex', 'text-center', 'highlighted'];
+        return ['d-flex', 'text-center', 'handle', 'highlighted'];
       } else {
-        return ['d-flex', 'text-center'];
+        return ['d-flex', 'text-center', 'handle'];
       }
     },
     // Par souci de practicité, chaque simulation a une "previousSim" qui s'avère être l'audit si elle est en première position
@@ -2785,7 +2786,7 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.isFirst) {
         this.previousSim = this.previousSimulation.name;
       } else {
-        this.previousSim = this.auditData;
+        this.previousSim = this.auditData.auditDate;
       }
     }
   },
@@ -2823,6 +2824,9 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
+//
+//
 //
 //
 //
@@ -7658,7 +7662,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.simulation {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.highlighted {\n    background-color: #2fa360;\n}\n", ""]);
+exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n", ""]);
 
 // exports
 
@@ -7677,7 +7681,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#addSimulation {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n", ""]);
+exports.push([module.i, "\n#addSimulation {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n", ""]);
 
 // exports
 
@@ -44476,7 +44480,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { class: _vm.getClasses() }, [
     _c("div", { staticClass: "p-2 w-25" }, [
-      _c("i", { staticClass: "fa fa-arrows-alt simulation" }),
+      _c("i", { staticClass: "fa fa-arrows-alt" }),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -44487,6 +44491,7 @@ var render = function() {
             expression: "simulation.name"
           }
         ],
+        staticClass: "inputs",
         domProps: { value: _vm.simulation.name },
         on: {
           blur: _vm.saveChanges,
@@ -44689,7 +44694,12 @@ var render = function() {
         "draggable",
         {
           staticClass: "dragArea",
-          attrs: { animation: 150 },
+          attrs: {
+            animation: 150,
+            handle: ".handle",
+            filter: ".inputs",
+            preventOnFilter: false
+          },
           on: { change: _vm.updateSimulationsValues },
           model: {
             value: _vm.simulations,
