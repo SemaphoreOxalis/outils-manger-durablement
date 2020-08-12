@@ -76,15 +76,10 @@ export default {
             this.simulations.splice(index, 1);
             this.refreshCounter();
             this.saveChangesToLocalStorage();
-            this.updateSimulationsValues();
         },
 
         getDataSourceForNewSimulation() {
-            if (this.simulations.length === 0) {
-                this.dataSource = this.auditData;
-            } else {
-                this.dataSource = this.simulations[this.simulations.length - 1];
-            }
+            this.dataSource = this.simulations.length === 0 ? this.auditData : this.simulations[this.simulations.length - 1];
         },
 
         // Ajoute une simulation
@@ -102,9 +97,9 @@ export default {
                     dishCost: this.dataSource.dishCost,
                     wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
                     foodWasteVolume: this.dataSource.foodWasteVolume,
-                    wasteCostPerDish: null,
-                    foodWasteCost: null,
-                    amountOfDishesWasted: null
+                    wasteCostPerDish: this.dataSource.wasteCostPerDish,
+                    foodWasteCost: this.dataSource.foodWasteCost,
+                    amountOfDishesWasted: this.dataSource.amountOfDishesWasted
                 }
             );
             this.saveChangesToLocalStorage();
@@ -136,11 +131,7 @@ export default {
 
         // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
         previousSimulation(index) {
-            if (index > 0) {
-                return this.simulations[index - 1];
-            } else {
-                return this.auditData;
-            }
+            return index > 0 ? this.simulations[index - 1] : this.auditData
         }
     },
 

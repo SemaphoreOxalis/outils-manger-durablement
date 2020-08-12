@@ -3,9 +3,6 @@
         <div class="p-2 w-25">
             <i class="fa fa-arrows-alt"></i>
             <input v-model="simulation.name" @blur="saveChanges" class="ignore-draggable">
-            <div>
-                <p>source : {{ this.previousSim.name }}</p>
-            </div>
         </div>
 
         <div class="p-2 flex-grow-1">
@@ -31,8 +28,6 @@
             <div><small>{{ foodWasteVolumeDeltaPercentage }}</small></div>
             <input v-model="simulation.foodWasteVolume" @blur="saveChanges" class="ignore-draggable">
         </div>
-
-
 
 
         <div class="p-2 flex-grow-1">
@@ -107,6 +102,7 @@ export default {
             return this.index === 0;
         },
 
+
         dishesNumberDelta() {
             return this.getDelta(this.simulation.dishesNumber, this.previousSim.dishesNumber);
         },
@@ -140,7 +136,6 @@ export default {
         },
 
 
-
         wasteCostPerDishDelta() {
             return this.getDelta(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
         },
@@ -164,8 +159,6 @@ export default {
         amountOfDishesWastedDeltaPercentage() {
             return this.getDeltaPercentage(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
         },
-
-
 
 
         // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets

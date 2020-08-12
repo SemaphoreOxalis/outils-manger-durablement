@@ -2739,11 +2739,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -2952,14 +2947,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this.simulations.splice(index, 1);
       this.refreshCounter();
       this.saveChangesToLocalStorage();
-      this.updateSimulationsValues();
     },
     getDataSourceForNewSimulation: function getDataSourceForNewSimulation() {
-      if (this.simulations.length === 0) {
-        this.dataSource = this.auditData;
-      } else {
-        this.dataSource = this.simulations[this.simulations.length - 1];
-      }
+      this.dataSource = this.simulations.length === 0 ? this.auditData : this.simulations[this.simulations.length - 1];
     },
     // Ajoute une simulation
     addSimulation: function addSimulation() {
@@ -2972,9 +2962,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         dishCost: this.dataSource.dishCost,
         wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
         foodWasteVolume: this.dataSource.foodWasteVolume,
-        wasteCostPerDish: null,
-        foodWasteCost: null,
-        amountOfDishesWasted: null
+        wasteCostPerDish: this.dataSource.wasteCostPerDish,
+        foodWasteCost: this.dataSource.foodWasteCost,
+        amountOfDishesWasted: this.dataSource.amountOfDishesWasted
       });
       this.saveChangesToLocalStorage();
     },
@@ -3003,11 +2993,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     },
     // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
     previousSimulation: function previousSimulation(index) {
-      if (index > 0) {
-        return this.simulations[index - 1];
-      } else {
-        return this.auditData;
-      }
+      return index > 0 ? this.simulations[index - 1] : this.auditData;
     }
   },
   // A l'initialisation du composant
@@ -44568,11 +44554,7 @@ var render = function() {
             _vm.$set(_vm.simulation, "name", $event.target.value)
           }
         }
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c("p", [_vm._v("source : " + _vm._s(this.previousSim.name))])
-      ])
+      })
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
