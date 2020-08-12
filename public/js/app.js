@@ -2677,6 +2677,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
 //
 //
 //
@@ -2740,7 +2741,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
   // données récupérées du composant parent (Simulations.vue)
   props: ['simulation', 'index', 'auditData', 'previousSimulation'],
   // Propriétés calculées du composant
@@ -2748,6 +2751,30 @@ __webpack_require__.r(__webpack_exports__);
     // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
     isFirst: function isFirst() {
       return this.index === 0;
+    },
+    dishesNumberDelta: function dishesNumberDelta() {
+      return this.getDelta(this.simulation.dishesNumber, this.previousSim.dishesNumber);
+    },
+    dishesNumberDeltaPercentage: function dishesNumberDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.dishesNumber, this.previousSim.dishesNumber);
+    },
+    dishCostDelta: function dishCostDelta() {
+      return this.getDelta(this.simulation.dishCost, this.previousSim.dishCost);
+    },
+    dishCostDeltaPercentage: function dishCostDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.dishCost, this.previousSim.dishCost);
+    },
+    wasteTreatmentCostDelta: function wasteTreatmentCostDelta() {
+      return this.getDelta(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
+    },
+    wasteTreatmentCostDeltaPercentage: function wasteTreatmentCostDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
+    },
+    foodWasteVolumeDelta: function foodWasteVolumeDelta() {
+      return this.getDelta(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
+    },
+    foodWasteVolumeDeltaPercentage: function foodWasteVolumeDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
     }
   },
   // Initialisation des données et propriétés utilisées par ce composant
@@ -2758,6 +2785,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   // Fonctions inhérentes au composant
   methods: {
+    getDelta: function getDelta(simData, sourceData) {
+      var result = this.roundToThreeDecimal(simData - sourceData);
+      return result >= 0 ? "+" + result : result;
+    },
+    getDeltaPercentage: function getDeltaPercentage(simData, sourceData) {
+      var result = this.roundToThreeDecimal(simData * 100 / sourceData - 100);
+      return result >= 0 ? "+" + result + "%" : result + "%";
+    },
     // Effacer une simulation
     remove: function remove(index) {
       // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
@@ -2784,9 +2819,9 @@ __webpack_require__.r(__webpack_exports__);
     // Par souci de practicité, chaque simulation a une "previousSim" qui s'avère être l'audit si elle est en première position
     getPreviousSim: function getPreviousSim() {
       if (!this.isFirst) {
-        this.previousSim = this.previousSimulation.name;
+        this.previousSim = this.previousSimulation;
       } else {
-        this.previousSim = this.auditData.auditDate;
+        this.previousSim = this.auditData;
       }
     }
   },
@@ -2824,6 +2859,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 //
 //
 //
@@ -7662,7 +7698,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n", ""]);
+exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
 
 // exports
 
@@ -7681,7 +7717,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#addSimulation {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n", ""]);
+exports.push([module.i, "\n#addSimulation {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n", ""]);
 
 // exports
 
@@ -44491,7 +44527,7 @@ var render = function() {
             expression: "simulation.name"
           }
         ],
-        staticClass: "inputs",
+        staticClass: "ignore-draggable",
         domProps: { value: _vm.simulation.name },
         on: {
           blur: _vm.saveChanges,
@@ -44504,7 +44540,127 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("div", [_c("p", [_vm._v(_vm._s(this.previousSim))])])
+      _c("div", [
+        _c("p", [_vm._v("source : " + _vm._s(this.previousSim.name))])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishesNumberDelta))])]),
+      _vm._v(" "),
+      _c("div", [
+        _c("small", [_vm._v(_vm._s(_vm.dishesNumberDeltaPercentage))])
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.simulation.dishesNumber,
+            expression: "simulation.dishesNumber"
+          }
+        ],
+        staticClass: "ignore-draggable",
+        domProps: { value: _vm.simulation.dishesNumber },
+        on: {
+          blur: _vm.saveChanges,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.simulation, "dishesNumber", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishCostDelta))])]),
+      _vm._v(" "),
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishCostDeltaPercentage))])]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.simulation.dishCost,
+            expression: "simulation.dishCost"
+          }
+        ],
+        staticClass: "ignore-draggable",
+        domProps: { value: _vm.simulation.dishCost },
+        on: {
+          blur: _vm.saveChanges,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.simulation, "dishCost", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDelta))])]),
+      _vm._v(" "),
+      _c("div", [
+        _c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDeltaPercentage))])
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.simulation.wasteTreatmentCost,
+            expression: "simulation.wasteTreatmentCost"
+          }
+        ],
+        staticClass: "ignore-draggable",
+        domProps: { value: _vm.simulation.wasteTreatmentCost },
+        on: {
+          blur: _vm.saveChanges,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.simulation, "wasteTreatmentCost", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteVolumeDelta))])]),
+      _vm._v(" "),
+      _c("div", [
+        _c("small", [_vm._v(_vm._s(_vm.foodWasteVolumeDeltaPercentage))])
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.simulation.foodWasteVolume,
+            expression: "simulation.foodWasteVolume"
+          }
+        ],
+        staticClass: "ignore-draggable",
+        domProps: { value: _vm.simulation.foodWasteVolume },
+        on: {
+          blur: _vm.saveChanges,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.simulation, "foodWasteVolume", $event.target.value)
+          }
+        }
+      })
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44512,7 +44668,7 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.dishesNumber))])
+      _c("div", [_vm._v(_vm._s(_vm.simulation.wasteCostPerDish))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44520,45 +44676,13 @@ var render = function() {
       _vm._v(" "),
       _vm._m(3),
       _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.dishCost))])
+      _c("div", [_vm._v(_vm._s(_vm.simulation.foodWasteCost))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _vm._m(4),
       _vm._v(" "),
       _vm._m(5),
-      _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.wasteTreatmentCost))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(6),
-      _vm._v(" "),
-      _vm._m(7),
-      _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.foodWasteVolume))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(8),
-      _vm._v(" "),
-      _vm._m(9),
-      _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.wasteCostPerDish))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(10),
-      _vm._v(" "),
-      _vm._m(11),
-      _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.foodWasteCost))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(12),
-      _vm._v(" "),
-      _vm._m(13),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.simulation.amountOfDishesWasted))])
     ]),
@@ -44585,85 +44709,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
+    return _c("div", [_c("small")])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
+    return _c("div", [_c("small")])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
+    return _c("div", [_c("small")])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
+    return _c("div", [_c("small")])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
+    return _c("div", [_c("small")])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small", [_vm._v("+2.3 %")])])
+    return _c("div", [_c("small")])
   }
 ]
 render._withStripped = true
@@ -44697,7 +44773,8 @@ var render = function() {
           attrs: {
             animation: 150,
             handle: ".handle",
-            filter: ".inputs",
+            chosenClass: ".handling",
+            filter: ".ignore-draggable",
             preventOnFilter: false
           },
           on: { change: _vm.updateSimulationsValues },

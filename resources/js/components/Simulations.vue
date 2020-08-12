@@ -5,7 +5,8 @@
                    @change="updateSimulationsValues"
                    :animation="150"
                    handle=".handle"
-                   filter=".inputs"
+                   chosenClass=".handling"
+                   filter=".ignore-draggable"
                    :preventOnFilter="false"
         >
 
@@ -161,10 +162,5 @@ export default {
     display: block;
     max-width: 500px;
     margin: auto;
-}
-
-.handle {
-    cursor: grab;
-    cursor: -webkit-grab;
 }
 </style>
