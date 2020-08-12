@@ -33,20 +33,20 @@
         </div>
 
         <div class="p-2 flex-grow-1">
-            <div><small></small></div>
-            <div><small></small></div>
+            <div><small>{{ wasteCostPerDishDelta }}</small></div>
+            <div><small>{{ wasteCostPerDishDeltaPercentage }}</small></div>
             <div>{{ simulation.wasteCostPerDish }}</div>
         </div>
 
         <div class="p-2 flex-grow-1">
-            <div><small></small></div>
-            <div><small></small></div>
+            <div><small>{{ foodWasteCostDelta }}</small></div>
+            <div><small>{{ foodWasteCostDeltaPercentage }}</small></div>
             <div>{{ simulation.foodWasteCost }}</div>
         </div>
 
         <div class="p-2 flex-grow-1">
-            <div><small></small></div>
-            <div><small></small></div>
+            <div><small>{{ amountOfDishesWastedDelta }}</small></div>
+            <div><small>{{ amountOfDishesWastedDeltaPercentage }}</small></div>
             <div>{{ simulation.amountOfDishesWasted }}</div>
         </div>
 
@@ -116,6 +116,30 @@ export default {
 
         foodWasteVolumeDeltaPercentage() {
             return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
+        },
+
+        wasteCostPerDishDelta() {
+            return this.getDelta(this.simulation.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+        },
+
+        wasteCostPerDishDeltaPercentage() {
+            return this.getDeltaPercentage(this.simulation.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+        },
+
+        foodWasteCostDelta() {
+            return this.getDelta(this.simulation.foodWasteCost, this.previousSim.foodWasteCost);
+        },
+
+        foodWasteCostDeltaPercentage() {
+            return this.getDeltaPercentage(this.simulation.foodWasteCost, this.previousSim.foodWasteCost);
+        },
+
+        amountOfDishesWastedDelta() {
+            return this.getDelta(this.simulation.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+        },
+
+        amountOfDishesWastedDeltaPercentage() {
+            return this.getDeltaPercentage(this.simulation.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
         },
     },
 

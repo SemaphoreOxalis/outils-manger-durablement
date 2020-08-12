@@ -2775,6 +2775,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     foodWasteVolumeDeltaPercentage: function foodWasteVolumeDeltaPercentage() {
       return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
+    },
+    wasteCostPerDishDelta: function wasteCostPerDishDelta() {
+      return this.getDelta(this.simulation.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+    },
+    wasteCostPerDishDeltaPercentage: function wasteCostPerDishDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+    },
+    foodWasteCostDelta: function foodWasteCostDelta() {
+      return this.getDelta(this.simulation.foodWasteCost, this.previousSim.foodWasteCost);
+    },
+    foodWasteCostDeltaPercentage: function foodWasteCostDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.foodWasteCost, this.previousSim.foodWasteCost);
+    },
+    amountOfDishesWastedDelta: function amountOfDishesWastedDelta() {
+      return this.getDelta(this.simulation.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+    },
+    amountOfDishesWastedDeltaPercentage: function amountOfDishesWastedDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
     }
   },
   // Initialisation des données et propriétés utilisées par ce composant
@@ -44664,25 +44682,31 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(0),
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDelta))])]),
       _vm._v(" "),
-      _vm._m(1),
+      _c("div", [
+        _c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDeltaPercentage))])
+      ]),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.simulation.wasteCostPerDish))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(2),
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteCostDelta))])]),
       _vm._v(" "),
-      _vm._m(3),
+      _c("div", [
+        _c("small", [_vm._v(_vm._s(_vm.foodWasteCostDeltaPercentage))])
+      ]),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.simulation.foodWasteCost))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
-      _vm._m(4),
+      _c("div", [_c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDelta))])]),
       _vm._v(" "),
-      _vm._m(5),
+      _c("div", [
+        _c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDeltaPercentage))])
+      ]),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.simulation.amountOfDishesWasted))])
     ]),
@@ -44704,44 +44728,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("small")])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
