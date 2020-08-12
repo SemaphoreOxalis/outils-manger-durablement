@@ -2,7 +2,7 @@
     <div>
         <draggable v-model="simulations"
                    class="dragArea"
-                   @change="updateSimulationsValues"
+                   @change="saveChangesToLocalStorage"
                    :animation="150"
                    handle=".handle"
                    chosenClass=".handling"
@@ -19,6 +19,7 @@
                 v-bind:previous-simulation="previousSimulation(index)"
                 @delete-simulation="deleteSimulation"
                 @save-changes="saveChangesToLocalStorage"
+                @update-simulations-component="updateSimulationsList"
             >
             </simulation>
 
@@ -63,18 +64,19 @@ export default {
     // Fonction inhérentes au composant
     methods: {
 
+        updateSimulationsList(simulation) {
+            this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
+            this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
+            this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
+            this.saveChangesToLocalStorage();
+        },
+
         // Efface une simulation
         deleteSimulation: function (index) {
             this.simulations.splice(index, 1);
             this.refreshCounter();
             this.saveChangesToLocalStorage();
             this.updateSimulationsValues();
-        },
-
-        // Lors du drag'n'drop des simulations, il faut mettre à jour les données qu'elles reçoivent
-        updateSimulationsValues() {
-            events.$emit('update-simulations-values');
-            this.saveChangesToLocalStorage();
         },
 
         getDataSourceForNewSimulation() {
@@ -100,9 +102,9 @@ export default {
                     dishCost: this.dataSource.dishCost,
                     wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
                     foodWasteVolume: this.dataSource.foodWasteVolume,
-                    wasteCostPerDish: this.dataSource.wasteCostPerDish,
-                    foodWasteCost: this.dataSource.foodWasteCost,
-                    amountOfDishesWasted: this.dataSource.amountOfDishesWasted
+                    wasteCostPerDish: null,
+                    foodWasteCost: null,
+                    amountOfDishesWasted: null
                 }
             );
             this.saveChangesToLocalStorage();
@@ -136,6 +138,8 @@ export default {
         previousSimulation(index) {
             if (index > 0) {
                 return this.simulations[index - 1];
+            } else {
+                return this.auditData;
             }
         }
     },

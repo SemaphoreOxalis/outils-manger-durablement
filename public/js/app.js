@@ -2741,13 +2741,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
   // données récupérées du composant parent (Simulations.vue)
   props: ['simulation', 'index', 'auditData', 'previousSimulation'],
+  watch: {
+    foodWasteCost: function foodWasteCost() {
+      this.updateSimulationsComponent();
+    },
+    wasteCostPerDish: function wasteCostPerDish() {
+      this.updateSimulationsComponent();
+    },
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      this.updateSimulationsComponent();
+    }
+  },
   // Propriétés calculées du composant
   computed: {
+    previousSim: function previousSim() {
+      return this.isFirst ? this.auditData : this.previousSimulation;
+    },
     // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
     isFirst: function isFirst() {
       return this.index === 0;
@@ -2777,32 +2794,41 @@ __webpack_require__.r(__webpack_exports__);
       return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
     },
     wasteCostPerDishDelta: function wasteCostPerDishDelta() {
-      return this.getDelta(this.simulation.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+      return this.getDelta(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
     },
     wasteCostPerDishDeltaPercentage: function wasteCostPerDishDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+      return this.getDeltaPercentage(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
     },
     foodWasteCostDelta: function foodWasteCostDelta() {
-      return this.getDelta(this.simulation.foodWasteCost, this.previousSim.foodWasteCost);
+      return this.getDelta(this.foodWasteCost, this.previousSim.foodWasteCost);
     },
     foodWasteCostDeltaPercentage: function foodWasteCostDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.foodWasteCost, this.previousSim.foodWasteCost);
+      return this.getDeltaPercentage(this.foodWasteCost, this.previousSim.foodWasteCost);
     },
     amountOfDishesWastedDelta: function amountOfDishesWastedDelta() {
-      return this.getDelta(this.simulation.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+      return this.getDelta(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
     },
     amountOfDishesWastedDeltaPercentage: function amountOfDishesWastedDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+      return this.getDeltaPercentage(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+    },
+    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
+    foodWasteCost: function foodWasteCost() {
+      return this.roundToTwoDecimal(this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost);
+    },
+    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
+    wasteCostPerDish: function wasteCostPerDish() {
+      return this.roundToThreeDecimal(this.foodWasteCost / this.simulation.dishesNumber);
+    },
+    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      return this.roundToOneDecimal(this.foodWasteCost / this.simulation.dishCost);
     }
-  },
-  // Initialisation des données et propriétés utilisées par ce composant
-  data: function data() {
-    return {
-      previousSim: null
-    };
   },
   // Fonctions inhérentes au composant
   methods: {
+    updateSimulationsComponent: function updateSimulationsComponent() {
+      this.$emit('update-simulations-component', this);
+    },
     getDelta: function getDelta(simData, sourceData) {
       var result = this.roundToThreeDecimal(simData - sourceData);
       return result >= 0 ? "+" + result : result;
@@ -2822,10 +2848,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('save-changes');
       flash('Vos modifications ont été sauvegardées');
     },
-    // Met à jour les données utilisées par la simulation lors du drag'n'drop
-    updateSimulationsValues: function updateSimulationsValues() {
-      this.getPreviousSim();
-    },
     // Classes CSS appliquées en fonction de la position de la simulation
     getClasses: function getClasses() {
       if (this.isFirst) {
@@ -2833,21 +2855,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return ['d-flex', 'text-center', 'handle'];
       }
-    },
-    // Par souci de practicité, chaque simulation a une "previousSim" qui s'avère être l'audit si elle est en première position
-    getPreviousSim: function getPreviousSim() {
-      if (!this.isFirst) {
-        this.previousSim = this.previousSimulation;
-      } else {
-        this.previousSim = this.auditData;
-      }
     }
-  },
-  // A l'initialisation du composant
-  created: function created() {
-    this.updateSimulationsValues();
-    this.getPreviousSim();
-    events.$on('update-simulations-values', this.updateSimulationsValues);
   }
 });
 
@@ -2911,6 +2919,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 // import des dépendances
 
 
@@ -2932,17 +2941,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   // Fonction inhérentes au composant
   methods: {
+    updateSimulationsList: function updateSimulationsList(simulation) {
+      this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
+      this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
+      this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
+      this.saveChangesToLocalStorage();
+    },
     // Efface une simulation
     deleteSimulation: function deleteSimulation(index) {
       this.simulations.splice(index, 1);
       this.refreshCounter();
       this.saveChangesToLocalStorage();
       this.updateSimulationsValues();
-    },
-    // Lors du drag'n'drop des simulations, il faut mettre à jour les données qu'elles reçoivent
-    updateSimulationsValues: function updateSimulationsValues() {
-      events.$emit('update-simulations-values');
-      this.saveChangesToLocalStorage();
     },
     getDataSourceForNewSimulation: function getDataSourceForNewSimulation() {
       if (this.simulations.length === 0) {
@@ -2962,9 +2972,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         dishCost: this.dataSource.dishCost,
         wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
         foodWasteVolume: this.dataSource.foodWasteVolume,
-        wasteCostPerDish: this.dataSource.wasteCostPerDish,
-        foodWasteCost: this.dataSource.foodWasteCost,
-        amountOfDishesWasted: this.dataSource.amountOfDishesWasted
+        wasteCostPerDish: null,
+        foodWasteCost: null,
+        amountOfDishesWasted: null
       });
       this.saveChangesToLocalStorage();
     },
@@ -2995,6 +3005,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     previousSimulation: function previousSimulation(index) {
       if (index > 0) {
         return this.simulations[index - 1];
+      } else {
+        return this.auditData;
       }
     }
   },
@@ -44688,7 +44700,7 @@ var render = function() {
         _c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDeltaPercentage))])
       ]),
       _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.wasteCostPerDish))])
+      _c("div", [_vm._v(_vm._s(_vm.wasteCostPerDish))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44698,7 +44710,7 @@ var render = function() {
         _c("small", [_vm._v(_vm._s(_vm.foodWasteCostDeltaPercentage))])
       ]),
       _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.foodWasteCost))])
+      _c("div", [_vm._v(_vm._s(_vm.foodWasteCost))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
@@ -44708,7 +44720,7 @@ var render = function() {
         _c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDeltaPercentage))])
       ]),
       _vm._v(" "),
-      _c("div", [_vm._v(_vm._s(_vm.simulation.amountOfDishesWasted))])
+      _c("div", [_vm._v(_vm._s(_vm.amountOfDishesWasted))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-2 flex-grow-0" }, [
@@ -44764,7 +44776,7 @@ var render = function() {
             filter: ".ignore-draggable",
             preventOnFilter: false
           },
-          on: { change: _vm.updateSimulationsValues },
+          on: { change: _vm.saveChangesToLocalStorage },
           model: {
             value: _vm.simulations,
             callback: function($$v) {
@@ -44784,7 +44796,8 @@ var render = function() {
             },
             on: {
               "delete-simulation": _vm.deleteSimulation,
-              "save-changes": _vm.saveChangesToLocalStorage
+              "save-changes": _vm.saveChangesToLocalStorage,
+              "update-simulations-component": _vm.updateSimulationsList
             }
           })
         }),
