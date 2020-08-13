@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 //
 //
 //
@@ -1929,7 +1930,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_helpers_DataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -1947,29 +1950,6 @@ __webpack_require__.r(__webpack_exports__);
     signedIn: function signedIn() {
       return window.App.signedIn;
     }
-  },
-  // Fonctions utilisées par le composant
-  methods: {
-    // Va chercher les valeurs de référence depuis la BDD
-    fetchWasteReferenceValues: function fetchWasteReferenceValues() {
-      var _this = this;
-
-      axios.get('/api/waste-values').then(function (response) {
-        _this.values = response.data;
-      });
-    },
-    // Met à jour les valeurs de référence dans la BDD
-    update: function update(value) {
-      // Appel AJAX
-      axios.patch('/api/waste-values/' + value.id, {
-        value: value.value // Puis feedback visuel
-
-      }).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    }
   }
 });
 
@@ -1984,9 +1964,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
-/* harmony import */ var _Simulations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Simulations */ "./resources/js/components/Simulations.vue");
+/* harmony import */ var _helpers_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/calculations/AuditLogic */ "./resources/js/helpers/calculations/AuditLogic.js");
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _Simulations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Simulations */ "./resources/js/components/Simulations.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2032,12 +2013,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ce mixin
-  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_helpers_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // Déclaration des composants enfants
   components: {
-    Simulations: _Simulations__WEBPACK_IMPORTED_MODULE_2__["default"]
+    Simulations: _Simulations__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   // données récupérées du composant parent (Results.vue)
   props: ['auditRawData'],
@@ -2048,29 +2030,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       computedValues: {},
       auditData: {}
     };
-  },
-  // données calculées
-  computed: {
-    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
-    globalFoodWasteVolume: function globalFoodWasteVolume() {
-      return this.roundToThreeDecimal(this.auditRawData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditRawData.globalWasteVolume);
-    },
-    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
-    foodWasteVolume: function foodWasteVolume() {
-      return this.roundToThreeDecimal(this.auditRawData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
-    },
-    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
-    foodWasteCost: function foodWasteCost() {
-      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditRawData.wasteTreatmentCost);
-    },
-    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
-    wasteCostPerDish: function wasteCostPerDish() {
-      return this.roundToThreeDecimal(this.foodWasteCost / this.auditRawData.dishesNumber);
-    },
-    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
-    amountOfDishesWasted: function amountOfDishesWasted() {
-      return this.roundToOneDecimal(this.foodWasteCost / this.auditRawData.dishCost);
-    }
   },
   // A l'initialisation du composant
   mounted: function mounted() {
@@ -2210,7 +2169,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HelpModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelpModal */ "./resources/js/components/HelpModal.vue");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 //
 //
 //
@@ -2251,13 +2211,14 @@ __webpack_require__.r(__webpack_exports__);
 // fenêtre modale d'aide
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Déclaration de la parenté de ce composant
   components: {
     HelpModal: _HelpModal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   // Bibliothèqye de fonctions custom
-  mixins: [_helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2268,8 +2229,14 @@ __webpack_require__.r(__webpack_exports__);
       previousAuditDate: null
     };
   },
-  // Fonctions inhérentes au composant
   methods: {
+    checkPreviousAuditFromLocalStorage: function checkPreviousAuditFromLocalStorage() {
+      // On récupère l'audit stocké en localStorage s'il y en a un
+      if (localStorage.hasOwnProperty('audit')) {
+        this.previousAuditDetectedInLocalStorage = true;
+        this.previousAuditDate = this.getAuditDateFromLocalStorage();
+      }
+    },
     // Si un audit a été effectué, possibilité de s'y rendre directement
     goToPreviousAudit: function goToPreviousAudit() {
       this.$router.push({
@@ -2278,19 +2245,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Efface l'audit enregistré en localStorage ainsi que les simulations associées
     deletePreviousAudit: function deletePreviousAudit() {
-      localStorage.removeItem('audit');
-      localStorage.removeItem('simulations');
+      this.clearLocalStorage();
       this.previousAuditDetectedInLocalStorage = false;
       flash("Vos simulations ont bien été supprimées");
     }
   },
   // A l'initialisation du composant
   created: function created() {
-    // On récupère l'audit stocké en localStorage s'il y en a un
-    if (localStorage.hasOwnProperty('audit')) {
-      this.previousAuditDetectedInLocalStorage = true;
-      this.previousAuditDate = this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
-    }
+    this.checkPreviousAuditFromLocalStorage();
   }
 });
 
@@ -2305,7 +2267,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_InputValidation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/InputValidation */ "./resources/js/helpers/InputValidation.js");
+/* harmony import */ var _helpers_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/calculations/InputLogic */ "./resources/js/helpers/calculations/InputLogic.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
 //
 //
 //
@@ -2429,14 +2395,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// Petite bibliothèque de fonctions bien pratique
+
+
+
+ // Petite bibliothèque de fonctions bien pratique
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ce mixin
-  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // A la création du composent (i.e quand on arrive sur la "page")
   created: function created() {
-    // Va chercher les valeurs de référence, cf. méthodes ci-dessous
+    // Va chercher les valeurs de référence, cf. méthode ci-dessous
     this.checkWasteReferenceValues();
   },
   // initialisation des données utilisées par le composant
@@ -2465,79 +2435,24 @@ __webpack_require__.r(__webpack_exports__);
       defaultValues: true
     };
   },
-  // Données calculées en fonction des sonnées saisies
-  computed: {
-    // VALIDATION - empêche de continuer si les données saisies ne sont pas pertinentes
-    // validation des données saisies pour l'audit ( supérieures à 0 + dates valables )
-    areThereInvalidData: function areThereInvalidData() {
-      if (this.areThereInvalidValues) {
-        return true;
-      }
-
-      if (this.userInput.dishesNumber < 1 || this.userInput.dishCost < 0.01 || this.userInput.globalWasteVolume < 0.001 || this.userInput.wasteTreatmentCost < 0.01) {
-        return true;
-      }
-
-      if (!this.userInput.startDate || !this.userInput.endDate || this.userInput.startDate > this.userInput.endDate) {
-        return true;
-      }
-
-      return false;
-    },
-    // validation des valeurs de référence ( entre 0 et 100 %)
-    areThereInvalidValues: function areThereInvalidValues() {
-      if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 || this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
-        return true;
-      }
-
-      if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 || this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
-        return true;
-      }
-
-      return false;
-    },
-    // CALCULS - "soit dans votre cas ..... tonnes"
-    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
-    foodLeftoversVolumeInGlobalWasteInYourCase: function foodLeftoversVolumeInGlobalWasteInYourCase() {
-      return this.roundToThreeDecimal(this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 * this.userInput.globalWasteVolume);
-    },
-    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
-    actualFoodLeftoversInFoodWasteInYourCase: function actualFoodLeftoversInFoodWasteInYourCase() {
-      return this.roundToThreeDecimal(this.referenceValues.actualFoodLeftoversInFoodWaste / 100 * this.foodLeftoversVolumeInGlobalWasteInYourCase);
-    }
-  },
   // Fonctions utilisées par le composant
   methods: {
     // Va chercher les valeurs de référence
     checkWasteReferenceValues: function checkWasteReferenceValues() {
       // Soit dans le local Storage (valeurs personnalisées)
       if (localStorage.getItem('localReferenceValues')) {
-        this.fetchWasteReferenceValuesFromLocalStorage();
+        this.referenceValues = this.fetchWasteReferenceValuesFromLocalStorage();
+        this.defaultValues = false;
       } // Sinon en BDD (valeurs par défaut)
       else {
           this.fetchWasteReferenceValuesFromDB();
+          this.defaultValues = true;
         }
-    },
-    // Va chercher les valeurs de référence depuis la BDD
-    fetchWasteReferenceValuesFromDB: function fetchWasteReferenceValuesFromDB() {
-      var _this = this;
-
-      axios.get('/api/waste-values').then(function (response) {
-        localStorage.removeItem('localReferenceValues');
-        _this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
-        _this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
-        _this.defaultValues = true;
-      });
-    },
-    // Va chercher les valeurs de référence depuis le localStorage
-    fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
-      this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
-      this.defaultValues = false;
     },
     // Enregistre en localStorage les valeurs personnalisées de l'utilisateur
     saveLocalReferenceValues: function saveLocalReferenceValues() {
-      var parsed = JSON.stringify(this.referenceValues);
-      localStorage.setItem('localReferenceValues', parsed);
+      var values = JSON.stringify(this.referenceValues);
+      this.savePersonalValuesToLocalStorage(values);
       this.editingReferenceValues = false;
       this.defaultValues = false;
       flash('Les nouvelles valeurs ont correctement été enregistrées dans votre navigateur');
@@ -2581,6 +2496,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Audit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Audit */ "./resources/js/components/Audit.vue");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2619,6 +2535,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 // import des composants enfants
+ // import des helpers
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration des composants enfants
@@ -2627,6 +2545,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   // données à récupérer de la page Input
   props: ['userInput', 'referenceValues'],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2637,19 +2556,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     // Si on vient de la page de saisie
     if (this.userInput) {
-      // On cleare le localStorage
-      localStorage.removeItem('audit');
-      localStorage.removeItem('simulations'); // On récupère les données saisies lors de la phase de saisie
-
-      this.auditRawData = _objectSpread(_objectSpread(_objectSpread({}, this.userInput), this.referenceValues), {}, {
-        auditDate: Date.now()
-      }); // et on les enregistre dans le localStorage
-
-      var audit = JSON.stringify(this.auditRawData);
-      localStorage.setItem('audit', audit);
+      this.handleUserInput();
     } // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
     else if (localStorage.hasOwnProperty('audit')) {
-        this.auditRawData = JSON.parse(localStorage.getItem('audit'));
+        this.auditRawData = this.getAuditFromLocalStorage();
       } // et si on arrive de nulle part, redirection vers la homepage
       else {
           this.$router.push({
@@ -2662,6 +2572,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // Efface les simulations (pas l'audit)
     resetSimulations: function resetSimulations() {
       events.$emit('reset-simulations');
+    },
+    handleUserInput: function handleUserInput() {
+      this.clearLocalStorage(); // On récupère les données saisies lors de la phase de saisie
+
+      this.auditRawData = _objectSpread(_objectSpread(_objectSpread({}, this.userInput), this.referenceValues), {}, {
+        auditDate: Date.now()
+      });
+      var audit = JSON.stringify(this.auditRawData);
+      this.saveAuditToLocalStorage(audit);
     }
   }
 });
@@ -2677,7 +2596,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/SimulationHelper */ "./resources/js/helpers/SimulationHelper.js");
+/* harmony import */ var _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/calculations/SimulationLogic */ "./resources/js/helpers/calculations/SimulationLogic.js");
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
 //
 //
 //
@@ -2740,8 +2661,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // données récupérées du composant parent (Simulations.vue)
   props: ['simulation', 'index', 'auditData', 'previousSimulation'],
   watch: {
@@ -2763,93 +2686,11 @@ __webpack_require__.r(__webpack_exports__);
     // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
     isFirst: function isFirst() {
       return this.index === 0;
-    },
-    dishesNumberDelta: function dishesNumberDelta() {
-      return this.getDelta(this.simulation.dishesNumber, this.previousSim.dishesNumber);
-    },
-    dishesNumberDeltaPercentage: function dishesNumberDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.dishesNumber, this.previousSim.dishesNumber);
-    },
-    dishCostDelta: function dishCostDelta() {
-      return this.getDelta(this.simulation.dishCost, this.previousSim.dishCost);
-    },
-    dishCostDeltaPercentage: function dishCostDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.dishCost, this.previousSim.dishCost);
-    },
-    wasteTreatmentCostDelta: function wasteTreatmentCostDelta() {
-      return this.getDelta(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
-    },
-    wasteTreatmentCostDeltaPercentage: function wasteTreatmentCostDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
-    },
-    foodWasteVolumeDelta: function foodWasteVolumeDelta() {
-      return this.getDelta(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
-    },
-    foodWasteVolumeDeltaPercentage: function foodWasteVolumeDeltaPercentage() {
-      return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
-    },
-    wasteCostPerDishDelta: function wasteCostPerDishDelta() {
-      return this.getDelta(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
-    },
-    wasteCostPerDishDeltaPercentage: function wasteCostPerDishDeltaPercentage() {
-      return this.getDeltaPercentage(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
-    },
-    foodWasteCostDelta: function foodWasteCostDelta() {
-      return this.getDelta(this.foodWasteCost, this.previousSim.foodWasteCost);
-    },
-    foodWasteCostDeltaPercentage: function foodWasteCostDeltaPercentage() {
-      return this.getDeltaPercentage(this.foodWasteCost, this.previousSim.foodWasteCost);
-    },
-    amountOfDishesWastedDelta: function amountOfDishesWastedDelta() {
-      return this.getDelta(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
-    },
-    amountOfDishesWastedDeltaPercentage: function amountOfDishesWastedDeltaPercentage() {
-      return this.getDeltaPercentage(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
-    },
-    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
-    foodWasteCost: function foodWasteCost() {
-      return this.roundToTwoDecimal(this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost);
-    },
-    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
-    wasteCostPerDish: function wasteCostPerDish() {
-      return this.roundToThreeDecimal(this.foodWasteCost / this.simulation.dishesNumber);
-    },
-    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
-    amountOfDishesWasted: function amountOfDishesWasted() {
-      return this.roundToOneDecimal(this.foodWasteCost / this.simulation.dishCost);
     }
   },
-  // Fonctions inhérentes au composant
   methods: {
     updateSimulationsComponent: function updateSimulationsComponent() {
       this.$emit('update-simulations-component', this);
-    },
-    getDelta: function getDelta(simData, sourceData) {
-      var result = this.roundToThreeDecimal(simData - sourceData);
-      return result >= 0 ? "+" + result : result;
-    },
-    getDeltaPercentage: function getDeltaPercentage(simData, sourceData) {
-      var result = this.roundToThreeDecimal(simData * 100 / sourceData - 100);
-      return result >= 0 ? "+" + result + "%" : result + "%";
-    },
-    // Effacer une simulation
-    remove: function remove(index) {
-      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
-      this.$emit('delete-simulation', index);
-    },
-    // Sauvegarder les modifications faites à la simulation
-    saveChanges: function saveChanges() {
-      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
-      this.$emit('save-changes');
-      flash('Vos modifications ont été sauvegardées');
-    },
-    // Classes CSS appliquées en fonction de la position de la simulation
-    getClasses: function getClasses() {
-      if (this.isFirst) {
-        return ['d-flex', 'text-center', 'handle', 'highlighted'];
-      } else {
-        return ['d-flex', 'text-center', 'handle'];
-      }
     }
   }
 });
@@ -2865,9 +2706,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/SimulationsHelper */ "./resources/js/helpers/SimulationsHelper.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_3__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2918,14 +2761,17 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 // import des dépendances
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Composants enfants
   components: {
-    Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_0__["default"],
-    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a
+    Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_2__["default"],
+    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_3___default.a
   },
   // Données reçues du composant parent (Audit.vue)
   props: ['auditData'],
+  mixins: [_helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // Initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2936,43 +2782,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   },
   // Fonction inhérentes au composant
   methods: {
-    updateSimulationsList: function updateSimulationsList(simulation) {
-      this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
-      this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
-      this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
-      this.saveChangesToLocalStorage();
-    },
-    // Efface une simulation
-    deleteSimulation: function deleteSimulation(index) {
-      this.simulations.splice(index, 1);
-      this.refreshCounter();
-      this.saveChangesToLocalStorage();
-    },
-    getDataSourceForNewSimulation: function getDataSourceForNewSimulation() {
-      this.dataSource = this.simulations.length === 0 ? this.auditData : this.simulations[this.simulations.length - 1];
-    },
-    // Ajoute une simulation
-    addSimulation: function addSimulation() {
-      this.getDataSourceForNewSimulation();
-      this.counter++;
-      this.simulations.push({
-        id: this.counter,
-        name: 'simulation ' + this.counter,
-        dishesNumber: this.dataSource.dishesNumber,
-        dishCost: this.dataSource.dishCost,
-        wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
-        foodWasteVolume: this.dataSource.foodWasteVolume,
-        wasteCostPerDish: this.dataSource.wasteCostPerDish,
-        foodWasteCost: this.dataSource.foodWasteCost,
-        amountOfDishesWasted: this.dataSource.amountOfDishesWasted
-      });
-      this.saveChangesToLocalStorage();
-    },
-    // Sauvegarde les changements des simulations en localStorage
-    saveChangesToLocalStorage: function saveChangesToLocalStorage() {
-      var sims = JSON.stringify(this.simulations);
-      localStorage.setItem('simulations', sims);
-    },
     // Met à jour le compteur qui sert à incrémenter les id des simulations
     refreshCounter: function refreshCounter() {
       if (this.simulations.length > 0) {
@@ -2985,12 +2794,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         this.counter = 0;
       }
     },
-    // Remet à zéro les simulations (pas l'audit)
-    resetSimulations: function resetSimulations() {
-      localStorage.removeItem('simulations');
-      this.simulations = [];
-      this.counter = 0;
-    },
     // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
     previousSimulation: function previousSimulation(index) {
       return index > 0 ? this.simulations[index - 1] : this.auditData;
@@ -3000,7 +2803,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   mounted: function mounted() {
     // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
     if (localStorage.hasOwnProperty('simulations')) {
-      this.simulations = JSON.parse(localStorage.getItem('simulations'));
+      this.simulations = this.getSimulationsFromLocalStorage();
       this.refreshCounter();
     } // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
 
@@ -44712,7 +44515,7 @@ var render = function() {
           {
             on: {
               click: function($event) {
-                return _vm.remove(_vm.index)
+                return _vm.removeSimulation(_vm.index)
               }
             }
           },
@@ -63690,6 +63493,55 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/helpers/DataBase.js":
+/*!******************************************!*\
+  !*** ./resources/js/helpers/DataBase.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    //ADMIN
+    // Va chercher les valeurs de référence depuis la BDD
+    fetchWasteReferenceValues: function fetchWasteReferenceValues() {
+      var _this = this;
+
+      axios.get('/api/waste-values').then(function (response) {
+        _this.values = response.data;
+      });
+    },
+    // Met à jour les valeurs de référence dans la BDD
+    update: function update(value) {
+      // Appel AJAX
+      axios.patch('/api/waste-values/' + value.id, {
+        value: value.value // Puis feedback visuel
+
+      }).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    //INPUT
+    // Va chercher les valeurs de référence depuis la BDD
+    fetchWasteReferenceValuesFromDB: function fetchWasteReferenceValuesFromDB() {
+      var _this2 = this;
+
+      axios.get('/api/waste-values').then(function (response) {
+        //TODO : virer trucs qu'ont rien à faire ici
+        localStorage.removeItem('localReferenceValues');
+        _this2.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
+        _this2.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/helpers/DateFormatter.js":
 /*!***********************************************!*\
   !*** ./resources/js/helpers/DateFormatter.js ***!
@@ -63705,6 +63557,100 @@ __webpack_require__.r(__webpack_exports__);
     formatToFrench: function formatToFrench(date) {
       var formattedDate = new Date(date);
       return formattedDate.toLocaleDateString();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/InputValidation.js":
+/*!*************************************************!*\
+  !*** ./resources/js/helpers/InputValidation.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    // VALIDATION - empêche de continuer si les données saisies ne sont pas pertinentes
+    // validation des données saisies pour l'audit ( supérieures à 0 + dates valables )
+    areThereInvalidData: function areThereInvalidData() {
+      if (this.areThereInvalidValues) {
+        return true;
+      }
+
+      if (this.userInput.dishesNumber < 1 || this.userInput.dishCost < 0.01 || this.userInput.globalWasteVolume < 0.001 || this.userInput.wasteTreatmentCost < 0.01) {
+        return true;
+      }
+
+      if (!this.userInput.startDate || !this.userInput.endDate || this.userInput.startDate > this.userInput.endDate) {
+        return true;
+      }
+
+      return false;
+    },
+    // validation des valeurs de référence ( entre 0 et 100 %)
+    areThereInvalidValues: function areThereInvalidValues() {
+      if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 || this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
+        return true;
+      }
+
+      if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 || this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
+        return true;
+      }
+
+      return false;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/LocalStorageHelper.js":
+/*!****************************************************!*\
+  !*** ./resources/js/helpers/LocalStorageHelper.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // HOME
+    getAuditDateFromLocalStorage: function getAuditDateFromLocalStorage() {
+      return this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
+    },
+    // INPUT
+    // Va chercher les valeurs de référence depuis le localStorage
+    fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
+      return JSON.parse(localStorage.getItem('localReferenceValues'));
+    },
+    savePersonalValuesToLocalStorage: function savePersonalValuesToLocalStorage(values) {
+      localStorage.setItem('localReferenceValues', values);
+    },
+    //RESULTS
+    clearLocalStorage: function clearLocalStorage() {
+      localStorage.removeItem('audit');
+      localStorage.removeItem('simulations');
+    },
+    saveAuditToLocalStorage: function saveAuditToLocalStorage(audit) {
+      localStorage.setItem('audit', audit);
+    },
+    getAuditFromLocalStorage: function getAuditFromLocalStorage() {
+      return JSON.parse(localStorage.getItem('audit'));
+    },
+    //SIMULATIONS
+    getSimulationsFromLocalStorage: function getSimulationsFromLocalStorage() {
+      return JSON.parse(localStorage.getItem('simulations'));
+    },
+    deleteSimulationsFromLocalStorage: function deleteSimulationsFromLocalStorage() {
+      localStorage.removeItem('simulations');
+    },
+    saveSimulationsToLocalStorage: function saveSimulationsToLocalStorage(sims) {
+      localStorage.setItem('simulations', sims);
     }
   }
 });
@@ -63732,6 +63678,243 @@ __webpack_require__.r(__webpack_exports__);
     },
     roundToThreeDecimal: function roundToThreeDecimal(number) {
       return Math.round((number + Number.EPSILON) * 1000) / 1000;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/SimulationHelper.js":
+/*!**************************************************!*\
+  !*** ./resources/js/helpers/SimulationHelper.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // Effacer une simulation
+    removeSimulation: function removeSimulation(index) {
+      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
+      this.$emit('delete-simulation', index);
+    },
+    // Sauvegarder les modifications faites à la simulation
+    saveChanges: function saveChanges() {
+      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
+      this.$emit('save-changes');
+      flash('Vos modifications ont été sauvegardées');
+    },
+    // Classes CSS appliquées en fonction de la position de la simulation
+    getClasses: function getClasses() {
+      if (this.isFirst) {
+        return ['d-flex', 'text-center', 'handle', 'highlighted'];
+      } else {
+        return ['d-flex', 'text-center', 'handle'];
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/SimulationsHelper.js":
+/*!***************************************************!*\
+  !*** ./resources/js/helpers/SimulationsHelper.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    updateSimulationsList: function updateSimulationsList(simulation) {
+      this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
+      this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
+      this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
+      this.saveChangesToLocalStorage();
+    },
+    // Efface une simulation
+    deleteSimulation: function deleteSimulation(index) {
+      this.simulations.splice(index, 1);
+      this.refreshCounter();
+      this.saveChangesToLocalStorage();
+    },
+    getDataSourceForNewSimulation: function getDataSourceForNewSimulation() {
+      this.dataSource = this.simulations.length === 0 ? this.auditData : this.simulations[this.simulations.length - 1];
+    },
+    // Ajoute une simulation
+    addSimulation: function addSimulation() {
+      this.getDataSourceForNewSimulation();
+      this.counter++;
+      this.simulations.push({
+        id: this.counter,
+        name: 'simulation ' + this.counter,
+        dishesNumber: this.dataSource.dishesNumber,
+        dishCost: this.dataSource.dishCost,
+        wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
+        foodWasteVolume: this.dataSource.foodWasteVolume,
+        wasteCostPerDish: this.dataSource.wasteCostPerDish,
+        foodWasteCost: this.dataSource.foodWasteCost,
+        amountOfDishesWasted: this.dataSource.amountOfDishesWasted
+      });
+      this.saveChangesToLocalStorage();
+    },
+    // Sauvegarde les changements des simulations en localStorage
+    saveChangesToLocalStorage: function saveChangesToLocalStorage() {
+      var sims = JSON.stringify(this.simulations);
+      this.saveSimulationsToLocalStorage(sims);
+    },
+    // Remet à zéro les simulations (pas l'audit)
+    resetSimulations: function resetSimulations() {
+      this.deleteSimulationsFromLocalStorage();
+      this.simulations = [];
+      this.counter = 0;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/calculations/AuditLogic.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/helpers/calculations/AuditLogic.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // données calculées
+  computed: {
+    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets - ou taux personnalisé)
+    globalFoodWasteVolume: function globalFoodWasteVolume() {
+      return this.roundToThreeDecimal(this.auditRawData.foodLeftoversVolumeInGlobalWaste / 100 * this.auditRawData.globalWasteVolume);
+    },
+    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale - ou taux personnalisé)
+    foodWasteVolume: function foodWasteVolume() {
+      return this.roundToThreeDecimal(this.auditRawData.actualFoodLeftoversInFoodWaste / 100 * this.globalFoodWasteVolume);
+    },
+    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
+    foodWasteCost: function foodWasteCost() {
+      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditRawData.wasteTreatmentCost);
+    },
+    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
+    wasteCostPerDish: function wasteCostPerDish() {
+      return this.roundToThreeDecimal(this.foodWasteCost / this.auditRawData.dishesNumber);
+    },
+    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      return this.roundToOneDecimal(this.foodWasteCost / this.auditRawData.dishCost);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/calculations/InputLogic.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/helpers/calculations/InputLogic.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // Données calculées en fonction des sonnées saisies
+  computed: {
+    // CALCULS - "soit dans votre cas ..... tonnes"
+    // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
+    foodLeftoversVolumeInGlobalWasteInYourCase: function foodLeftoversVolumeInGlobalWasteInYourCase() {
+      return this.roundToThreeDecimal(this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 * this.userInput.globalWasteVolume);
+    },
+    // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
+    actualFoodLeftoversInFoodWasteInYourCase: function actualFoodLeftoversInFoodWasteInYourCase() {
+      return this.roundToThreeDecimal(this.referenceValues.actualFoodLeftoversInFoodWaste / 100 * this.foodLeftoversVolumeInGlobalWasteInYourCase);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/calculations/SimulationLogic.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/helpers/calculations/SimulationLogic.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    dishesNumberDelta: function dishesNumberDelta() {
+      return this.getDelta(this.simulation.dishesNumber, this.previousSim.dishesNumber);
+    },
+    dishesNumberDeltaPercentage: function dishesNumberDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.dishesNumber, this.previousSim.dishesNumber);
+    },
+    dishCostDelta: function dishCostDelta() {
+      return this.getDelta(this.simulation.dishCost, this.previousSim.dishCost);
+    },
+    dishCostDeltaPercentage: function dishCostDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.dishCost, this.previousSim.dishCost);
+    },
+    wasteTreatmentCostDelta: function wasteTreatmentCostDelta() {
+      return this.getDelta(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
+    },
+    wasteTreatmentCostDeltaPercentage: function wasteTreatmentCostDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
+    },
+    foodWasteVolumeDelta: function foodWasteVolumeDelta() {
+      return this.getDelta(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
+    },
+    foodWasteVolumeDeltaPercentage: function foodWasteVolumeDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
+    },
+    wasteCostPerDishDelta: function wasteCostPerDishDelta() {
+      return this.getDelta(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+    },
+    wasteCostPerDishDeltaPercentage: function wasteCostPerDishDeltaPercentage() {
+      return this.getDeltaPercentage(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
+    },
+    foodWasteCostDelta: function foodWasteCostDelta() {
+      return this.getDelta(this.foodWasteCost, this.previousSim.foodWasteCost);
+    },
+    foodWasteCostDeltaPercentage: function foodWasteCostDeltaPercentage() {
+      return this.getDeltaPercentage(this.foodWasteCost, this.previousSim.foodWasteCost);
+    },
+    amountOfDishesWastedDelta: function amountOfDishesWastedDelta() {
+      return this.getDelta(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+    },
+    amountOfDishesWastedDeltaPercentage: function amountOfDishesWastedDeltaPercentage() {
+      return this.getDeltaPercentage(this.amountOfDishesWasted, this.previousSim.amountOfDishesWasted);
+    },
+    // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
+    foodWasteCost: function foodWasteCost() {
+      return this.roundToTwoDecimal(this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost);
+    },
+    // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
+    wasteCostPerDish: function wasteCostPerDish() {
+      return this.roundToThreeDecimal(this.foodWasteCost / this.simulation.dishesNumber);
+    },
+    // équivalence en nombre de repas = coût du gaspillage alimentaire global / prix de revient d'un repas
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      return this.roundToOneDecimal(this.foodWasteCost / this.simulation.dishCost);
+    }
+  },
+  methods: {
+    getDelta: function getDelta(simData, sourceData) {
+      var result = this.roundToThreeDecimal(simData - sourceData);
+      return result >= 0 ? "+" + result : result;
+    },
+    getDeltaPercentage: function getDeltaPercentage(simData, sourceData) {
+      var result = this.roundToTwoDecimal(simData * 100 / sourceData - 100);
+      return result >= 0 ? "+" + result + "%" : result + "%";
     }
   }
 });

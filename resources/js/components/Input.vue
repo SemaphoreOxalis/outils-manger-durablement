@@ -122,6 +122,10 @@
 </template>
 
 <script>
+    import InputValidation from "../helpers/InputValidation";
+    import InputLogic from "../helpers/calculations/InputLogic";
+    import DataBase from "../helpers/DataBase";
+    import LocalStorageHelper from "../helpers/LocalStorageHelper";
     // Petite bibliothèque de fonctions bien pratique
     import NumberRounder from "../helpers/NumberRounder";
 
@@ -129,13 +133,17 @@
 
         // déclaration de la dépendance à ce mixin
         mixins: [
+            InputValidation,
+            InputLogic,
+            DataBase,
+            LocalStorageHelper,
             NumberRounder
         ],
 
         // A la création du composent (i.e quand on arrive sur la "page")
         created() {
 
-            // Va chercher les valeurs de référence, cf. méthodes ci-dessous
+            // Va chercher les valeurs de référence, cf. méthode ci-dessous
             this.checkWasteReferenceValues();
         },
 
@@ -165,60 +173,6 @@
             }
         },
 
-        // Données calculées en fonction des sonnées saisies
-        computed: {
-
-            // VALIDATION - empêche de continuer si les données saisies ne sont pas pertinentes
-
-            // validation des données saisies pour l'audit ( supérieures à 0 + dates valables )
-            areThereInvalidData: function () {
-                if (this.areThereInvalidValues) {
-                    return true;
-                }
-                if (this.userInput.dishesNumber < 1 ||
-                    this.userInput.dishCost < 0.01 ||
-                    this.userInput.globalWasteVolume < 0.001 ||
-                    this.userInput.wasteTreatmentCost < 0.01) {
-                    return true;
-                }
-                if (!this.userInput.startDate ||
-                    !this.userInput.endDate ||
-                    this.userInput.startDate > this.userInput.endDate) {
-                    return true;
-                }
-                return false;
-            },
-
-            // validation des valeurs de référence ( entre 0 et 100 %)
-            areThereInvalidValues: function () {
-                if (this.referenceValues.foodLeftoversVolumeInGlobalWaste < 0.01 ||
-                    this.referenceValues.foodLeftoversVolumeInGlobalWaste > 100) {
-                    return true;
-                }
-                if (this.referenceValues.actualFoodLeftoversInFoodWaste < 0.01 ||
-                    this.referenceValues.actualFoodLeftoversInFoodWaste > 100) {
-                    return true;
-                }
-                return false;
-            },
-
-            // CALCULS - "soit dans votre cas ..... tonnes"
-
-            // calcul de la part fermentescible globale ( environ 25 % du volume global de déchets )
-            foodLeftoversVolumeInGlobalWasteInYourCase: function() {
-                return this.roundToThreeDecimal(
-                    ( this.referenceValues.foodLeftoversVolumeInGlobalWaste / 100 ) * this.userInput.globalWasteVolume
-                );
-            },
-
-            // calcul du volume de gaspillage alimentaire ( environ 75 % de la part fermentescible globale )
-            actualFoodLeftoversInFoodWasteInYourCase: function() {
-                return this.roundToThreeDecimal(
-                    ( this.referenceValues.actualFoodLeftoversInFoodWaste / 100 ) * this.foodLeftoversVolumeInGlobalWasteInYourCase
-                );
-            },
-        },
-
         // Fonctions utilisées par le composant
         methods: {
 
@@ -227,37 +181,20 @@
 
                 // Soit dans le local Storage (valeurs personnalisées)
                 if (localStorage.getItem('localReferenceValues')) {
-                    this.fetchWasteReferenceValuesFromLocalStorage();
+                    this.referenceValues = this.fetchWasteReferenceValuesFromLocalStorage();
+                    this.defaultValues = false;
                 }
                 // Sinon en BDD (valeurs par défaut)
                 else {
                     this.fetchWasteReferenceValuesFromDB();
-                }
-            },
-
-            // Va chercher les valeurs de référence depuis la BDD
-            fetchWasteReferenceValuesFromDB() {
-                axios.get('/api/waste-values').then((response) => {
-                    localStorage.removeItem('localReferenceValues');
-
-                    this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;
-                    this.referenceValues.actualFoodLeftoversInFoodWaste = response.data[1].value;
-
                     this.defaultValues = true;
-                });
-            },
-
-            // Va chercher les valeurs de référence depuis le localStorage
-            fetchWasteReferenceValuesFromLocalStorage() {
-                this.referenceValues = JSON.parse(localStorage.getItem('localReferenceValues'));
-
-                this.defaultValues = false;
+                }
             },
 
             // Enregistre en localStorage les valeurs personnalisées de l'utilisateur
             saveLocalReferenceValues() {
-                const parsed = JSON.stringify(this.referenceValues);
-                localStorage.setItem('localReferenceValues', parsed);
+                const values = JSON.stringify(this.referenceValues);
+                this.savePersonalValuesToLocalStorage(values);
 
                 this.editingReferenceValues = false;
                 this.defaultValues = false;

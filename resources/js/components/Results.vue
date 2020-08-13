@@ -33,7 +33,8 @@
 
     // import des composants enfants
     import Audit from "./Audit"
-
+    // import des helpers
+    import LocalStorageHelper from "../helpers/LocalStorageHelper";
     export default {
 
         // déclaration des composants enfants
@@ -45,6 +46,10 @@
         props: [
             'userInput',
             'referenceValues'
+        ],
+
+        mixins: [
+          LocalStorageHelper
         ],
 
         // initialisation des données utilisées par le composant
@@ -59,22 +64,12 @@
 
             // Si on vient de la page de saisie
             if (this.userInput) {
-
-                // On cleare le localStorage
-                localStorage.removeItem('audit');
-                localStorage.removeItem('simulations');
-
-                // On récupère les données saisies lors de la phase de saisie
-                this.auditRawData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
-
-                // et on les enregistre dans le localStorage
-                const audit = JSON.stringify(this.auditRawData);
-                localStorage.setItem('audit', audit);
+                this.handleUserInput();
             }
 
             // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
             else if (localStorage.hasOwnProperty('audit')) {
-                this.auditRawData = JSON.parse(localStorage.getItem('audit'))
+                this.auditRawData = this.getAuditFromLocalStorage();
             }
 
             // et si on arrive de nulle part, redirection vers la homepage
@@ -89,6 +84,16 @@
             // Efface les simulations (pas l'audit)
             resetSimulations() {
                 events.$emit('reset-simulations');
+            },
+
+            handleUserInput() {
+                this.clearLocalStorage();
+
+                // On récupère les données saisies lors de la phase de saisie
+                this.auditRawData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
+
+                const audit = JSON.stringify(this.auditRawData);
+                this.saveAuditToLocalStorage(audit);
             }
         }
     }

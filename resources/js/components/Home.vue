@@ -38,6 +38,7 @@
 <script>
     // fenêtre modale d'aide
     import HelpModal from "./HelpModal";
+    import LocalStorageHelper from "../helpers/LocalStorageHelper";
     import DateFormatter from "../helpers/DateFormatter";
 
     export default {
@@ -49,6 +50,7 @@
 
         // Bibliothèqye de fonctions custom
         mixins: [
+            LocalStorageHelper,
             DateFormatter
         ],
 
@@ -65,8 +67,14 @@
             }
         },
 
-        // Fonctions inhérentes au composant
         methods: {
+            checkPreviousAuditFromLocalStorage() {
+                // On récupère l'audit stocké en localStorage s'il y en a un
+                if (localStorage.hasOwnProperty('audit')) {
+                    this.previousAuditDetectedInLocalStorage = true;
+                    this.previousAuditDate = this.getAuditDateFromLocalStorage();
+                }
+            },
 
             // Si un audit a été effectué, possibilité de s'y rendre directement
             goToPreviousAudit() {
@@ -75,22 +83,16 @@
 
             // Efface l'audit enregistré en localStorage ainsi que les simulations associées
             deletePreviousAudit() {
-                localStorage.removeItem('audit');
-                localStorage.removeItem('simulations');
+                this.clearLocalStorage();
                 this.previousAuditDetectedInLocalStorage = false;
 
                 flash("Vos simulations ont bien été supprimées");
-            }
+            },
         },
 
         // A l'initialisation du composant
         created() {
-
-            // On récupère l'audit stocké en localStorage s'il y en a un
-            if (localStorage.hasOwnProperty('audit')) {
-                this.previousAuditDetectedInLocalStorage = true;
-                this.previousAuditDate = this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
-            }
+            this.checkPreviousAuditFromLocalStorage();
         }
     }
 </script>

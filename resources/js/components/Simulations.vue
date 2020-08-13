@@ -36,6 +36,8 @@
 <script>
 
 // import des dépendances
+import SimulationsHelper from "../helpers/SimulationsHelper";
+import LocalStorageHelper from "../helpers/LocalStorageHelper";
 import Simulation from "./Simulation";
 import draggable from 'vuedraggable'
 
@@ -52,6 +54,11 @@ export default {
         'auditData'
     ],
 
+    mixins: [
+        SimulationsHelper,
+        LocalStorageHelper
+    ],
+
     // Initialisation des données utilisées par le composant
     data() {
         return {
@@ -63,54 +70,7 @@ export default {
 
     // Fonction inhérentes au composant
     methods: {
-
-        updateSimulationsList(simulation) {
-            this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
-            this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
-            this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
-            this.saveChangesToLocalStorage();
-        },
-
-        // Efface une simulation
-        deleteSimulation: function (index) {
-            this.simulations.splice(index, 1);
-            this.refreshCounter();
-            this.saveChangesToLocalStorage();
-        },
-
-        getDataSourceForNewSimulation() {
-            this.dataSource = this.simulations.length === 0 ? this.auditData : this.simulations[this.simulations.length - 1];
-        },
-
-        // Ajoute une simulation
-        addSimulation() {
-
-            this.getDataSourceForNewSimulation();
-
-            this.counter++;
-
-            this.simulations.push(
-                {
-                    id: this.counter,
-                    name: 'simulation ' + this.counter,
-                    dishesNumber: this.dataSource.dishesNumber,
-                    dishCost: this.dataSource.dishCost,
-                    wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
-                    foodWasteVolume: this.dataSource.foodWasteVolume,
-                    wasteCostPerDish: this.dataSource.wasteCostPerDish,
-                    foodWasteCost: this.dataSource.foodWasteCost,
-                    amountOfDishesWasted: this.dataSource.amountOfDishesWasted
-                }
-            );
-            this.saveChangesToLocalStorage();
-        },
-
-        // Sauvegarde les changements des simulations en localStorage
-        saveChangesToLocalStorage() {
-            const sims = JSON.stringify(this.simulations);
-            localStorage.setItem('simulations', sims);
-        },
-
+        
         // Met à jour le compteur qui sert à incrémenter les id des simulations
         refreshCounter() {
             if (this.simulations.length > 0) {
@@ -120,13 +80,6 @@ export default {
             } else {
                 this.counter = 0;
             }
-        },
-
-        // Remet à zéro les simulations (pas l'audit)
-        resetSimulations() {
-            localStorage.removeItem('simulations');
-            this.simulations = [];
-            this.counter = 0;
         },
 
         // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
@@ -140,7 +93,7 @@ export default {
 
         // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
         if (localStorage.hasOwnProperty('simulations')) {
-            this.simulations = JSON.parse(localStorage.getItem('simulations'));
+            this.simulations = this.getSimulationsFromLocalStorage();
             this.refreshCounter();
         }
 
