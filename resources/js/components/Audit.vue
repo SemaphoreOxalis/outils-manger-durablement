@@ -13,9 +13,7 @@
         </div>
 
         <div class="d-flex text-center">
-            <div class="p-2 w-25">Référence du {{ this.formatToFrench(this.input.startDate) }} au {{
-                this.formatToFrench(this.input.endDate) }}
-            </div>
+            <div class="p-2 w-25">{{ this.auditData.name }}</div>
             <div class="p-2 flex-grow-1">{{ this.input.dishesNumber }}</div>
             <div class="p-2 flex-grow-1">{{ this.input.dishCost }}</div>
             <div class="p-2 flex-grow-1">{{ this.input.wasteTreatmentCost }}</div>
@@ -88,6 +86,7 @@
 
             // Par souci de practicité, on stocke tout dans un unique objet
             this.auditData = {...this.input, ...this.computedValues};
+            this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
         }
     }
 </script>

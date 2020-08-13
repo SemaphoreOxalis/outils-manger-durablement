@@ -2007,8 +2007,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 // Imports des dépendances
 
 
@@ -2045,6 +2043,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }; // Par souci de practicité, on stocke tout dans un unique objet
 
     this.auditData = _objectSpread(_objectSpread({}, this.input), this.computedValues);
+    this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
   }
 });
 
@@ -2717,9 +2716,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/SimulationsHelper */ "./resources/js/helpers/SimulationsHelper.js");
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_4__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2773,15 +2773,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Composants enfants
   components: {
-    Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_2__["default"],
-    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_3___default.a
+    Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_3__["default"],
+    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_4___default.a
   },
   // Données reçues du composant parent (Audit.vue)
   props: ['auditData'],
-  mixins: [_helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // Initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2812,6 +2813,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     exportSimulations: function exportSimulations() {
       events.$emit('get-full-simulations-info-for-export');
       this["export"].audit = this.auditData;
+      this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
       this["export"].simulations = this.simulations;
     }
   },
@@ -43327,13 +43329,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "d-flex text-center" }, [
         _c("div", { staticClass: "p-2 w-25" }, [
-          _vm._v(
-            "Référence du " +
-              _vm._s(this.formatToFrench(this.input.startDate)) +
-              " au " +
-              _vm._s(this.formatToFrench(this.input.endDate)) +
-              "\n        "
-          )
+          _vm._v(_vm._s(this.auditData.name))
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "p-2 flex-grow-1" }, [

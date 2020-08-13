@@ -39,6 +39,7 @@
 // import des dépendances
 import SimulationsHelper from "../helpers/SimulationsHelper";
 import LocalStorageHelper from "../helpers/LocalStorageHelper";
+import DateFormatter from "../helpers/DateFormatter";
 import Simulation from "./Simulation";
 import draggable from 'vuedraggable'
 
@@ -57,7 +58,8 @@ export default {
 
     mixins: [
         SimulationsHelper,
-        LocalStorageHelper
+        LocalStorageHelper,
+        DateFormatter
     ],
 
     // Initialisation des données utilisées par le composant
@@ -91,8 +93,9 @@ export default {
 
         exportSimulations() {
             events.$emit('get-full-simulations-info-for-export');
-            
+
             this.export.audit = this.auditData;
+            this.export.audit.auditDate = this.getAuditDateFromLocalStorage()
             this.export.simulations = this.simulations;
         }
     },
