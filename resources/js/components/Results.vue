@@ -22,7 +22,7 @@
         <p>Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les actions réalisables</a></p>
 
         <div class="d-flex justify-content-around">
-            <button class="btn btn-primary"><i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation</button>
+            <button class="btn btn-primary" @click="exportSimulations"><i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation</button>
             <button class="btn btn-danger" @click="resetSimulations"><i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations</button>
         </div>
 
@@ -94,6 +94,10 @@
 
                 const audit = JSON.stringify(this.auditRawData);
                 this.saveAuditToLocalStorage(audit);
+            },
+
+            exportSimulations() {
+                events.$emit('export-simulations');
             }
         }
     }

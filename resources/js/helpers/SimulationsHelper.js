@@ -7,6 +7,30 @@ export default {
             this.saveChangesToLocalStorage();
         },
 
+        updateSimulationsListWithFullInfo(simulation) {
+            this.updateSimulationsList(simulation);
+
+            this.simulations[simulation.index].deltas = {};
+            this.simulations[simulation.index].deltas.dishesNumber = simulation.dishesNumberDelta;
+            this.simulations[simulation.index].deltas.dishCost = simulation.dishCostDelta;
+            this.simulations[simulation.index].deltas.wasteTreatmentCost = simulation.wasteTreatmentCostDelta;
+            this.simulations[simulation.index].deltas.foodWasteVolume = simulation.foodWasteVolumeDelta;
+            this.simulations[simulation.index].deltas.wasteCostPerDish = simulation.wasteCostPerDishDelta;
+            this.simulations[simulation.index].deltas.foodWasteCost = simulation.foodWasteCostDelta;
+            this.simulations[simulation.index].deltas.amountOfDishesWasted = simulation.amountOfDishesWastedDelta;
+
+            this.simulations[simulation.index].percentages = {};
+            this.simulations[simulation.index].percentages.dishesNumber = simulation.dishesNumberDeltaPercentage;
+            this.simulations[simulation.index].percentages.dishCost = simulation.dishCostDeltaPercentage;
+            this.simulations[simulation.index].percentages.wasteTreatmentCost = simulation.wasteTreatmentCostDeltaPercentage;
+            this.simulations[simulation.index].percentages.foodWasteVolume = simulation.foodWasteVolumeDeltaPercentage;
+            this.simulations[simulation.index].percentages.wasteCostPerDish = simulation.wasteCostPerDishDeltaPercentage;
+            this.simulations[simulation.index].percentages.foodWasteCost = simulation.foodWasteCostDeltaPercentage;
+            this.simulations[simulation.index].percentages.amountOfDishesWasted = simulation.amountOfDishesWastedDeltaPercentage;
+
+            this.saveChangesToLocalStorage();
+        },
+
         // Efface une simulation
         deleteSimulation: function (index) {
             this.simulations.splice(index, 1);
@@ -55,3 +79,4 @@ export default {
         },
     }
 }
+

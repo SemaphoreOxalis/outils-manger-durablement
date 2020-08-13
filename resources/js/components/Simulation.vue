@@ -111,6 +111,14 @@ export default {
         updateSimulationsComponent() {
             this.$emit('update-simulations-component', this);
         },
+
+        sendSimulationFullInfo() {
+            this.$emit('update-simulations-component-will-full-info-for-export', this);
+        },
+    },
+
+    mounted() {
+        events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo)
     }
 }
 </script>

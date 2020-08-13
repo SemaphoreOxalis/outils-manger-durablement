@@ -20,6 +20,7 @@
                 @delete-simulation="deleteSimulation"
                 @save-changes="saveChangesToLocalStorage"
                 @update-simulations-component="updateSimulationsList"
+                @update-simulations-component-will-full-info-for-export="updateSimulationsListWithFullInfo"
             >
             </simulation>
 
@@ -64,13 +65,14 @@ export default {
         return {
             simulations: [],
             counter: 0,
-            dataSource: null
+            dataSource: null,
+            export: {}
         }
     },
 
     // Fonction inhérentes au composant
     methods: {
-        
+
         // Met à jour le compteur qui sert à incrémenter les id des simulations
         refreshCounter() {
             if (this.simulations.length > 0) {
@@ -85,6 +87,13 @@ export default {
         // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
         previousSimulation(index) {
             return index > 0 ? this.simulations[index - 1] : this.auditData
+        },
+
+        exportSimulations() {
+            events.$emit('get-full-simulations-info-for-export');
+            
+            this.export.audit = this.auditData;
+            this.export.simulations = this.simulations;
         }
     },
 
@@ -99,6 +108,8 @@ export default {
 
         // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
         events.$on('reset-simulations', this.resetSimulations);
+
+        events.$on('export-simulations', this.exportSimulations);
 
         this.getDataSourceForNewSimulation();
     }

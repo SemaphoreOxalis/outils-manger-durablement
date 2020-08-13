@@ -2581,6 +2581,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
       var audit = JSON.stringify(this.auditRawData);
       this.saveAuditToLocalStorage(audit);
+    },
+    exportSimulations: function exportSimulations() {
+      events.$emit('export-simulations');
     }
   }
 });
@@ -2691,7 +2694,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     updateSimulationsComponent: function updateSimulationsComponent() {
       this.$emit('update-simulations-component', this);
+    },
+    sendSimulationFullInfo: function sendSimulationFullInfo() {
+      this.$emit('update-simulations-component-will-full-info-for-export', this);
     }
+  },
+  mounted: function mounted() {
+    events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
   }
 });
 
@@ -2758,6 +2767,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 // import des dépendances
 
 
@@ -2777,7 +2787,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     return {
       simulations: [],
       counter: 0,
-      dataSource: null
+      dataSource: null,
+      "export": {}
     };
   },
   // Fonction inhérentes au composant
@@ -2797,6 +2808,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
     previousSimulation: function previousSimulation(index) {
       return index > 0 ? this.simulations[index - 1] : this.auditData;
+    },
+    exportSimulations: function exportSimulations() {
+      events.$emit('get-full-simulations-info-for-export');
+      this["export"].audit = this.auditData;
+      this["export"].simulations = this.simulations;
     }
   },
   // A l'initialisation du composant
@@ -2809,6 +2825,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
     events.$on('reset-simulations', this.resetSimulations);
+    events.$on('export-simulations', this.exportSimulations);
     this.getDataSourceForNewSimulation();
   }
 });
@@ -44199,7 +44216,17 @@ var render = function() {
       _vm._m(3),
       _vm._v(" "),
       _c("div", { staticClass: "d-flex justify-content-around" }, [
-        _vm._m(4),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            on: { click: _vm.exportSimulations }
+          },
+          [
+            _c("i", { staticClass: "fas fa-file-export mr-2" }),
+            _vm._v("Exporter le rapport de simulation")
+          ]
+        ),
         _vm._v(" "),
         _c(
           "button",
@@ -44300,15 +44327,6 @@ var staticRenderFns = [
           "site ressource de l'ANAP pour découvrir les actions réalisables"
         )
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-primary" }, [
-      _c("i", { staticClass: "fas fa-file-export mr-2" }),
-      _vm._v("Exporter le rapport de simulation")
     ])
   }
 ]
@@ -44582,7 +44600,9 @@ var render = function() {
             on: {
               "delete-simulation": _vm.deleteSimulation,
               "save-changes": _vm.saveChangesToLocalStorage,
-              "update-simulations-component": _vm.updateSimulationsList
+              "update-simulations-component": _vm.updateSimulationsList,
+              "update-simulations-component-will-full-info-for-export":
+                _vm.updateSimulationsListWithFullInfo
             }
           })
         }),
@@ -63734,6 +63754,26 @@ __webpack_require__.r(__webpack_exports__);
       this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
       this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
       this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
+      this.saveChangesToLocalStorage();
+    },
+    updateSimulationsListWithFullInfo: function updateSimulationsListWithFullInfo(simulation) {
+      this.updateSimulationsList(simulation);
+      this.simulations[simulation.index].deltas = {};
+      this.simulations[simulation.index].deltas.dishesNumber = simulation.dishesNumberDelta;
+      this.simulations[simulation.index].deltas.dishCost = simulation.dishCostDelta;
+      this.simulations[simulation.index].deltas.wasteTreatmentCost = simulation.wasteTreatmentCostDelta;
+      this.simulations[simulation.index].deltas.foodWasteVolume = simulation.foodWasteVolumeDelta;
+      this.simulations[simulation.index].deltas.wasteCostPerDish = simulation.wasteCostPerDishDelta;
+      this.simulations[simulation.index].deltas.foodWasteCost = simulation.foodWasteCostDelta;
+      this.simulations[simulation.index].deltas.amountOfDishesWasted = simulation.amountOfDishesWastedDelta;
+      this.simulations[simulation.index].percentages = {};
+      this.simulations[simulation.index].percentages.dishesNumber = simulation.dishesNumberDeltaPercentage;
+      this.simulations[simulation.index].percentages.dishCost = simulation.dishCostDeltaPercentage;
+      this.simulations[simulation.index].percentages.wasteTreatmentCost = simulation.wasteTreatmentCostDeltaPercentage;
+      this.simulations[simulation.index].percentages.foodWasteVolume = simulation.foodWasteVolumeDeltaPercentage;
+      this.simulations[simulation.index].percentages.wasteCostPerDish = simulation.wasteCostPerDishDeltaPercentage;
+      this.simulations[simulation.index].percentages.foodWasteCost = simulation.foodWasteCostDeltaPercentage;
+      this.simulations[simulation.index].percentages.amountOfDishesWasted = simulation.amountOfDishesWastedDeltaPercentage;
       this.saveChangesToLocalStorage();
     },
     // Efface une simulation
