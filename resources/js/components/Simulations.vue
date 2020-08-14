@@ -97,6 +97,14 @@ export default {
             this.export.audit = this.auditData;
             this.export.audit.auditDate = this.getAuditDateFromLocalStorage()
             this.export.simulations = this.simulations;
+
+            axios.post('/export', this.export)
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(e => {
+                    console.log(e);
+                });
         }
     },
 

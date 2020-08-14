@@ -1,18 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <h1>TEST</h1>
     <div class="flex">
         <div class="left">
-            @foreach ($products as $product)
-                <div>
-                    <span class="product">
-                        {{ $product->name }} -
-                        {{ $product->category->name }} -
-                        kgCO2e/{{ $product->unit->unit }} -
-                        {{ $product->emissionFactor }}
-                    </span>
-                </div>
-            @endforeach
+            <pre>
+                {{ $res }}
+            </pre>
         </div>
         <div class="right">
 

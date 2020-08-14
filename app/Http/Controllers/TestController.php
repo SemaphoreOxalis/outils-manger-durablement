@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\WasteReferenceValue;
+use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
@@ -30,8 +31,8 @@ class TestController extends Controller
         return view('admin.adminPanel', ['values' => $values]);
     }
 
-    public function show()
+    public function export(Request $request)
     {
-
+        return response()->json($request->all());
     }
 }

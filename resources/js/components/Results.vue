@@ -90,7 +90,7 @@
                 this.clearLocalStorage();
 
                 // On récupère les données saisies lors de la phase de saisie
-                this.auditRawData = {...this.userInput, ... this.referenceValues, auditDate: Date.now()};
+                this.auditRawData = {...this.userInput, ...this.referenceValues, auditDate: Date.now()};
 
                 const audit = JSON.stringify(this.auditRawData);
                 this.saveAuditToLocalStorage(audit);

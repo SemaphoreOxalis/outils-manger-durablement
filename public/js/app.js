@@ -2815,6 +2815,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this["export"].audit = this.auditData;
       this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
       this["export"].simulations = this.simulations;
+      axios.post('/export', this["export"]).then(function (response) {
+        console.log(response);
+      })["catch"](function (e) {
+        console.log(e);
+      });
     }
   },
   // A l'initialisation du composant

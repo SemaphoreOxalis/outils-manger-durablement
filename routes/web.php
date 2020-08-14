@@ -24,6 +24,8 @@ Route::get('/api/categories', 'CategoriesController@index');
 Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
 Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesController@update');
 
+Route::post('/export', 'ExportController@export');
+
 
 // Commentez la première ligne et décommentez la 2e pour qu'il ne soit plus possible de s'enregistrer
 // ATTENTION :  tout utilisateur enregistré dispose des droits d'administrateur et peux donc accéder aux pages admin

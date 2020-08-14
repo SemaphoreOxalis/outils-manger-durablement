@@ -25,6 +25,7 @@ class WasteReferenceValuesController extends Controller {
                 'value' => 'required|numeric|between:0,100',
             ]);
             $wasteReferenceValue->update(request(['value']));
+
             return response('Vos modifications ont été enregistrées', 202);
         } catch (\Exception $e)
         {
