@@ -17,7 +17,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.1"
+        "laravel/ui": "^2.1",
+        "phpoffice/phpspreadsheet": "^1.14"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",

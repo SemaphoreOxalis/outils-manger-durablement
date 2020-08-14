@@ -2815,8 +2815,22 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       this["export"].audit = this.auditData;
       this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
       this["export"].simulations = this.simulations;
-      axios.post('/export', this["export"]).then(function (response) {
-        console.log(response);
+      axios.post('/export', this["export"], {
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var headers = response.headers; // const url = URL.createObjectURL(new Blob([response.data],  {
+        //     type: 'text/csv'
+        // }));
+
+        var blob = new Blob([response.data], {
+          type: headers['Content-type']
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob); // link.setAttribute('download', 'Rapport.csv');
+        // document.body.appendChild(link);
+
+        link.download = "Rapport.xlsx";
+        link.click();
       })["catch"](function (e) {
         console.log(e);
       });
