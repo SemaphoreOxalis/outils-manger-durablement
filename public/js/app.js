@@ -2818,17 +2818,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       axios.post('/export', this["export"], {
         responseType: 'arraybuffer'
       }).then(function (response) {
-        var headers = response.headers; // const url = URL.createObjectURL(new Blob([response.data],  {
-        //     type: 'text/csv'
-        // }));
-
+        var headers = response.headers;
         var blob = new Blob([response.data], {
           type: headers['Content-type']
         });
         var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob); // link.setAttribute('download', 'Rapport.csv');
-        // document.body.appendChild(link);
-
+        link.href = window.URL.createObjectURL(blob);
         link.download = "Rapport.xlsx";
         link.click();
       })["catch"](function (e) {

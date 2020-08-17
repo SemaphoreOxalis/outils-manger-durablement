@@ -102,14 +102,9 @@ export default {
                 responseType: 'arraybuffer'
             }).then(response => {
                 let headers = response.headers;
-                // const url = URL.createObjectURL(new Blob([response.data],  {
-                //     type: 'text/csv'
-                // }));
                 let blob = new Blob([response.data], {type:headers['Content-type']});
                 let link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                // link.setAttribute('download', 'Rapport.csv');
-                // document.body.appendChild(link);
                 link.download = "Rapport.xlsx"
                 link.click();
             }).catch(e => {
