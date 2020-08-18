@@ -3,6 +3,8 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
+// Nécessaires pour Vue et son fonctionnement en SPA
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
@@ -35,6 +37,7 @@ window.Vue = require('vue');
 // Composants enfants généraux à toute l'application
 Vue.component('flash', require('./components/Flash.vue').default);
 
+// Bus d'évenements qui va nous permettre de lancer des évenements entre composants qui ne sont pas forcément parent/enfants
 window.events = new Vue();
 
 // permet de pouvoir faire

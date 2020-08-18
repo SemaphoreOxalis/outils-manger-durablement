@@ -122,16 +122,22 @@
 </template>
 
 <script>
+    // import de bibliothèques de fonctions
+    // validation des données saisies
     import InputValidation from "../helpers/InputValidation";
+    // logique principale du composant
     import InputLogic from "../helpers/calculations/InputLogic";
+    // intéractions avec la base de donnée
     import DataBase from "../helpers/DataBase";
+    // intéractions avec le localStorage
     import LocalStorageHelper from "../helpers/LocalStorageHelper";
-    // Petite bibliothèque de fonctions bien pratique
+
+    // Petite bibliothèque de fonctions bien pratique pour arrondir les nombres
     import NumberRounder from "../helpers/NumberRounder";
 
     export default {
 
-        // déclaration de la dépendance à ce mixin
+        // déclaration de la dépendance à ces mixins (bibliothèques de fonctions dans des fichiers externes, dans un souci de lisibilité)
         mixins: [
             InputValidation,
             InputLogic,

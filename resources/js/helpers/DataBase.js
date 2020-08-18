@@ -1,6 +1,9 @@
+// Intéractions avec la base de donnée
+
 export default {
     methods: {
-        //ADMIN
+
+        // ADMIN component
         // Va chercher les valeurs de référence depuis la BDD
         fetchWasteReferenceValues() {
             axios.get('/api/waste-values').then((response) => {
@@ -23,11 +26,13 @@ export default {
             });
         },
 
-        //INPUT
+        //INPUT component
         // Va chercher les valeurs de référence depuis la BDD
         fetchWasteReferenceValuesFromDB() {
             axios.get('/api/waste-values').then((response) => {
                 //TODO : virer trucs qu'ont rien à faire ici
+
+                // On efface les valeurs personnalisée du localStorage
                 localStorage.removeItem('localReferenceValues');
 
                 this.referenceValues.foodLeftoversVolumeInGlobalWaste = response.data[0].value;

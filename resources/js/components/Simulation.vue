@@ -60,12 +60,16 @@
 </template>
 
 <script>
+// traite les simulations (add, remove, style...)
 import SimulationHelper from "../helpers/SimulationHelper";
+// La logique principale de composant (calculs)
 import SimulationLogic from "../helpers/calculations/SimulationLogic";
+// utile pour arrondir les nombres
 import NumberRounder from "../helpers/NumberRounder";
 
 export default {
 
+    // déclaration de dépendance vis-à-vis de ces fichiers
     mixins: [
         SimulationHelper,
         SimulationLogic,
@@ -80,6 +84,7 @@ export default {
         'previousSimulation'
     ],
 
+    // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
     watch: {
         foodWasteCost: function() {
             this.updateSimulationsComponent();
@@ -97,6 +102,7 @@ export default {
     // Propriétés calculées du composant
     computed: {
 
+        // récupère les données de la simulation précédente (qui se trouve être l'audit si elle est en première position)
         previousSim() {
             return this.isFirst ? this.auditData : this.previousSimulation;
         },
@@ -107,17 +113,24 @@ export default {
         },
     },
 
+    // Fonctions inhérentes à ce composant
     methods: {
+
+        // Demande au composant parent (Simulations) de mettre à jour sa liste de simulations
         updateSimulationsComponent() {
             this.$emit('update-simulations-component', this);
         },
 
+        // Envoie au composant parent (Simulations) TOUTES les données (y compris deltas et pourcentages) pour préparer l'export
         sendSimulationFullInfo() {
             this.$emit('update-simulations-component-will-full-info-for-export', this);
         },
     },
 
+    // A l'initialisation du composant
     mounted() {
+
+        // Listener
         events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo)
     }
 }
@@ -139,6 +152,14 @@ export default {
 
 .down {
     transform: rotate(45deg);
+}
+
+.good {
+    color: #00ff00;
+}
+
+.bad {
+    color: #ff0000;
 }
 
 /* TODO : make it work */

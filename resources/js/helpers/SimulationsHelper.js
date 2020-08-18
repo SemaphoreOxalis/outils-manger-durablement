@@ -1,5 +1,9 @@
+// helper pour le composant Simulations.vue
+
 export default {
     methods: {
+
+        // Met à jour la liste des simulations avec les données strictement nécessaires au fonctionnement de l'application
         updateSimulationsList(simulation) {
             this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
             this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
@@ -7,6 +11,7 @@ export default {
             this.saveChangesToLocalStorage();
         },
 
+        // Met à jour la liste des simulations avec les données complètes (différences et pourcentages) pour préparer un export
         updateSimulationsListWithFullInfo(simulation) {
             this.updateSimulationsList(simulation);
 
@@ -38,6 +43,7 @@ export default {
             this.saveChangesToLocalStorage();
         },
 
+        // Nécessaire pour savoir sur quoi doit se baser une 'nouvelle simulation'
         getDataSourceForNewSimulation() {
             this.dataSource = this.simulations.length === 0 ? this.auditData : this.simulations[this.simulations.length - 1];
         },

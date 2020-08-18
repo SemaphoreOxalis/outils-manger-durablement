@@ -1,5 +1,11 @@
+// Logique du composant Simulation.vue
+
 export default {
+
+    // propriétés recalculées dès qu'elles changent
     computed: {
+
+        // Différences en valeur absolue et en pourcentage (previousSim se trouve être l'audit si la simulation est en première place)
         dishesNumberDelta() {
             return this.getDelta(this.simulation.dishesNumber, this.previousSim.dishesNumber);
         },
@@ -31,7 +37,6 @@ export default {
         foodWasteVolumeDeltaPercentage() {
             return this.getDeltaPercentage(this.simulation.foodWasteVolume, this.previousSim.foodWasteVolume);
         },
-
 
         wasteCostPerDishDelta() {
             return this.getDelta(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
@@ -80,30 +85,26 @@ export default {
         },
     },
 
+    // Fonctions inhérentes au composant
     methods: {
+
+        // Renvoie la différence en valeur absolue entre la simulation précédente et celle-ci
         getDelta(simData, sourceData) {
             let result = this.roundToThreeDecimal(simData - sourceData);
+
+            // si le résultat et supérieur à 0, on lui ajoute le symbole '+'
             return result >= 0 ? "+" + result : result;
         },
 
+        // Renvoie la différence en pourcentage entre la simulation précédente et celle-ci
         getDeltaPercentage(simData, sourceData) {
             let result = this.roundToOneDecimal(
                 // - 100 pour ne pas avoir +150% si on passe de 100 à 150, mais seulement +50%
                 ((simData * 100) / sourceData) - 100
             );
-            return result > 0 ? "+" + result + "%" :  result + "%";
-        },
 
-        getStyle(value, upIsGood) {
-            if (value.startsWith('+')) {
-                let color = (upIsGood === true) ? '#00ff00' : '#ff0000';
-                return '<small style="color:'+ color +';"><i class="fas fa-arrow-right up"></i> ' + value + ' </small>';
-            }
-            else if (value.startsWith('-')) {
-                let color = (upIsGood === true) ? '#ff0000' : '#00ff00';
-                return '<small style="color:'+ color +';"><i class="fas fa-arrow-right down"></i> ' + value + ' </small>';
-            }
-            return '<small>' + value + '</small>';
-        }
+            // si le résultat est positif, on lui ajoute le symbole '+'
+            return result > 0 ? "+" + result + "%" : result + "%";
+        },
     },
 }

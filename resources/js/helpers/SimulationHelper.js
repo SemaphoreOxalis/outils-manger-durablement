@@ -1,3 +1,5 @@
+// helper pour le composant Simulation.vue
+
 export default {
     methods: {
 
@@ -33,5 +35,19 @@ export default {
                 ]
             }
         },
+
+        // Style appliqué aux pourcentages (flèches et couleurs)
+        // la propriété upIsGood nous permet de savoir si une modification est bénéfique et de lui appliquer la bonne couleur
+        // ( + de repas produits = bien, mais + de gaspillage = mauvais)
+        getStyle(value, upIsGood) {
+            if (value.startsWith('+')) {
+                let cssClass = (upIsGood === true) ? 'good' : 'bad';
+                return '<small class="' + cssClass + '"><i class="fas fa-arrow-right up"></i> ' + value + ' </small>';
+            } else if (value.startsWith('-')) {
+                let cssClass = (upIsGood === true) ? 'bad' : 'good';
+                return '<small class="' + cssClass + '"><i class="fas fa-arrow-right down"></i> ' + value + ' </small>';
+            }
+            return '<small>' + value + '</small>';
+        }
     }
 }

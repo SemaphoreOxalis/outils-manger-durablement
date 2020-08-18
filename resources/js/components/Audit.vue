@@ -34,16 +34,17 @@
 <script>
 
     // Imports des dépendances
+    // logique du composant
     import AuditLogic from "../helpers/calculations/AuditLogic";
-
+    // utiles pour arrondir les nombres et formatter les dates
     import NumberRounder from "../helpers/NumberRounder";
     import DateFormatter from "../helpers/DateFormatter";
-
+    // Composant enfant
     import Simulations from "./Simulations";
 
     export default {
 
-        // déclaration de la dépendance à ce mixin
+        // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
         mixins: [
             AuditLogic,
             NumberRounder,

@@ -20,9 +20,12 @@
 </template>
 
 <script>
+    // import des fonctions utiles regroupées dans des fichiers 'helpers'
     import DataBase from "../helpers/DataBase";
+
     export default {
 
+        // déclaration de dépendance à ces bibliothèques de fonctions
         mixins : [
             DataBase
         ],

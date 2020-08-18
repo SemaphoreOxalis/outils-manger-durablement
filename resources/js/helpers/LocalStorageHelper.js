@@ -1,44 +1,54 @@
+// Intéractions avec le localStorage
+
 export default {
     methods: {
 
-        // HOME
+        // HOME component
+        // récupère la date de l'audit et la formatte
         getAuditDateFromLocalStorage() {
             return this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
         },
 
-        // INPUT
+        // INPUT component
         // Va chercher les valeurs de référence depuis le localStorage
         fetchWasteReferenceValuesFromLocalStorage() {
             return JSON.parse(localStorage.getItem('localReferenceValues'));
         },
 
+        // Enregistre les valeurs de référence personnalisées en localStorage
         savePersonalValuesToLocalStorage(values) {
             localStorage.setItem('localReferenceValues', values);
         },
 
-        //RESULTS
+        //RESULTS component
+        // efface le localStorage
         clearLocalStorage() {
             localStorage.removeItem('audit');
             localStorage.removeItem('simulations');
         },
 
+        // Enregistre l'audit en localStorage
         saveAuditToLocalStorage(audit) {
             localStorage.setItem('audit', audit);
         },
 
+        // Récupère l'audit du localStorage
         getAuditFromLocalStorage() {
             return JSON.parse(localStorage.getItem('audit'));
         },
 
-        //SIMULATIONS
+        //SIMULATIONS component
+        // Récupère les simulations du localStorage
         getSimulationsFromLocalStorage() {
             return JSON.parse(localStorage.getItem('simulations'));
         },
 
+        // Efface les simulations du localStorage (pas l'audit)
         deleteSimulationsFromLocalStorage() {
             localStorage.removeItem('simulations');
         },
 
+        // Enregistre les simulations en localStorage
         saveSimulationsToLocalStorage(sims) {
             localStorage.setItem('simulations', sims);
         }

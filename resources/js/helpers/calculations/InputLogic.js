@@ -1,3 +1,5 @@
+// Logique du composant Input.vue
+
 export default {
     // Données calculées en fonction des sonnées saisies
     computed: {

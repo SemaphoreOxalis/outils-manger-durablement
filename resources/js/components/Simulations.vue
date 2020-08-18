@@ -37,11 +37,17 @@
 <script>
 
 // import des dépendances
+// bibliothèque de fonctions chargée de traiter la liste des simulations
 import SimulationsHelper from "../helpers/SimulationsHelper";
+// intéraction avec le localStorage
 import LocalStorageHelper from "../helpers/LocalStorageHelper";
+// responsable de l'export Excel
 import ExportHelper from "../helpers/ExportHelper";
+// pratique pour formatter les dates
 import DateFormatter from "../helpers/DateFormatter";
+// composant enfant
 import Simulation from "./Simulation";
+// Vue-draggable (https://github.com/SortableJS/Vue.Draggable) pour le drag'n'drop
 import draggable from 'vuedraggable'
 
 export default {
@@ -57,6 +63,7 @@ export default {
         'auditData'
     ],
 
+    // déclaration de dépendance à ces fichiers
     mixins: [
         SimulationsHelper,
         LocalStorageHelper,
@@ -90,6 +97,8 @@ export default {
 
         // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
         previousSimulation(index) {
+
+            // si la simulation est en première position, sa "previousSimulation" se trouve être l'audit
             return index > 0 ? this.simulations[index - 1] : this.auditData
         },
     },
@@ -106,8 +115,10 @@ export default {
         // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
         events.$on('reset-simulations', this.resetSimulations);
 
+        // LAnce l'évènement 'export-simulations' qui sera écouté par les composants concernés
         events.$on('export-simulations', this.exportSimulations);
 
+        // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
         this.getDataSourceForNewSimulation();
     }
 }
