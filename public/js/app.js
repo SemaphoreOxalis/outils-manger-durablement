@@ -2716,10 +2716,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/SimulationsHelper */ "./resources/js/helpers/SimulationsHelper.js");
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
-/* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/ExportHelper */ "./resources/js/helpers/ExportHelper.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _Simulation__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Simulation */ "./resources/js/components/Simulation.vue");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_5__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2774,15 +2775,16 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Composants enfants
   components: {
-    Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_3__["default"],
-    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_4___default.a
+    Simulation: _Simulation__WEBPACK_IMPORTED_MODULE_4__["default"],
+    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_5___default.a
   },
   // Données reçues du composant parent (Audit.vue)
   props: ['auditData'],
-  mixins: [_helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"]],
   // Initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2809,26 +2811,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
     previousSimulation: function previousSimulation(index) {
       return index > 0 ? this.simulations[index - 1] : this.auditData;
-    },
-    exportSimulations: function exportSimulations() {
-      events.$emit('get-full-simulations-info-for-export');
-      this["export"].audit = this.auditData;
-      this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
-      this["export"].simulations = this.simulations;
-      axios.post('/export', this["export"], {
-        responseType: 'arraybuffer'
-      }).then(function (response) {
-        var headers = response.headers;
-        var blob = new Blob([response.data], {
-          type: headers['Content-type']
-        });
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = "Rapport.xlsx";
-        link.click();
-      })["catch"](function (e) {
-        console.log(e);
-      });
     }
   },
   // A l'initialisation du composant
@@ -7550,7 +7532,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
+exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
 
 // exports
 
@@ -44391,9 +44373,11 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishesNumberDelta))])]),
       _vm._v(" "),
-      _c("div", [
-        _c("small", [_vm._v(_vm._s(_vm.dishesNumberDeltaPercentage))])
-      ]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(_vm.getStyle(_vm.dishesNumberDeltaPercentage, true))
+        }
+      }),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -44421,7 +44405,11 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishCostDelta))])]),
       _vm._v(" "),
-      _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishCostDeltaPercentage))])]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(_vm.getStyle(_vm.dishCostDeltaPercentage, false))
+        }
+      }),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -44449,9 +44437,13 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDelta))])]),
       _vm._v(" "),
-      _c("div", [
-        _c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDeltaPercentage))])
-      ]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.getStyle(_vm.wasteTreatmentCostDeltaPercentage, false)
+          )
+        }
+      }),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -44479,9 +44471,13 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteVolumeDelta))])]),
       _vm._v(" "),
-      _c("div", [
-        _c("small", [_vm._v(_vm._s(_vm.foodWasteVolumeDeltaPercentage))])
-      ]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.getStyle(_vm.foodWasteVolumeDeltaPercentage, false)
+          )
+        }
+      }),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -44509,9 +44505,13 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDelta))])]),
       _vm._v(" "),
-      _c("div", [
-        _c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDeltaPercentage))])
-      ]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.getStyle(_vm.wasteCostPerDishDeltaPercentage, false)
+          )
+        }
+      }),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.wasteCostPerDish))])
     ]),
@@ -44519,9 +44519,13 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteCostDelta))])]),
       _vm._v(" "),
-      _c("div", [
-        _c("small", [_vm._v(_vm._s(_vm.foodWasteCostDeltaPercentage))])
-      ]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.getStyle(_vm.foodWasteCostDeltaPercentage, false)
+          )
+        }
+      }),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.foodWasteCost))])
     ]),
@@ -44529,9 +44533,13 @@ var render = function() {
     _c("div", { staticClass: "p-2 flex-grow-1" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDelta))])]),
       _vm._v(" "),
-      _c("div", [
-        _c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDeltaPercentage))])
-      ]),
+      _c("div", {
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.getStyle(_vm.amountOfDishesWastedDeltaPercentage, false)
+          )
+        }
+      }),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.amountOfDishesWasted))])
     ]),
@@ -63593,6 +63601,42 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/helpers/ExportHelper.js":
+/*!**********************************************!*\
+  !*** ./resources/js/helpers/ExportHelper.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    exportSimulations: function exportSimulations() {
+      events.$emit('get-full-simulations-info-for-export');
+      this["export"].audit = this.auditData;
+      this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
+      this["export"].simulations = this.simulations;
+      axios.post('/export', this["export"], {
+        responseType: 'arraybuffer'
+      }).then(function (response) {
+        var headers = response.headers;
+        var blob = new Blob([response.data], {
+          type: headers['Content-type']
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "Rapport" + Date.now() + ".xlsx";
+        link.click();
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/helpers/InputValidation.js":
 /*!*************************************************!*\
   !*** ./resources/js/helpers/InputValidation.js ***!
@@ -63963,8 +64007,21 @@ __webpack_require__.r(__webpack_exports__);
       return result >= 0 ? "+" + result : result;
     },
     getDeltaPercentage: function getDeltaPercentage(simData, sourceData) {
-      var result = this.roundToTwoDecimal(simData * 100 / sourceData - 100);
-      return result >= 0 ? "+" + result + "%" : result + "%";
+      var result = this.roundToOneDecimal( // - 100 pour ne pas avoir +150% si on passe de 100 à 150, mais seulement +50%
+      simData * 100 / sourceData - 100);
+      return result > 0 ? "+" + result + "%" : result + "%";
+    },
+    getStyle: function getStyle(value, upIsGood) {
+      if (value.startsWith('+')) {
+        var color = upIsGood === true ? '#00ff00' : '#ff0000';
+        return '<small style="color:' + color + ';"><i class="fas fa-arrow-right up"></i> ' + value + ' </small>';
+      } else if (value.startsWith('-')) {
+        var _color = upIsGood === true ? '#ff0000' : '#00ff00';
+
+        return '<small style="color:' + _color + ';"><i class="fas fa-arrow-right down"></i> ' + value + ' </small>';
+      }
+
+      return '<small>' + value + '</small>';
     }
   }
 });

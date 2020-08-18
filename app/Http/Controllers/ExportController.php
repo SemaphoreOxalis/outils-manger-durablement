@@ -111,7 +111,7 @@ class ExportController extends Controller {
             $sheet->setCellValue('G' . $line, $sim['percentages']["foodWasteCost"]);
             $sheet->setCellValue('H' . $line, $sim['percentages']["amountOfDishesWasted"]);
 
-            $previous = $sim["name"];
+            $previous = '"' . $sim["name"] . '"';
             $line++;
             $line++;
         }

@@ -87,10 +87,23 @@ export default {
         },
 
         getDeltaPercentage(simData, sourceData) {
-            let result = this.roundToTwoDecimal(
+            let result = this.roundToOneDecimal(
+                // - 100 pour ne pas avoir +150% si on passe de 100 à 150, mais seulement +50%
                 ((simData * 100) / sourceData) - 100
             );
-            return result >= 0 ? "+" + result + "%" :  result + "%";
+            return result > 0 ? "+" + result + "%" :  result + "%";
         },
+
+        getStyle(value, upIsGood) {
+            if (value.startsWith('+')) {
+                let color = (upIsGood === true) ? '#00ff00' : '#ff0000';
+                return '<small style="color:'+ color +';"><i class="fas fa-arrow-right up"></i> ' + value + ' </small>';
+            }
+            else if (value.startsWith('-')) {
+                let color = (upIsGood === true) ? '#ff0000' : '#00ff00';
+                return '<small style="color:'+ color +';"><i class="fas fa-arrow-right down"></i> ' + value + ' </small>';
+            }
+            return '<small>' + value + '</small>';
+        }
     },
 }

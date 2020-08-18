@@ -39,6 +39,7 @@
 // import des dépendances
 import SimulationsHelper from "../helpers/SimulationsHelper";
 import LocalStorageHelper from "../helpers/LocalStorageHelper";
+import ExportHelper from "../helpers/ExportHelper";
 import DateFormatter from "../helpers/DateFormatter";
 import Simulation from "./Simulation";
 import draggable from 'vuedraggable'
@@ -59,6 +60,7 @@ export default {
     mixins: [
         SimulationsHelper,
         LocalStorageHelper,
+        ExportHelper,
         DateFormatter
     ],
 
@@ -90,27 +92,6 @@ export default {
         previousSimulation(index) {
             return index > 0 ? this.simulations[index - 1] : this.auditData
         },
-
-        exportSimulations() {
-            events.$emit('get-full-simulations-info-for-export');
-
-            this.export.audit = this.auditData;
-            this.export.audit.auditDate = this.getAuditDateFromLocalStorage()
-            this.export.simulations = this.simulations;
-
-            axios.post('/export', this.export, {
-                responseType: 'arraybuffer'
-            }).then(response => {
-                let headers = response.headers;
-                let blob = new Blob([response.data], {type:headers['Content-type']});
-                let link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = "Rapport.xlsx"
-                link.click();
-            }).catch(e => {
-                console.log(e);
-            });
-        }
     },
 
     // A l'initialisation du composant

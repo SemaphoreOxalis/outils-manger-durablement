@@ -7,44 +7,44 @@
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ dishesNumberDelta }}</small></div>
-            <div><small>{{ dishesNumberDeltaPercentage }}</small></div>
+            <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
             <input v-model="simulation.dishesNumber" @blur="saveChanges" class="ignore-draggable">
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ dishCostDelta }}</small></div>
-            <div><small>{{ dishCostDeltaPercentage }}</small></div>
+            <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
             <input v-model="simulation.dishCost" @blur="saveChanges" class="ignore-draggable">
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ wasteTreatmentCostDelta }}</small></div>
-            <div><small>{{ wasteTreatmentCostDeltaPercentage }}</small></div>
+            <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
             <input v-model="simulation.wasteTreatmentCost" @blur="saveChanges" class="ignore-draggable">
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ foodWasteVolumeDelta }}</small></div>
-            <div><small>{{ foodWasteVolumeDeltaPercentage }}</small></div>
+            <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
             <input v-model="simulation.foodWasteVolume" @blur="saveChanges" class="ignore-draggable">
         </div>
 
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ wasteCostPerDishDelta }}</small></div>
-            <div><small>{{ wasteCostPerDishDeltaPercentage }}</small></div>
+            <div v-html="getStyle(wasteCostPerDishDeltaPercentage, false)"></div>
             <div>{{ wasteCostPerDish }}</div>
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ foodWasteCostDelta }}</small></div>
-            <div><small>{{ foodWasteCostDeltaPercentage }}</small></div>
+            <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
             <div>{{ foodWasteCost }}</div>
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ amountOfDishesWastedDelta }}</small></div>
-            <div><small>{{ amountOfDishesWastedDeltaPercentage }}</small></div>
+            <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
             <div>{{ amountOfDishesWasted }}</div>
         </div>
 
@@ -131,6 +131,14 @@ export default {
 .handle {
     cursor: grab;
     cursor: -webkit-grab;
+}
+
+.up {
+    transform: rotate(-45deg);
+}
+
+.down {
+    transform: rotate(45deg);
 }
 
 /* TODO : make it work */
