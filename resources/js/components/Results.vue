@@ -28,11 +28,14 @@
             actions réalisables</a></p>
 
         <div class="d-flex justify-content-around">
-            <button class="btn btn-primary" @click="exportSimulations"><i class="fas fa-file-export mr-2"></i>Exporter
-                le rapport de simulation
+            <button class="btn btn-primary"
+                    @click="exportSimulations"
+                    :disabled="areThereInvalidData">
+                <i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation
             </button>
-            <button class="btn btn-danger" @click="resetSimulations"><i class="fas fa-redo-alt mr-2"></i>Je réinitialise
-                toutes mes simulations
+            <button class="btn btn-danger"
+                    @click="resetSimulations">
+                <i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations
             </button>
         </div>
 
@@ -68,6 +71,12 @@ export default {
     data() {
         return {
             auditRawData: {}
+        }
+    },
+
+    computed: {
+        areThereInvalidData: function() {
+            return true;
         }
     },
 
@@ -115,7 +124,7 @@ export default {
         // Demande aux composants concernés de rassembler les données pour un export (Audit, Simulations et Simulation)
         exportSimulations() {
             events.$emit('export-simulations');
-        }
+        },
     }
 }
 </script>

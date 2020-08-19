@@ -2565,6 +2565,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 // import des composants enfants
  // import des helpers
 
@@ -2583,6 +2586,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       auditRawData: {}
     };
+  },
+  computed: {
+    areThereInvalidData: function areThereInvalidData() {
+      return true;
+    }
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
   created: function created() {
@@ -2639,6 +2647,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/SimulationHelper */ "./resources/js/helpers/SimulationHelper.js");
 /* harmony import */ var _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/calculations/SimulationLogic */ "./resources/js/helpers/calculations/SimulationLogic.js");
 /* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7591,7 +7623,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n.good {\n    color: #00ff00;\n}\n.bad {\n    color: #ff0000;\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
+exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n.good {\n    color: #00ff00;\n}\n.bad {\n    color: #ff0000;\n}\n.input:invalid {\n    background-color: lightpink;\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
 
 // exports
 
@@ -44271,11 +44303,12 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-primary",
+            attrs: { disabled: _vm.areThereInvalidData },
             on: { click: _vm.exportSimulations }
           },
           [
             _c("i", { staticClass: "fas fa-file-export mr-2" }),
-            _vm._v("Exporter\n            le rapport de simulation\n        ")
+            _vm._v("Exporter le rapport de simulation\n        ")
           ]
         ),
         _vm._v(" "),
@@ -44287,9 +44320,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
-            _vm._v(
-              "Je réinitialise\n            toutes mes simulations\n        "
-            )
+            _vm._v("Je réinitialise toutes mes simulations\n        ")
           ]
         )
       ])
@@ -44417,7 +44448,8 @@ var render = function() {
             expression: "simulation.name"
           }
         ],
-        staticClass: "ignore-draggable",
+        staticClass: "ignore-draggable input",
+        attrs: { type: "text", required: "" },
         domProps: { value: _vm.simulation.name },
         on: {
           blur: _vm.saveChanges,
@@ -44449,7 +44481,8 @@ var render = function() {
             expression: "simulation.dishesNumber"
           }
         ],
-        staticClass: "ignore-draggable",
+        staticClass: "ignore-draggable input",
+        attrs: { type: "number", required: "", min: "1", step: "1" },
         domProps: { value: _vm.simulation.dishesNumber },
         on: {
           blur: _vm.saveChanges,
@@ -44481,7 +44514,8 @@ var render = function() {
             expression: "simulation.dishCost"
           }
         ],
-        staticClass: "ignore-draggable",
+        staticClass: "ignore-draggable input",
+        attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.dishCost },
         on: {
           blur: _vm.saveChanges,
@@ -44515,7 +44549,8 @@ var render = function() {
             expression: "simulation.wasteTreatmentCost"
           }
         ],
-        staticClass: "ignore-draggable",
+        staticClass: "ignore-draggable input",
+        attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.wasteTreatmentCost },
         on: {
           blur: _vm.saveChanges,
@@ -44549,7 +44584,8 @@ var render = function() {
             expression: "simulation.foodWasteVolume"
           }
         ],
-        staticClass: "ignore-draggable",
+        staticClass: "ignore-draggable input",
+        attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.foodWasteVolume },
         on: {
           blur: _vm.saveChanges,

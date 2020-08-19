@@ -2,31 +2,55 @@
     <div :class="getClasses()">
         <div class="p-2 w-25">
             <i class="fa fa-arrows-alt"></i>
-            <input v-model="simulation.name" @blur="saveChanges" class="ignore-draggable">
+            <input v-model="simulation.name"
+                   @blur="saveChanges"
+                   class="ignore-draggable input"
+                   type="text"
+                   required>
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ dishesNumberDelta }}</small></div>
             <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
-            <input v-model="simulation.dishesNumber" @blur="saveChanges" class="ignore-draggable">
+            <input v-model="simulation.dishesNumber"
+                   @blur="saveChanges"
+                   class="ignore-draggable input"
+                   type="number"
+                   required
+                   min="1" step="1">
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ dishCostDelta }}</small></div>
             <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
-            <input v-model="simulation.dishCost" @blur="saveChanges" class="ignore-draggable">
+            <input v-model="simulation.dishCost"
+                   @blur="saveChanges"
+                   class="ignore-draggable input"
+                   type="number"
+                   required
+                   min="0.01" step="0.01">
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ wasteTreatmentCostDelta }}</small></div>
             <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
-            <input v-model="simulation.wasteTreatmentCost" @blur="saveChanges" class="ignore-draggable">
+            <input v-model="simulation.wasteTreatmentCost"
+                   @blur="saveChanges"
+                   class="ignore-draggable input"
+                   type="number"
+                   required
+                   min="0.01" step="0.01">
         </div>
 
         <div class="p-2 flex-grow-1">
             <div><small>{{ foodWasteVolumeDelta }}</small></div>
             <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
-            <input v-model="simulation.foodWasteVolume" @blur="saveChanges" class="ignore-draggable">
+            <input v-model="simulation.foodWasteVolume"
+                   @blur="saveChanges"
+                   class="ignore-draggable input"
+                   type="number"
+                   required
+                   min="0.01" step="0.01">
         </div>
 
 
@@ -131,7 +155,7 @@ export default {
     mounted() {
 
         // Listener
-        events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo)
+        events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
     }
 }
 </script>
@@ -160,6 +184,10 @@ export default {
 
 .bad {
     color: #ff0000;
+}
+
+.input:invalid {
+    background-color: lightpink;
 }
 
 /* TODO : make it work */
