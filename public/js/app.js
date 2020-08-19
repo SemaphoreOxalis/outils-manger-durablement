@@ -43505,11 +43505,13 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coûts de gaspillage alimentaire")
+        _vm._v("Estimation du gaspillage alimentaire (en €)")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Equivalence en nombre de repas")
+        _vm._v(
+          "Estimation du gaspillage alimentaire (équivalence en nombre de repas)"
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-2 flex-grow-1" })

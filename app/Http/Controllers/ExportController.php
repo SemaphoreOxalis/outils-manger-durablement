@@ -13,6 +13,12 @@ class ExportController extends Controller {
 
     public function export(Request $request)
     {
+        //Validation des données
+        $request->validate([
+            'audit' => 'array|required',
+            'simulations' => 'array|required'
+        ]);
+
         // création de la spreadsheet
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getProperties()
@@ -45,8 +51,8 @@ class ExportController extends Controller {
         $sheet->setCellValue('D5', 'Coût de traitement par tonne de déchets (en €)');
         $sheet->setCellValue('E5', 'Volume de gaspillage alimentaire (en T)');
         $sheet->setCellValue('F5', 'Coût de traitement des déchets d\'un repas');
-        $sheet->setCellValue('G5', 'Coût de gaspillage alimentaire');
-        $sheet->setCellValue('H5', 'Equivalence en nombre de repas');
+        $sheet->setCellValue('G5', 'Estimation du gaspillage alimentaire (en €)');
+        $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
 
         $sheet->getStyle('B5:H5')->getFont()->setBold(true);
 

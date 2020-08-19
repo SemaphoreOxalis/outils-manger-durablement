@@ -7,8 +7,8 @@
             <div class="p-2 flex-shrink-1">Coût de traitement par tonne (€)</div>
             <div class="p-2 flex-shrink-1">Volume de gaspillage alimentaire (tonnes)</div>
             <div class="p-2 flex-shrink-1">Coût de traitement des déchets d'un repas</div>
-            <div class="p-2 flex-shrink-1">Coûts de gaspillage alimentaire</div>
-            <div class="p-2 flex-shrink-1">Equivalence en nombre de repas</div>
+            <div class="p-2 flex-shrink-1">Estimation du gaspillage alimentaire (en €)</div>
+            <div class="p-2 flex-shrink-1">Estimation du gaspillage alimentaire (équivalence en nombre de repas)</div>
             <div class="p-2 flex-grow-1"></div>
         </div>
 
