@@ -2480,6 +2480,7 @@ __webpack_require__.r(__webpack_exports__);
     // Réinitialise les valeurs de référence à leurs valeurs par défaut depuis la BDD
     resetReferenceValues: function resetReferenceValues() {
       this.fetchWasteReferenceValuesFromDB();
+      this.defaultValues = true;
       flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
     }
   }

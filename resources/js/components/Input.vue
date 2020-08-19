@@ -212,6 +212,8 @@
             resetReferenceValues() {
                 this.fetchWasteReferenceValuesFromDB();
 
+                this.defaultValues = true;
+
                 flash('Les valeurs ont été correctement réinitialisées depuis la base de donnée');
             }
         }
