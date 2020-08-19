@@ -64261,6 +64261,10 @@ __webpack_require__.r(__webpack_exports__);
     component: _components_Home__WEBPACK_IMPORTED_MODULE_1__["default"],
     name: 'home'
   }, {
+    path: '/test',
+    component: _components_Test__WEBPACK_IMPORTED_MODULE_0__["default"],
+    name: 'test'
+  }, {
     path: '/input',
     component: _components_Input__WEBPACK_IMPORTED_MODULE_3__["default"],
     name: 'input'
@@ -64270,13 +64274,17 @@ __webpack_require__.r(__webpack_exports__);
     name: 'results',
     props: true
   }, {
-    path: '/test',
-    component: _components_Test__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }, {
     path: '/admin',
     component: _components_Admin__WEBPACK_IMPORTED_MODULE_2__["default"],
     props: {
       'user': window.App.user
+    },
+    beforeEnter: function beforeEnter(to, from, next) {
+      if (window.App.signedIn) {
+        next();
+      } else {
+        window.location.href = 'login';
+      }
     }
   }, {
     path: '*',

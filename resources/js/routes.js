@@ -24,6 +24,11 @@ export default {
             name: 'home'
         },
         {
+            path: '/test',
+            component: Test,
+            name: 'test'
+        },
+        {
             path: '/input',
             component: Input,
             name: 'input'
@@ -35,13 +40,16 @@ export default {
             props: true
         },
         {
-            path: '/test',
-            component: Test
-        },
-        {
             path: '/admin',
             component: Admin,
-            props: { 'user': window.App.user }
+            props: { 'user': window.App.user },
+            beforeEnter(to, from, next) {
+                if (window.App.signedIn) {
+                    next()
+                } else {
+                    window.location.href = 'login'
+                }
+            }
         },
         {
             path: '*',
