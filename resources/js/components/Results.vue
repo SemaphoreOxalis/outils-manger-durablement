@@ -30,7 +30,7 @@
         <div class="d-flex justify-content-around">
             <button class="btn btn-primary"
                     @click="exportSimulations"
-                    :disabled="areThereInvalidData">
+                    :disabled="areSimulationsInvalid">
                 <i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation
             </button>
             <button class="btn btn-danger"
@@ -46,6 +46,8 @@
 
 // import des composants enfants
 import Audit from "./Audit"
+// Logique de validation
+import SimulationValidation from "../helpers/SimulationValidation";
 // import des helpers
 import LocalStorageHelper from "../helpers/LocalStorageHelper";
 
@@ -58,7 +60,8 @@ export default {
 
     // déclaration des helpers
     mixins: [
-        LocalStorageHelper
+        LocalStorageHelper,
+        SimulationValidation
     ],
 
     // données à récupérer de la page Input
@@ -70,13 +73,9 @@ export default {
     // initialisation des données utilisées par le composant
     data() {
         return {
-            auditRawData: {}
-        }
-    },
-
-    computed: {
-        areThereInvalidData: function() {
-            return true;
+            auditRawData: {},
+            simulationsErrors: [],
+            areSimulationsInvalid: true
         }
     },
 
@@ -97,6 +96,14 @@ export default {
         else {
             this.$router.push({name: 'home'})
         }
+
+        // Listener
+        events.$on('validate', this.checkValidation);
+
+        // HACK : ce timeout est nécessaire, sinon la variable areSimulationsInvalid est calculée avant d'avant d'avoir les données des simulations
+        setTimeout(() => {
+            this.validateSimulations();
+        }, 1000);
     },
 
     // Fonctions inhérentes au composant

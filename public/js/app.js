@@ -2517,7 +2517,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Audit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Audit */ "./resources/js/components/Audit.vue");
-/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/SimulationValidation */ "./resources/js/helpers/SimulationValidation.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2569,6 +2570,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 // import des composants enfants
+ // Logique de validation
+
  // import des helpers
 
 
@@ -2578,22 +2581,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     Audit: _Audit__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   // déclaration des helpers
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // données à récupérer de la page Input
   props: ['userInput', 'referenceValues'],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
-      auditRawData: {}
+      auditRawData: {},
+      simulationsErrors: [],
+      areSimulationsInvalid: true
     };
-  },
-  computed: {
-    areThereInvalidData: function areThereInvalidData() {
-      return true;
-    }
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
   created: function created() {
+    var _this = this;
+
     // Si on vient de la page de saisie
     if (this.userInput) {
       this.handleUserInput();
@@ -2605,7 +2607,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.$router.push({
             name: 'home'
           });
-        }
+        } // Listener
+
+
+    events.$on('validate', this.checkValidation); // HACK : ce timeout est nécessaire, sinon la variable areSimulationsInvalid est calculée avant d'avant d'avoir les données des simulations
+
+    setTimeout(function () {
+      _this.validateSimulations();
+    }, 1000);
   },
   // Fonctions inhérentes au composant
   methods: {
@@ -2646,7 +2655,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/SimulationHelper */ "./resources/js/helpers/SimulationHelper.js");
 /* harmony import */ var _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/calculations/SimulationLogic */ "./resources/js/helpers/calculations/SimulationLogic.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/SimulationValidation */ "./resources/js/helpers/SimulationValidation.js");
+/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
 //
 //
 //
@@ -2735,12 +2745,14 @@ __webpack_require__.r(__webpack_exports__);
 // traite les simulations (add, remove, style...)
  // La logique principale de composant (calculs)
 
+ // Validation
+
  // utile pour arrondir les nombres
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de dépendance vis-à-vis de ces fichiers
-  mixins: [_helpers_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__["default"]],
   // données récupérées du composant parent (Simulations.vue)
   props: ['simulation', 'index', 'auditData', 'previousSimulation'],
   // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
@@ -2764,6 +2776,14 @@ __webpack_require__.r(__webpack_exports__);
     // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit
     isFirst: function isFirst() {
       return this.index === 0;
+    },
+    // Vérifie que les données saisies sont valides
+    isInvalid: function isInvalid() {
+      if (this.simulation.dishesNumber < 1 || this.simulation.dishCost < 0.01 || this.simulation.wasteTreatmentCost < 0.01 || this.simulation.foodWasteVolume < 0.01) {
+        return true;
+      }
+
+      return false;
     }
   },
   // Fonctions inhérentes à ce composant
@@ -2779,8 +2799,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   // A l'initialisation du composant
   mounted: function mounted() {
-    // Listener
+    // Listeners
     events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
+    events.$on('validate-simulations', this.validate);
   }
 });
 
@@ -44303,7 +44324,7 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-primary",
-            attrs: { disabled: _vm.areThereInvalidData },
+            attrs: { disabled: _vm.areSimulationsInvalid },
             on: { click: _vm.exportSimulations }
           },
           [
@@ -63899,7 +63920,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Sauvegarder les modifications faites à la simulation
     saveChanges: function saveChanges() {
-      // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
+      this.validate(); // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
+
       this.$emit('save-changes');
       flash('Vos modifications ont été sauvegardées');
     },
@@ -63925,6 +63947,38 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '<small>' + value + '</small>';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/SimulationValidation.js":
+/*!******************************************************!*\
+  !*** ./resources/js/helpers/SimulationValidation.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // RESULTS component
+    // Envoi d'une demande aux simulations pour avoir leur validation
+    validateSimulations: function validateSimulations() {
+      events.$emit('validate-simulations');
+    },
+    // Retour de l'envoi de cette demande
+    checkValidation: function checkValidation(simulationIndex, simulationIsInvalid) {
+      // On crée un tableau qui contient, pour chaque simulation, true ou false en fonction d'erreurs éventuelles de saisie
+      this.simulationsErrors[simulationIndex] = simulationIsInvalid;
+      this.areSimulationsInvalid = this.simulationsErrors.includes(true);
+    },
+    // SIMULATION component
+    // Envoi aux composants parents le résultat de la validation
+    validate: function validate() {
+      events.$emit('validate', this.index, this.isInvalid);
     }
   }
 });

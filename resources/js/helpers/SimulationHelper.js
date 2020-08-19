@@ -13,6 +13,8 @@ export default {
         // Sauvegarder les modifications faites à la simulation
         saveChanges() {
 
+            this.validate();
+
             // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
             this.$emit('save-changes');
             flash('Vos modifications ont été sauvegardées');

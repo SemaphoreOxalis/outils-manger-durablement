@@ -88,6 +88,8 @@
 import SimulationHelper from "../helpers/SimulationHelper";
 // La logique principale de composant (calculs)
 import SimulationLogic from "../helpers/calculations/SimulationLogic";
+// Validation
+import SimulationValidation from "../helpers/SimulationValidation";
 // utile pour arrondir les nombres
 import NumberRounder from "../helpers/NumberRounder";
 
@@ -97,6 +99,7 @@ export default {
     mixins: [
         SimulationHelper,
         SimulationLogic,
+        SimulationValidation,
         NumberRounder
     ],
 
@@ -135,6 +138,17 @@ export default {
         isFirst() {
             return this.index === 0;
         },
+
+        // Vérifie que les données saisies sont valides
+        isInvalid() {
+            if (this.simulation.dishesNumber < 1 ||
+                this.simulation.dishCost < 0.01 ||
+                this.simulation.wasteTreatmentCost < 0.01 ||
+                this.simulation.foodWasteVolume < 0.01) {
+                return true;
+            }
+            return false;
+        }
     },
 
     // Fonctions inhérentes à ce composant
@@ -154,8 +168,9 @@ export default {
     // A l'initialisation du composant
     mounted() {
 
-        // Listener
+        // Listeners
         events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
+        events.$on('validate-simulations', this.validate);
     }
 }
 </script>
