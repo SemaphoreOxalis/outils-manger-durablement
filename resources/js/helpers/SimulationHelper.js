@@ -44,10 +44,10 @@ export default {
         getStyle(value, upIsGood) {
             if (value.startsWith('+')) {
                 let cssClass = (upIsGood === true) ? 'good' : 'bad';
-                return '<small class="' + cssClass + '"><i class="fas fa-arrow-right up"></i> ' + value + ' </small>';
+                return '<small class="' + cssClass + '"><i class="icon icon-long-arrow-right up"></i> ' + value + ' </small>';
             } else if (value.startsWith('-')) {
                 let cssClass = (upIsGood === true) ? 'bad' : 'good';
-                return '<small class="' + cssClass + '"><i class="fas fa-arrow-right down"></i> ' + value + ' </small>';
+                return '<small class="' + cssClass + '"><i class="icon icon-long-arrow-right down"></i> ' + value + ' </small>';
             }
             return '<small>' + value + '</small>';
         }

@@ -50,7 +50,7 @@
                    class="ignore-draggable input"
                    type="number"
                    required
-                   min="0.01" step="0.01">
+                   min="0.001" step="0.001">
         </div>
 
 
@@ -144,7 +144,7 @@ export default {
             if (this.simulation.dishesNumber < 1 ||
                 this.simulation.dishCost < 0.01 ||
                 this.simulation.wasteTreatmentCost < 0.01 ||
-                this.simulation.foodWasteVolume < 0.01) {
+                this.simulation.foodWasteVolume < 0.001) {
                 return true;
             }
             return false;

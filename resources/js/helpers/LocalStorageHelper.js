@@ -25,11 +25,13 @@ export default {
         clearLocalStorage() {
             localStorage.removeItem('audit');
             localStorage.removeItem('simulations');
+            events.$emit('check-data-in-local-storage');
         },
 
         // Enregistre l'audit en localStorage
         saveAuditToLocalStorage(audit) {
             localStorage.setItem('audit', audit);
+            events.$emit('check-data-in-local-storage');
         },
 
         // Récupère l'audit du localStorage

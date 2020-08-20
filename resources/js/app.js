@@ -36,6 +36,8 @@ window.Vue = require('vue');
 
 // Composants enfants généraux à toute l'application
 Vue.component('flash', require('./components/Flash.vue').default);
+Vue.component('navigation-links', require('./components/NavigationLinks.vue').default);
+
 
 // Bus d'évenements qui va nous permettre de lancer des évenements entre composants qui ne sont pas forcément parent/enfants
 window.events = new Vue();
