@@ -1,49 +1,90 @@
 <template>
     <div class="py-4 px-4">
         <div v-if="editingReferenceValues" class="editing-mask"></div>
-        <h1>Etape 1/2: saisie des données</h1>
+        <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
 
-        <div>
-            <p>Précisez la période sur laquelle vos données vont porter</p>
-            <label for="start">Du </label>
-            <input type="date"
-                   id="start"
-                   required
-                   v-model="userInput.startDate"
-                   :max="userInput.endDate">
-            <label for="end">au </label>
-            <input type="date"
-                   id="end"
-                   required
-                   v-model="userInput.endDate"
-                   :min="userInput.startDate">
-        </div>
+        <h4 class="text-center mb-4">Obtenez une estimation économique et quantitative du gaspillage alimentaire <br> de votre établissement en 15 minutes</h4>
 
-        <div>
-            <p>Saisissez les informations sur les repas produits/commandés par votre cuisine sur cette période</p>
+        <ul class="stepper linear">
+            <li class="step">
+                <div class="step-title">Les dates</div>
+                <div class="step-content">
+                    <h4 class="col-12">Précisez la période sur laquelle vos données vont porter :</h4>
+                    <div class="row ">
+                        <div class="col col-6">
+                            <label>Date de début :</label>
+                            <input type="date"
+                                   class="custom-input datepicker number-field browser-default"
+                                   id="start"
+                                   required
+                                   v-model="userInput.startDate"
+                                   :max="userInput.endDate">
+                        </div>
+                        <div class="col col-6">
+                            <label>Date de fin :</label>
+                            <input type="date"
+                                   class="custom-input datepicker number-field browser-default"
+                                   id="end"
+                                   required
+                                   v-model="userInput.endDate"
+                                   :min="userInput.startDate">
+                        </div>
+                    </div>
+                    <div class="step-actions">
+                        <button class="button next-step">suivant <span class="icon"></span></button>
+                    </div>
+                </div>
+            </li>
 
-            <label for="dishes-number">Nombre de repas :</label>
-            <input id="dishes-number"
-                   v-model="userInput.dishesNumber"
-                   type="number"
-                   required
-                   min="1" step="1"
-                   class="input">
+            <li class="step">
+                <div class="step-title waves-effect">Les repas</div>
+                <div class="step-content">
+                    <h4 class="col-12">Saisissez les informations sur les repas produits/commandés par votre cuisine sur cette période</h4>
+                    <div class="row">
+                        <div class="col col-6">
+                            <label>Nombre de repas :</label>
+                            <input id="dishes-number"
+                                   v-model="userInput.dishesNumber"
+                                   type="number"
+                                   required
+                                   min="1" step="1"
+                                   class="custom-input number-field browser-default">
+                            <label>Coût de revient d&#x27;un repas :</label>
+                            <input id="dish-cost"
+                                   v-model="userInput.dishCost"
+                                   type="number"
+                                   required
+                                   min="0.01" step="0.01"
+                                   class="custom-input number-field browser-default">
+                        </div>
+                        <div class="col col-6">
+                            <div class="grey lighten-3">
+                                <p>*Le prix de revient d’un repas peut être calculé grâce à la formule suivante :</p>
+                                <p>[(montant total des achats alimentaires (matière première) + masse salariale de l&#x27;équipe de restauration + investissements + coût de l&#x27;énergie) / nombre de repas produits]</p>
+                                <p><strong>ou</strong>, en cas d&#x27;externalisation :</p>
+                                <p>[coût facturé / nombre de repas produits]</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-actions">
+                        <!-- Here goes your actions buttons -->
+                        <button class="button alter previous-step"><span class="icon"></span> retour</button>
+                        <button class="button next-step">suivant <span class="icon"></span></button>
+                    </div>
+                </div>
+            </li>
 
-            <br>
-            <label for="dish-cost">Coût de revient d'un repas (en €) :</label>
-            <input id="dish-cost"
-                   v-model="userInput.dishCost"
-                   type="number"
-                   required
-                   min="0.01" step="0.01"
-                   class="input">
-
-            <span class="detail">
-                Le pix de revient d'un repas peut être calculé grâce à la formule suivante :
-                [(montant total des achats alimentaires (matière première) + masse salariale de l'équipe de restauration + investissements + coût de l'énergie) <strong>ou</strong> (en cas d'externalisation, coût facturé)] / nombre de repas produits
-            </span>
-        </div>
+            <li class="step">
+                <div class="step-title waves-effect">Les déchets</div>
+                <div class="step-content">
+                    <!-- Your step content goes here (like inputs or so) -->
+                    <div class="step-actions">
+                        <!-- Here goes your actions buttons -->
+                        <button class="button alter previous-step"><span class="icon"></span> retour</button>
+                    </div>
+                </div>
+            </li>
+        </ul>
 
         <div id="reference-values">
             <p>Saisissez les informations sur les déchets (hors déchets médicaux pour les structures médicales) <strong>sur la même période</strong></p>
@@ -153,6 +194,14 @@
             this.checkWasteReferenceValues();
         },
 
+        mounted() {
+            let stepper = document.querySelector('.stepper');
+            let stepperInstance = new MStepper(stepper, {
+                // options
+                firstActive: 0 // this is the default
+            })
+        },
+
         // initialisation des données utilisées par le composant
         data() {
             return {
@@ -221,19 +270,8 @@
 </script>
 
 <style>
-    .detail {
-        display: inline-block;
-        max-width: 500px;
-    }
-
-    #launching-audit-button {
-        display: block;
-        max-width: 500px;
-        margin: auto;
-    }
-
-    .input:invalid {
-        background-color: lightpink;
+    input:invalid {
+        border-color: lightpink;
     }
 
     .editing-reference-values {
@@ -250,5 +288,25 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    ul.stepper .step.active::before, ul.stepper .step.done::before {
+        background-color: #34d579;
+    }
+
+    ul.stepper .step.wrong::before {
+        background-color: red;
+    }
+
+    ul.stepper .step.active::before {
+        font-size: 1.5rem;
+        line-height: 30px;
+        height: 30px;
+        width: 30px;
+    }
+
+    .active .step-title {
+        line-height: 30px;
+        font-size: 1.2rem;
     }
 </style>

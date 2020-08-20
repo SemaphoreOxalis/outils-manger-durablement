@@ -12,6 +12,9 @@ import routes from './routes';
 // principalement bootstrap et Axios pour les appels AJAX
 require('./bootstrap');
 
+// Nécessaire pour le stepper de la page Input
+require('materialize-css/dist/js/materialize.min');
+
 // Remplace le routeur de Laravel pour les URLS concernés par Vue (SPA)
 Vue.use(VueRouter);
 

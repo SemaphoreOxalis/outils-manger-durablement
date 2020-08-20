@@ -27,7 +27,7 @@
                         </button>
 
                         <div class="text-right">
-                            <a class="button" @click="deletePreviousAudit"><span class="icon"></span></a>
+                            <button class="button" @click="deletePreviousAudit"><span class="icon"></span></button>
                         </div>
                     </div>
                 </div>
