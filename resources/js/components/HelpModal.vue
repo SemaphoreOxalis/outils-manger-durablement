@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button class="modal-default-button btn btn-outline-primary" @click="close">
+                        <button class="modal-default-button button alter" @click="close">
                             OK
                         </button>
                     </div>
@@ -64,18 +64,15 @@
         margin: 0px auto;
         padding: 20px 30px;
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 20px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
         transition: all 0.3s ease;
         font-family: Helvetica, Arial, sans-serif;
     }
 
-    .modal-body {
-        margin: 20px 0;
-    }
-
     .modal-footer {
         border-top: none;
+        padding: 0;
     }
 
     .modal-default-button {

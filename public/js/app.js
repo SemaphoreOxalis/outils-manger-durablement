@@ -2223,6 +2223,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // fenêtre modale d'aide
 
 
@@ -7638,7 +7663,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container {\n    width: 520px;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 5px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-body {\n    margin: 20px 0;\n}\n.modal-footer {\n    border-top: none;\n}\n.modal-default-button {\n    float: right;\n}\n.modal-enter {\n    opacity: 0;\n}\n.modal-leave-active {\n    opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n    transform: scale(1.1);\n}\n", ""]);
+exports.push([module.i, "\n.modal-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n    display: table;\n    transition: opacity 0.3s ease;\n}\n.modal-wrapper {\n    display: table-cell;\n    vertical-align: middle;\n}\n.modal-container {\n    width: 520px;\n    margin: 0px auto;\n    padding: 20px 30px;\n    background-color: #fff;\n    border-radius: 20px;\n    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);\n    transition: all 0.3s ease;\n    font-family: Helvetica, Arial, sans-serif;\n}\n.modal-footer {\n    border-top: none;\n    padding: 0;\n}\n.modal-default-button {\n    float: right;\n}\n.modal-enter {\n    opacity: 0;\n}\n.modal-leave-active {\n    opacity: 0;\n}\n.modal-enter .modal-container,\n.modal-leave-active .modal-container {\n    transform: scale(1.1);\n}\n", ""]);
 
 // exports
 
@@ -7657,7 +7682,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#im-ready-button {\n    display: block;\n    max-width: 500px;\n    margin: auto;\n}\n#help {\n    display: inline-block;\n    background-color: #343a40;\n    color: white;\n    border-radius: 50%;\n    width: 1.5em;\n    height: 1.5em;\n    text-align: center;\n    border-style: none;\n}\n", ""]);
+exports.push([module.i, "\n#help {\n    display: inline-block;\n    background-color: #343a40;\n    color: white;\n    border-radius: 50%;\n    width: 1.5em;\n    height: 1.5em;\n    text-align: center;\n    border-style: none;\n}\n.info {\n    background-color: white;\n    border-radius: 1rem;\n}\n.big-button {\n    background-color: var(--main-color);\n    background-image: linear-gradient(129deg, rgba(17, 153, 142,0.8), var(--main-color));\n}\n.big-button {\n    font-size: 1rem;\n}\n.big-button .icon {\n    font-size: 3rem;\n}\n.small-line-height {\n    line-height: 25px;\n}\n", ""]);
 
 // exports
 
@@ -43659,7 +43684,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "modal-default-button btn btn-outline-primary",
+                staticClass: "modal-default-button button alter",
                 on: { click: _vm.close }
               },
               [_vm._v("\n                        OK\n                    ")]
@@ -43706,105 +43731,191 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _c("h1", [_vm._v("Accueil")]),
+      _vm._m(0),
       _vm._v(" "),
-      _vm.previousAuditDetectedInLocalStorage
-        ? _c("div", [
-            _c("p", [
-              _vm._v(
-                "\n            Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière\n            fois en date du " +
-                  _vm._s(this.previousAuditDate) +
-                  "\n        "
-              )
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.previousAuditDetectedInLocalStorage
+            ? _c("div", { staticClass: "info p-4 m-4" }, [
+                _c("p", [
+                  _vm._v(
+                    "\n                    Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière\n                    fois en date du "
+                  ),
+                  _c("strong", [_vm._v(_vm._s(this.previousAuditDate))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "position-relative" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button big-button d-flex p-4 m-2",
+                      on: { click: _vm.goToPreviousAudit }
+                    },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "icon align-self-center mr-4" },
+                        [_vm._v("")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "text-left small-line-height" },
+                        [
+                          _c("strong", [_vm._v("Reprendre")]),
+                          _c("br"),
+                          _c("small", [
+                            _vm._v("la simulation"),
+                            _c("br"),
+                            _vm._v("du " + _vm._s(_vm.previousAuditDate))
+                          ])
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-right" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "button",
+                        on: { click: _vm.deletePreviousAudit }
+                      },
+                      [_c("span", { staticClass: "icon" }, [_vm._v("")])]
+                    )
+                  ])
+                ])
+              ])
+            : _vm._e()
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col p-4 m-4" },
+          [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("ul", [
+              _c("li", [
+                _vm._v(
+                  "du nombre de repas produits dans votre établissement (par an)"
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v(
+                  "du coût de revient unitaire d'un repas\n                    "
+                ),
+                _c(
+                  "button",
+                  {
+                    attrs: { id: "help" },
+                    on: {
+                      click: function($event) {
+                        _vm.showModal = true
+                      }
+                    }
+                  },
+                  [_vm._v("?")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v(
+                  "du volume de déchets ménagers produits par votre établissement (en tonnes)"
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _vm._v("du coût de traitement des déchets (en euros par tonne)")
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "d-flex justify-content-around" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
               _c(
                 "button",
-                {
-                  staticClass: "btn btn-primary",
-                  on: { click: _vm.goToPreviousAudit }
-                },
-                [_vm._v("Les consulter")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  on: { click: _vm.deletePreviousAudit }
-                },
-                [_vm._v("Les effacer")]
+                { staticClass: "button big-button d-flex p-4 m-2" },
+                [
+                  _c("div", { staticClass: "icon align-self-center mr-4" }, [
+                    _vm._v("")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-left small-line-height" }, [
+                    _c("small", [_vm._v("Je suis prêt")]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("strong", [_vm._v("Démarrer")]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("small", [
+                      _vm._v("une nouvelle\n                        simulation")
+                    ])
+                  ])
+                ]
               )
             ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Pour réaliser votre première simulation, vous aurez besoin :")
-      ]),
-      _vm._v(" "),
-      _c("ul", [
-        _c("li", [
-          _vm._v(
-            "du nombre de repas produits dans votre établissement (par an)"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _vm._v("du coût de revient unitaire d'un repas "),
-          _c(
-            "button",
-            {
-              attrs: { id: "help" },
-              on: {
-                click: function($event) {
-                  _vm.showModal = true
-                }
-              }
-            },
-            [_vm._v("?")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _vm._v(
-            "du volume de déchets ménagers produits par votre établissement (en tonnes)"
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _vm._v("du coût de traitement des déchets (en euros par tonne)")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Grâce à ces données, vous obtiendrez une estimation économique et quantitative du gaspillage alimentaire de\n        votre établissement en 15 minutes"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est réalisé\n        uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur"
-        )
-      ]),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn-lg btn-block py-4",
-            attrs: { id: "im-ready-button" }
-          },
-          [_vm._v("Je suis prêt.e")]
+          ],
+          1
         )
       ])
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", [
+      _vm._v("Simulateur de gaspillage "),
+      _c("br"),
+      _vm._v(" pour la restauration collective")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "info p-4 m-4" }, [
+      _c("p", [
+        _c("i", [
+          _vm._v(
+            "Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est\n                        réalisé uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur"
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Pour réaliser votre première simulation, "),
+      _c("strong", [_vm._v("vous aurez besoin")]),
+      _vm._v(" :")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("strong", [
+        _vm._v(
+          "Grâce à ces données, vous obtiendrez une estimation économique et quantitative du gaspillage\n                alimentaire de votre établissement en 15 minutes"
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

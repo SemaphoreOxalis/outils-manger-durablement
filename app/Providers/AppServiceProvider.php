@@ -18,9 +18,9 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(IdeHelperServiceProvider::class);
         }
 
-        if ($this->app->isLocal()) {
-            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
-        }
+//        if ($this->app->isLocal()) {
+//            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+//        }
     }
 
     /**

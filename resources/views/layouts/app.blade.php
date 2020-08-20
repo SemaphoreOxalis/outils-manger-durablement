@@ -101,6 +101,7 @@
                         @csrf
                     </form>
                 @endauth
+                <router-link to="#" class="menu-item button icon"><span>Mentions Légales <br> Confidentialité</span></router-link>
             </div>
         </nav>
 

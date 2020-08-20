@@ -11588,3 +11588,11 @@ Generated using nucleoapp.com
   content: "\EA22";
 }
 
+.icon-ellipsis-h::before {
+  content: "\EA23";
+}
+
+.icon-ellipsis-v::before {
+  content: "\EA24";
+}
+
