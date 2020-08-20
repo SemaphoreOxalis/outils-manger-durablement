@@ -43809,9 +43809,9 @@ var render = function() {
                   "du coût de revient unitaire d'un repas\n                    "
                 ),
                 _c(
-                  "button",
+                  "a",
                   {
-                    attrs: { id: "help" },
+                    staticClass: "button alter",
                     on: {
                       click: function($event) {
                         _vm.showModal = true

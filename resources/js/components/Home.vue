@@ -38,7 +38,7 @@
                 <ul>
                     <li>du nombre de repas produits dans votre établissement (par an)</li>
                     <li>du coût de revient unitaire d'un repas
-                        <button id="help" @click="showModal = true">?</button>
+                        <a class="button alter" @click="showModal = true">?</a>
                     </li>
                     <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
                     <li>du coût de traitement des déchets (en euros par tonne)</li>
