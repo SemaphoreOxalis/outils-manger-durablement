@@ -25,12 +25,6 @@
             </simulation>
 
         </draggable>
-
-
-        <button class="btn btn-primary btn-lg btn-block py-4 my-2" id="addSimulation" @click="addSimulation">
-            <i class="fas fa-plus-circle mr-2"></i>Ajouter une simulation
-        </button>
-
     </div>
 </template>
 
@@ -117,6 +111,8 @@ export default {
 
         // LAnce l'évènement 'export-simulations' qui sera écouté par les composants concernés
         events.$on('export-simulations', this.exportSimulations);
+
+        events.$on('add-simulation', this.addSimulation);
 
         // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
         this.getDataSourceForNewSimulation();

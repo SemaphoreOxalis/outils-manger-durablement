@@ -1,8 +1,9 @@
 <template>
     <div class="py-4 px-4">
-        <h1>Etape 2/2 : Résultats et comparaisons de vos simulations</h1>
+        <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
+        <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
 
-        <div>
+        <div class="pt-4">
             <p>Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première
                 ligne du tableau ci-dessous</p>
             <p>Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage
@@ -12,32 +13,38 @@
                 !</p>
         </div>
 
-        <div style="border: 1px solid black;" class="p-3">
-            <p><i class="fas fa-arrows-alt mr-2"></i> Vous pouvez réorganiser les simulations en les faisant glisser</p>
-            <p><i class="fas fa-pencil-alt mr-2"></i> Les valeurs modifiables sont indiquées par ce symbole</p>
-            <p><i class="fas fa-trash-alt mr-2"></i> Vous pouvez également supprimer les simulations inutiles</p>
-            <p><i class="fas fa-file-export mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des
+        <div class="position-relative info p-3">
+            <p><i class="icon mr-2"></i> Vous pouvez réorganiser les simulations en les faisant glisser</p>
+            <p><i class="icon mr-2"></i> Les valeurs modifiables sont indiquées par ce symbole</p>
+            <p><i class="icon mr-2"></i> Vous pouvez également supprimer les simulations inutiles</p>
+            <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des
                 données sur votre logiciel de tableur</p>
         </div>
 
         <audit v-bind:audit-raw-data="this.auditRawData"></audit>
 
+        <div class="d-flex">
+            <button class="button"
+                    @click="addSimulation">
+                <i class="icon mr-2"></i>Ajouter une simulation
+            </button>
+
+            <button class="button alter"
+                    @click="resetSimulations">
+                <i class="icon mr-2"></i>Je réinitialise toutes mes simulations
+            </button>
+
+            <button class="button ml-auto"
+                    @click="exportSimulations"
+                    :disabled="areSimulationsInvalid">
+                <i class="icon mr-2"></i>Exporter le rapport de simulation
+            </button>
+        </div>
+
         <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a>
         </p>
         <p>Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les
             actions réalisables</a></p>
-
-        <div class="d-flex justify-content-around">
-            <button class="btn btn-primary"
-                    @click="exportSimulations"
-                    :disabled="areSimulationsInvalid">
-                <i class="fas fa-file-export mr-2"></i>Exporter le rapport de simulation
-            </button>
-            <button class="btn btn-danger"
-                    @click="resetSimulations">
-                <i class="fas fa-redo-alt mr-2"></i>Je réinitialise toutes mes simulations
-            </button>
-        </div>
 
     </div>
 </template>
@@ -132,6 +139,17 @@ export default {
         exportSimulations() {
             events.$emit('export-simulations');
         },
+
+        addSimulation() {
+            events.$emit('add-simulation');
+        }
     }
 }
 </script>
+
+<style>
+.info {
+    background-color: white;
+    border-radius: 1rem;
+}
+</style>

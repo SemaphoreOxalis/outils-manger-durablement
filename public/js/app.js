@@ -1930,6 +1930,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 // import des fonctions utiles regroupées dans des fichiers 'helpers'
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2476,6 +2478,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 // import de bibliothèques de fonctions
 // validation des données saisies
  // logique principale du composant
@@ -2694,6 +2700,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 // import des composants enfants
  // Logique de validation
 
@@ -2763,6 +2776,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // Demande aux composants concernés de rassembler les données pour un export (Audit, Simulations et Simulation)
     exportSimulations: function exportSimulations() {
       events.$emit('export-simulations');
+    },
+    addSimulation: function addSimulation() {
+      events.$emit('add-simulation');
     }
   }
 });
@@ -2990,12 +3006,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
 // import des dépendances
 // bibliothèque de fonctions chargée de traiter la liste des simulations
  // intéraction avec le localStorage
@@ -3059,7 +3069,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
     events.$on('reset-simulations', this.resetSimulations); // LAnce l'évènement 'export-simulations' qui sera écouté par les composants concernés
 
-    events.$on('export-simulations', this.exportSimulations); // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
+    events.$on('export-simulations', this.exportSimulations);
+    events.$on('add-simulation', this.addSimulation); // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
 
     this.getDataSourceForNewSimulation();
   }
@@ -7674,7 +7685,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.admin input:invalid {\n    background-color: lightpink;\n}\n", ""]);
+exports.push([module.i, "\n.admin input:invalid {\n    border: lightpink;\n}\n", ""]);
 
 // exports
 
@@ -7750,7 +7761,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\ninput:invalid {\n    border-color: lightpink;\n}\n.editing-reference-values {\n    position: relative;\n    background-color: white;\n    z-index: 999;\n}\n.editing-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n}\nul.stepper .step.active::before, ul.stepper .step.done::before {\n    background-color: #34d579;\n}\nul.stepper .step.wrong::before {\n    background-color: red;\n}\nul.stepper .step.active::before {\n    font-size: 1.5rem;\n    line-height: 30px;\n    height: 30px;\n    width: 30px;\n}\n.active .step-title {\n    line-height: 30px;\n    font-size: 1.2rem;\n}\n", ""]);
+exports.push([module.i, "\ninput:invalid {\n    border-color: lightpink;\n}\n.editing-reference-values {\n    position: relative;\n    background-color: white;\n    z-index: 999;\n}\n.editing-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n}\nul.stepper .step.active::before, ul.stepper .step.done::before {\n    background-color: #34d579;\n}\nul.stepper .step.wrong::before {\n    background-color: red;\n}\nul.stepper .step.active::before {\n    font-size: 1.5rem;\n    line-height: 30px;\n    height: 30px;\n    width: 30px;\n}\n.active .step-title {\n    line-height: 30px;\n    font-size: 1.2rem;\n}\nlabel {\n    font-size: 1rem;\n    color: black;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Results.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.info {\n    background-color: white;\n    border-radius: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -42807,6 +42837,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Results.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Results.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Simulation.vue?vue&type=style&index=0&lang=css&":
 /*!********************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Simulation.vue?vue&type=style&index=0&lang=css& ***!
@@ -43501,13 +43561,20 @@ var render = function() {
       ? _c(
           "div",
           [
-            _c("h1", [_vm._v("Admin Panel")]),
+            _c("h1", { staticClass: "my-4" }, [
+              _vm._v("Panneau d'administration")
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "mb-4" }, [
+              _vm._v(
+                "Ici, vous pouvez modifier simplement les valeurs de référence utilisées pas l'application"
+              )
+            ]),
             _vm._v(" "),
             _vm._l(_vm.values, function(value) {
               return _c("div", { key: value.id }, [
-                _vm._v(
-                  "\n\n            " + _vm._s(value.label) + "\n            "
-                ),
+                _c("label", [_vm._v(_vm._s(value.label))]),
+                _vm._v(" "),
                 _c("div", { staticClass: "form-group admin" }, [
                   _c("input", {
                     directives: [
@@ -43518,6 +43585,7 @@ var render = function() {
                         expression: "value.value"
                       }
                     ],
+                    staticClass: "custom-input browser-default number-field",
                     attrs: {
                       type: "number",
                       required: "",
@@ -44100,7 +44168,7 @@ var render = function() {
         _c("div", { staticClass: "step-content" }, [
           _c("h4", { staticClass: "col-12" }, [
             _vm._v(
-              "Saisissez les informations sur les repas produits/commandés par votre cuisine sur cette période"
+              "Saisissez les informations sur les repas produits/commandés par votre cuisine sur\n                    cette période"
             )
           ]),
           _vm._v(" "),
@@ -44174,297 +44242,336 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(5)
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { attrs: { id: "reference-values" } },
-      [
-        _vm._m(6),
-        _vm._v(" "),
-        _vm._m(7),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "global-waste-volume" } }, [
-          _vm._v("Volume constaté (en tonnes)")
+      _c("li", { staticClass: "step" }, [
+        _c("div", { staticClass: "step-title waves-effect" }, [
+          _vm._v("Les déchets")
         ]),
         _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.userInput.globalWasteVolume,
-              expression: "userInput.globalWasteVolume"
-            }
-          ],
-          staticClass: "input",
-          attrs: {
-            id: "global-waste-volume",
-            type: "number",
-            required: "",
-            min: "0.001",
-            step: "0.001"
-          },
-          domProps: { value: _vm.userInput.globalWasteVolume },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.userInput, "globalWasteVolume", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.defaultValues
-          ? _c("p", [
-              _vm._v("Suite à la "),
-              _c("a", { attrs: { href: "#" } }, [
-                _vm._v("caractérisation des déchets du C.H de Niort,")
+        _c("div", { staticClass: "step-content" }, [
+          _c("h4", { staticClass: "col-12" }, [
+            _vm._v(
+              "Saisissez les informations sur les déchets (hors déchets médicaux pour les\n                    structures médicales) sur la même période."
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col col-6" }, [
+              _c("label", [_vm._v("Volume constaté (en tonnes) :")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userInput.globalWasteVolume,
+                    expression: "userInput.globalWasteVolume"
+                  }
+                ],
+                staticClass:
+                  "custom-input number-field w-input browser-default",
+                attrs: {
+                  id: "global-waste-volume",
+                  type: "number",
+                  required: "",
+                  min: "0.001",
+                  step: "0.001"
+                },
+                domProps: { value: _vm.userInput.globalWasteVolume },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.userInput,
+                      "globalWasteVolume",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", [_vm._v("Coût de traitement par tonnes (en €) :")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userInput.wasteTreatmentCost,
+                    expression: "userInput.wasteTreatmentCost"
+                  }
+                ],
+                staticClass:
+                  "custom-input number-field w-input browser-default",
+                attrs: {
+                  id: "waste-treatment-cost",
+                  type: "number",
+                  required: "",
+                  min: "0.01",
+                  step: "0.01"
+                },
+                domProps: { value: _vm.userInput.wasteTreatmentCost },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.userInput,
+                      "wasteTreatmentCost",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col col-6 reference-values" }, [
+              _vm.defaultValues
+                ? _c("p", [
+                    _vm._v("Suite à la "),
+                    _c("a", { attrs: { href: "#" } }, [
+                      _vm._v("caractérisation des déchets du C.H de Niort,")
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "px-2 py-2",
+                  class: _vm.editingReferenceValues
+                    ? "editing-reference-values"
+                    : ""
+                },
+                [
+                  _c("p", [
+                    _vm._v(
+                      "Il a été constaté que la part des restes alimentaires représente environ\n                                "
+                    ),
+                    _vm.editingReferenceValues
+                      ? _c("span", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value:
+                                  _vm.referenceValues
+                                    .foodLeftoversVolumeInGlobalWaste,
+                                expression:
+                                  "referenceValues.foodLeftoversVolumeInGlobalWaste"
+                              }
+                            ],
+                            staticClass:
+                              "custom-input number-field browser-default",
+                            attrs: {
+                              type: "number",
+                              required: "",
+                              min: "0.01",
+                              max: "100",
+                              step: "0.01"
+                            },
+                            domProps: {
+                              value:
+                                _vm.referenceValues
+                                  .foodLeftoversVolumeInGlobalWaste
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.referenceValues,
+                                  "foodLeftoversVolumeInGlobalWaste",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      : _c("span", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(
+                                _vm.referenceValues
+                                  .foodLeftoversVolumeInGlobalWaste
+                              ) +
+                              "\n                                "
+                          )
+                        ]),
+                    _vm._v(
+                      "\n                                % du volume global des ordures ménagères, soit dans votre cas\n                                "
+                    ),
+                    _c("strong", [
+                      _vm._v(
+                        _vm._s(_vm.foodLeftoversVolumeInGlobalWasteInYourCase) +
+                          " tonnes"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v(
+                      "Sans action particulière,\n                                "
+                    ),
+                    _vm.editingReferenceValues
+                      ? _c("span", [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value:
+                                  _vm.referenceValues
+                                    .actualFoodLeftoversInFoodWaste,
+                                expression:
+                                  "referenceValues.actualFoodLeftoversInFoodWaste"
+                              }
+                            ],
+                            staticClass:
+                              "custom-input number-field browser-default",
+                            attrs: {
+                              type: "number",
+                              required: "",
+                              min: "0.01",
+                              max: "100",
+                              step: "0.01"
+                            },
+                            domProps: {
+                              value:
+                                _vm.referenceValues
+                                  .actualFoodLeftoversInFoodWaste
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.referenceValues,
+                                  "actualFoodLeftoversInFoodWaste",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      : _c("span", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(
+                                _vm.referenceValues
+                                  .actualFoodLeftoversInFoodWaste
+                              ) +
+                              "\n                                "
+                          )
+                        ]),
+                    _vm._v(
+                      "\n                                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas\n                                "
+                    ),
+                    _c("strong", [
+                      _vm._v(
+                        _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
+                          " tonnes"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm.editingReferenceValues
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "button alter",
+                          attrs: { disabled: _vm.areThereInvalidValues },
+                          on: { click: _vm.saveLocalReferenceValues }
+                        },
+                        [_vm._v("OK\n                            ")]
+                      )
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à\n                            "
+                ),
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#reference-values" },
+                    on: {
+                      click: function($event) {
+                        _vm.editingReferenceValues = true
+                      }
+                    }
+                  },
+                  [_vm._v("modifier ces valeurs")]
+                ),
+                _vm._v("\n                            (ou à "),
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#reference-values" },
+                    on: { click: _vm.resetReferenceValues }
+                  },
+                  [_vm._v("les réinitialiser à leurs valeur par défaut")]
+                ),
+                _vm._v(")\n                        ")
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "px-2 py-2",
-            class: _vm.editingReferenceValues ? "editing-reference-values" : ""
-          },
-          [
-            _c("p", [
-              _vm._v(
-                "Il a été constaté que la part des restes alimentaires représente environ\n                "
-              ),
-              _vm.editingReferenceValues
-                ? _c("span", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value:
-                            _vm.referenceValues
-                              .foodLeftoversVolumeInGlobalWaste,
-                          expression:
-                            "referenceValues.foodLeftoversVolumeInGlobalWaste"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        type: "number",
-                        required: "",
-                        min: "0.01",
-                        max: "100",
-                        step: "0.01"
-                      },
-                      domProps: {
-                        value:
-                          _vm.referenceValues.foodLeftoversVolumeInGlobalWaste
-                      },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.referenceValues,
-                            "foodLeftoversVolumeInGlobalWaste",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ])
-                : _c("span", [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(
-                          _vm.referenceValues.foodLeftoversVolumeInGlobalWaste
-                        ) +
-                        "\n                "
-                    )
-                  ]),
-              _vm._v(
-                "\n                % du volume global des ordures ménagères, soit dans votre cas\n                "
-              ),
-              _c("strong", [
-                _vm._v(
-                  _vm._s(_vm.foodLeftoversVolumeInGlobalWasteInYourCase) +
-                    " tonnes"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("Sans action particulière,\n                "),
-              _vm.editingReferenceValues
-                ? _c("span", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value:
-                            _vm.referenceValues.actualFoodLeftoversInFoodWaste,
-                          expression:
-                            "referenceValues.actualFoodLeftoversInFoodWaste"
-                        }
-                      ],
-                      staticClass: "input",
-                      attrs: {
-                        type: "number",
-                        required: "",
-                        min: "0.01",
-                        max: "100",
-                        step: "0.01"
-                      },
-                      domProps: {
-                        value:
-                          _vm.referenceValues.actualFoodLeftoversInFoodWaste
-                      },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.referenceValues,
-                            "actualFoodLeftoversInFoodWaste",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ])
-                : _c("span", [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(
-                          _vm.referenceValues.actualFoodLeftoversInFoodWaste
-                        ) +
-                        "\n                "
-                    )
-                  ]),
-              _vm._v(
-                "\n                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas\n                "
-              ),
-              _c("strong", [
-                _vm._v(
-                  _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
-                    " tonnes"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm.editingReferenceValues
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-sm",
-                    attrs: { disabled: _vm.areThereInvalidValues },
-                    on: { click: _vm.saveLocalReferenceValues }
-                  },
-                  [_vm._v("OK\n            ")]
-                )
-              : _vm._e()
-          ]
-        ),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à\n            "
-          ),
+          ]),
+          _vm._v(" "),
           _c(
-            "a",
-            {
-              attrs: { href: "#reference-values" },
-              on: {
-                click: function($event) {
-                  _vm.editingReferenceValues = true
-                }
-              }
-            },
-            [_vm._v("modifier ces valeurs")]
-          ),
-          _vm._v("\n            (ou à "),
-          _c(
-            "a",
-            {
-              attrs: { href: "#reference-values" },
-              on: { click: _vm.resetReferenceValues }
-            },
-            [_vm._v("les réinitialiser à leurs valeur par défaut")]
-          ),
-          _vm._v(")\n        ")
-        ]),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "waste-treatment-cost" } }, [
-          _vm._v("Coût de traitement par tonne (en €) :")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.userInput.wasteTreatmentCost,
-              expression: "userInput.wasteTreatmentCost"
-            }
-          ],
-          staticClass: "input",
-          attrs: {
-            id: "waste-treatment-cost",
-            type: "number",
-            required: "",
-            min: "0.01",
-            step: "0.01"
-          },
-          domProps: { value: _vm.userInput.wasteTreatmentCost },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.userInput, "wasteTreatmentCost", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          {
-            attrs: {
-              to: {
-                name: "results",
-                params: {
-                  userInput: _vm.userInput,
-                  referenceValues: _vm.referenceValues
-                }
-              },
-              tag: "span"
-            }
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary btn-lg btn-block py-4",
-                attrs: {
-                  disabled: _vm.areThereInvalidData,
-                  id: "launching-audit-button"
-                }
-              },
-              [_vm._v("\n                Je lance ma simulation\n            ")]
-            )
-          ]
-        )
-      ],
-      1
-    )
+            "div",
+            { staticClass: "step-actions" },
+            [
+              _vm._m(6),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      name: "results",
+                      params: {
+                        userInput: _vm.userInput,
+                        referenceValues: _vm.referenceValues
+                      }
+                    },
+                    tag: "span"
+                  }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button",
+                      attrs: {
+                        disabled: _vm.areThereInvalidData,
+                        id: "launching-audit-button"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Je lance ma simulation\n                        "
+                      )
+                    ]
+                  )
+                ]
+              )
+            ],
+            1
+          )
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -44487,7 +44594,7 @@ var staticRenderFns = [
         "Obtenez une estimation économique et quantitative du gaspillage alimentaire "
       ),
       _c("br"),
-      _vm._v(" de votre établissement en 15 minutes")
+      _vm._v(" de\n        votre établissement en 15 minutes")
     ])
   },
   function() {
@@ -44515,7 +44622,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "[(montant total des achats alimentaires (matière première) + masse salariale de l'équipe de restauration + investissements + coût de l'énergie) / nombre de repas produits]"
+            "[(montant total des achats alimentaires (matière première) + masse salariale de l'équipe\n                                de restauration + investissements + coût de l'énergie) / nombre de repas\n                                produits]"
           )
         ]),
         _vm._v(" "),
@@ -44548,42 +44655,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "step" }, [
-      _c("div", { staticClass: "step-title waves-effect" }, [
-        _vm._v("Les déchets")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "step-content" }, [
-        _c("div", { staticClass: "step-actions" }, [
-          _c("button", { staticClass: "button alter previous-step" }, [
-            _c("span", { staticClass: "icon" }, [_vm._v("")]),
-            _vm._v(" retour")
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v(
-        "Saisissez les informations sur les déchets (hors déchets médicaux pour les structures médicales) "
-      ),
-      _c("strong", [_vm._v("sur la même période")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("p", [
       _c("a", { attrs: { href: "#" } }, [
         _vm._v(
           "En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets"
         )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "button alter previous-step" }, [
+      _c("span", { staticClass: "icon" }, [_vm._v("")]),
+      _vm._v(" retour")
     ])
   }
 ]
@@ -44696,46 +44782,54 @@ var render = function() {
     "div",
     { staticClass: "py-4 px-4" },
     [
-      _c("h1", [
-        _vm._v("Etape 2/2 : Résultats et comparaisons de vos simulations")
-      ]),
-      _vm._v(" "),
       _vm._m(0),
+      _vm._v(" "),
+      _c("h4", { staticClass: "mb-4 text-center" }, [
+        _vm._v("Résultats et comparaisons de vos simulations")
+      ]),
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("audit", { attrs: { "audit-raw-data": this.auditRawData } }),
-      _vm._v(" "),
       _vm._m(2),
       _vm._v(" "),
-      _vm._m(3),
+      _c("audit", { attrs: { "audit-raw-data": this.auditRawData } }),
       _vm._v(" "),
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex" }, [
         _c(
           "button",
-          {
-            staticClass: "btn btn-primary",
-            attrs: { disabled: _vm.areSimulationsInvalid },
-            on: { click: _vm.exportSimulations }
-          },
+          { staticClass: "button", on: { click: _vm.addSimulation } },
           [
-            _c("i", { staticClass: "fas fa-file-export mr-2" }),
-            _vm._v("Exporter le rapport de simulation\n        ")
+            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+            _vm._v("Ajouter une simulation\n        ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "button alter", on: { click: _vm.resetSimulations } },
+          [
+            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+            _vm._v("Je réinitialise toutes mes simulations\n        ")
           ]
         ),
         _vm._v(" "),
         _c(
           "button",
           {
-            staticClass: "btn btn-danger",
-            on: { click: _vm.resetSimulations }
+            staticClass: "button ml-auto",
+            attrs: { disabled: _vm.areSimulationsInvalid },
+            on: { click: _vm.exportSimulations }
           },
           [
-            _c("i", { staticClass: "fas fa-redo-alt mr-2" }),
-            _vm._v("Je réinitialise toutes mes simulations\n        ")
+            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+            _vm._v("Exporter le rapport de simulation\n        ")
           ]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _vm._m(4)
     ],
     1
   )
@@ -44745,7 +44839,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
+    return _c("h1", { staticClass: "mb-4" }, [
+      _vm._v("Simulateur de gaspillage "),
+      _c("br"),
+      _vm._v(" pour la restauration collective")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pt-4" }, [
       _c("p", [
         _vm._v(
           "Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première\n            ligne du tableau ci-dessous"
@@ -44771,35 +44875,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "p-3", staticStyle: { border: "1px solid black" } },
-      [
-        _c("p", [
-          _c("i", { staticClass: "fas fa-arrows-alt mr-2" }),
-          _vm._v(
-            " Vous pouvez réorganiser les simulations en les faisant glisser"
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fas fa-pencil-alt mr-2" }),
-          _vm._v(" Les valeurs modifiables sont indiquées par ce symbole")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fas fa-trash-alt mr-2" }),
-          _vm._v(" Vous pouvez également supprimer les simulations inutiles")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "fas fa-file-export mr-2" }),
-          _vm._v(
-            ' Le bouton "exporter" vous permet de récupérer l\'ensemble des\n            données sur votre logiciel de tableur'
-          )
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "position-relative info p-3" }, [
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(
+          " Vous pouvez réorganiser les simulations en les faisant glisser"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(" Les valeurs modifiables sont indiquées par ce symbole")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(" Vous pouvez également supprimer les simulations inutiles")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(
+          ' Le bouton "exporter" vous permet de récupérer l\'ensemble des\n            données sur votre logiciel de tableur'
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -45134,19 +45234,6 @@ var render = function() {
           })
         }),
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-lg btn-block py-4 my-2",
-          attrs: { id: "addSimulation" },
-          on: { click: _vm.addSimulation }
-        },
-        [
-          _c("i", { staticClass: "fas fa-plus-circle mr-2" }),
-          _vm._v("Ajouter une simulation\n    ")
-        ]
       )
     ],
     1
@@ -63797,7 +63884,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Results.vue?vue&type=template&id=8ef50b4a& */ "./resources/js/components/Results.vue?vue&type=template&id=8ef50b4a&");
 /* harmony import */ var _Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Results.vue?vue&type=script&lang=js& */ "./resources/js/components/Results.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Results.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Results.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -63805,7 +63894,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Results_vue_vue_type_template_id_8ef50b4a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -63834,6 +63923,22 @@ component.options.__file = "resources/js/components/Results.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Results.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Results.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/Results.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Results.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Results.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Results_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 

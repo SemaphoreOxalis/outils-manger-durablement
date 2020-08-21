@@ -1,14 +1,16 @@
 <template>
     <div class="mx-5">
         <div v-if="signedIn">
-            <h1>Admin Panel</h1>
+            <h1 class="my-4">Panneau d'administration</h1>
+            <p class="mb-4">Ici, vous pouvez modifier simplement les valeurs de référence utilisées pas l'application</p>
+
             <div v-for="value in values"
                  :key="value.id">
 
-                {{ value.label }}
+                <label>{{ value.label }}</label>
                 <div class="form-group admin">
                     <input v-model="value.value" @change="update(value)" type="number" required
-                           min="0" max="100" step="0.01"> <span> %</span>
+                           min="0" max="100" step="0.01" class="custom-input browser-default number-field"> <span> %</span>
                 </div>
             </div>
 
@@ -57,6 +59,6 @@
 
 <style>
     .admin input:invalid {
-        background-color: lightpink;
+        border: lightpink;
     }
 </style>
