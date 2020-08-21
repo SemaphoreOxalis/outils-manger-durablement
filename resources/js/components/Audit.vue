@@ -63,61 +63,61 @@
 
 <script>
 
-    // Imports des dépendances
-    // logique du composant
-    import AuditLogic from "../helpers/calculations/AuditLogic";
-    // utiles pour arrondir les nombres et formatter les dates
-    import NumberRounder from "../helpers/NumberRounder";
-    import DateFormatter from "../helpers/DateFormatter";
-    // Composant enfant
-    import Simulations from "./Simulations";
+// Imports des dépendances
+// logique du composant
+import AuditLogic from "../helpers/calculations/AuditLogic";
+// utiles pour arrondir les nombres et formatter les dates
+import NumberRounder from "../helpers/NumberRounder";
+import DateFormatter from "../helpers/DateFormatter";
+// Composant enfant
+import Simulations from "./Simulations";
 
-    export default {
+export default {
 
-        // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
-        mixins: [
-            AuditLogic,
-            NumberRounder,
-            DateFormatter
-        ],
+    // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
+    mixins: [
+        AuditLogic,
+        NumberRounder,
+        DateFormatter
+    ],
 
-        // Déclaration des composants enfants
-        components: {
-            Simulations
-        },
+    // Déclaration des composants enfants
+    components: {
+        Simulations
+    },
 
-        // données récupérées du composant parent (Results.vue)
-        props: [
-            'auditRawData'
-        ],
+    // données récupérées du composant parent (Results.vue)
+    props: [
+        'auditRawData'
+    ],
 
-        // données utilisées par ce composant
-        data() {
-            return {
-                input: {},
-                computedValues: {},
-                auditData: {}
-            }
-        },
-
-        // A l'initialisation du composant
-        mounted() {
-
-            // on récupère les données du parent (Results.vue)
-            this.input = this.auditRawData;
-
-            // et on initialise un objet qui va servir pour les composants enfants (Simulations.vue)
-            this.computedValues = {
-                globalFoodWasteVolume: this.globalFoodWasteVolume,
-                foodWasteVolume: this.foodWasteVolume,
-                foodWasteCost: this.foodWasteCost,
-                wasteCostPerDish: this.wasteCostPerDish,
-                amountOfDishesWasted: this.amountOfDishesWasted
-            };
-
-            // Par souci de practicité, on stocke tout dans un unique objet
-            this.auditData = {...this.input, ...this.computedValues};
-            this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
+    // données utilisées par ce composant
+    data() {
+        return {
+            input: {},
+            computedValues: {},
+            auditData: {}
         }
+    },
+
+    // A l'initialisation du composant
+    mounted() {
+
+        // on récupère les données du parent (Results.vue)
+        this.input = this.auditRawData;
+
+        // et on initialise un objet qui va servir pour les composants enfants (Simulations.vue)
+        this.computedValues = {
+            globalFoodWasteVolume: this.globalFoodWasteVolume,
+            foodWasteVolume: this.foodWasteVolume,
+            foodWasteCost: this.foodWasteCost,
+            wasteCostPerDish: this.wasteCostPerDish,
+            amountOfDishesWasted: this.amountOfDishesWasted
+        };
+
+        // Par souci de practicité, on stocke tout dans un unique objet
+        this.auditData = {...this.input, ...this.computedValues};
+        this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
     }
+}
 </script>

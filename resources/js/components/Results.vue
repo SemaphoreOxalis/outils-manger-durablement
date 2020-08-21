@@ -4,27 +4,22 @@
         <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
 
         <div class="pt-4">
-            <p>Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première
-                ligne du tableau ci-dessous</p>
-            <p>Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage
-                alimentaire, optimisation du nombre de repas...</p>
-            <br>
-            <p>Chaque simulation est comparée avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter
-                !</p>
+            <p>Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous</p>
+            <p>Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
+            <p>Chaque simulation est comparée avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !</p>
         </div>
 
         <div class="position-relative info p-3 mb-4">
             <p><i class="icon mr-2"></i> Vous pouvez réorganiser les simulations en les faisant glisser</p>
             <p><i class="icon mr-2"></i> Les valeurs modifiables sont indiquées par ce symbole</p>
             <p><i class="icon mr-2"></i> Vous pouvez également supprimer les simulations inutiles</p>
-            <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des
-                données sur votre logiciel de tableur</p>
+            <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</p>
         </div>
 
         <div class="spacer">
             <audit v-bind:audit-raw-data="this.auditRawData"></audit>
 
-            <div class="d-flex">
+            <div class="d-flex mt-4">
                 <button class="button"
                         @click="addSimulation">
                     <i class="icon mr-2"></i>Ajouter une simulation
@@ -43,10 +38,12 @@
             </div>
         </div>
 
-        <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a>
+        <p class="mt-5">
+            Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a>
         </p>
-        <p>Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les
-            actions réalisables</a></p>
+        <p>
+            Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les actions réalisables</a>
+        </p>
 
     </div>
 </template>
@@ -148,10 +145,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.info {
-    background-color: white;
-    border-radius: 1rem;
-}
-</style>

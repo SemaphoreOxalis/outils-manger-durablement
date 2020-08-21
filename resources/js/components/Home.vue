@@ -23,7 +23,7 @@
                     <div class="position-relative">
                         <button class="button big-button d-flex p-4 m-2" @click="goToPreviousAudit">
                             <div class="icon align-self-center mr-4"></div>
-                            <div class="text-left small-line-height"><strong>Reprendre</strong><br><small>la simulation<br>du {{ previousAuditDate }}</small></div>
+                            <div class="text-left big-button-line-height"><strong>Reprendre</strong><br><small>la simulation<br>du {{ previousAuditDate }}</small></div>
                         </button>
 
                         <div class="text-right">
@@ -51,7 +51,7 @@
                 <router-link to="/input" tag="span">
                     <button class="button big-button d-flex p-4 m-2">
                         <div class="icon align-self-center mr-4"></div>
-                        <div class="text-left small-line-height"><small>Je suis prêt</small> <br> <strong>Démarrer</strong> <br> <small>une nouvelle
+                        <div class="text-left big-button-line-height"><small>Je suis prêt</small> <br> <strong>Démarrer</strong> <br> <small>une nouvelle
                             simulation</small></div>
                     </button>
                 </router-link>
@@ -121,38 +121,3 @@ export default {
     }
 }
 </script>
-
-<style>
-#help {
-    display: inline-block;
-    background-color: #343a40;
-    color: white;
-    border-radius: 50%;
-    width: 1.5em;
-    height: 1.5em;
-    text-align: center;
-    border-style: none;
-}
-
-.info {
-    background-color: white;
-    border-radius: 1rem;
-}
-
-.big-button {
-    background-color: var(--main-color);
-    background-image: linear-gradient(129deg, rgba(17, 153, 142,0.8), var(--main-color));
-}
-
-.big-button {
-    font-size: 1rem;
-}
-
-.big-button .icon {
-    font-size: 3rem;
-}
-
-.small-line-height {
-    line-height: 25px;
-}
-</style>

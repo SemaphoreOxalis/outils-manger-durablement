@@ -5,7 +5,7 @@
                    @change="saveChangesToLocalStorage"
                    :animation="150"
                    handle=".handle"
-                   chosenClass=".handling"
+                   chosenClass="handling"
                    filter=".ignore-draggable"
                    :preventOnFilter="false"
         >
@@ -119,11 +119,3 @@ export default {
     }
 }
 </script>
-
-<style>
-#addSimulation {
-    display: block;
-    max-width: 500px;
-    margin: auto;
-}
-</style>

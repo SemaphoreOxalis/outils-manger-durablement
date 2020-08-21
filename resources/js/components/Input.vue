@@ -3,8 +3,8 @@
         <div v-if="editingReferenceValues" class="editing-mask"></div>
         <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
 
-        <h4 class="text-center mb-4">Obtenez une estimation économique et quantitative du gaspillage alimentaire <br> de
-            votre établissement en 15 minutes</h4>
+        <h4 class="text-center mb-4">Obtenez une estimation économique et quantitative du gaspillage alimentaire
+            <br> de votre établissement en 15 minutes</h4>
 
         <ul class="stepper linear">
 
@@ -43,8 +43,8 @@
             <li class="step">
                 <div class="step-title waves-effect">Les repas</div>
                 <div class="step-content">
-                    <h4 class="col-12">Saisissez les informations sur les repas produits/commandés par votre cuisine sur
-                        cette période</h4>
+                    <h4 class="col-12">Saisissez les informations sur les repas produits/commandés par votre cuisine
+                        sur cette période</h4>
                     <div class="row">
                         <div class="col col-6">
                             <label>Nombre de repas :</label>
@@ -65,9 +65,11 @@
                         <div class="col col-6">
                             <div class="grey lighten-3">
                                 <p>*Le prix de revient d’un repas peut être calculé grâce à la formule suivante :</p>
-                                <p>[(montant total des achats alimentaires (matière première) + masse salariale de l&#x27;équipe
-                                    de restauration + investissements + coût de l&#x27;énergie) / nombre de repas
-                                    produits]</p>
+                                <p>[(montant total des achats alimentaires (matière première)
+                                    + masse salariale de l&#x27;équipe de restauration
+                                    + investissements
+                                    + coût de l&#x27;énergie)
+                                    / nombre de repas produits]</p>
                                 <p><strong>ou</strong>, en cas d&#x27;externalisation :</p>
                                 <p>[coût facturé / nombre de repas produits]</p>
                             </div>
@@ -274,48 +276,24 @@ export default {
 </script>
 
 <style>
-input:invalid {
-    border-color: lightpink;
-}
+    .editing-reference-values {
+        position: relative;
+        background-color: white;
+        z-index: 999;
+    }
 
-.editing-reference-values {
-    position: relative;
-    background-color: white;
-    z-index: 999;
-}
+    .editing-mask {
+        position: fixed;
+        z-index: 666;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
 
-.editing-mask {
-    position: fixed;
-    z-index: 666;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-ul.stepper .step.active::before, ul.stepper .step.done::before {
-    background-color: #34d579;
-}
-
-ul.stepper .step.wrong::before {
-    background-color: red;
-}
-
-ul.stepper .step.active::before {
-    font-size: 1.5rem;
-    line-height: 30px;
-    height: 30px;
-    width: 30px;
-}
-
-.active .step-title {
-    line-height: 30px;
-    font-size: 1.2rem;
-}
-
-label {
-    font-size: 1rem;
-    color: black;
-}
+    label {
+        font-size: 1rem;
+        color: var(--dark-color);
+    }
 </style>

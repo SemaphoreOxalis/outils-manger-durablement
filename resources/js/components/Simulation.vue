@@ -1,76 +1,88 @@
 <template>
     <div class="handle table-row">
 
-        <div class="table-div bigger">
+        <div class="table-div bigger d-flex">
             <input v-model="simulation.name"
                    @blur="saveChanges"
-                   class="ignore-draggable custom-input browser-default"
+                   class="ignore-draggable custom-input browser-default align-self-end"
                    type="text"
                    required>
         </div>
         <div class="table-div">
-            <div><small>{{ dishesNumberDelta }}</small></div>
-            <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ dishesNumberDelta }}</small></div>
+                <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
+            </div>
             <input v-model="simulation.dishesNumber"
                    @blur="saveChanges"
-                   class="ignore-draggable custom-input browser-default number"
+                   class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
                    min="1" step="1">
         </div>
         <div class="table-div">
-            <div><small>{{ dishCostDelta }}</small></div>
-            <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ dishCostDelta }}</small></div>
+                <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
+            </div>
             <input v-model="simulation.dishCost"
                    @blur="saveChanges"
-                   class="ignore-draggable custom-input browser-default number"
+                   class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
                    min="0.01" step="0.01">
         </div>
         <div class="table-div">
-            <div><small>{{ wasteTreatmentCostDelta }}</small></div>
-            <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ wasteTreatmentCostDelta }}</small></div>
+                <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
+            </div>
             <input v-model="simulation.wasteTreatmentCost"
                    @blur="saveChanges"
-                   class="ignore-draggable custom-input browser-default number"
+                   class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
                    min="0.01" step="0.01">
         </div>
         <div class="table-div">
-            <div><small>{{ foodWasteVolumeDelta }}</small></div>
-            <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ foodWasteVolumeDelta }}</small></div>
+                <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
+            </div>
             <input v-model="simulation.foodWasteVolume"
                    @blur="saveChanges"
-                   class="ignore-draggable custom-input browser-default number"
+                   class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
                    min="0.001" step="0.001">
         </div>
         <div class="table-div">
-            <div><small>{{ wasteCostPerDishDelta }}</small></div>
-            <div v-html="getStyle(wasteCostPerDishDeltaPercentage, false)"></div>
-            <div>{{ wasteCostPerDish }}</div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ wasteCostPerDishDelta }}</small></div>
+                <div v-html="getStyle(wasteCostPerDishDeltaPercentage, false)"></div>
+            </div>
+            <div class="strong align-with-inputs">{{ wasteCostPerDish }}</div>
         </div>
         <div class="table-div">
-            <div><small>{{ foodWasteCostDelta }}</small></div>
-            <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
-            <div>{{ foodWasteCost }}</div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ foodWasteCostDelta }}</small></div>
+                <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
+            </div>
+            <div class="strong align-with-inputs">{{ foodWasteCost }}</div>
         </div>
         <div class="table-div">
-            <div><small>{{ amountOfDishesWastedDelta }}</small></div>
-            <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
-            <div>{{ amountOfDishesWasted }}</div>
+            <div class="d-flex justify-content-around">
+                <div><small>{{ amountOfDishesWastedDelta }}</small></div>
+                <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
+            </div>
+            <div class="strong align-with-inputs">{{ amountOfDishesWasted }}</div>
         </div>
 
-<!--        <div class="p-2 flex-grow-0">-->
-<!--            <div>-->
-<!--                <button @click="removeSimulation(index)">-->
-<!--                    <i class="fas fa-trash-alt"></i>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="trash-icon">
+            <a @click="removeSimulation(index)">
+                <i class="icon"></i>
+            </a>
+        </div>
     </div>
 </template>
 
@@ -104,15 +116,15 @@ export default {
 
     // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
     watch: {
-        foodWasteCost: function() {
+        foodWasteCost: function () {
             this.updateSimulationsComponent();
         },
 
-        wasteCostPerDish: function() {
+        wasteCostPerDish: function () {
             this.updateSimulationsComponent();
         },
 
-        amountOfDishesWasted: function() {
+        amountOfDishesWasted: function () {
             this.updateSimulationsComponent();
         },
     },
@@ -167,34 +179,28 @@ export default {
 </script>
 
 <style>
-.handle {
-    cursor: grab;
-    cursor: -webkit-grab;
-}
+    .up {
+        transform: rotate(-45deg);
+    }
 
-.up {
-    transform: rotate(-45deg);
-}
+    .down {
+        transform: rotate(45deg);
+    }
 
-.down {
-    transform: rotate(45deg);
-}
+    .good {
+        color: var(--main-color-darker);
+    }
 
-.good {
-    color: #00ff00;
-}
+    .bad {
+        color: #ff0000;
+    }
 
-.bad {
-    color: #ff0000;
-}
+    .strong {
+        font-weight: 700;
+        margin-top: 10px;
+    }
 
-.custom-input:invalid {
-    border: lightpink;
-}
-
-/* TODO : make it work */
-.handling {
-    cursor: grabbing;
-    cursor: -webkit-grabbing;
-}
+    .align-with-inputs {
+        padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+    }
 </style>
