@@ -2011,6 +2011,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // Imports des dépendances
 // logique du composant
  // utiles pour arrondir les nombres et formatter les dates
@@ -2707,6 +2737,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 // import des composants enfants
  // Logique de validation
 
@@ -2798,15 +2830,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/calculations/SimulationLogic */ "./resources/js/helpers/calculations/SimulationLogic.js");
 /* harmony import */ var _helpers_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../helpers/SimulationValidation */ "./resources/js/helpers/SimulationValidation.js");
 /* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -7799,7 +7822,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.highlighted {\n    background-color: #2fa360;\n}\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n.good {\n    color: #00ff00;\n}\n.bad {\n    color: #ff0000;\n}\n.input:invalid {\n    background-color: lightpink;\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
+exports.push([module.i, "\n.handle {\n    cursor: grab;\n    cursor: -webkit-grab;\n}\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n.good {\n    color: #00ff00;\n}\n.bad {\n    color: #ff0000;\n}\n.custom-input:invalid {\n    border: lightpink;\n}\n\n/* TODO : make it work */\n.handling {\n    cursor: grabbing;\n    cursor: -webkit-grabbing;\n}\n", ""]);
 
 // exports
 
@@ -43646,40 +43669,38 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "d-flex text-center" }, [
-        _c("div", { staticClass: "p-2 w-25" }, [
-          _vm._v(_vm._s(this.auditData.name))
+      _c("div", { staticClass: "table-row ref" }, [
+        _c("div", { staticClass: "table-div bigger" }, [
+          _c("div", [_vm._v(_vm._s(this.auditData.name))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.input.dishesNumber))
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.input.dishesNumber))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.input.dishCost))
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.input.dishCost))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.input.wasteTreatmentCost))
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.input.wasteTreatmentCost))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.foodWasteVolume))
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.foodWasteVolume))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.wasteCostPerDish))
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.wasteCostPerDish))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.foodWasteCost))
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.foodWasteCost))])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-1" }, [
-          _vm._v(_vm._s(this.amountOfDishesWasted))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-2 flex-grow-0" })
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.amountOfDishesWasted))])
+        ])
       ]),
       _vm._v(" "),
       _c("simulations", { attrs: { "audit-data": this.auditData } })
@@ -43692,40 +43713,42 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex text-center" }, [
-      _c("div", { staticClass: "p-2 w-50" }, [_vm._v("Nom de la simulation")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Nombre de repas produits")
+    return _c("div", { staticClass: "table-row table-header" }, [
+      _c("div", { staticClass: "table-div bigger" }, [
+        _c("div", [_vm._v("Nom de la simulation")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coût de revient d'un repas")
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Nombre de repas produits")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coût de traitement par tonne (€)")
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Coût de revient d'un repas")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Volume de gaspillage alimentaire (tonnes)")
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Coût de traitement par tonne (€)")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Coût de traitement des déchets d'un repas")
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Volume de gaspillage alimentaire (tonnes).")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v("Estimation du gaspillage alimentaire (en €)")
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Coût de traitement des déchets d'un repas")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-shrink-1" }, [
-        _vm._v(
-          "Estimation du gaspillage alimentaire (équivalence en nombre de repas)"
-        )
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Estimation du gaspillage alimentaire (en €)")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-2 flex-grow-1" })
+      _c("div", { staticClass: "table-div" }, [
+        _c("div", [
+          _vm._v(
+            "Estimation du gaspillage alimentaire (équivalence en nombre de repas)"
+          )
+        ])
+      ])
     ])
   }
 ]
@@ -44778,61 +44801,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "py-4 px-4" },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("h4", { staticClass: "mb-4 text-center" }, [
-        _vm._v("Résultats et comparaisons de vos simulations")
-      ]),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _vm._m(2),
-      _vm._v(" "),
-      _c("audit", { attrs: { "audit-raw-data": this.auditRawData } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex" }, [
-        _c(
-          "button",
-          { staticClass: "button", on: { click: _vm.addSimulation } },
-          [
-            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-            _vm._v("Ajouter une simulation\n        ")
-          ]
-        ),
+  return _c("div", { staticClass: "py-4 px-4" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("h4", { staticClass: "mb-4 text-center" }, [
+      _vm._v("Résultats et comparaisons de vos simulations")
+    ]),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _vm._m(2),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "spacer" },
+      [
+        _c("audit", { attrs: { "audit-raw-data": this.auditRawData } }),
         _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "button alter", on: { click: _vm.resetSimulations } },
-          [
-            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-            _vm._v("Je réinitialise toutes mes simulations\n        ")
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "button ml-auto",
-            attrs: { disabled: _vm.areSimulationsInvalid },
-            on: { click: _vm.exportSimulations }
-          },
-          [
-            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-            _vm._v("Exporter le rapport de simulation\n        ")
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(3),
-      _vm._v(" "),
-      _vm._m(4)
-    ],
-    1
-  )
+        _c("div", { staticClass: "d-flex" }, [
+          _c(
+            "button",
+            { staticClass: "button", on: { click: _vm.addSimulation } },
+            [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v("Ajouter une simulation\n            ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button alter",
+              on: { click: _vm.resetSimulations }
+            },
+            [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v("Je réinitialise toutes mes simulations\n            ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button ml-auto",
+              attrs: { disabled: _vm.areSimulationsInvalid },
+              on: { click: _vm.exportSimulations }
+            },
+            [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v("Exporter le rapport de simulation\n            ")
+            ]
+          )
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _vm._m(4)
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -44875,7 +44903,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "position-relative info p-3" }, [
+    return _c("div", { staticClass: "position-relative info p-3 mb-4" }, [
       _c("p", [
         _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
         _vm._v(
@@ -44947,10 +44975,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { class: _vm.getClasses() }, [
-    _c("div", { staticClass: "p-2 w-25" }, [
-      _c("i", { staticClass: "fa fa-arrows-alt" }),
-      _vm._v(" "),
+  return _c("div", { staticClass: "handle table-row" }, [
+    _c("div", { staticClass: "table-div bigger" }, [
       _c("input", {
         directives: [
           {
@@ -44960,7 +44986,7 @@ var render = function() {
             expression: "simulation.name"
           }
         ],
-        staticClass: "ignore-draggable input",
+        staticClass: "ignore-draggable custom-input browser-default",
         attrs: { type: "text", required: "" },
         domProps: { value: _vm.simulation.name },
         on: {
@@ -44975,7 +45001,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishesNumberDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -44993,7 +45019,7 @@ var render = function() {
             expression: "simulation.dishesNumber"
           }
         ],
-        staticClass: "ignore-draggable input",
+        staticClass: "ignore-draggable custom-input browser-default number",
         attrs: { type: "number", required: "", min: "1", step: "1" },
         domProps: { value: _vm.simulation.dishesNumber },
         on: {
@@ -45008,7 +45034,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishCostDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -45026,7 +45052,7 @@ var render = function() {
             expression: "simulation.dishCost"
           }
         ],
-        staticClass: "ignore-draggable input",
+        staticClass: "ignore-draggable custom-input browser-default number",
         attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.dishCost },
         on: {
@@ -45041,7 +45067,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -45061,7 +45087,7 @@ var render = function() {
             expression: "simulation.wasteTreatmentCost"
           }
         ],
-        staticClass: "ignore-draggable input",
+        staticClass: "ignore-draggable custom-input browser-default number",
         attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.wasteTreatmentCost },
         on: {
@@ -45076,7 +45102,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteVolumeDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -45096,7 +45122,7 @@ var render = function() {
             expression: "simulation.foodWasteVolume"
           }
         ],
-        staticClass: "ignore-draggable input",
+        staticClass: "ignore-draggable custom-input browser-default number",
         attrs: { type: "number", required: "", min: "0.001", step: "0.001" },
         domProps: { value: _vm.simulation.foodWasteVolume },
         on: {
@@ -45111,7 +45137,7 @@ var render = function() {
       })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -45125,7 +45151,7 @@ var render = function() {
       _c("div", [_vm._v(_vm._s(_vm.wasteCostPerDish))])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteCostDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -45139,7 +45165,7 @@ var render = function() {
       _c("div", [_vm._v(_vm._s(_vm.foodWasteCost))])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-1" }, [
+    _c("div", { staticClass: "table-div" }, [
       _c("div", [_c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDelta))])]),
       _vm._v(" "),
       _c("div", {
@@ -45151,22 +45177,6 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", [_vm._v(_vm._s(_vm.amountOfDishesWasted))])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-2 flex-grow-0" }, [
-      _c("div", [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.removeSimulation(_vm.index)
-              }
-            }
-          },
-          [_c("i", { staticClass: "fas fa-trash-alt" })]
-        )
-      ])
     ])
   ])
 }
@@ -45194,6 +45204,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "simulations" },
     [
       _c(
         "draggable",
@@ -64495,14 +64506,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$emit('save-changes');
       flash('Vos modifications ont été sauvegardées');
-    },
-    // Classes CSS appliquées en fonction de la position de la simulation
-    getClasses: function getClasses() {
-      if (this.isFirst) {
-        return ['d-flex', 'text-center', 'handle', 'highlighted'];
-      } else {
-        return ['d-flex', 'text-center', 'handle'];
-      }
     },
     // Style appliqué aux pourcentages (flèches et couleurs)
     // la propriété upIsGood nous permet de savoir si une modification est bénéfique et de lui appliquer la bonne couleur

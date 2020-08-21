@@ -20,24 +20,6 @@ export default {
             flash('Vos modifications ont été sauvegardées');
         },
 
-        // Classes CSS appliquées en fonction de la position de la simulation
-        getClasses() {
-            if (this.isFirst) {
-                return [
-                    'd-flex',
-                    'text-center',
-                    'handle',
-                    'highlighted'
-                ]
-            } else {
-                return [
-                    'd-flex',
-                    'text-center',
-                    'handle'
-                ]
-            }
-        },
-
         // Style appliqué aux pourcentages (flèches et couleurs)
         // la propriété upIsGood nous permet de savoir si une modification est bénéfique et de lui appliquer la bonne couleur
         // ( + de repas produits = bien, mais + de gaspillage = mauvais)

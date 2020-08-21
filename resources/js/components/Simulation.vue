@@ -1,85 +1,76 @@
 <template>
-    <div :class="getClasses()">
-        <div class="p-2 w-25">
-            <i class="fa fa-arrows-alt"></i>
+    <div class="handle table-row">
+
+        <div class="table-div bigger">
             <input v-model="simulation.name"
                    @blur="saveChanges"
-                   class="ignore-draggable input"
+                   class="ignore-draggable custom-input browser-default"
                    type="text"
                    required>
         </div>
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ dishesNumberDelta }}</small></div>
             <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
             <input v-model="simulation.dishesNumber"
                    @blur="saveChanges"
-                   class="ignore-draggable input"
+                   class="ignore-draggable custom-input browser-default number"
                    type="number"
                    required
                    min="1" step="1">
         </div>
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ dishCostDelta }}</small></div>
             <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
             <input v-model="simulation.dishCost"
                    @blur="saveChanges"
-                   class="ignore-draggable input"
+                   class="ignore-draggable custom-input browser-default number"
                    type="number"
                    required
                    min="0.01" step="0.01">
         </div>
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ wasteTreatmentCostDelta }}</small></div>
             <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
             <input v-model="simulation.wasteTreatmentCost"
                    @blur="saveChanges"
-                   class="ignore-draggable input"
+                   class="ignore-draggable custom-input browser-default number"
                    type="number"
                    required
                    min="0.01" step="0.01">
         </div>
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ foodWasteVolumeDelta }}</small></div>
             <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
             <input v-model="simulation.foodWasteVolume"
                    @blur="saveChanges"
-                   class="ignore-draggable input"
+                   class="ignore-draggable custom-input browser-default number"
                    type="number"
                    required
                    min="0.001" step="0.001">
         </div>
-
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ wasteCostPerDishDelta }}</small></div>
             <div v-html="getStyle(wasteCostPerDishDeltaPercentage, false)"></div>
             <div>{{ wasteCostPerDish }}</div>
         </div>
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ foodWasteCostDelta }}</small></div>
             <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
             <div>{{ foodWasteCost }}</div>
         </div>
-
-        <div class="p-2 flex-grow-1">
+        <div class="table-div">
             <div><small>{{ amountOfDishesWastedDelta }}</small></div>
             <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
             <div>{{ amountOfDishesWasted }}</div>
         </div>
 
-        <div class="p-2 flex-grow-0">
-            <div>
-                <button @click="removeSimulation(index)">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-
-        </div>
+<!--        <div class="p-2 flex-grow-0">-->
+<!--            <div>-->
+<!--                <button @click="removeSimulation(index)">-->
+<!--                    <i class="fas fa-trash-alt"></i>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -176,10 +167,6 @@ export default {
 </script>
 
 <style>
-.highlighted {
-    background-color: #2fa360;
-}
-
 .handle {
     cursor: grab;
     cursor: -webkit-grab;
@@ -201,8 +188,8 @@ export default {
     color: #ff0000;
 }
 
-.input:invalid {
-    background-color: lightpink;
+.custom-input:invalid {
+    border: lightpink;
 }
 
 /* TODO : make it work */

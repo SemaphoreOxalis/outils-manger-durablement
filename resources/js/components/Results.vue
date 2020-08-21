@@ -13,7 +13,7 @@
                 !</p>
         </div>
 
-        <div class="position-relative info p-3">
+        <div class="position-relative info p-3 mb-4">
             <p><i class="icon mr-2"></i> Vous pouvez réorganiser les simulations en les faisant glisser</p>
             <p><i class="icon mr-2"></i> Les valeurs modifiables sont indiquées par ce symbole</p>
             <p><i class="icon mr-2"></i> Vous pouvez également supprimer les simulations inutiles</p>
@@ -21,24 +21,26 @@
                 données sur votre logiciel de tableur</p>
         </div>
 
-        <audit v-bind:audit-raw-data="this.auditRawData"></audit>
+        <div class="spacer">
+            <audit v-bind:audit-raw-data="this.auditRawData"></audit>
 
-        <div class="d-flex">
-            <button class="button"
-                    @click="addSimulation">
-                <i class="icon mr-2"></i>Ajouter une simulation
-            </button>
+            <div class="d-flex">
+                <button class="button"
+                        @click="addSimulation">
+                    <i class="icon mr-2"></i>Ajouter une simulation
+                </button>
 
-            <button class="button alter"
-                    @click="resetSimulations">
-                <i class="icon mr-2"></i>Je réinitialise toutes mes simulations
-            </button>
+                <button class="button alter"
+                        @click="resetSimulations">
+                    <i class="icon mr-2"></i>Je réinitialise toutes mes simulations
+                </button>
 
-            <button class="button ml-auto"
-                    @click="exportSimulations"
-                    :disabled="areSimulationsInvalid">
-                <i class="icon mr-2"></i>Exporter le rapport de simulation
-            </button>
+                <button class="button ml-auto"
+                        @click="exportSimulations"
+                        :disabled="areSimulationsInvalid">
+                    <i class="icon mr-2"></i>Exporter le rapport de simulation
+                </button>
+            </div>
         </div>
 
         <p class="mt-5">Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a>

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="simulations">
         <draggable v-model="simulations"
                    class="dragArea"
                    @change="saveChangesToLocalStorage"

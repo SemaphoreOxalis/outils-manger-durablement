@@ -1,27 +1,57 @@
 <template>
     <div>
-        <div class="d-flex text-center">
-            <div class="p-2 w-50">Nom de la simulation</div>
-            <div class="p-2 flex-shrink-1">Nombre de repas produits</div>
-            <div class="p-2 flex-shrink-1">Coût de revient d'un repas</div>
-            <div class="p-2 flex-shrink-1">Coût de traitement par tonne (€)</div>
-            <div class="p-2 flex-shrink-1">Volume de gaspillage alimentaire (tonnes)</div>
-            <div class="p-2 flex-shrink-1">Coût de traitement des déchets d'un repas</div>
-            <div class="p-2 flex-shrink-1">Estimation du gaspillage alimentaire (en €)</div>
-            <div class="p-2 flex-shrink-1">Estimation du gaspillage alimentaire (équivalence en nombre de repas)</div>
-            <div class="p-2 flex-grow-1"></div>
+        <div class="table-row table-header">
+            <div class="table-div bigger">
+                <div>Nom de la simulation</div>
+            </div>
+            <div class="table-div">
+                <div>Nombre de repas produits</div>
+            </div>
+            <div class="table-div">
+                <div>Coût de revient d'un repas</div>
+            </div>
+            <div class="table-div">
+                <div>Coût de traitement par tonne (€)</div>
+            </div>
+            <div class="table-div">
+                <div>Volume de gaspillage alimentaire (tonnes).</div>
+            </div>
+            <div class="table-div">
+                <div>Coût de traitement des déchets d'un repas</div>
+            </div>
+            <div class="table-div">
+                <div>Estimation du gaspillage alimentaire (en €)</div>
+            </div>
+            <div class="table-div">
+                <div>Estimation du gaspillage alimentaire (équivalence en nombre de repas)</div>
+            </div>
         </div>
 
-        <div class="d-flex text-center">
-            <div class="p-2 w-25">{{ this.auditData.name }}</div>
-            <div class="p-2 flex-grow-1">{{ this.input.dishesNumber }}</div>
-            <div class="p-2 flex-grow-1">{{ this.input.dishCost }}</div>
-            <div class="p-2 flex-grow-1">{{ this.input.wasteTreatmentCost }}</div>
-            <div class="p-2 flex-grow-1">{{ this.foodWasteVolume }}</div>
-            <div class="p-2 flex-grow-1">{{ this.wasteCostPerDish }}</div>
-            <div class="p-2 flex-grow-1">{{ this.foodWasteCost }}</div>
-            <div class="p-2 flex-grow-1">{{ this.amountOfDishesWasted }}</div>
-            <div class="p-2 flex-grow-0"></div>
+        <div class="table-row ref">
+            <div class="table-div bigger">
+                <div>{{ this.auditData.name }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.input.dishesNumber }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.input.dishCost }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.input.wasteTreatmentCost }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.foodWasteVolume }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.wasteCostPerDish }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.foodWasteCost }}</div>
+            </div>
+            <div class="table-div">
+                <div>{{ this.amountOfDishesWasted }}</div>
+            </div>
         </div>
 
         <simulations
