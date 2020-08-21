@@ -6,15 +6,26 @@
         <div class="pt-4">
             <p>Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous</p>
             <p>Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
-            <p>Chaque simulation est comparée avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !</p>
+            <p>Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !</p>
         </div>
 
         <div class="position-relative info p-3 mb-4">
-            <p><i class="icon mr-2"></i> Vous pouvez réorganiser les simulations en les faisant glisser</p>
-            <p><i class="icon mr-2"></i> Les valeurs modifiables sont indiquées par ce symbole</p>
-            <p><i class="icon mr-2"></i> Vous pouvez également supprimer les simulations inutiles</p>
-            <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</p>
+            <div class="d-flex justify-content-end">
+                <span v-if="!legendShown" class="mr-2 align-self-center colored">Légende</span>
+                <button class="button alter" data-toggle="collapse" data-target="#legend" @click="toggleLegend" aria-expanded="true" aria-controls="legend">
+                    <i id="collapse-icon" class="icon icon-angle-down reversed"></i>
+                </button>
+            </div>
+            <div class="collapse show" id="legend">
+                <p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
+                <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly> sont modifiables</p>
+                <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant glisser</p>
+                <p><i class="icon mr-2"></i> Vous pouvez supprimer les simulations inutiles une par une</p>
+                <p><i class="icon mr-2"></i> ou toutes les supprimer d'un seul clic</p>
+                <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</p>
+            </div>
         </div>
+
 
         <div class="spacer">
             <audit v-bind:audit-raw-data="this.auditRawData"></audit>
@@ -81,7 +92,8 @@ export default {
         return {
             auditRawData: {},
             simulationsErrors: [],
-            areSimulationsInvalid: true
+            areSimulationsInvalid: true,
+            legendShown: true
         }
     },
 
@@ -141,7 +153,31 @@ export default {
 
         addSimulation() {
             events.$emit('add-simulation');
+        },
+
+        toggleLegend() {
+            this.legendShown = !this.legendShown;
+
+            $(".collapse").on('show.bs.collapse', function() {
+                $("#collapse-icon").addClass("reversed");
+            }).on('hide.bs.collapse', function() {
+                $("#collapse-icon").removeClass("reversed");
+            })
         }
     }
 }
 </script>
+
+<style>
+    .colored {
+        color: var(--main-color-darker);
+    }
+
+    .icon-angle-down {
+        transition: all 0.5s;
+    }
+
+    .button .icon.reversed {
+        transform: rotate(180deg);
+    }
+</style>

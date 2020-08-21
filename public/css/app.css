@@ -11224,13 +11224,13 @@ input:invalid {
 }
 
 .handle {
-  cursor: grab;
-  cursor: -webkit-grab;
+  cursor: move;
+  cursor: -webkit-move;
 }
 
 .handling {
-  cursor: grabbing;
-  cursor: -webkit-grabbing;
+  cursor: move;
+  cursor: -webkit-move;
 }
 
 /*************/
