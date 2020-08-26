@@ -64,9 +64,9 @@
 // import des composants enfants
 import Audit from "./Audit"
 // Logique de validation
-import SimulationValidation from "../helpers/SimulationValidation";
+import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // import des helpers
-import LocalStorageHelper from "../helpers/LocalStorageHelper";
+import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 
 export default {
 

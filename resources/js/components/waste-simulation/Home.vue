@@ -63,8 +63,8 @@
 <script>
 // fenêtre modale d'aide
 import HelpModal from "./HelpModal";
-import LocalStorageHelper from "../helpers/LocalStorageHelper";
-import DateFormatter from "../helpers/DateFormatter";
+import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+import DateFormatter from "../../helpers/DateFormatter";
 
 export default {
 

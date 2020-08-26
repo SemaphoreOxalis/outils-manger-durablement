@@ -88,13 +88,13 @@
 
 <script>
 // traite les simulations (add, remove, style...)
-import SimulationHelper from "../helpers/SimulationHelper";
+import SimulationHelper from "../../helpers/waste-simulation/component-specific/SimulationHelper";
 // La logique principale de composant (calculs)
-import SimulationLogic from "../helpers/calculations/SimulationLogic";
+import SimulationLogic from "../../helpers/waste-simulation/calculations/SimulationLogic";
 // Validation
-import SimulationValidation from "../helpers/SimulationValidation";
+import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // utile pour arrondir les nombres
-import NumberRounder from "../helpers/NumberRounder";
+import NumberRounder from "../../helpers/NumberRounder";
 
 export default {
 

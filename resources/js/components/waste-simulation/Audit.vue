@@ -65,10 +65,10 @@
 
 // Imports des dépendances
 // logique du composant
-import AuditLogic from "../helpers/calculations/AuditLogic";
+import AuditLogic from "../../helpers/waste-simulation/calculations/AuditLogic";
 // utiles pour arrondir les nombres et formatter les dates
-import NumberRounder from "../helpers/NumberRounder";
-import DateFormatter from "../helpers/DateFormatter";
+import NumberRounder from "../../helpers/NumberRounder";
+import DateFormatter from "../../helpers/DateFormatter";
 // Composant enfant
 import Simulations from "./Simulations";
 

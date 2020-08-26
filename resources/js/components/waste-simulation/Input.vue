@@ -54,7 +54,7 @@
                                    required
                                    min="1" step="1"
                                    class="custom-input number-field browser-default">
-                            <label>Coût de revient d&#x27;un repas :</label>
+                            <label>Coût de revient d&#x27;un repas<sup>*</sup> :</label>
                             <input id="dish-cost"
                                    v-model="userInput.dishCost"
                                    type="number"
@@ -171,16 +171,16 @@
 <script>
 // import de bibliothèques de fonctions
 // validation des données saisies
-import InputValidation from "../helpers/InputValidation";
+import InputValidation from "../../helpers/waste-simulation/validation/InputValidation";
 // logique principale du composant
-import InputLogic from "../helpers/calculations/InputLogic";
+import InputLogic from "../../helpers/waste-simulation/calculations/InputLogic";
 // intéractions avec la base de donnée
-import DataBase from "../helpers/DataBase";
+import DataBase from "../../helpers/DataBase";
 // intéractions avec le localStorage
-import LocalStorageHelper from "../helpers/LocalStorageHelper";
+import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 
 // Petite bibliothèque de fonctions bien pratique pour arrondir les nombres
-import NumberRounder from "../helpers/NumberRounder";
+import NumberRounder from "../../helpers/NumberRounder";
 
 export default {
 

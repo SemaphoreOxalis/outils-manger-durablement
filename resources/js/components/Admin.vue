@@ -2,7 +2,8 @@
     <div class="mx-5">
         <div v-if="signedIn">
             <h1 class="my-4">Panneau d'administration</h1>
-            <p class="mb-4">Ici, vous pouvez modifier simplement les valeurs de référence utilisées pas l'application</p>
+            <p class="mb-4"><strong>Ici, vous pouvez modifier simplement les valeurs de référence utilisées par
+                l'application</strong></p>
 
             <div v-for="value in values"
                  :key="value.id">

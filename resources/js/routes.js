@@ -1,8 +1,8 @@
 import Test from "./components/Test";
-import Home from "./components/Home";
+import Home from "./components/waste-simulation/Home";
 import Admin from "./components/Admin";
-import Input from "./components/Input";
-import Results from "./components/Results";
+import Input from "./components/waste-simulation/Input";
+import Results from "./components/waste-simulation/Results";
 import NotFound from "./components/NotFound";
 
 export default {

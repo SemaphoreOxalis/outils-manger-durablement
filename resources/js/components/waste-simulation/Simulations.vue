@@ -32,13 +32,13 @@
 
 // import des dépendances
 // bibliothèque de fonctions chargée de traiter la liste des simulations
-import SimulationsHelper from "../helpers/SimulationsHelper";
+import SimulationsHelper from "../../helpers/waste-simulation/component-specific/SimulationsHelper";
 // intéraction avec le localStorage
-import LocalStorageHelper from "../helpers/LocalStorageHelper";
+import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 // responsable de l'export Excel
-import ExportHelper from "../helpers/ExportHelper";
+import ExportHelper from "../../helpers/ExportHelper";
 // pratique pour formatter les dates
-import DateFormatter from "../helpers/DateFormatter";
+import DateFormatter from "../../helpers/DateFormatter";
 // composant enfant
 import Simulation from "./Simulation";
 // Vue-draggable (https://github.com/SortableJS/Vue.Draggable) pour le drag'n'drop
