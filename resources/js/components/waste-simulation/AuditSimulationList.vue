@@ -10,7 +10,7 @@
                    :preventOnFilter="false"
         >
 
-            <simulation
+            <simulation-item
                 v-for="(simulation, index) in simulations"
                 v-bind:key="simulation.id"
                 v-bind:simulation="simulation"
@@ -22,7 +22,7 @@
                 @update-simulations-component="updateSimulationsList"
                 @update-simulations-component-will-full-info-for-export="updateSimulationsListWithFullInfo"
             >
-            </simulation>
+            </simulation-item>
 
         </draggable>
     </div>
@@ -40,7 +40,7 @@ import ExportHelper from "../../helpers/ExportHelper";
 // pratique pour formatter les dates
 import DateFormatter from "../../helpers/DateFormatter";
 // composant enfant
-import Simulation from "./Simulation";
+import SimulationItem from "./SimulationItem";
 // Vue-draggable (https://github.com/SortableJS/Vue.Draggable) pour le drag'n'drop
 import draggable from 'vuedraggable'
 
@@ -48,11 +48,11 @@ export default {
 
     // Composants enfants
     components: {
-        Simulation,
+        SimulationItem,
         draggable
     },
 
-    // Données reçues du composant parent (Audit.vue)
+    // Données reçues du composant parent (AuditItem.vue)
     props: [
         'auditData'
     ],
@@ -89,7 +89,7 @@ export default {
             }
         },
 
-        // Utile pour le composant enfant Simulation.vue, permet de lui communiquer les données de son prédécesseur
+        // Utile pour le composant enfant SimulationItem.vue, permet de lui communiquer les données de son prédécesseur
         previousSimulation(index) {
 
             // si la simulation est en première position, sa "previousSimulation" se trouve être l'audit
@@ -106,7 +106,7 @@ export default {
             this.refreshCounter();
         }
 
-        // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
+        // Fait le lien entre le composant grand-parent (ResultsPage.vue) où se trouve le bouton et ce composant
         events.$on('reset-simulations', this.resetSimulations);
 
         // listeners

@@ -54,9 +54,9 @@
             </div>
         </div>
 
-        <simulations
+        <audit-simulation-list
             v-bind:audit-data="this.auditData"
-        ></simulations>
+        ></audit-simulation-list>
 
     </div>
 </template>
@@ -70,7 +70,7 @@ import AuditLogic from "../../helpers/waste-simulation/calculations/AuditLogic";
 import NumberRounder from "../../helpers/NumberRounder";
 import DateFormatter from "../../helpers/DateFormatter";
 // Composant enfant
-import Simulations from "./Simulations";
+import AuditSimulationList from "./AuditSimulationList";
 
 export default {
 
@@ -83,10 +83,10 @@ export default {
 
     // Déclaration des composants enfants
     components: {
-        Simulations
+        AuditSimulationList
     },
 
-    // données récupérées du composant parent (Results.vue)
+    // données récupérées du composant parent (ResultsPage.vue)
     props: [
         'auditRawData'
     ],
@@ -103,10 +103,10 @@ export default {
     // A l'initialisation du composant
     mounted() {
 
-        // on récupère les données du parent (Results.vue)
+        // on récupère les données du parent (ResultsPage.vue)
         this.input = this.auditRawData;
 
-        // et on initialise un objet qui va servir pour les composants enfants (Simulations.vue)
+        // et on initialise un objet qui va servir pour les composants enfants (AuditSimulationList.vue)
         this.computedValues = {
             globalFoodWasteVolume: this.globalFoodWasteVolume,
             foodWasteVolume: this.foodWasteVolume,

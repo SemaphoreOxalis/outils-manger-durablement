@@ -1,4 +1,4 @@
-// Logique du composant Input.vue
+// Logique du composant InputPage.vue
 
 export default {
     // Données calculées en fonction des sonnées saisies

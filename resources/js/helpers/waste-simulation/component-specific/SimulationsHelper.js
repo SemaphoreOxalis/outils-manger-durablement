@@ -1,4 +1,4 @@
-// helper pour le composant Simulations.vue
+// helper pour le composant AuditSimulationList.vue
 
 export default {
     methods: {

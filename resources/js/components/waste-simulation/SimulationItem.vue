@@ -106,7 +106,7 @@ export default {
         NumberRounder
     ],
 
-    // données récupérées du composant parent (Simulations.vue)
+    // données récupérées du composant parent (AuditSimulationList.vue)
     props: [
         'simulation',
         'index',

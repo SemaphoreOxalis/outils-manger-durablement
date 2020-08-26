@@ -1,4 +1,4 @@
-// Logique du composant Simulation.vue
+// Logique du composant SimulationItem.vue
 
 export default {
 

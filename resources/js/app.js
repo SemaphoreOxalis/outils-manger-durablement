@@ -38,7 +38,7 @@ window.Vue = require('vue');
  */
 
 // Composants enfants généraux à toute l'application
-Vue.component('flash', require('./components/Flash.vue').default);
+Vue.component('flash', require('./components/FlashMessage.vue').default);
 Vue.component('navigation-links', require('./components/NavigationLinks.vue').default);
 
 

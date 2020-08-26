@@ -28,7 +28,7 @@
 
 
         <div class="spacer">
-            <audit v-bind:audit-raw-data="this.auditRawData"></audit>
+            <audit-item v-bind:audit-raw-data="this.auditRawData"></audit-item>
 
             <div class="d-flex mt-4">
                 <button class="button"
@@ -62,7 +62,7 @@
 <script>
 
 // import des composants enfants
-import Audit from "./Audit"
+import AuditItem from "./AuditItem"
 // Logique de validation
 import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // import des helpers
@@ -72,7 +72,7 @@ export default {
 
     // déclaration des composants enfants
     components: {
-        Audit
+        AuditItem
     },
 
     // déclaration des helpers
@@ -151,7 +151,7 @@ export default {
             events.$emit('export-simulations');
         },
 
-        // envoie une demande au composant concerné (Simulations.vue)
+        // envoie une demande au composant concerné (AuditSimulationList.vue)
         addSimulation() {
             events.$emit('add-simulation');
         },

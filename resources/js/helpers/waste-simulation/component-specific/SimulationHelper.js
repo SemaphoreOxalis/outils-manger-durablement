@@ -1,4 +1,4 @@
-// helper pour le composant Simulation.vue
+// helper pour le composant SimulationItem.vue
 
 export default {
     methods: {
@@ -6,7 +6,7 @@ export default {
         // Effacer une simulation
         removeSimulation: function (index) {
 
-            // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
+            // Envoie la demande au composant parent (AuditSimulationList.vue) qui s'en occupe
             this.$emit('delete-simulation', index);
         },
 
@@ -15,7 +15,7 @@ export default {
 
             this.validate();
 
-            // Envoie la demande au composant parent (Simulations.vue) qui s'en occupe
+            // Envoie la demande au composant parent (AuditSimulationList.vue) qui s'en occupe
             this.$emit('save-changes');
             flash('Vos modifications ont été sauvegardées');
         },

@@ -1,9 +1,9 @@
 import Test from "./components/Test";
-import Home from "./components/waste-simulation/Home";
-import Admin from "./components/Admin";
-import Input from "./components/waste-simulation/Input";
-import Results from "./components/waste-simulation/Results";
+import InputPage from "./components/waste-simulation/InputPage";
+import ResultsPage from "./components/waste-simulation/ResultsPage";
 import NotFound from "./components/NotFound";
+import AdminPage from "./components/AdminPage";
+import HomePage from "./components/waste-simulation/HomePage";
 
 export default {
 
@@ -20,8 +20,8 @@ export default {
     routes: [
         {
             path: '/',
-            component: Home,
-            name: 'home'
+            component: HomePage,
+            name: 'home-page'
         },
         {
             path: '/test',
@@ -30,18 +30,18 @@ export default {
         },
         {
             path: '/input',
-            component: Input,
-            name: 'input'
+            component: InputPage,
+            name: 'input-page'
         },
         {
             path: '/results',
-            component: Results,
-            name: 'results',
+            component: ResultsPage,
+            name: 'results-page',
             props: true
         },
         {
             path: '/admin',
-            component: Admin,
+            component: AdminPage,
             props: { 'user': window.App.user },
             beforeEnter(to, from, next) {
                 if (window.App.signedIn) {
