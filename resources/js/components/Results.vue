@@ -151,10 +151,11 @@ export default {
             events.$emit('export-simulations');
         },
 
+        // envoie une demande au composant concerné (Simulations.vue)
         addSimulation() {
             events.$emit('add-simulation');
         },
-
+        
         toggleLegend() {
             this.legendShown = !this.legendShown;
 

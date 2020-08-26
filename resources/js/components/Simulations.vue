@@ -109,9 +109,8 @@ export default {
         // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
         events.$on('reset-simulations', this.resetSimulations);
 
-        // LAnce l'évènement 'export-simulations' qui sera écouté par les composants concernés
+        // listeners
         events.$on('export-simulations', this.exportSimulations);
-
         events.$on('add-simulation', this.addSimulation);
 
         // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"

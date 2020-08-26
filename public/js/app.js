@@ -2820,6 +2820,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     exportSimulations: function exportSimulations() {
       events.$emit('export-simulations');
     },
+    // envoie une demande au composant concerné (Simulations.vue)
     addSimulation: function addSimulation() {
       events.$emit('add-simulation');
     },
@@ -3121,7 +3122,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     } // Fait le lien entre le composant grand-parent (Results.vue) où se trouve le bouton et ce composant
 
 
-    events.$on('reset-simulations', this.resetSimulations); // LAnce l'évènement 'export-simulations' qui sera écouté par les composants concernés
+    events.$on('reset-simulations', this.resetSimulations); // listeners
 
     events.$on('export-simulations', this.exportSimulations);
     events.$on('add-simulation', this.addSimulation); // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
