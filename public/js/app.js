@@ -7797,7 +7797,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.editing-reference-values {\n    position: relative;\n    background-color: white;\n    z-index: 999;\n}\n.editing-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n}\nlabel {\n    font-size: 1rem;\n    color: var(--dark-color);\n}\n", ""]);
+exports.push([module.i, "\n.editing-reference-values {\n    position: relative;\n    background-color: white;\n    z-index: 999;\n}\n.editing-mask {\n    position: fixed;\n    z-index: 666;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(0, 0, 0, 0.5);\n}\nlabel {\n    font-size: 1rem;\n    color: var(--dark-color);\n}\n.datepicker {\n    cursor: text;\n}\n", ""]);
 
 // exports
 
@@ -7835,7 +7835,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n.good {\n    color: var(--main-color-darker);\n}\n.bad {\n    color: #ff0000;\n}\n.strong {\n    font-weight: 700;\n    margin-top: 10px;\n}\n.align-with-inputs {\n    padding: 0.5rem 0.25rem 0.5rem 0.5rem;\n}\n", ""]);
+exports.push([module.i, "\n.up {\n    transform: rotate(-45deg);\n}\n.down {\n    transform: rotate(45deg);\n}\n.good {\n    color: var(--main-color-darker);\n}\n.bad {\n    color: var(--error-color);\n}\n.strong {\n    font-weight: 700;\n    margin-top: 10px;\n}\n.align-with-inputs {\n    padding: 0.5rem 0.25rem 0.5rem 0.5rem;\n}\n", ""]);
 
 // exports
 
@@ -43838,7 +43838,7 @@ var render = function() {
                   _c("strong", [_vm._v(_vm._s(this.previousAuditDate))])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "position-relative" }, [
+                _c("div", { staticClass: "position-relative d-inline-block" }, [
                   _c(
                     "button",
                     {

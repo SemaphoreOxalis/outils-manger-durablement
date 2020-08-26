@@ -192,7 +192,7 @@ export default {
     }
 
     .bad {
-        color: #ff0000;
+        color: var(--error-color);
     }
 
     .strong {

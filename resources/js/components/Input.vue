@@ -296,4 +296,8 @@ export default {
         font-size: 1rem;
         color: var(--dark-color);
     }
+
+    .datepicker {
+        cursor: text;
+    }
 </style>

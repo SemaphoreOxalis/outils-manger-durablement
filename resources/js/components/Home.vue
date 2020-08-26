@@ -20,7 +20,7 @@
                         Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière
                         fois en date du <strong>{{ this.previousAuditDate }}</strong>
                     </p>
-                    <div class="position-relative">
+                    <div class="position-relative d-inline-block">
                         <button class="button big-button d-flex p-4 m-2" @click="goToPreviousAudit">
                             <div class="icon align-self-center mr-4"></div>
                             <div class="text-left big-button-line-height"><strong>Reprendre</strong><br><small>la simulation<br>du {{ previousAuditDate }}</small></div>

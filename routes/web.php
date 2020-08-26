@@ -30,8 +30,8 @@ Route::post('/export', 'ExportController@export');
 // Commentez la première ligne et décommentez la 2e pour qu'il ne soit plus possible de s'enregistrer
 // ATTENTION :  tout utilisateur enregistré dispose des droits d'administrateur et peux donc accéder aux pages admin
 
-Auth::routes();
-//Auth::routes(['register' => false]);
+//Auth::routes();
+Auth::routes(['register' => false]);
 
 
 // /{any?} car on ne veut pas que ce soit Laravel qui s'occupe de répondre aux URLS de la SPA

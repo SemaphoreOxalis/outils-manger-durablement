@@ -7,6 +7,7 @@
     --second-color-lighter: #eef5f3;
     --dark-color: #353E53;
     --light-grey: #eef5f3;
+    --error-color: #d9534f;
 
     --test-color:red;
 
@@ -362,7 +363,7 @@ ul.stepper .step.active::before, ul.stepper .step.done::before {
 }
 
 ul.stepper .step.wrong::before {
-    background-color: red;
+    background-color: var(--error-color);
 }
 
 ul.stepper .step.active::before {
