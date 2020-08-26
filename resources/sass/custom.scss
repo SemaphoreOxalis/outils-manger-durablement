@@ -471,3 +471,16 @@ ul.stepper .step.active::before {
     background-color: white;
     border-radius: 1rem;
 }
+
+.back.button:hover {
+    text-decoration: none;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.login label {
+    margin: 0 0 0.5rem;
+}
