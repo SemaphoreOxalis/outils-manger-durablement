@@ -274,30 +274,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    .editing-reference-values {
-        position: relative;
-        background-color: white;
-        z-index: 999;
-    }
-
-    .editing-mask {
-        position: fixed;
-        z-index: 666;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    label {
-        font-size: 1rem;
-        color: var(--dark-color);
-    }
-
-    .datepicker {
-        cursor: text;
-    }
-</style>

@@ -155,7 +155,7 @@ export default {
         addSimulation() {
             events.$emit('add-simulation');
         },
-        
+
         toggleLegend() {
             this.legendShown = !this.legendShown;
 
@@ -168,17 +168,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    .colored {
-        color: var(--main-color-darker);
-    }
-
-    .icon-angle-down {
-        transition: all 0.5s;
-    }
-
-    .button .icon.reversed {
-        transform: rotate(180deg);
-    }
-</style>

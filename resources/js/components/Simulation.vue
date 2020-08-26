@@ -177,30 +177,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    .up {
-        transform: rotate(-45deg);
-    }
-
-    .down {
-        transform: rotate(45deg);
-    }
-
-    .good {
-        color: var(--main-color-darker);
-    }
-
-    .bad {
-        color: var(--error-color);
-    }
-
-    .strong {
-        font-weight: 700;
-        margin-top: 10px;
-    }
-
-    .align-with-inputs {
-        padding: 0.5rem 0.25rem 0.5rem 0.5rem;
-    }
-</style>

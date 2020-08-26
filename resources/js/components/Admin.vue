@@ -56,9 +56,3 @@
         },
     }
 </script>
-
-<style>
-    .admin input:invalid {
-        border: lightpink;
-    }
-</style>
