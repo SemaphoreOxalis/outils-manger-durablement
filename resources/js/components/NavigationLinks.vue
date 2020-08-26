@@ -29,16 +29,16 @@
             }
         },
 
+        mounted() {
+            this.checkDataInLocalStorage();
+
+            events.$on('check-data-in-local-storage', this.checkDataInLocalStorage);
+        },
+
         methods: {
             checkDataInLocalStorage() {
                 this.dataInLocalStorage = localStorage.hasOwnProperty('audit');
             }
         },
-
-        mounted() {
-            this.checkDataInLocalStorage();
-
-            events.$on('check-data-in-local-storage', this.checkDataInLocalStorage);
-        }
     }
 </script>

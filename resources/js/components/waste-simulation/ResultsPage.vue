@@ -82,10 +82,10 @@ export default {
     ],
 
     // données à récupérer de la page Input
-    props: [
-        'userInput',
-        'referenceValues'
-    ],
+    props: {
+        userInput: [Object, undefined],
+        referenceValues: [Object, undefined]
+    },
 
     // initialisation des données utilisées par le composant
     data() {

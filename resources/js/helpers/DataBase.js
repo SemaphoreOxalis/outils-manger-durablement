@@ -6,7 +6,7 @@ export default {
         // ADMIN component
         // Va chercher les valeurs de référence depuis la BDD
         fetchWasteReferenceValues() {
-            axios.get('/api/waste-values').then((response) => {
+            getValuesFromDB().then((response) => {
                 this.values = response.data;
             });
         },
@@ -15,11 +15,7 @@ export default {
         update(value) {
 
             // Appel AJAX
-            axios.patch('/api/waste-values/' + value.id, {
-                value: value.value
-
-                // Puis feedback visuel
-            }).then(response => {
+            patchValue(value).then(response => {
                 flash(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
@@ -29,7 +25,7 @@ export default {
         //INPUT component
         // Va chercher les valeurs de référence depuis la BDD
         fetchWasteReferenceValuesFromDB() {
-            axios.get('/api/waste-values').then((response) => {
+            getValuesFromDB().then((response) => {
                 //TODO : virer trucs qu'ont rien à faire ici
 
                 // On efface les valeurs personnalisée du localStorage
@@ -40,4 +36,16 @@ export default {
             });
         },
     }
+}
+
+// Situées ici, ces fonctions sont "privées"
+
+function getValuesFromDB() {
+    return axios.get('/api/waste-values');
+}
+
+function patchValue(value) {
+    return axios.patch('/api/waste-values/' + value.id, {
+        value: value.value
+    });
 }

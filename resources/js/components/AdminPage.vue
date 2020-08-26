@@ -40,13 +40,6 @@
             }
         },
 
-        // A la création du composent (i.e quand on arrive sur la "page")
-        created() {
-
-            // Va chercher les valeurs de référence dans la BDD
-            this.fetchWasteReferenceValues();
-        },
-
         // Valeurs calculées à la volée
         computed: {
 
@@ -54,6 +47,13 @@
             signedIn() {
                 return window.App.signedIn;
             }
+        },
+
+        // A la création du composent (i.e quand on arrive sur la "page")
+        created() {
+
+            // Va chercher les valeurs de référence dans la BDD
+            this.fetchWasteReferenceValues();
         },
     }
 </script>

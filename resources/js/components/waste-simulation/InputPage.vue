@@ -154,7 +154,7 @@
                     </div>
                     <div class="step-actions">
                         <button class="button alter previous-step"><span class="icon"></span> retour</button>
-                        <router-link :to="{ name: 'results', params: { userInput, referenceValues }}" tag="span">
+                        <router-link :to="{ name: 'results-page', params: { userInput, referenceValues }}" tag="span">
                             <button :disabled="areThereInvalidData"
                                     class="button"
                                     id="launching-audit-button">
@@ -193,21 +193,6 @@ export default {
         NumberRounder
     ],
 
-    // A la création du composent (i.e quand on arrive sur la "page")
-    created() {
-
-        // Va chercher les valeurs de référence, cf. méthode ci-dessous
-        this.checkWasteReferenceValues();
-    },
-
-    mounted() {
-        let stepper = document.querySelector('.stepper');
-        let stepperInstance = new MStepper(stepper, {
-            // options
-            firstActive: 0 // this is the default
-        })
-    },
-
     // initialisation des données utilisées par le composant
     data() {
         return {
@@ -232,6 +217,21 @@ export default {
             editingReferenceValues: false,
             defaultValues: true
         }
+    },
+
+    // A la création du composent (i.e quand on arrive sur la "page")
+    created() {
+
+        // Va chercher les valeurs de référence, cf. méthode ci-dessous
+        this.checkWasteReferenceValues();
+    },
+
+    mounted() {
+        let stepper = document.querySelector('.stepper');
+        let stepperInstance = new MStepper(stepper, {
+            // options
+            firstActive: 0 // this is the default
+        })
     },
 
     // Fonctions utilisées par le composant

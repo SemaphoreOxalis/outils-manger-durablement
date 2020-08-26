@@ -92,6 +92,11 @@ export default {
         }
     },
 
+    // A l'initialisation du composant
+    created() {
+        this.checkPreviousAuditFromLocalStorage();
+    },
+
     methods: {
         checkPreviousAuditFromLocalStorage() {
             // On récupère l'audit stocké en localStorage s'il y en a un
@@ -114,10 +119,5 @@ export default {
             flash("Vos simulations ont bien été supprimées");
         },
     },
-
-    // A l'initialisation du composant
-    created() {
-        this.checkPreviousAuditFromLocalStorage();
-    }
 }
 </script>

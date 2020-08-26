@@ -74,6 +74,11 @@ import AuditSimulationList from "./AuditSimulationList";
 
 export default {
 
+    // Déclaration des composants enfants
+    components: {
+        AuditSimulationList
+    },
+
     // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
     mixins: [
         AuditLogic,
@@ -81,15 +86,10 @@ export default {
         DateFormatter
     ],
 
-    // Déclaration des composants enfants
-    components: {
-        AuditSimulationList
-    },
-
     // données récupérées du composant parent (ResultsPage.vue)
-    props: [
-        'auditRawData'
-    ],
+    props: {
+        auditRawData: Object
+    },
 
     // données utilisées par ce composant
     data() {

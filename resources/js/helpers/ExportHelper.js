@@ -13,13 +13,11 @@ export default {
             this.export.simulations = this.simulations;
 
             // appel AJAX vers le côté Laravel (ExportController.php)
-            axios.post('/export', this.export, {
-                responseType: 'arraybuffer'
-            }).then(response => {
+            makeExportAjaxCall(this.export).then(response => {
 
                 //TODO: make it compatible with IE11
                 let headers = response.headers;
-                let blob = new Blob([response.data], {type:headers['Content-type']});
+                let blob = new Blob([response.data], {type: headers['Content-type']});
                 let link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
                 link.download = "Rapport" + Date.now() + ".xlsx"
@@ -29,4 +27,10 @@ export default {
             });
         }
     }
+};
+
+function makeExportAjaxCall(exportData) {
+    return axios.post('/export', exportData, {
+        responseType: 'arraybuffer'
+    });
 }

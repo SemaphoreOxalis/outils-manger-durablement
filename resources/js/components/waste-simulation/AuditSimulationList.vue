@@ -52,11 +52,6 @@ export default {
         draggable
     },
 
-    // Données reçues du composant parent (AuditItem.vue)
-    props: [
-        'auditData'
-    ],
-
     // déclaration de dépendance à ces fichiers
     mixins: [
         SimulationsHelper,
@@ -64,6 +59,11 @@ export default {
         ExportHelper,
         DateFormatter
     ],
+
+    // Données reçues du composant parent (AuditItem.vue)
+    props: {
+        auditData: Object
+    },
 
     // Initialisation des données utilisées par le composant
     data() {
@@ -73,6 +73,26 @@ export default {
             dataSource: null,
             export: {}
         }
+    },
+
+    // A l'initialisation du composant
+    mounted() {
+
+        // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
+        if (localStorage.hasOwnProperty('simulations')) {
+            this.simulations = this.getSimulationsFromLocalStorage();
+            this.refreshCounter();
+        }
+
+        // Fait le lien entre le composant grand-parent (ResultsPage.vue) où se trouve le bouton et ce composant
+        events.$on('reset-simulations', this.resetSimulations);
+
+        // listeners
+        events.$on('export-simulations', this.exportSimulations);
+        events.$on('add-simulation', this.addSimulation);
+
+        // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
+        this.getDataSourceForNewSimulation();
     },
 
     // Fonction inhérentes au composant
@@ -96,25 +116,5 @@ export default {
             return index > 0 ? this.simulations[index - 1] : this.auditData
         },
     },
-
-    // A l'initialisation du composant
-    mounted() {
-
-        // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
-        if (localStorage.hasOwnProperty('simulations')) {
-            this.simulations = this.getSimulationsFromLocalStorage();
-            this.refreshCounter();
-        }
-
-        // Fait le lien entre le composant grand-parent (ResultsPage.vue) où se trouve le bouton et ce composant
-        events.$on('reset-simulations', this.resetSimulations);
-
-        // listeners
-        events.$on('export-simulations', this.exportSimulations);
-        events.$on('add-simulation', this.addSimulation);
-
-        // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
-        this.getDataSourceForNewSimulation();
-    }
 }
 </script>

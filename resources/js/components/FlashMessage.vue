@@ -11,7 +11,9 @@
     export default {
 
         // propriétés héritées du composant parent
-        props: ['message'],
+        props: {
+            message: String
+        },
 
         // initialisation des propriétés utiles à ce composant
         data() {

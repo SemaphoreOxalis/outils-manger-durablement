@@ -1944,17 +1944,17 @@ __webpack_require__.r(__webpack_exports__);
       values: []
     };
   },
-  // A la création du composent (i.e quand on arrive sur la "page")
-  created: function created() {
-    // Va chercher les valeurs de référence dans la BDD
-    this.fetchWasteReferenceValues();
-  },
   // Valeurs calculées à la volée
   computed: {
     // L'utilisateur est-il bien authentifié ?
     signedIn: function signedIn() {
       return window.App.signedIn;
     }
+  },
+  // A la création du composent (i.e quand on arrive sur la "page")
+  created: function created() {
+    // Va chercher les valeurs de référence dans la BDD
+    this.fetchWasteReferenceValues();
   }
 });
 
@@ -1980,7 +1980,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   // propriétés héritées du composant parent
-  props: ['message'],
+  props: {
+    message: String
+  },
   // initialisation des propriétés utiles à ce composant
   data: function data() {
     return {
@@ -2066,14 +2068,14 @@ __webpack_require__.r(__webpack_exports__);
       dataInLocalStorage: false
     };
   },
+  mounted: function mounted() {
+    this.checkDataInLocalStorage();
+    events.$on('check-data-in-local-storage', this.checkDataInLocalStorage);
+  },
   methods: {
     checkDataInLocalStorage: function checkDataInLocalStorage() {
       this.dataInLocalStorage = localStorage.hasOwnProperty('audit');
     }
-  },
-  mounted: function mounted() {
-    this.checkDataInLocalStorage();
-    events.$on('check-data-in-local-storage', this.checkDataInLocalStorage);
   }
 });
 
@@ -2354,14 +2356,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
-  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // Déclaration des composants enfants
   components: {
     AuditSimulationList: _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
+  // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
+  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // données récupérées du composant parent (ResultsPage.vue)
-  props: ['auditRawData'],
+  props: {
+    auditRawData: Object
+  },
   // données utilisées par ce composant
   data: function data() {
     return {
@@ -2467,10 +2471,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     SimulationItem: _SimulationItem__WEBPACK_IMPORTED_MODULE_4__["default"],
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_5___default.a
   },
-  // Données reçues du composant parent (AuditItem.vue)
-  props: ['auditData'],
   // déclaration de dépendance à ces fichiers
   mixins: [_helpers_waste_simulation_component_specific_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  // Données reçues du composant parent (AuditItem.vue)
+  props: {
+    auditData: Object
+  },
   // Initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2479,6 +2485,22 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       dataSource: null,
       "export": {}
     };
+  },
+  // A l'initialisation du composant
+  mounted: function mounted() {
+    // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
+    if (localStorage.hasOwnProperty('simulations')) {
+      this.simulations = this.getSimulationsFromLocalStorage();
+      this.refreshCounter();
+    } // Fait le lien entre le composant grand-parent (ResultsPage.vue) où se trouve le bouton et ce composant
+
+
+    events.$on('reset-simulations', this.resetSimulations); // listeners
+
+    events.$on('export-simulations', this.exportSimulations);
+    events.$on('add-simulation', this.addSimulation); // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
+
+    this.getDataSourceForNewSimulation();
   },
   // Fonction inhérentes au composant
   methods: {
@@ -2499,22 +2521,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       // si la simulation est en première position, sa "previousSimulation" se trouve être l'audit
       return index > 0 ? this.simulations[index - 1] : this.auditData;
     }
-  },
-  // A l'initialisation du composant
-  mounted: function mounted() {
-    // On vérifie qu'il existe ou non des simulations enregistrées en localStorage
-    if (localStorage.hasOwnProperty('simulations')) {
-      this.simulations = this.getSimulationsFromLocalStorage();
-      this.refreshCounter();
-    } // Fait le lien entre le composant grand-parent (ResultsPage.vue) où se trouve le bouton et ce composant
-
-
-    events.$on('reset-simulations', this.resetSimulations); // listeners
-
-    events.$on('export-simulations', this.exportSimulations);
-    events.$on('add-simulation', this.addSimulation); // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
-
-    this.getDataSourceForNewSimulation();
   }
 });
 
@@ -2667,6 +2673,10 @@ __webpack_require__.r(__webpack_exports__);
       previousAuditDate: null
     };
   },
+  // A l'initialisation du composant
+  created: function created() {
+    this.checkPreviousAuditFromLocalStorage();
+  },
   methods: {
     checkPreviousAuditFromLocalStorage: function checkPreviousAuditFromLocalStorage() {
       // On récupère l'audit stocké en localStorage s'il y en a un
@@ -2687,10 +2697,6 @@ __webpack_require__.r(__webpack_exports__);
       this.previousAuditDetectedInLocalStorage = false;
       flash("Vos simulations ont bien été supprimées");
     }
-  },
-  // A l'initialisation du composant
-  created: function created() {
-    this.checkPreviousAuditFromLocalStorage();
   }
 });
 
@@ -2894,19 +2900,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions dans des fichiers externes, dans un souci de lisibilité)
   mixins: [_helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__["default"]],
-  // A la création du composent (i.e quand on arrive sur la "page")
-  created: function created() {
-    // Va chercher les valeurs de référence, cf. méthode ci-dessous
-    this.checkWasteReferenceValues();
-  },
-  mounted: function mounted() {
-    var stepper = document.querySelector('.stepper');
-    var stepperInstance = new MStepper(stepper, {
-      // options
-      firstActive: 0 // this is the default
-
-    });
-  },
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2932,6 +2925,19 @@ __webpack_require__.r(__webpack_exports__);
       editingReferenceValues: false,
       defaultValues: true
     };
+  },
+  // A la création du composent (i.e quand on arrive sur la "page")
+  created: function created() {
+    // Va chercher les valeurs de référence, cf. méthode ci-dessous
+    this.checkWasteReferenceValues();
+  },
+  mounted: function mounted() {
+    var stepper = document.querySelector('.stepper');
+    var stepperInstance = new MStepper(stepper, {
+      // options
+      firstActive: 0 // this is the default
+
+    });
   },
   // Fonctions utilisées par le composant
   methods: {
@@ -3059,7 +3065,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   // déclaration des helpers
   mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // données à récupérer de la page Input
-  props: ['userInput', 'referenceValues'],
+  props: {
+    userInput: [Object, undefined],
+    referenceValues: [Object, undefined]
+  },
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -3246,18 +3255,11 @@ __webpack_require__.r(__webpack_exports__);
   // déclaration de dépendance vis-à-vis de ces fichiers
   mixins: [_helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__["default"]],
   // données récupérées du composant parent (AuditSimulationList.vue)
-  props: ['simulation', 'index', 'auditData', 'previousSimulation'],
-  // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
-  watch: {
-    foodWasteCost: function foodWasteCost() {
-      this.updateSimulationsComponent();
-    },
-    wasteCostPerDish: function wasteCostPerDish() {
-      this.updateSimulationsComponent();
-    },
-    amountOfDishesWasted: function amountOfDishesWasted() {
-      this.updateSimulationsComponent();
-    }
+  props: {
+    simulation: Object,
+    index: Number,
+    auditData: Object,
+    previousSimulation: Object
   },
   // Propriétés calculées du composant
   computed: {
@@ -3278,6 +3280,24 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     }
   },
+  // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
+  watch: {
+    foodWasteCost: function foodWasteCost() {
+      this.updateSimulationsComponent();
+    },
+    wasteCostPerDish: function wasteCostPerDish() {
+      this.updateSimulationsComponent();
+    },
+    amountOfDishesWasted: function amountOfDishesWasted() {
+      this.updateSimulationsComponent();
+    }
+  },
+  // A l'initialisation du composant
+  mounted: function mounted() {
+    // Listeners
+    events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
+    events.$on('validate-simulations', this.validate);
+  },
   // Fonctions inhérentes à ce composant
   methods: {
     // Demande au composant parent (Simulations) de mettre à jour sa liste de simulations
@@ -3288,12 +3308,6 @@ __webpack_require__.r(__webpack_exports__);
     sendSimulationFullInfo: function sendSimulationFullInfo() {
       this.$emit('update-simulations-component-will-full-info-for-export', this);
     }
-  },
-  // A l'initialisation du composant
-  mounted: function mounted() {
-    // Listeners
-    events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
-    events.$on('validate-simulations', this.validate);
   }
 });
 
@@ -43940,7 +43954,7 @@ var render = function() {
                 {
                   attrs: {
                     to: {
-                      name: "results",
+                      name: "results-page",
                       params: {
                         userInput: _vm.userInput,
                         referenceValues: _vm.referenceValues
@@ -63190,17 +63204,14 @@ __webpack_require__.r(__webpack_exports__);
     fetchWasteReferenceValues: function fetchWasteReferenceValues() {
       var _this = this;
 
-      axios.get('/api/waste-values').then(function (response) {
+      getValuesFromDB().then(function (response) {
         _this.values = response.data;
       });
     },
     // Met à jour les valeurs de référence dans la BDD
     update: function update(value) {
       // Appel AJAX
-      axios.patch('/api/waste-values/' + value.id, {
-        value: value.value // Puis feedback visuel
-
-      }).then(function (response) {
+      patchValue(value).then(function (response) {
         flash(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
@@ -63211,7 +63222,7 @@ __webpack_require__.r(__webpack_exports__);
     fetchWasteReferenceValuesFromDB: function fetchWasteReferenceValuesFromDB() {
       var _this2 = this;
 
-      axios.get('/api/waste-values').then(function (response) {
+      getValuesFromDB().then(function (response) {
         //TODO : virer trucs qu'ont rien à faire ici
         // On efface les valeurs personnalisée du localStorage
         localStorage.removeItem('localReferenceValues');
@@ -63220,7 +63231,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   }
-});
+}); // Situées ici, ces fonctions sont "privées"
+
+function getValuesFromDB() {
+  return axios.get('/api/waste-values');
+}
+
+function patchValue(value) {
+  return axios.patch('/api/waste-values/' + value.id, {
+    value: value.value
+  });
+}
 
 /***/ }),
 
@@ -63265,9 +63286,7 @@ __webpack_require__.r(__webpack_exports__);
       this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
       this["export"].simulations = this.simulations; // appel AJAX vers le côté Laravel (ExportController.php)
 
-      axios.post('/export', this["export"], {
-        responseType: 'arraybuffer'
-      }).then(function (response) {
+      makeExportAjaxCall(this["export"]).then(function (response) {
         //TODO: make it compatible with IE11
         var headers = response.headers;
         var blob = new Blob([response.data], {
@@ -63283,6 +63302,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
+
+function makeExportAjaxCall(exportData) {
+  return axios.post('/export', exportData, {
+    responseType: 'arraybuffer'
+  });
+}
 
 /***/ }),
 
@@ -63535,7 +63560,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-// helper pour le composant Simulation.vue
+// helper pour le composant SimulationItem.vue
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     // Effacer une simulation

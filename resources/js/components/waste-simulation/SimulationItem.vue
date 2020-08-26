@@ -107,26 +107,11 @@ export default {
     ],
 
     // données récupérées du composant parent (AuditSimulationList.vue)
-    props: [
-        'simulation',
-        'index',
-        'auditData',
-        'previousSimulation'
-    ],
-
-    // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
-    watch: {
-        foodWasteCost: function () {
-            this.updateSimulationsComponent();
-        },
-
-        wasteCostPerDish: function () {
-            this.updateSimulationsComponent();
-        },
-
-        amountOfDishesWasted: function () {
-            this.updateSimulationsComponent();
-        },
+    props: {
+        simulation: Object,
+        index: Number,
+        auditData: Object,
+        previousSimulation: Object
     },
 
     // Propriétés calculées du composant
@@ -154,6 +139,29 @@ export default {
         }
     },
 
+    // propriétés à "surveiller", elles invoquent la fonction 'updateSimulationsComponent' dès qu'elles changent
+    watch: {
+        foodWasteCost: function () {
+            this.updateSimulationsComponent();
+        },
+
+        wasteCostPerDish: function () {
+            this.updateSimulationsComponent();
+        },
+
+        amountOfDishesWasted: function () {
+            this.updateSimulationsComponent();
+        },
+    },
+
+    // A l'initialisation du composant
+    mounted() {
+
+        // Listeners
+        events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
+        events.$on('validate-simulations', this.validate);
+    },
+
     // Fonctions inhérentes à ce composant
     methods: {
 
@@ -167,13 +175,5 @@ export default {
             this.$emit('update-simulations-component-will-full-info-for-export', this);
         },
     },
-
-    // A l'initialisation du composant
-    mounted() {
-
-        // Listeners
-        events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
-        events.$on('validate-simulations', this.validate);
-    }
 }
 </script>
