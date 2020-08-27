@@ -49,12 +49,16 @@
             </div>
         </div>
 
-        <p class="mt-5">
-            Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM</a>
-        </p>
-        <p>
-            Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les actions réalisables</a>
-        </p>
+        <div class="text-center">
+            <p class="mt-5">
+                Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM <span
+                class="icon"></span></a>
+            </p>
+            <p>
+                Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les
+                actions réalisables <span class="icon"></span></a>
+            </p>
+        </div>
 
     </div>
 </template>

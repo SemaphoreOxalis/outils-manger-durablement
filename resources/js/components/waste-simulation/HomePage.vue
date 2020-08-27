@@ -20,14 +20,14 @@
                         Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière
                         fois en date du <strong>{{ this.previousAuditDate }}</strong>
                     </p>
-                    <div class="position-relative d-inline-block">
-                        <button class="button big-button d-flex p-4 m-2" @click="goToPreviousAudit">
+                    <div class="d-flex flex-column align-items-center">
+                        <button class="button big-button d-flex p-4 justify-content-center mb-2" @click="goToPreviousAudit">
                             <div class="icon align-self-center mr-4"></div>
                             <div class="text-left big-button-line-height"><strong>Reprendre</strong><br><small>la simulation<br>du {{ previousAuditDate }}</small></div>
                         </button>
 
-                        <div class="text-right">
-                            <button class="button" @click="deletePreviousAudit"><span class="icon"></span></button>
+                        <div class="text-center">
+                            <button class="button alter" @click="deletePreviousAudit"><span class="icon mr-4"></span>Effacer toutes les données</button>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
 
             <div class="col p-4 m-4">
                 <p>Pour réaliser votre première simulation, <strong>vous aurez besoin</strong> :</p>
-                <ul>
+                <ul class="browser-default">
                     <li>du nombre de repas produits dans votre établissement (par an)</li>
                     <li>du coût de revient unitaire d'un repas
                         <a class="button alter" @click="showModal = true">?</a>
@@ -49,7 +49,7 @@
                 </p>
 
                 <router-link to="/input" tag="span">
-                    <button class="button big-button d-flex p-4 m-2">
+                    <button class="button big-button d-flex p-4 m-2 justify-content-center">
                         <div class="icon align-self-center mr-4"></div>
                         <div class="text-left big-button-line-height"><small>Je suis prêt</small> <br> <strong>Démarrer</strong> <br> <small>une nouvelle
                             simulation</small></div>
@@ -121,3 +121,7 @@ export default {
     },
 }
 </script>
+
+<style>
+
+</style>

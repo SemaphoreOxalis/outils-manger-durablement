@@ -29,29 +29,7 @@
 <body>
 <div>
     <div id="app">
-
-
         @yield('content')
-
-{{--                <footer class="mt-4">--}}
-{{--                    <div id="top-footer" class="pt-2">--}}
-{{--                        <p class="text-center">--}}
-{{--                            Cet outil est le fruit du travail du CH de Niort, dans le cadre d'un appel à projet de la fondation--}}
-{{--                            Carasso, financé par la région Nouvelle-Aquitaine, l'Europe et le centre ESCER--}}
-{{--                        </p>--}}
-{{--                        <div class="d-flex justify-content-around pb-3" id="logos">--}}
-{{--                            <img src="/images/Logo_fondation_carasso-small.jpg" alt="logo fondation Carasso">--}}
-{{--                            <img src="/images/Logo_Nouvelle-Aquitaine_2019.svg" alt="logo région Nouvelle-Aquitaine">--}}
-{{--                            <img src="/images/Logo_Europe.svg" alt="logo Europe">--}}
-{{--                            <img src="/images/centre_escer.jpg" alt="logo centre ESCER">--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div id="bottom-footer" class="d-flex justify-content-center py-3">--}}
-{{--                        <a href="#" class="px-3">Mentions légales</a>--}}
-{{--                        <a href="#" class="px-3">Politique de confidentialité</a>--}}
-{{--                        <a href="#" class="px-3">Administration</a>--}}
-{{--                    </div>--}}
-{{--                </footer>--}}
     </div>
 </div>
 

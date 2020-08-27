@@ -2136,9 +2136,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     $("body").addClass("dark");
+    $("footer").addClass("hide");
   },
   destroyed: function destroyed() {
     $("body").removeClass("dark");
+    $("footer").removeClass("hide");
   }
 });
 
@@ -3034,6 +3036,10 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -7799,7 +7805,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.not-found button {\n    margin: 50px auto;\n}\n.dark {\n    background-color: var(--dark-color);\n    color: var(--main-color);\n}\n", ""]);
+exports.push([module.i, "\n.not-found button {\n    margin: 50px auto;\n}\n.dark {\n    background-color: var(--dark-color);\n    color: var(--main-color);\n}\n.hide {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -43293,7 +43299,7 @@ var staticRenderFns = [
           ),
           _c("br"),
           _vm._v(
-            " dans le cadre d'un appel à projet de la fondation\n            Carasso, financé par la région Nouvelle-Aquitaine, l'Europe et le centre ESCER\n        "
+            " dans le cadre d'un appel à projet de la fondation\n            Carasso, financé par la région Nouvelle-Aquitaine et l'Europe\n        "
           )
         ]),
         _vm._v(" "),
@@ -44069,47 +44075,57 @@ var render = function() {
                   _c("strong", [_vm._v(_vm._s(this.previousAuditDate))])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "position-relative d-inline-block" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button big-button d-flex p-4 m-2",
-                      on: { click: _vm.goToPreviousAudit }
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "icon align-self-center mr-4" },
-                        [_vm._v("")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "text-left big-button-line-height" },
-                        [
-                          _c("strong", [_vm._v("Reprendre")]),
-                          _c("br"),
-                          _c("small", [
-                            _vm._v("la simulation"),
-                            _c("br"),
-                            _vm._v("du " + _vm._s(_vm.previousAuditDate))
-                          ])
-                        ]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "text-right" }, [
+                _c(
+                  "div",
+                  { staticClass: "d-flex flex-column align-items-center" },
+                  [
                     _c(
                       "button",
                       {
-                        staticClass: "button",
-                        on: { click: _vm.deletePreviousAudit }
+                        staticClass:
+                          "button big-button d-flex p-4 justify-content-center mb-2",
+                        on: { click: _vm.goToPreviousAudit }
                       },
-                      [_c("span", { staticClass: "icon" }, [_vm._v("")])]
-                    )
-                  ])
-                ])
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "icon align-self-center mr-4" },
+                          [_vm._v("")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "text-left big-button-line-height" },
+                          [
+                            _c("strong", [_vm._v("Reprendre")]),
+                            _c("br"),
+                            _c("small", [
+                              _vm._v("la simulation"),
+                              _c("br"),
+                              _vm._v("du " + _vm._s(_vm.previousAuditDate))
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "text-center" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button alter",
+                          on: { click: _vm.deletePreviousAudit }
+                        },
+                        [
+                          _c("span", { staticClass: "icon mr-4" }, [
+                            _vm._v("")
+                          ]),
+                          _vm._v("Effacer toutes les données")
+                        ]
+                      )
+                    ])
+                  ]
+                )
               ])
             : _vm._e()
         ]),
@@ -44120,7 +44136,7 @@ var render = function() {
           [
             _vm._m(2),
             _vm._v(" "),
-            _c("ul", [
+            _c("ul", { staticClass: "browser-default" }, [
               _c("li", [
                 _vm._v(
                   "du nombre de repas produits dans votre établissement (par an)"
@@ -44161,7 +44177,10 @@ var render = function() {
             _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
               _c(
                 "button",
-                { staticClass: "button big-button d-flex p-4 m-2" },
+                {
+                  staticClass:
+                    "button big-button d-flex p-4 m-2 justify-content-center"
+                },
                 [
                   _c("div", { staticClass: "icon align-self-center mr-4" }, [
                     _vm._v("")
@@ -44302,7 +44321,6 @@ var render = function() {
                 attrs: {
                   type: "date",
                   id: "start",
-                  required: "",
                   max: _vm.userInput.endDate
                 },
                 domProps: { value: _vm.userInput.startDate },
@@ -44334,7 +44352,6 @@ var render = function() {
                 attrs: {
                   type: "date",
                   id: "end",
-                  required: "",
                   min: _vm.userInput.startDate
                 },
                 domProps: { value: _vm.userInput.endDate },
@@ -44367,7 +44384,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col col-6" }, [
+            _c("div", { staticClass: "col col-4" }, [
               _c("label", [_vm._v("Nombre de repas :")]),
               _vm._v(" "),
               _c("input", {
@@ -44451,7 +44468,7 @@ var render = function() {
           _vm._m(6),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col col-6" }, [
+            _c("div", { staticClass: "col col-4" }, [
               _c("label", [_vm._v("Volume constaté (en tonnes) :")]),
               _vm._v(" "),
               _c("input", {
@@ -44523,210 +44540,215 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col col-6 reference-values" }, [
-              _vm.defaultValues
-                ? _c("p", [
-                    _vm._v("Suite à la "),
-                    _c("a", { attrs: { href: "#" } }, [
-                      _vm._v("caractérisation des déchets du C.H de Niort,")
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "px-2 py-2",
-                  class: _vm.editingReferenceValues
-                    ? "editing-reference-values"
-                    : ""
-                },
-                [
-                  _c("p", [
-                    _vm._v(
-                      "Il a été constaté que la part des restes alimentaires représente environ\n                                "
-                    ),
-                    _vm.editingReferenceValues
-                      ? _c("span", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.referenceValues
-                                    .foodLeftoversVolumeInGlobalWaste,
-                                expression:
-                                  "referenceValues.foodLeftoversVolumeInGlobalWaste"
-                              }
-                            ],
-                            staticClass:
-                              "custom-input number-field browser-default",
-                            attrs: {
-                              type: "number",
-                              required: "",
-                              min: "0.01",
-                              max: "100",
-                              step: "0.01"
-                            },
-                            domProps: {
-                              value:
-                                _vm.referenceValues
-                                  .foodLeftoversVolumeInGlobalWaste
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.referenceValues,
-                                  "foodLeftoversVolumeInGlobalWaste",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      : _c("span", [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(
-                                _vm.referenceValues
-                                  .foodLeftoversVolumeInGlobalWaste
-                              ) +
-                              "\n                                "
-                          )
-                        ]),
-                    _vm._v(
-                      "\n                                % du volume global des ordures ménagères, soit dans votre cas\n                                "
-                    ),
-                    _c("strong", [
-                      _vm._v(
-                        _vm._s(_vm.foodLeftoversVolumeInGlobalWasteInYourCase) +
-                          " tonnes"
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Sans action particulière,\n                                "
-                    ),
-                    _vm.editingReferenceValues
-                      ? _c("span", [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value:
-                                  _vm.referenceValues
-                                    .actualFoodLeftoversInFoodWaste,
-                                expression:
-                                  "referenceValues.actualFoodLeftoversInFoodWaste"
-                              }
-                            ],
-                            staticClass:
-                              "custom-input number-field browser-default",
-                            attrs: {
-                              type: "number",
-                              required: "",
-                              min: "0.01",
-                              max: "100",
-                              step: "0.01"
-                            },
-                            domProps: {
-                              value:
-                                _vm.referenceValues
-                                  .actualFoodLeftoversInFoodWaste
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.referenceValues,
-                                  "actualFoodLeftoversInFoodWaste",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      : _c("span", [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(
-                                _vm.referenceValues
-                                  .actualFoodLeftoversInFoodWaste
-                              ) +
-                              "\n                                "
-                          )
-                        ]),
-                    _vm._v(
-                      "\n                                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas\n                                "
-                    ),
-                    _c("strong", [
-                      _vm._v(
-                        _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
-                          " tonnes"
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm.editingReferenceValues
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "button alter",
-                          attrs: { disabled: _vm.areThereInvalidValues },
-                          on: { click: _vm.saveLocalReferenceValues }
-                        },
-                        [_vm._v("OK\n                            ")]
-                      )
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à\n                            "
-                ),
+            _c(
+              "div",
+              { staticClass: "col col-8 reference-values info p-3 mt-3" },
+              [
+                _vm.defaultValues
+                  ? _c("p", [_vm._v("Suite à la "), _vm._m(7), _vm._v(",")])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c(
-                  "a",
+                  "div",
                   {
-                    attrs: { href: "#reference-values" },
-                    on: {
-                      click: function($event) {
-                        _vm.editingReferenceValues = true
+                    staticClass: "px-2 py-2",
+                    class: _vm.editingReferenceValues
+                      ? "editing-reference-values"
+                      : ""
+                  },
+                  [
+                    _c("p", [
+                      _vm._v(
+                        "Il a été constaté que la part des restes alimentaires représente environ\n                                "
+                      ),
+                      _vm.editingReferenceValues
+                        ? _c("span", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value:
+                                    _vm.referenceValues
+                                      .foodLeftoversVolumeInGlobalWaste,
+                                  expression:
+                                    "referenceValues.foodLeftoversVolumeInGlobalWaste"
+                                }
+                              ],
+                              staticClass:
+                                "custom-input number-field browser-default",
+                              attrs: {
+                                type: "number",
+                                required: "",
+                                min: "0.01",
+                                max: "100",
+                                step: "0.01"
+                              },
+                              domProps: {
+                                value:
+                                  _vm.referenceValues
+                                    .foodLeftoversVolumeInGlobalWaste
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.referenceValues,
+                                    "foodLeftoversVolumeInGlobalWaste",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _c("span", [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(
+                                  _vm.referenceValues
+                                    .foodLeftoversVolumeInGlobalWaste
+                                ) +
+                                "\n                                "
+                            )
+                          ]),
+                      _vm._v(
+                        "\n                                % du volume global des ordures ménagères, soit dans votre cas\n                                "
+                      ),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.foodLeftoversVolumeInGlobalWasteInYourCase
+                          ) + " tonnes"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "Sans action particulière,\n                                "
+                      ),
+                      _vm.editingReferenceValues
+                        ? _c("span", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value:
+                                    _vm.referenceValues
+                                      .actualFoodLeftoversInFoodWaste,
+                                  expression:
+                                    "referenceValues.actualFoodLeftoversInFoodWaste"
+                                }
+                              ],
+                              staticClass:
+                                "custom-input number-field browser-default",
+                              attrs: {
+                                type: "number",
+                                required: "",
+                                min: "0.01",
+                                max: "100",
+                                step: "0.01"
+                              },
+                              domProps: {
+                                value:
+                                  _vm.referenceValues
+                                    .actualFoodLeftoversInFoodWaste
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.referenceValues,
+                                    "actualFoodLeftoversInFoodWaste",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _c("span", [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(
+                                  _vm.referenceValues
+                                    .actualFoodLeftoversInFoodWaste
+                                ) +
+                                "\n                                "
+                            )
+                          ]),
+                      _vm._v(
+                        "\n                                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas\n                                "
+                      ),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
+                            " tonnes"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm.editingReferenceValues
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "button alter",
+                            attrs: { disabled: _vm.areThereInvalidValues },
+                            on: { click: _vm.saveLocalReferenceValues }
+                          },
+                          [_vm._v("OK\n                            ")]
+                        )
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à\n                            "
+                  ),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button alter mr-0",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.editingReferenceValues = true
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("modifier ces valeurs")]
-                ),
-                _vm._v("\n                            (ou à "),
-                _c(
-                  "a",
-                  {
-                    attrs: { href: "#reference-values" },
-                    on: { click: _vm.resetReferenceValues }
-                  },
-                  [_vm._v("les réinitialiser à leurs valeur par défaut")]
-                ),
-                _vm._v(")\n                        ")
-              ])
-            ])
+                    },
+                    [_vm._v("modifier ces valeurs")]
+                  ),
+                  _vm._v("\n                            ou à "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button alter",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.resetReferenceValues($event)
+                        }
+                      }
+                    },
+                    [_vm._v("les réinitialiser à leurs valeur par défaut")]
+                  )
+                ])
+              ]
+            )
           ]),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "step-actions" },
+            { staticClass: "step-actions pb-4" },
             [
-              _vm._m(7),
+              _vm._m(8),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -44816,8 +44838,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col col-6" }, [
-      _c("div", { staticClass: "grey lighten-3" }, [
+    return _c("div", { staticClass: "col col-8 mt-3 p-3 info" }, [
+      _c("div", { staticClass: "lighten-3" }, [
         _c("p", [
           _vm._v(
             "*Le prix de revient d’un repas peut être calculé grâce à la formule suivante :"
@@ -44862,9 +44884,19 @@ var staticRenderFns = [
     return _c("p", [
       _c("a", { attrs: { href: "#" } }, [
         _vm._v(
-          "En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets"
-        )
+          "En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets "
+        ),
+        _c("span", { staticClass: "icon" }, [_vm._v("")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _vm._v("caractérisation des déchets du C.H de Niort "),
+      _c("span", { staticClass: "icon" }, [_vm._v("")])
     ])
   },
   function() {
@@ -44984,9 +45016,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _vm._m(4)
+    _vm._m(3)
   ])
 }
 var staticRenderFns = [
@@ -45081,23 +45111,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mt-5" }, [
-      _vm._v(
-        "\n        Bravo, vous venez de franchir la première étape de la démarche de "
-      ),
-      _c("a", { attrs: { href: "#" } }, [_vm._v("la loi EGALIM")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("\n        Que faire de ces résultats ? Rendez vous sur le "),
-      _c("a", { attrs: { href: "#" } }, [
+    return _c("div", { staticClass: "text-center" }, [
+      _c("p", { staticClass: "mt-5" }, [
         _vm._v(
-          "site ressource de l'ANAP pour découvrir les actions réalisables"
-        )
+          "\n            Bravo, vous venez de franchir la première étape de la démarche de "
+        ),
+        _c("a", { attrs: { href: "#" } }, [
+          _vm._v("la loi EGALIM "),
+          _c("span", { staticClass: "icon" }, [_vm._v("")])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n            Que faire de ces résultats ? Rendez vous sur le "
+        ),
+        _c("a", { attrs: { href: "#" } }, [
+          _vm._v(
+            "site ressource de l'ANAP pour découvrir les\n            actions réalisables "
+          ),
+          _c("span", { staticClass: "icon" }, [_vm._v("")])
+        ])
       ])
     ])
   }

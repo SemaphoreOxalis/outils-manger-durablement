@@ -19,7 +19,7 @@
                             <input type="date"
                                    class="custom-input datepicker number-field browser-default"
                                    id="start"
-                                   required
+
                                    v-model="userInput.startDate"
                                    :max="userInput.endDate">
                         </div>
@@ -28,7 +28,7 @@
                             <input type="date"
                                    class="custom-input datepicker number-field browser-default"
                                    id="end"
-                                   required
+
                                    v-model="userInput.endDate"
                                    :min="userInput.startDate">
                         </div>
@@ -46,7 +46,7 @@
                     <h4 class="col-12">Saisissez les informations sur les repas produits/commandés par votre cuisine
                         sur cette période</h4>
                     <div class="row">
-                        <div class="col col-6">
+                        <div class="col col-4">
                             <label>Nombre de repas :</label>
                             <input id="dishes-number"
                                    v-model="userInput.dishesNumber"
@@ -62,8 +62,8 @@
                                    min="0.01" step="0.01"
                                    class="custom-input number-field browser-default">
                         </div>
-                        <div class="col col-6">
-                            <div class="grey lighten-3">
+                        <div class="col col-8 mt-3 p-3 info">
+                            <div class="lighten-3">
                                 <p>*Le prix de revient d’un repas peut être calculé grâce à la formule suivante :</p>
                                 <p>[(montant total des achats alimentaires (matière première)
                                     + masse salariale de l&#x27;équipe de restauration
@@ -88,9 +88,9 @@
                 <div class="step-content">
                     <h4 class="col-12">Saisissez les informations sur les déchets (hors déchets médicaux pour les
                         structures médicales) sur la même période.</h4>
-                    <p><a href="#">En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets</a></p>
+                    <p><a href="#">En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets <span class="icon"></span></a></p>
                     <div class="row">
-                        <div class="col col-6">
+                        <div class="col col-4">
                             <label>Volume constaté (en tonnes) :</label>
                             <input id="global-waste-volume"
                                    v-model="userInput.globalWasteVolume"
@@ -106,8 +106,8 @@
                                    min="0.01" step="0.01"
                                    class="custom-input number-field w-input browser-default">
                         </div>
-                        <div class="col col-6 reference-values">
-                            <p v-if="defaultValues">Suite à la <a href="#">caractérisation des déchets du C.H de Niort,</a></p>
+                        <div class="col col-8 reference-values info p-3 mt-3">
+                            <p v-if="defaultValues">Suite à la <a href="#">caractérisation des déchets du C.H de Niort <span class="icon"></span></a>,</p>
                             <div :class="editingReferenceValues ? 'editing-reference-values' : ''" class="px-2 py-2">
                                 <p>Il a été constaté que la part des restes alimentaires représente environ
                                     <span v-if="editingReferenceValues">
@@ -147,12 +147,12 @@
 
                             <br>
                             <p>Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à
-                                <a href="#reference-values" @click="editingReferenceValues = true">modifier ces valeurs</a>
-                                (ou à <a href="#reference-values" @click="resetReferenceValues">les réinitialiser à leurs valeur par défaut</a>)
+                                <button class="button alter mr-0" @click.prevent="editingReferenceValues = true">modifier ces valeurs</button>
+                                ou à <button class="button alter" @click.prevent="resetReferenceValues">les réinitialiser à leurs valeur par défaut</button>
                             </p>
                         </div>
                     </div>
-                    <div class="step-actions">
+                    <div class="step-actions pb-4">
                         <button class="button alter previous-step"><span class="icon"></span> retour</button>
                         <router-link :to="{ name: 'results-page', params: { userInput, referenceValues }}" tag="span">
                             <button :disabled="areThereInvalidData"

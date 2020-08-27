@@ -15,10 +15,13 @@
     export default {
         mounted() {
             $("body").addClass("dark");
+            $("footer").addClass("hide");
         },
 
         destroyed() {
             $("body").removeClass("dark");
+            $("footer").removeClass("hide");
+
         }
     }
 </script>
@@ -31,5 +34,9 @@
     .dark {
         background-color: var(--dark-color);
         color: var(--main-color);
+    }
+
+    .hide {
+        display: none;
     }
 </style>
