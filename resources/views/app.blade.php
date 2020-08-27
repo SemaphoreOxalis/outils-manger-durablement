@@ -32,7 +32,7 @@
             </div>
         </main>
 
-        <footer class="mt-auto container">
+        <footer class="mt-auto w-100">
             <div class="pt-2">
                 <p class="text-center">
                     Cet outil est le fruit du travail du CH de Niort, <br> dans le cadre d'un appel à projet de la

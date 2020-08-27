@@ -1,0 +1,12 @@
+- git clone https://github.com/EvilYep/twerp
+- cd twerp
+- composer install
+- npm install
+- copy and change .env file
+- php artisan key:generate
+- php artisan storage:link
+- php artisan serve
+- php artisan migrate:fresh
+- create an account
+- php artisan db:seed
+

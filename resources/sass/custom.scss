@@ -109,6 +109,10 @@ img.footer-logo {
     max-width: 100px;
 }
 
+footer {
+    background-color: white;
+}
+
 /***********/
 /* BOUTONS */
 /***********/
@@ -121,7 +125,7 @@ label {
     display: inline-block;
     position: relative;
     margin-right: 0.5rem;
-    padding: 0px 16px;
+    padding: 8px 16px;
     border-style: solid;
     border-width: 1px;
     border-color: var(--main-color);
@@ -131,11 +135,11 @@ label {
     -webkit-transition: all 200ms ease-in-out;
     transition: all 200ms ease-in-out;
     color: var(--dark-color);
-    font-size: 0.8em;
+    font-size: 0.9rem;
     font-weight: 700;
     text-decoration: none;
     text-transform: uppercase;
-    line-height: 2.5em;
+    line-height: 20px;
 }
 
 .button .icon{

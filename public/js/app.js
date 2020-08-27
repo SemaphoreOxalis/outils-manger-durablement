@@ -44470,7 +44470,7 @@ var render = function() {
           _vm._m(6),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col col-4" }, [
+            _c("div", { staticClass: "col col-3" }, [
               _c("label", [_vm._v("Volume constaté (en tonnes) :")]),
               _vm._v(" "),
               _c("input", {
@@ -44544,7 +44544,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col col-8 reference-values info p-3 mt-3" },
+              { staticClass: "col col-9 reference-values info p-3 mt-3" },
               [
                 _vm.defaultValues
                   ? _c("p", [_vm._v("Suite à la "), _vm._m(7), _vm._v(",")])

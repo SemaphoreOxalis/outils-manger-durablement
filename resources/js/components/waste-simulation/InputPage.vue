@@ -90,7 +90,7 @@
                         structures médicales) sur la même période.</h4>
                     <p><a href="#">En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets <span class="icon"></span></a></p>
                     <div class="row">
-                        <div class="col col-4">
+                        <div class="col col-3">
                             <label>Volume constaté (en tonnes) :</label>
                             <input id="global-waste-volume"
                                    v-model="userInput.globalWasteVolume"
@@ -106,7 +106,7 @@
                                    min="0.01" step="0.01"
                                    class="custom-input number-field w-input browser-default">
                         </div>
-                        <div class="col col-8 reference-values info p-3 mt-3">
+                        <div class="col col-9 reference-values info p-3 mt-3">
                             <p v-if="defaultValues">Suite à la <a href="#">caractérisation des déchets du C.H de Niort <span class="icon"></span></a>,</p>
                             <div :class="editingReferenceValues ? 'editing-reference-values' : ''" class="px-2 py-2">
                                 <p>Il a été constaté que la part des restes alimentaires représente environ
