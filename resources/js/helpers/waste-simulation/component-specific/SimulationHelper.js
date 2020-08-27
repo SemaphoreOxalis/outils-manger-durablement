@@ -12,7 +12,6 @@ export default {
 
         // Sauvegarder les modifications faites à la simulation
         saveChanges() {
-
             this.validate();
 
             // Envoie la demande au composant parent (AuditSimulationList.vue) qui s'en occupe

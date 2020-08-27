@@ -19,7 +19,7 @@
                             <input type="date"
                                    class="custom-input datepicker number-field browser-default"
                                    id="start"
-
+                                   required
                                    v-model="userInput.startDate"
                                    :max="userInput.endDate">
                         </div>
@@ -28,7 +28,7 @@
                             <input type="date"
                                    class="custom-input datepicker number-field browser-default"
                                    id="end"
-
+                                   required
                                    v-model="userInput.endDate"
                                    :min="userInput.startDate">
                         </div>

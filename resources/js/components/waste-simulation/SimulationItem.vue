@@ -3,7 +3,7 @@
 
         <div class="table-div bigger d-flex">
             <input v-model="simulation.name"
-                   @blur="saveChanges"
+                   @change="saveChanges"
                    class="ignore-draggable custom-input browser-default align-self-end"
                    type="text"
                    required>
@@ -14,7 +14,7 @@
                 <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
             </div>
             <input v-model="simulation.dishesNumber"
-                   @blur="saveChanges"
+                   @change="saveChanges"
                    class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
@@ -26,7 +26,7 @@
                 <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
             </div>
             <input v-model="simulation.dishCost"
-                   @blur="saveChanges"
+                   @change="saveChanges"
                    class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
@@ -38,7 +38,7 @@
                 <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
             </div>
             <input v-model="simulation.wasteTreatmentCost"
-                   @blur="saveChanges"
+                   @change="saveChanges"
                    class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
@@ -50,7 +50,7 @@
                 <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
             </div>
             <input v-model="simulation.foodWasteVolume"
-                   @blur="saveChanges"
+                   @change="saveChanges"
                    class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required

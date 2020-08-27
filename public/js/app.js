@@ -44321,6 +44321,7 @@ var render = function() {
                 attrs: {
                   type: "date",
                   id: "start",
+                  required: "",
                   max: _vm.userInput.endDate
                 },
                 domProps: { value: _vm.userInput.startDate },
@@ -44352,6 +44353,7 @@ var render = function() {
                 attrs: {
                   type: "date",
                   id: "end",
+                  required: "",
                   min: _vm.userInput.startDate
                 },
                 domProps: { value: _vm.userInput.endDate },
@@ -45173,7 +45175,7 @@ var render = function() {
         attrs: { type: "text", required: "" },
         domProps: { value: _vm.simulation.name },
         on: {
-          blur: _vm.saveChanges,
+          change: _vm.saveChanges,
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -45211,7 +45213,7 @@ var render = function() {
         attrs: { type: "number", required: "", min: "1", step: "1" },
         domProps: { value: _vm.simulation.dishesNumber },
         on: {
-          blur: _vm.saveChanges,
+          change: _vm.saveChanges,
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -45247,7 +45249,7 @@ var render = function() {
         attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.dishCost },
         on: {
-          blur: _vm.saveChanges,
+          change: _vm.saveChanges,
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -45285,7 +45287,7 @@ var render = function() {
         attrs: { type: "number", required: "", min: "0.01", step: "0.01" },
         domProps: { value: _vm.simulation.wasteTreatmentCost },
         on: {
-          blur: _vm.saveChanges,
+          change: _vm.saveChanges,
           input: function($event) {
             if ($event.target.composing) {
               return
@@ -45323,7 +45325,7 @@ var render = function() {
         attrs: { type: "number", required: "", min: "0.001", step: "0.001" },
         domProps: { value: _vm.simulation.foodWasteVolume },
         on: {
-          blur: _vm.saveChanges,
+          change: _vm.saveChanges,
           input: function($event) {
             if ($event.target.composing) {
               return
