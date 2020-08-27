@@ -108,7 +108,7 @@ export default {
 
         // Si un audit a été effectué, possibilité de s'y rendre directement
         goToPreviousAudit() {
-            this.$router.push({name: 'results'})
+            this.$router.push({name: 'results-page'})
         },
 
         // Efface l'audit enregistré en localStorage ainsi que les simulations associées

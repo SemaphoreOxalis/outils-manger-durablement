@@ -4,6 +4,7 @@ import ResultsPage from "./components/waste-simulation/ResultsPage";
 import NotFound from "./components/NotFound";
 import AdminPage from "./components/AdminPage";
 import HomePage from "./components/waste-simulation/HomePage";
+import AboutUs from "./components/AboutUs";
 
 export default {
 
@@ -50,6 +51,11 @@ export default {
                     window.location.href = 'login'
                 }
             }
+        },
+        {
+            path: '/about',
+            component: AboutUs,
+            name: 'about-us'
         },
         {
             path: '*',

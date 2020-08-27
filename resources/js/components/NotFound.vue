@@ -13,12 +13,23 @@
 
 <script>
     export default {
+        mounted() {
+            $("body").addClass("dark");
+        },
 
+        destroyed() {
+            $("body").removeClass("dark");
+        }
     }
 </script>
 
 <style>
     .not-found button {
         margin: 50px auto;
+    }
+
+    .dark {
+        background-color: var(--dark-color);
+        color: var(--main-color);
     }
 </style>
