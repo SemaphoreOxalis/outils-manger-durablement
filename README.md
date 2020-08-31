@@ -1,7 +1,7 @@
 # :recycle: Outil Gaspi :recycle:
 
 
-## Installation
+## Installation :floppy_disk:
 
 * :computer: Dans le terminal du serveur, à la racine, tapez :
     * `git clone https://github.com/SemaphoreOxalis/outil-gaspi outil-gaspi.sc4semadmin.universe.wf` (2e argument = sous-domaine qui hébergera l'appli (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`))
@@ -71,7 +71,7 @@ DEBUGBAR_ENABLED=false
     * `php artisan key:generate` (crée une clé de chiffrage unique à l'application pour générer les tokens CSRF et les cookies de session)
     * `php artisan migrate:fresh` (crée les tables de la base de données - tapez 'yes' si on vous le demande)
 
-* :running: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
+* :abc: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
 
 * :pencil2: Editez le fichier routes/web.php :
     * Commentez la ligne `Auth::routes();`
@@ -90,36 +90,36 @@ Le côté back-end en Laravel ne s'occupe que de fournir une sorte d'API pour le
 
 La majorité de la logique de l'application est gérée par Vue.js en front-end, qui consommera cette API mise en place.
 
-### Configuration :wrench:
+### :wrench: Configuration
 
 * Le principal fichier de configuration est `.env` à la racine. D'autres options se trouvent dans le dossier `/config`
 
-### Authentification :key:
+### :key: Authentification
 
 * Toute l'authentification est gérée de façon traditionnelle par Laravel. Plus d'infos [sur ce lien](https://laravel.com/docs/7.x/authentication)
 * La seule modification apportée est la désactivation de la route `/register` que vous avez affectuée lors de l'installation
 
-### Base de données :card_file_box:
+### :card_file_box: Base de données
 
 * La base de données de l'application se trouve dans `/database/database.sqlite`
 * dans le dossier `/database`, vous trouverez 2 autres dossiers utiles à l'application :
     * `/migrations` contient les fichiers responsables de *créer* les tables de la base de données
     * `/seeds` contient les fichiers responsable de *remplir* les tables de la base de données. (C'est ici que se trouvent les valeurs de référence qui sont initialisées à "25%" et "75%" lors de l'installation)
 
-### Routes :traffic-light:
+### :vertical_traffic_light: Routes
 
 * Back-end (endpoints de l'API et authentification)
     * Ces routes sont dans le fichier `routes/web.php`
 * Front-end (ces routes correspondent à des composants Vue)
     * Ces routes sont dans le fichier `resources/js/routes.js`
 
-### Back-end :arrow_left:
+### :factory: Back-end
 
 Ici se trouvent les fichiers principaux constituant notre API
 * `app/Http/Controllers/WasteReferenceValuesController.php` s'occupe de récupérer et de modifier les valeurs de référence
 * `app/Http/Controllers/ExportController.php` s'occupe de l'export des simulations au format .xlsx
 
-### Front-end :arrow_right:
+### :iphone: Front-end
 
 #### Vues PHP
 La "page" de notre Single-Page-Application est un template Laravel divisé en deux fichiers:
@@ -141,29 +141,29 @@ En plus de ces fichiers, dans `resources/js/`, vous pouvez trouver
 * `app.js` ce fichier initialise Vue.js. Concrètement, il "fait le lien" entre la balise `div` d'id `app` dans le template PHP `resources/views/layout/app.blade.php` et le routeur de Vue qui va la "remplir" avec les différents composants. Ce fichier importe:
 * `bootstrap.js` qui s'occupe d'initialiser les librairies nécessaires à l'application (axios, jQuery, bootstrap.js...)
 
-### Style et polices :art:
+### :art: Style et polices
 Tout se trouve dans les dossiers `resources/fonts` et `resources/sass`, notamment dans le fichier `resources/sass/app.scss` qui importe les autres fichiers utiles (dont évidemment nos `custom.scss` et `icons.scss`). Tout ceci sera compilé dans le fichier `public/css/app.css` lors de l'exécution du script `npm run prod` lors de la phase d'installation (si elle a été correctement effectuée, le dossier `public` est à la racine du site et les internautes n'ont donc accès qu'à celui-ci)
 
-### Divers
-* Les images se trouvent déjà dans `public/images` :sparkles:
-* La traduction de messages d'erreurs et système se trouve dans `resources/lang` :earth_africa:
+### :slot_machine: Divers
+* :sparkles: Les images se trouvent déjà dans `public/images` 
+* :earth_africa: La traduction de messages d'erreurs et système se trouve dans `resources/lang` 
 
 
 ## Détail des fichiers et dossiers :clipboard:
-Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Laravel/Vue mais n'ont pas été modifiés, ou ne devraient pas l'être
-:no-entry: Ce symbole indique que ces fichiers/dossiers ne doivent pas être modifiés
-:warning: Ce symbole indique que ces fichiers/dossiers ne devraient pas être modifiés
+Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Laravel/Vue mais n'ont pas été modifiés, ou ne devraient pas l'être  
+:no_entry: Ce symbole indique que ces fichiers/dossiers ne doivent pas être modifiés  
+:warning: Ce symbole indique que ces fichiers/dossiers ne devraient pas être modifiés  
 
 * `app` : contient le code back-end de notre API (dont l'authentification gérée par Laravel)
     * `Http/Controllers` : contient plus spécifiquement le code nécessaire à traiter les données de référence et à la fonction export
-* `bootstrap` : :no-entry: géré par Laravel, contient le fichier `app.php` qui lance l'application et le dossier `cache` pour optimisation
-* `config` : :warning: contient des fichiers de configuration
-* `database` : :warning: contient la base de données et la logique ce celle-ci
-    * `migrations` : :warning: 
-    * `seeds` : :warning:
+* :no_entry: `bootstrap` : généré par Laravel, contient le fichier `app.php` qui lance l'application et le dossier `cache` pour optimisation
+* :warning: `config` : contient des fichiers de configuration
+* :warning: `database` : contient la base de données et la logique ce celle-ci
+    * :warning: `migrations` : code pour construire a base de données lors de la commande `php artisan migrate:fresh`
+    * :warning: `seeds` : code pour remplir les tables de la base de données lors de la commande `php artisan db:seed`
 * `doc` : contient uniquement l'image présente en haut de ce README
-* `node_modules` : :no-entry: Contient les dépendances Javascript
-* `public` : :warning: Le point d'entrée de notre application. Derrière ce point tout est accessible au navigateur. Une modification ici n'aurait aucun effet, le contenu de ce dossier étant généré à l'installation (sauf `/images`).
+* :no_entry: `node_modules` : Contient les dépendances Javascript
+* :warning: `public` : Le point d'entrée de notre application. Derrière ce point tout est accessible au navigateur. Une modification ici n'aurait aucun effet, le contenu de ce dossier étant généré à l'installation (sauf `/images`).
     * `images` : Seul ce sous-dossier contient réellement les images affichées par l'application (si vous voulez les modifier, faites-le ici)
 * `resources` : contient les vues et le code front-end non compilé
     * `js` : Vue.js et ses Composants, fichiers ressources Javascript, logique front-end
@@ -171,13 +171,13 @@ Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Lar
         * `routes.js` : routeur vers les "pages"/composants
     * `sass` : Styles
     * `views` : vues Laravel (conteneur de l'application)
-* `routes` : :warning: contient les définitions de routes de l'application 
+* :warning: `routes` : contient les définitions de routes de l'application 
     * `web.php` : routeur back-end Laravel : contient les routes vers notre API et pour l'authentification
 * `storage` : Non utilisé. Logs et fichiers envoyés par les utilisateurs
 * `tests` : Non utilisé. Contient les fichiers de tests (NDD : J'essaierai de faire du TDD pour la deuxième appli)
-* `vendor` : :no_entry: Contient les dépendances PHP
+* :no_entry: `vendor` : Contient les dépendances PHP
 * fichiers à la racine :
-    * `.env` : :warning: fichier de configuration général de l'application
-    * `composer.json` : :warning: dépendances PHP à installer lors de la commande `composer install`
-    * `package.json` : :warning: dépendances JS à installer lors de la commande `npm install`
-    * `wabpack.mix.js` : :warning: responsable de compiler le CSS et le JS depuis le dossier `resouces` dans le dossier `public`
+    * :warning: `.env` : fichier de configuration général de l'application
+    * :warning: `composer.json` : dépendances PHP à installer lors de la commande `composer install`
+    * :warning: `package.json` : dépendances JS à installer lors de la commande `npm install`
+    * :warning: `wabpack.mix.js` : responsable de compiler le CSS et le JS depuis le dossier `resouces` dans le dossier `public`
