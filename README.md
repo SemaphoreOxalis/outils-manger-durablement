@@ -1,6 +1,23 @@
+- [:recycle: Outil Gaspi :recycle:](#:recycle:-outil-gaspi-:recycle:)
+  * [Installation :floppy_disk:](#installation-:floppy_disk:)
+  * [Architecture :building_construction:](#architecture-:building_construction:)
+    + [:wrench: Configuration](#:wrench:-configuration)
+    + [:key: Authentification](#:key:-authentification)
+    + [:card_file_box: Base de données](#:card_file_box:-base-de-données)
+    + [:vertical_traffic_light: Routes](#:vertical_traffic_light:-routes)
+    + [:factory: Back-end](#:factory:-back-end)
+    + [:iphone: Front-end](#:iphone:-front-end)
+      - [Vues PHP](#vues-php)
+      - [Vues Vue.js](#vues-vuejs)
+      - [Initialisation de Vue.js](#initialisation-de-vuejs)
+    + [:art: Style et polices](#:art:-style-et-polices)
+    + [:slot_machine: Divers](#:slot_machine:-divers)
+  * [Détail des fichiers et dossiers :clipboard:](#détail-des-fichiers-et-dossiers-:clipboard:)
+  
+  
 # :recycle: Outil Gaspi :recycle:
-
-
+  
+  
 ## Installation :floppy_disk:
 
 * :computer: Dans le terminal du serveur, à la racine, tapez :
@@ -71,7 +88,7 @@ DEBUGBAR_ENABLED=false
     * `php artisan key:generate` (crée une clé de chiffrage unique à l'application pour générer les tokens CSRF et les cookies de session)
     * `php artisan migrate:fresh` (crée les tables de la base de données - tapez 'yes' si on vous le demande)
 
-* :abc: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
+* :cop: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
 
 * :pencil2: Editez le fichier routes/web.php :
     * Commentez la ligne `Auth::routes();`
@@ -82,8 +99,8 @@ DEBUGBAR_ENABLED=false
 * :computer: Dans le terminal du serveur, tapez :
     * `php artisan db:seed` (remplit les tables de la base de données avec les valeurs de référence - tapez 'yes' si on vous le demande)
     * `npm run prod` (compile et minifie le Javascript et le CSS de l'application dans le dossier `/public`)
-
-
+  
+  
 ## Architecture :building_construction:
 
 Le côté back-end en Laravel ne s'occupe que de fournir une sorte d'API pour le front, contenant les données (valeurs de référence) et mettant en place des routes permettant de les récupérer et de les modifier. Il s'occupe également de l'authentification et de l'export .xlsx
@@ -111,7 +128,7 @@ La majorité de la logique de l'application est gérée par Vue.js en front-end,
 * Back-end (endpoints de l'API et authentification)
     * Ces routes sont dans le fichier `routes/web.php`
 * Front-end (ces routes correspondent à des composants Vue)
-    * Ces routes sont dans le fichier `resources/js/routes.js`
+    * Elles sont dans le fichier `resources/js/routes.js`
 
 ### :factory: Back-end
 
@@ -147,12 +164,13 @@ Tout se trouve dans les dossiers `resources/fonts` et `resources/sass`, notammen
 ### :slot_machine: Divers
 * :sparkles: Les images se trouvent déjà dans `public/images` 
 * :earth_africa: La traduction de messages d'erreurs et système se trouve dans `resources/lang` 
-
-
+  
+  
 ## Détail des fichiers et dossiers :clipboard:
 Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Laravel/Vue mais n'ont pas été modifiés, ou ne devraient pas l'être  
 :no_entry: Ce symbole indique que ces fichiers/dossiers ne doivent pas être modifiés  
 :warning: Ce symbole indique que ces fichiers/dossiers ne devraient pas être modifiés  
+  
 
 * `app` : contient le code back-end de notre API (dont l'authentification gérée par Laravel)
     * `Http/Controllers` : contient plus spécifiquement le code nécessaire à traiter les données de référence et à la fonction export
@@ -180,4 +198,4 @@ Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Lar
     * :warning: `.env` : fichier de configuration général de l'application
     * :warning: `composer.json` : dépendances PHP à installer lors de la commande `composer install`
     * :warning: `package.json` : dépendances JS à installer lors de la commande `npm install`
-    * :warning: `wabpack.mix.js` : responsable de compiler le CSS et le JS depuis le dossier `resouces` dans le dossier `public`
+    * :warning: `wabpack.mix.js` : responsable de compiler le CSS et le JS depuis le dossier `resources` dans le dossier `public`
