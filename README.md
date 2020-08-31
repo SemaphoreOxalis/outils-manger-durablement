@@ -8,7 +8,7 @@
 ### :warning: **IMPORTANT** :warning:
 
 * :lock: créer le sous-domaine sur CPanel et faire pointer la racine sur le dossier `/public`.
-** :bangbang: Sans cette étape, les internautes auraient accès à TOUT le code source de l'application (logique, base de donnée, configuration, etc...)** :
+:bangbang: **Sans cette étape, les internautes auraient accès à TOUT le code source de l'application (logique, base de donnée, configuration, etc...)** :
 
 ![exemple](https://github.com/SemaphoreOxalis/outil-CO2-gaspi/blob/master/doc/sous-domaine.jpg?raw=true)
 
@@ -100,6 +100,6 @@ La majorité de la logique de l'application est gérée par Vue.js en front-end.
 
 * Toute l'authentification est gérée de façon traditionnelle par Laravel. Plus d'infos [sur ce lien](https://laravel.com/docs/7.x/authentication)
 
-#### Base de données
+#### Base de données :card_file_box:
 
 * 
