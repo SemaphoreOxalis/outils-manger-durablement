@@ -21,7 +21,6 @@
         destroyed() {
             $("body").removeClass("dark");
             $("footer").removeClass("hide");
-
         }
     }
 </script>

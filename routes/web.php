@@ -14,10 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+// ROUTES BACK-END
+
 // Restes de l'appli CO2
-Route::get('/api/products', 'ProductsController@index');
-Route::get('/api/origins', 'OriginsController@index');
-Route::get('/api/categories', 'CategoriesController@index');
+// Route::get('/api/products', 'ProductsController@index');
+// Route::get('/api/origins', 'OriginsController@index');
+// Route::get('/api/categories', 'CategoriesController@index');
 
 
 // Endpoints pour notre API
@@ -29,10 +31,12 @@ Route::post('/export', 'ExportController@export');
 
 // Commentez la première ligne et décommentez la 2e pour qu'il ne soit plus possible de s'enregistrer
 // ATTENTION :  tout utilisateur enregistré dispose des droits d'administrateur et peux donc accéder aux pages admin
-
 Auth::routes();
 //Auth::routes(['register' => false]);
 
+
+
+// ROUTES FRONT-END
 
 // /{any?} car on ne veut pas que ce soit Laravel qui s'occupe de répondre aux URLS de la SPA
 // On veut que ce soit géré en front-end par Vue
