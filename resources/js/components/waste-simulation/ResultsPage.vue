@@ -116,7 +116,7 @@ export default {
 
         // et si on arrive de nulle part et qu'il n'y a rien dans le localStorage, redirection vers la homepage
         else {
-            this.$router.push({name: 'home'})
+            this.$router.push({name: 'home-page'})
         }
 
         // Listener

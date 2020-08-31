@@ -77,7 +77,7 @@ DEBUGBAR_ENABLED=false
 * Editez le fichier routes/web.php :
     * Commentez la ligne `Auth::routes();`
     * Décommentez la ligne `Auth::routes(['register' => false]);`
-    * Ces 2 instructions permettent d'"interdire" la création de nouvel utilisateur administrateur en désactivent la route `/register`
+    * Ces 2 instructions permettent d'"interdire" la création de nouvel utilisateur administrateur en désactivant la route `/register`
 
 * Dans le terminal, tapez :
     * `php artisan db:seed` (remplit les tables de la base de données avec les valeurs de référence - tapez 'yes' si on vous le demande)

@@ -24,11 +24,11 @@ export default {
             component: HomePage,
             name: 'home-page'
         },
-        {
-            path: '/test',
-            component: Test,
-            name: 'test'
-        },
+        // {
+        //     path: '/test',
+        //     component: Test,
+        //     name: 'test'
+        // },
         {
             path: '/input',
             component: InputPage,
