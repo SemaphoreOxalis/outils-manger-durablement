@@ -21,22 +21,7 @@
         destroyed() {
             $("body").removeClass("dark");
             $("footer").removeClass("hide");
-
         }
     }
 </script>
 
-<style>
-    .not-found button {
-        margin: 50px auto;
-    }
-
-    .dark {
-        background-color: var(--dark-color);
-        color: var(--main-color);
-    }
-
-    .hide {
-        display: none;
-    }
-</style>

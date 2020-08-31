@@ -611,6 +611,21 @@ label {
     padding: 0.5rem 0.25rem 0.5rem 0.5rem;
 }
 
+// NotFound Component
+
+.not-found button {
+    margin: 50px auto;
+}
+
+.dark {
+    background-color: var(--dark-color);
+    color: var(--main-color);
+}
+
+.hide {
+    display: none;
+}
+
 /*************/
 /* MISC      */
 /*************/

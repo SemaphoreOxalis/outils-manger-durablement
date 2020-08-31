@@ -1,4 +1,4 @@
-import Test from "./components/Test";
+// import Test from "./components/Test";
 import InputPage from "./components/waste-simulation/InputPage";
 import ResultsPage from "./components/waste-simulation/ResultsPage";
 import NotFound from "./components/NotFound";
@@ -24,11 +24,11 @@ export default {
             component: HomePage,
             name: 'home-page'
         },
-        {
-            path: '/test',
-            component: Test,
-            name: 'test'
-        },
+        // {
+        //     path: '/test',
+        //     component: Test,
+        //     name: 'test'
+        // },
         {
             path: '/input',
             component: InputPage,
