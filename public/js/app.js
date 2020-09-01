@@ -2270,6 +2270,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.auditData = _objectSpread(_objectSpread({}, this.input), this.computedValues);
     this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
+    events.$on('get-audit-results', this.sendAuditResults);
+    this.sendAuditResults();
+  },
+  methods: {
+    sendAuditResults: function sendAuditResults() {
+      this.$emit('sent-audit-results', this);
+    }
   }
 });
 
@@ -2936,6 +2943,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 // import des composants enfants
  // Logique de validation
 
@@ -2960,7 +2970,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       auditRawData: {},
       simulationsErrors: [],
       areSimulationsInvalid: true,
-      legendShown: false
+      legendShown: false,
+      auditResults: {}
     };
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
@@ -2985,7 +2996,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     setTimeout(function () {
       _this.validateSimulations();
-    }, 1000);
+
+      _this.fetchAuditResults();
+
+      _this.$forceUpdate();
+    }, 1);
   },
   // Fonctions inhérentes au composant
   methods: {
@@ -3005,6 +3020,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var audit = JSON.stringify(this.auditRawData); // On enregistre l'audit en localStorage
 
       this.saveAuditToLocalStorage(audit);
+    },
+    fetchAuditResults: function fetchAuditResults() {
+      events.$emit('get-audit-results');
+    },
+    setAuditResults: function setAuditResults(result) {
+      this.auditResults.foodWasteCost = result.foodWasteCost;
+      this.auditResults.amountOfDishesWasted = result.amountOfDishesWasted;
     },
     // Demande aux composants concernés de rassembler les données pour un export (Audit, Simulations et Simulation)
     exportSimulations: function exportSimulations() {
@@ -43917,7 +43939,43 @@ var render = function() {
       _vm._v("Résultats et comparaisons de vos simulations")
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", { staticClass: "pt-4" }, [
+      _c("p", [
+        _vm._v(
+          "Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Il estime le coût de votre gaspillage alimentaire à "),
+        _c("strong", [
+          _c("span", {
+            domProps: { innerHTML: _vm._s(_vm.auditResults.foodWasteCost) }
+          })
+        ]),
+        _vm._v(" € (soit l'équivalent de\n        "),
+        _c("strong", [
+          _c("span", {
+            domProps: {
+              innerHTML: _vm._s(_vm.auditResults.amountOfDishesWasted)
+            }
+          })
+        ]),
+        _vm._v(" repas)")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "position-relative info p-3 mb-4" }, [
       _c("div", { staticClass: "d-flex justify-content-end" }, [
@@ -43948,14 +44006,17 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(2)
+      _vm._m(1)
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "spacer" },
       [
-        _c("audit-item", { attrs: { "audit-raw-data": this.auditRawData } }),
+        _c("audit-item", {
+          attrs: { "audit-raw-data": this.auditRawData },
+          on: { "sent-audit-results": this.setAuditResults }
+        }),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex mt-4" }, [
           _c(
@@ -43996,7 +44057,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm._m(3)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -44008,30 +44069,6 @@ var staticRenderFns = [
       _vm._v("Simulateur de gaspillage "),
       _c("br"),
       _vm._v(" pour la restauration collective")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pt-4" }, [
-      _c("p", [
-        _vm._v(
-          "Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
-        )
-      ])
     ])
   },
   function() {

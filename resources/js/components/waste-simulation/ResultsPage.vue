@@ -4,8 +4,10 @@
         <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
 
         <div class="pt-4">
-            <p>Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous</p>
-            <p>Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
+            <p>Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire.</p>
+            <p>Il estime le coût de votre gaspillage alimentaire à <strong><span v-html="auditResults.foodWasteCost"></span></strong> € (soit l'équivalent de
+            <strong><span v-html="auditResults.amountOfDishesWasted"></span></strong> repas)</p>
+            <p>Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
             <p>Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !</p>
         </div>
 
@@ -28,7 +30,8 @@
 
 
         <div class="spacer">
-            <audit-item v-bind:audit-raw-data="this.auditRawData"></audit-item>
+            <audit-item v-bind:audit-raw-data="this.auditRawData" @sent-audit-results="this.setAuditResults">
+            </audit-item>
 
             <div class="d-flex mt-4">
                 <button class="button"
@@ -97,7 +100,8 @@ export default {
             auditRawData: {},
             simulationsErrors: [],
             areSimulationsInvalid: true,
-            legendShown: false
+            legendShown: false,
+            auditResults: {}
         }
     },
 
@@ -125,7 +129,9 @@ export default {
         // HACK : ce timeout est nécessaire, sinon la variable areSimulationsInvalid est calculée avant d'avant d'avoir les données des simulations
         setTimeout(() => {
             this.validateSimulations();
-        }, 1000);
+            this.fetchAuditResults();
+            this.$forceUpdate();
+        }, 1);
     },
 
     // Fonctions inhérentes au composant
@@ -148,6 +154,15 @@ export default {
 
             // On enregistre l'audit en localStorage
             this.saveAuditToLocalStorage(audit);
+        },
+
+        fetchAuditResults() {
+            events.$emit('get-audit-results');
+        },
+
+        setAuditResults(result) {
+            this.auditResults.foodWasteCost = result.foodWasteCost;
+            this.auditResults.amountOfDishesWasted = result.amountOfDishesWasted;
         },
 
         // Demande aux composants concernés de rassembler les données pour un export (Audit, Simulations et Simulation)

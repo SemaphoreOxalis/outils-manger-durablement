@@ -118,6 +118,15 @@ export default {
         // Par souci de practicité, on stocke tout dans un unique objet
         this.auditData = {...this.input, ...this.computedValues};
         this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
+
+        events.$on('get-audit-results', this.sendAuditResults);
+        this.sendAuditResults();
+    },
+
+    methods: {
+        sendAuditResults() {
+            this.$emit('sent-audit-results', this);
+        }
     }
 }
 </script>
