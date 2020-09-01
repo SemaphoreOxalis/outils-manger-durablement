@@ -2270,6 +2270,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     this.auditData = _objectSpread(_objectSpread({}, this.input), this.computedValues);
     this.auditData.name = "Référence du " + this.formatToFrench(this.input.startDate) + " au " + this.formatToFrench(this.input.endDate);
+    events.$on('get-audit-results', this.sendAuditResults);
+    this.sendAuditResults();
+  },
+  methods: {
+    sendAuditResults: function sendAuditResults() {
+      this.$emit('sent-audit-results', this);
+    }
   }
 });
 
@@ -2936,6 +2943,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 // import des composants enfants
  // Logique de validation
 
@@ -2959,8 +2969,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       auditRawData: {},
       simulationsErrors: [],
-      areSimulationsInvalid: true,
-      legendShown: true
+      areSimulationsInvalid: false,
+      legendShown: false,
+      auditResults: {}
     };
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
@@ -2985,7 +2996,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     setTimeout(function () {
       _this.validateSimulations();
-    }, 1000);
+
+      _this.fetchAuditResults();
+
+      _this.$forceUpdate();
+    }, 1);
   },
   // Fonctions inhérentes au composant
   methods: {
@@ -3006,6 +3021,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.saveAuditToLocalStorage(audit);
     },
+    fetchAuditResults: function fetchAuditResults() {
+      events.$emit('get-audit-results');
+    },
+    setAuditResults: function setAuditResults(result) {
+      this.auditResults.foodWasteCost = result.foodWasteCost;
+      this.auditResults.amountOfDishesWasted = result.amountOfDishesWasted;
+    },
     // Demande aux composants concernés de rassembler les données pour un export (Audit, Simulations et Simulation)
     exportSimulations: function exportSimulations() {
       events.$emit('export-simulations');
@@ -3014,6 +3036,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     addSimulation: function addSimulation() {
       events.$emit('add-simulation');
     },
+    // montre/cache la légende
     toggleLegend: function toggleLegend() {
       this.legendShown = !this.legendShown;
       $(".collapse").on('show.bs.collapse', function () {
@@ -43916,7 +43939,43 @@ var render = function() {
       _vm._v("Résultats et comparaisons de vos simulations")
     ]),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", { staticClass: "pt-4" }, [
+      _c("p", [
+        _vm._v(
+          "Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v("Il estime le coût de votre gaspillage alimentaire à "),
+        _c("strong", [
+          _c("span", {
+            domProps: { innerHTML: _vm._s(_vm.auditResults.foodWasteCost) }
+          })
+        ]),
+        _vm._v(" € (soit l'équivalent de\n        "),
+        _c("strong", [
+          _c("span", {
+            domProps: {
+              innerHTML: _vm._s(_vm.auditResults.amountOfDishesWasted)
+            }
+          })
+        ]),
+        _vm._v(" repas)")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "position-relative info p-3 mb-4" }, [
       _c("div", { staticClass: "d-flex justify-content-end" }, [
@@ -43940,21 +43999,24 @@ var render = function() {
           },
           [
             _c("i", {
-              staticClass: "icon icon-angle-down reversed",
+              staticClass: "icon icon-angle-down",
               attrs: { id: "collapse-icon" }
             })
           ]
         )
       ]),
       _vm._v(" "),
-      _vm._m(2)
+      _vm._m(1)
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "spacer" },
       [
-        _c("audit-item", { attrs: { "audit-raw-data": this.auditRawData } }),
+        _c("audit-item", {
+          attrs: { "audit-raw-data": this.auditRawData },
+          on: { "sent-audit-results": this.setAuditResults }
+        }),
         _vm._v(" "),
         _c("div", { staticClass: "d-flex mt-4" }, [
           _c(
@@ -43995,7 +44057,7 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm._m(3)
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
@@ -44013,22 +44075,43 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pt-4" }, [
+    return _c("div", { staticClass: "collapse", attrs: { id: "legend" } }, [
       _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
         _vm._v(
-          "Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous"
+          " Commencez par ajouter une ou plusieurs simulations à votre audit"
         )
       ]),
       _vm._v(" "),
       _c("p", [
+        _c("input", {
+          staticClass: "custom-input browser-default",
+          attrs: { type: "text", value: "Les champs de ce type", readonly: "" }
+        }),
+        _vm._v(" sont modifiables")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
         _vm._v(
-          "Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
+          " Vous pouvez maintenant réorganiser vos simulations en les faisant glisser"
         )
       ]),
       _vm._v(" "),
       _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(" Vous pouvez supprimer les simulations inutiles une par une")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(" ou toutes les supprimer d'un seul clic")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
         _vm._v(
-          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
+          ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
         )
       ])
     ])
@@ -44039,80 +44122,31 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "collapse show", attrs: { id: "legend" } },
+      { staticClass: "text-center mt-5", attrs: { id: "further-actions" } },
       [
         _c("p", [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
           _vm._v(
-            " Commencez par ajouter une ou plusieurs simulations à votre audit"
-          )
+            "\n            Bravo, vous venez de franchir la première étape de la démarche de "
+          ),
+          _c("a", { attrs: { href: "#" } }, [
+            _vm._v("la loi EGALIM "),
+            _c("span", { staticClass: "icon" }, [_vm._v("")])
+          ])
         ]),
         _vm._v(" "),
         _c("p", [
-          _c("input", {
-            staticClass: "custom-input browser-default",
-            attrs: {
-              type: "text",
-              value: "Les champs de ce type",
-              readonly: ""
-            }
-          }),
-          _vm._v(" sont modifiables")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
           _vm._v(
-            " Vous pouvez maintenant réorganiser vos simulations en les faisant glisser"
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-          _vm._v(" Vous pouvez supprimer les simulations inutiles une par une")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-          _vm._v(" ou toutes les supprimer d'un seul clic")
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-          _vm._v(
-            ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
-          )
+            "\n            Que faire de ces résultats ? Rendez vous sur le "
+          ),
+          _c("a", { attrs: { href: "#" } }, [
+            _vm._v(
+              "site ressource de l'ANAP pour découvrir les\n            actions réalisables "
+            ),
+            _c("span", { staticClass: "icon" }, [_vm._v("")])
+          ])
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("p", { staticClass: "mt-5" }, [
-        _vm._v(
-          "\n            Bravo, vous venez de franchir la première étape de la démarche de "
-        ),
-        _c("a", { attrs: { href: "#" } }, [
-          _vm._v("la loi EGALIM "),
-          _c("span", { staticClass: "icon" }, [_vm._v("")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "\n            Que faire de ces résultats ? Rendez vous sur le "
-        ),
-        _c("a", { attrs: { href: "#" } }, [
-          _vm._v(
-            "site ressource de l'ANAP pour découvrir les\n            actions réalisables "
-          ),
-          _c("span", { staticClass: "icon" }, [_vm._v("")])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -63453,6 +63487,9 @@ __webpack_require__.r(__webpack_exports__);
         amountOfDishesWasted: this.dataSource.amountOfDishesWasted
       });
       this.saveChangesToLocalStorage();
+      this.$nextTick(function () {
+        events.$emit('validate-simulations');
+      });
     },
     // Sauvegarde les changements des simulations en localStorage
     saveChangesToLocalStorage: function saveChangesToLocalStorage() {

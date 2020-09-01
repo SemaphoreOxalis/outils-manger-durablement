@@ -4,8 +4,10 @@
         <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
 
         <div class="pt-4">
-            <p>Vous venez de réaliser un audit simplifié de votre gaspillage alimentaire, représenté par la première ligne du tableau ci-dessous</p>
-            <p>Il vous permet de simuler les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
+            <p>Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire.</p>
+            <p>Il estime le coût de votre gaspillage alimentaire à <strong><span v-html="auditResults.foodWasteCost"></span></strong> € (soit l'équivalent de
+            <strong><span v-html="auditResults.amountOfDishesWasted"></span></strong> repas)</p>
+            <p>Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
             <p>Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !</p>
         </div>
 
@@ -13,10 +15,10 @@
             <div class="d-flex justify-content-end">
                 <span v-if="!legendShown" class="mr-2 align-self-center colored">Légende</span>
                 <button class="button alter" data-toggle="collapse" data-target="#legend" @click="toggleLegend" aria-expanded="true" aria-controls="legend">
-                    <i id="collapse-icon" class="icon icon-angle-down reversed"></i>
+                    <i id="collapse-icon" class="icon icon-angle-down"></i>
                 </button>
             </div>
-            <div class="collapse show" id="legend">
+            <div class="collapse" id="legend">
                 <p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
                 <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly> sont modifiables</p>
                 <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant glisser</p>
@@ -28,7 +30,8 @@
 
 
         <div class="spacer">
-            <audit-item v-bind:audit-raw-data="this.auditRawData"></audit-item>
+            <audit-item v-bind:audit-raw-data="this.auditRawData" @sent-audit-results="this.setAuditResults">
+            </audit-item>
 
             <div class="d-flex mt-4">
                 <button class="button"
@@ -49,8 +52,8 @@
             </div>
         </div>
 
-        <div class="text-center">
-            <p class="mt-5">
+        <div class="text-center mt-5" id="further-actions">
+            <p>
                 Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM <span
                 class="icon"></span></a>
             </p>
@@ -96,8 +99,9 @@ export default {
         return {
             auditRawData: {},
             simulationsErrors: [],
-            areSimulationsInvalid: true,
-            legendShown: true
+            areSimulationsInvalid: false,
+            legendShown: false,
+            auditResults: {}
         }
     },
 
@@ -125,7 +129,9 @@ export default {
         // HACK : ce timeout est nécessaire, sinon la variable areSimulationsInvalid est calculée avant d'avant d'avoir les données des simulations
         setTimeout(() => {
             this.validateSimulations();
-        }, 1000);
+            this.fetchAuditResults();
+            this.$forceUpdate();
+        }, 1);
     },
 
     // Fonctions inhérentes au composant
@@ -150,6 +156,15 @@ export default {
             this.saveAuditToLocalStorage(audit);
         },
 
+        fetchAuditResults() {
+            events.$emit('get-audit-results');
+        },
+
+        setAuditResults(result) {
+            this.auditResults.foodWasteCost = result.foodWasteCost;
+            this.auditResults.amountOfDishesWasted = result.amountOfDishesWasted;
+        },
+
         // Demande aux composants concernés de rassembler les données pour un export (Audit, Simulations et Simulation)
         exportSimulations() {
             events.$emit('export-simulations');
@@ -160,6 +175,7 @@ export default {
             events.$emit('add-simulation');
         },
 
+        // montre/cache la légende
         toggleLegend() {
             this.legendShown = !this.legendShown;
 

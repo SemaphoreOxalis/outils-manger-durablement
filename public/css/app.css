@@ -11500,6 +11500,14 @@ label {
   transform: rotate(180deg);
 }
 
+#further-actions {
+  font-size: 1.2em;
+  border: 2px solid var(--main-color);
+  padding: 10px 0 0;
+  background-color: white;
+  border-radius: 1em;
+}
+
 .up {
   transform: rotate(-45deg);
 }

@@ -69,6 +69,9 @@ export default {
                 }
             );
             this.saveChangesToLocalStorage();
+            this.$nextTick(() => {
+               events.$emit('validate-simulations');
+            });
         },
 
         // Sauvegarde les changements des simulations en localStorage
