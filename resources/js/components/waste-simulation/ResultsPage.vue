@@ -13,10 +13,10 @@
             <div class="d-flex justify-content-end">
                 <span v-if="!legendShown" class="mr-2 align-self-center colored">Légende</span>
                 <button class="button alter" data-toggle="collapse" data-target="#legend" @click="toggleLegend" aria-expanded="true" aria-controls="legend">
-                    <i id="collapse-icon" class="icon icon-angle-down reversed"></i>
+                    <i id="collapse-icon" class="icon icon-angle-down"></i>
                 </button>
             </div>
-            <div class="collapse show" id="legend">
+            <div class="collapse" id="legend">
                 <p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
                 <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly> sont modifiables</p>
                 <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant glisser</p>
@@ -49,8 +49,8 @@
             </div>
         </div>
 
-        <div class="text-center">
-            <p class="mt-5">
+        <div class="text-center mt-5" id="further-actions">
+            <p>
                 Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM <span
                 class="icon"></span></a>
             </p>
@@ -97,7 +97,7 @@ export default {
             auditRawData: {},
             simulationsErrors: [],
             areSimulationsInvalid: true,
-            legendShown: true
+            legendShown: false
         }
     },
 
@@ -160,6 +160,7 @@ export default {
             events.$emit('add-simulation');
         },
 
+        // montre/cache la légende
         toggleLegend() {
             this.legendShown = !this.legendShown;
 

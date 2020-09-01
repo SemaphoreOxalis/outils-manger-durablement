@@ -31,7 +31,7 @@
 
 * :computer: Dans le terminal du serveur, tapez :
     * `cd outil-gaspi.sc4semadmin.universe.wf` (Pour vous placer à la racine de l'application)
-    * `composer install` (installe les dépendances back PHP)
+    * `composer install --optimize-autoloader --no-dev` (installe les dépendances back PHP)
     * `npm install` (installe les dépendances front JS)
 
 * :pencil2: à la racine du sous-domaine (vous devriez voir les dossiers .git, app, bootstrap, config, public, etc...), créez un fichier nommé `.env` et copiez ceci dedans en adaptant `APP_URL` : (ce dossier n'est pas sur votre repository par défaut, car il contient votre configuration)
@@ -88,16 +88,23 @@ DEBUGBAR_ENABLED=false
     * `php artisan key:generate` (crée une clé de chiffrage unique à l'application pour générer les tokens CSRF et les cookies de session)
     * `php artisan migrate:fresh` (crée les tables de la base de données - tapez 'yes' si on vous le demande)
 
+* :pencil2: Editez le fichier routes/web.php :
+    * Décommentez la ligne `Auth::routes();`
+    * Commentez la ligne `Auth::routes(['register' => false]);`
+
 * :cop: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
 
-* :pencil2: Editez le fichier routes/web.php :
-    * Commentez la ligne `Auth::routes();`
-    * Décommentez la ligne `Auth::routes(['register' => false]);`
+* :pencil2: Ré-éditez le fichier routes/web.php :
+    * Re-commentez la ligne `Auth::routes();`
+    * Re-décommentez la ligne `Auth::routes(['register' => false]);`
     * Ces 2 instructions permettent d'"interdire" la création de nouvel utilisateur administrateur en désactivant la route `/register`
-    * :warning: **Sans cette étape, et bien qu'aucun lien n'apparaisse, il serait possible de visiter l'URL `/register` et de créer un utilisateur administrateur**
+    * :warning: **Sans cette étape, et bien qu'aucun lien n'apparaisse, il serait possible de visiter l'URL `/register` et de créer un utilisateur administrateur.** Une fois l'utilisateur administrateur créé, n'hésitez pas à vérifiez que cette étape a été correctement effectuée en essayant de vous rendre à nouveau sur l'URL `/register`, vous devriez alors tomber sur une page d'erreur
 
 * :computer: Dans le terminal du serveur, tapez :
     * `php artisan db:seed` (remplit les tables de la base de données avec les valeurs de référence - tapez 'yes' si on vous le demande)
+    * `php artisan config:cache` compile toute la configuration de Laravel dans un seul fichier, utile pour l'optimisation des temps de chargement
+    * `php artisan route:cache` compile toutes les routes back-end dans une seule méthode, utile pour optimiser les performances
+    * `php artisan view:cache` compile les template Blade pour des soucis de performance
     * `npm run prod` (compile et minifie le Javascript et le CSS de l'application dans le dossier `/public`)
   
   
