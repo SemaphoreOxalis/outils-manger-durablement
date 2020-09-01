@@ -99,7 +99,7 @@ export default {
         return {
             auditRawData: {},
             simulationsErrors: [],
-            areSimulationsInvalid: true,
+            areSimulationsInvalid: false,
             legendShown: false,
             auditResults: {}
         }

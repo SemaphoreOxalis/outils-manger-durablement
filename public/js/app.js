@@ -2969,7 +2969,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       auditRawData: {},
       simulationsErrors: [],
-      areSimulationsInvalid: true,
+      areSimulationsInvalid: false,
       legendShown: false,
       auditResults: {}
     };
@@ -63487,6 +63487,9 @@ __webpack_require__.r(__webpack_exports__);
         amountOfDishesWasted: this.dataSource.amountOfDishesWasted
       });
       this.saveChangesToLocalStorage();
+      this.$nextTick(function () {
+        events.$emit('validate-simulations');
+      });
     },
     // Sauvegarde les changements des simulations en localStorage
     saveChangesToLocalStorage: function saveChangesToLocalStorage() {
