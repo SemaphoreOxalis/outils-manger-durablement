@@ -40,6 +40,7 @@
                     <li>du coût de revient unitaire d'un repas
                         <a class="button alter" @click="showModal = true">?</a>
                     </li>
+                    <li>du poids moyen d'un repas (en g)</li>
                     <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
                     <li>du coût de traitement des déchets (en euros par tonne)</li>
                 </ul>

@@ -48,9 +48,9 @@ class ExportController extends Controller {
         // Labels
         $sheet->setCellValue('B5', 'Nombre de repas produits');
         $sheet->setCellValue('C5', 'Coût de revient d\'un repas');
-        $sheet->setCellValue('D5', 'Coût de traitement par tonne de déchets (en €)');
-        $sheet->setCellValue('E5', 'Volume de gaspillage alimentaire (en T)');
-        $sheet->setCellValue('F5', 'Coût de traitement des déchets d\'un repas');
+        $sheet->setCellValue('D5', 'Poids moyen d\'un repas');
+        $sheet->setCellValue('E5', 'Coût de traitement par tonne de déchets (en €)');
+        $sheet->setCellValue('F5', 'Volume de gaspillage alimentaire (en T)');
         $sheet->setCellValue('G5', 'Estimation du gaspillage alimentaire (en €)');
         $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
 
@@ -60,9 +60,9 @@ class ExportController extends Controller {
         $sheet->setCellValue('A6', $request->input('audit.name'));
         $sheet->setCellValueExplicit('B6', $request->input('audit.dishesNumber'), DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('C6', $request->input('audit.dishCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('D6', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('E6', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('F6', $request->input('audit.wasteCostPerDish'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('D6', $request->input('audit.dishWeight'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('E6', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('F6', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('G6', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('H6', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
 
@@ -82,9 +82,9 @@ class ExportController extends Controller {
             $sheet->setCellValue('A' . $line, $sim["name"]);
             $sheet->setCellValueExplicit('B' . $line, $sim["dishesNumber"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('C' . $line, $sim["dishCost"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('D' . $line, $sim["wasteTreatmentCost"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('E' . $line, $sim["foodWasteVolume"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('F' . $line, $sim["wasteCostPerDish"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('D' . $line, $sim["dishWeight"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('E' . $line, $sim["wasteTreatmentCost"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('F' . $line, $sim["foodWasteVolume"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('G' . $line, $sim["foodWasteCost"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('H' . $line, $sim["amountOfDishesWasted"], DataType::TYPE_STRING);
 
@@ -99,9 +99,9 @@ class ExportController extends Controller {
             $sheet->setCellValue('A' . $line, 'différence en valeur absolue par rapport à ' . $previous);
             $sheet->setCellValueExplicit('B' . $line, $sim['deltas']["dishesNumber"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('C' . $line, $sim['deltas']["dishCost"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('D' . $line, $sim['deltas']["wasteTreatmentCost"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('E' . $line, $sim['deltas']["foodWasteVolume"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('F' . $line, $sim['deltas']["wasteCostPerDish"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('D' . $line, $sim['deltas']["dishWeight"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('E' . $line, $sim['deltas']["wasteTreatmentCost"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('F' . $line, $sim['deltas']["foodWasteVolume"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('G' . $line, $sim['deltas']["foodWasteCost"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('H' . $line, $sim['deltas']["amountOfDishesWasted"], DataType::TYPE_STRING);
 
@@ -111,9 +111,9 @@ class ExportController extends Controller {
             $sheet->setCellValue('A' . $line, 'différence en pourcentage');
             $sheet->setCellValue('B' . $line, $sim['percentages']["dishesNumber"]);
             $sheet->setCellValue('C' . $line, $sim['percentages']["dishCost"]);
-            $sheet->setCellValue('D' . $line, $sim['percentages']["wasteTreatmentCost"]);
-            $sheet->setCellValue('E' . $line, $sim['percentages']["foodWasteVolume"]);
-            $sheet->setCellValue('F' . $line, $sim['percentages']["wasteCostPerDish"]);
+            $sheet->setCellValue('D' . $line, $sim['percentages']["dishWeight"]);
+            $sheet->setCellValue('E' . $line, $sim['percentages']["wasteTreatmentCost"]);
+            $sheet->setCellValue('F' . $line, $sim['percentages']["foodWasteVolume"]);
             $sheet->setCellValue('G' . $line, $sim['percentages']["foodWasteCost"]);
             $sheet->setCellValue('H' . $line, $sim['percentages']["amountOfDishesWasted"]);
 

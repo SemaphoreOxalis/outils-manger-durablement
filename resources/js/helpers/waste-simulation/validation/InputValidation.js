@@ -15,6 +15,7 @@ export default {
             // Validation des données saisies (supérieures à 0)
             if (this.userInput.dishesNumber < 1 ||
                 this.userInput.dishCost < 0.01 ||
+                this.userInput.dishWeight < 1 ||
                 this.userInput.globalWasteVolume < 0.001 ||
                 this.userInput.wasteTreatmentCost < 0.01) {
                 return true;

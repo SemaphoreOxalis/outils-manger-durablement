@@ -61,6 +61,13 @@
                                    required
                                    min="0.01" step="0.01"
                                    class="custom-input number-field browser-default">
+                            <label>Poids moyen d'un repas (en g) :</label>
+                            <input id="dish-weight"
+                                   v-model="userInput.dishWeight"
+                                   type="number"
+                                   required
+                                   min="1" step="1"
+                                   class="custom-input number-field browser-default">
                         </div>
                         <div class="col col-8 mt-3 p-3 info">
                             <div class="lighten-3">
@@ -205,10 +212,11 @@ export default {
 
             // Champs à remplir
             userInput: {
-                dishesNumber: 1,        // précis à 1
-                dishCost: 1,            // précis à 0.01
-                globalWasteVolume: 1,   // précis à 0.001
-                wasteTreatmentCost: 1,  // précis à 0.01
+                dishesNumber: 100000,       // précis à 1
+                dishCost: 3,                // précis à 0.01 €
+                dishWeight: 400,            // précis à 1 g
+                globalWasteVolume: 15,      // précis à 0.001 T
+                wasteTreatmentCost: 100,    // précis à 0.01 €
                 startDate: null,
                 endDate: null
             },

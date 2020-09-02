@@ -34,6 +34,18 @@
         </div>
         <div class="table-div">
             <div class="d-flex justify-content-around">
+                <div><small>{{ dishWeightDelta }}</small></div>
+                <div v-html="getStyle(dishWeightDeltaPercentage, false)"></div>
+            </div>
+            <input v-model="simulation.dishWeight"
+                   @change="saveChanges"
+                   class="ignore-draggable custom-input browser-default strong number-field"
+                   type="number"
+                   required
+                   min="1" step="1">
+        </div>
+        <div class="table-div">
+            <div class="d-flex justify-content-around">
                 <div><small>{{ wasteTreatmentCostDelta }}</small></div>
                 <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
             </div>
@@ -56,13 +68,7 @@
                    required
                    min="0.001" step="0.001">
         </div>
-        <div class="table-div">
-            <div class="d-flex justify-content-around">
-                <div><small>{{ wasteCostPerDishDelta }}</small></div>
-                <div v-html="getStyle(wasteCostPerDishDeltaPercentage, false)"></div>
-            </div>
-            <div class="strong align-with-inputs">{{ wasteCostPerDish }}</div>
-        </div>
+
         <div class="table-div">
             <div class="d-flex justify-content-around">
                 <div><small>{{ foodWasteCostDelta }}</small></div>
@@ -131,6 +137,7 @@ export default {
         isInvalid() {
             if (this.simulation.dishesNumber < 1 ||
                 this.simulation.dishCost < 0.01 ||
+                this.simulation.dishWeight < 1 ||
                 this.simulation.wasteTreatmentCost < 0.01 ||
                 this.simulation.foodWasteVolume < 0.001) {
                 return true;
