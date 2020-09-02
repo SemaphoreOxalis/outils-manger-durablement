@@ -2985,6 +2985,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 // import des composants enfants
  // Logique de validation
 
@@ -44192,7 +44199,21 @@ var render = function() {
                   _vm._v("Exporter le rapport de simulation\n                ")
                 ]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "mt-2" },
+              [
+                _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
+                  _c("button", { staticClass: "button alter" }, [
+                    _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+                    _vm._v("J'effectue un nouvel audit\n                    ")
+                  ])
+                ])
+              ],
+              1
+            )
           ],
           1
         ),
