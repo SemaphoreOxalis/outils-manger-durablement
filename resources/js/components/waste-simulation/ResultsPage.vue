@@ -1,68 +1,95 @@
 <template>
     <div class="py-4 px-4">
-        <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
-        <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
+        <div v-if="showResultsModal" id="results-modal"></div>
 
-        <div class="pt-4">
-            <p>Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire.</p>
-            <p>Il estime le coût de votre gaspillage alimentaire à <strong><span v-html="auditResults.foodWasteCost"></span></strong> € (soit l'équivalent de
-            <strong><span v-html="auditResults.amountOfDishesWasted"></span></strong> repas)</p>
-            <p>Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
-            <p>Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !</p>
-        </div>
+        <div>
+            <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
+            <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
 
-        <div class="position-relative info p-3 mb-4">
-            <div class="d-flex justify-content-end">
-                <span v-if="!legendShown" class="mr-2 align-self-center colored">Légende</span>
-                <button class="button alter" data-toggle="collapse" data-target="#legend" @click="toggleLegend" aria-expanded="true" aria-controls="legend">
-                    <i id="collapse-icon" class="icon icon-angle-down"></i>
-                </button>
+            <transition name="modal" v-if="showResultsModal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-container">
+
+                            <div class="modal-body">
+                                <p>Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire.</p>
+                                <p>Il estime le coût de votre gaspillage alimentaire à <strong><span
+                                    v-html="auditResults.foodWasteCost"></span></strong> € (soit l'équivalent de
+                                    <strong><span v-html="auditResults.amountOfDishesWasted"></span></strong> repas)</p>
+                                <p>Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos
+                                    pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
+                                <p>Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas
+                                    à expérimenter !</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button class="modal-default-button button alter" @click="showResultsModal = false">
+                                    Fermer
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </transition>
+
+            <div class="position-relative info p-3 mb-4">
+                <div class="d-flex justify-content-end">
+                    <span v-if="!legendShown" class="mr-2 align-self-center colored">Mode d'emploi</span>
+                    <button class="button alter" data-toggle="collapse" data-target="#legend" @click="toggleLegend"
+                            aria-expanded="true" aria-controls="legend">
+                        <i id="collapse-icon" class="icon icon-angle-down"></i>
+                    </button>
+                </div>
+                <div class="collapse" id="legend">
+                    <p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
+                    <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly>
+                        sont modifiables</p>
+                    <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant
+                        glisser</p>
+                    <p><i class="icon mr-2"></i> Vous pouvez supprimer les simulations inutiles une par une</p>
+                    <p><i class="icon mr-2"></i> ou toutes les supprimer d'un seul clic</p>
+                    <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données
+                        sur votre logiciel de tableur</p>
+                </div>
             </div>
-            <div class="collapse" id="legend">
-                <p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
-                <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly> sont modifiables</p>
-                <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant glisser</p>
-                <p><i class="icon mr-2"></i> Vous pouvez supprimer les simulations inutiles une par une</p>
-                <p><i class="icon mr-2"></i> ou toutes les supprimer d'un seul clic</p>
-                <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</p>
+
+
+            <div class="spacer">
+                <audit-item v-bind:audit-raw-data="this.auditRawData" @sent-audit-results="this.setAuditResults">
+                </audit-item>
+
+                <div class="d-flex mt-4">
+                    <button class="button"
+                            @click="addSimulation">
+                        <i class="icon mr-2"></i>Ajouter une simulation
+                    </button>
+
+                    <button class="button alter"
+                            @click="resetSimulations">
+                        <i class="icon mr-2"></i>Je réinitialise toutes mes simulations
+                    </button>
+
+                    <button class="button ml-auto"
+                            @click="exportSimulations"
+                            :disabled="areSimulationsInvalid">
+                        <i class="icon mr-2"></i>Exporter le rapport de simulation
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center mt-5" id="further-actions">
+                <p>
+                    Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM <span
+                    class="icon"></span></a>
+                </p>
+                <p>
+                    Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir
+                    les
+                    actions réalisables <span class="icon"></span></a>
+                </p>
             </div>
         </div>
-
-
-        <div class="spacer">
-            <audit-item v-bind:audit-raw-data="this.auditRawData" @sent-audit-results="this.setAuditResults">
-            </audit-item>
-
-            <div class="d-flex mt-4">
-                <button class="button"
-                        @click="addSimulation">
-                    <i class="icon mr-2"></i>Ajouter une simulation
-                </button>
-
-                <button class="button alter"
-                        @click="resetSimulations">
-                    <i class="icon mr-2"></i>Je réinitialise toutes mes simulations
-                </button>
-
-                <button class="button ml-auto"
-                        @click="exportSimulations"
-                        :disabled="areSimulationsInvalid">
-                    <i class="icon mr-2"></i>Exporter le rapport de simulation
-                </button>
-            </div>
-        </div>
-
-        <div class="text-center mt-5" id="further-actions">
-            <p>
-                Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM <span
-                class="icon"></span></a>
-            </p>
-            <p>
-                Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir les
-                actions réalisables <span class="icon"></span></a>
-            </p>
-        </div>
-
     </div>
 </template>
 
@@ -101,7 +128,8 @@ export default {
             simulationsErrors: [],
             areSimulationsInvalid: false,
             legendShown: false,
-            auditResults: {}
+            auditResults: {},
+            showResultsModal: false
         }
     },
 
@@ -110,6 +138,7 @@ export default {
 
         // Si on vient de la page de saisie
         if (this.userInput) {
+            this.showResultsModal = true;
             this.handleUserInput();
         }
 

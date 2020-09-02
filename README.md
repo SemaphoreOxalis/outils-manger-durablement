@@ -103,7 +103,6 @@ DEBUGBAR_ENABLED=false
 * :computer: Dans le terminal du serveur, tapez :
     * `php artisan db:seed` (remplit les tables de la base de données avec les valeurs de référence - tapez 'yes' si on vous le demande)
     * `php artisan config:cache` compile toute la configuration de Laravel dans un seul fichier, utile pour l'optimisation des temps de chargement
-    * `php artisan route:cache` compile toutes les routes back-end dans une seule méthode, utile pour optimiser les performances
     * `php artisan view:cache` compile les template Blade pour des soucis de performance
     * `npm run prod` (compile et minifie le Javascript et le CSS de l'application dans le dossier `/public`)
   
