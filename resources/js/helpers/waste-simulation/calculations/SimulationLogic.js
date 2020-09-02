@@ -22,6 +22,14 @@ export default {
             return this.getDeltaPercentage(this.simulation.dishCost, this.previousSim.dishCost);
         },
 
+        dishWeightDelta() {
+            return this.getDelta(this.simulation.dishWeight, this.previousSim.dishWeight);
+        },
+
+        dishWeightDeltaPercentage() {
+            return this.getDeltaPercentage(this.simulation.dishWeight, this.previousSim.dishWeight);
+        },
+
         wasteTreatmentCostDelta() {
             return this.getDelta(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
         },
@@ -65,8 +73,10 @@ export default {
 
         // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
         foodWasteCost: function () {
+            let foodWasteVolumeInKg = this.simulation.foodWasteVolume * 1000;
+            let dishWeightInKg = this.simulation.dishWeight / 1000;
             return this.roundToTwoDecimal(
-                this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost
+                (this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost) + ((foodWasteVolumeInKg / dishWeightInKg) * this.simulation.dishCost)
             );
         },
 

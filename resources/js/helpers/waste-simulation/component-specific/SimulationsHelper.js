@@ -18,6 +18,7 @@ export default {
             this.simulations[simulation.index].deltas = {};
             this.simulations[simulation.index].deltas.dishesNumber = simulation.dishesNumberDelta;
             this.simulations[simulation.index].deltas.dishCost = simulation.dishCostDelta;
+            this.simulations[simulation.index].deltas.dishWeight = simulation.dishWeightDelta;
             this.simulations[simulation.index].deltas.wasteTreatmentCost = simulation.wasteTreatmentCostDelta;
             this.simulations[simulation.index].deltas.foodWasteVolume = simulation.foodWasteVolumeDelta;
             this.simulations[simulation.index].deltas.wasteCostPerDish = simulation.wasteCostPerDishDelta;
@@ -27,6 +28,7 @@ export default {
             this.simulations[simulation.index].percentages = {};
             this.simulations[simulation.index].percentages.dishesNumber = simulation.dishesNumberDeltaPercentage;
             this.simulations[simulation.index].percentages.dishCost = simulation.dishCostDeltaPercentage;
+            this.simulations[simulation.index].percentages.dishWeight = simulation.dishWeightDeltaPercentage;
             this.simulations[simulation.index].percentages.wasteTreatmentCost = simulation.wasteTreatmentCostDeltaPercentage;
             this.simulations[simulation.index].percentages.foodWasteVolume = simulation.foodWasteVolumeDeltaPercentage;
             this.simulations[simulation.index].percentages.wasteCostPerDish = simulation.wasteCostPerDishDeltaPercentage;
@@ -61,6 +63,7 @@ export default {
                     name: 'simulation ' + this.counter,
                     dishesNumber: this.dataSource.dishesNumber,
                     dishCost: this.dataSource.dishCost,
+                    dishWeight: this.dataSource.dishWeight,
                     wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
                     foodWasteVolume: this.dataSource.foodWasteVolume,
                     wasteCostPerDish: this.dataSource.wasteCostPerDish,

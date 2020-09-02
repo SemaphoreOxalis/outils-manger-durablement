@@ -18,8 +18,10 @@ export default {
 
         // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
         foodWasteCost: function () {
+            let foodWasteVolumeInKg = this.foodWasteVolume * 1000;
+            let dishWeightInKg = this.auditRawData.dishWeight / 1000;
             return this.roundToTwoDecimal(
-                this.foodWasteVolume * this.auditRawData.wasteTreatmentCost
+                (this.foodWasteVolume * this.auditRawData.wasteTreatmentCost) + ((foodWasteVolumeInKg / dishWeightInKg) * this.auditRawData.dishCost)
             );
         },
 

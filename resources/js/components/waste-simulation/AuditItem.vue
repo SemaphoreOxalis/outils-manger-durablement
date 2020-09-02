@@ -11,14 +11,15 @@
                 <div>Coût de revient d'un repas</div>
             </div>
             <div class="table-div">
+                <div>Poids moyen d'un repas (en g)</div>
+            </div>
+            <div class="table-div">
                 <div>Coût de traitement par tonne (€)</div>
             </div>
             <div class="table-div">
                 <div>Volume de gaspillage alimentaire (tonnes).</div>
             </div>
-            <div class="table-div">
-                <div>Coût de traitement des déchets d'un repas</div>
-            </div>
+
             <div class="table-div">
                 <div>Estimation du gaspillage alimentaire (en €)</div>
             </div>
@@ -38,14 +39,15 @@
                 <div>{{ this.input.dishCost }}</div>
             </div>
             <div class="table-div">
+                <div>{{ this.input.dishWeight }}</div>
+            </div>
+            <div class="table-div">
                 <div>{{ this.input.wasteTreatmentCost }}</div>
             </div>
             <div class="table-div">
                 <div>{{ this.foodWasteVolume }}</div>
             </div>
-            <div class="table-div">
-                <div>{{ this.wasteCostPerDish }}</div>
-            </div>
+
             <div class="table-div">
                 <div>{{ this.foodWasteCost }}</div>
             </div>

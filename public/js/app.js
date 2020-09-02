@@ -2228,6 +2228,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 // Imports des dépendances
 // logique du composant
  // utiles pour arrondir les nombres et formatter les dates
@@ -2540,6 +2542,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // fenêtre modale d'aide
 
 
@@ -2774,6 +2777,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 // import de bibliothèques de fonctions
 // validation des données saisies
  // logique principale du composant
@@ -2798,14 +2808,16 @@ __webpack_require__.r(__webpack_exports__);
       },
       // Champs à remplir
       userInput: {
-        dishesNumber: 1,
+        dishesNumber: 100000,
         // précis à 1
-        dishCost: 1,
-        // précis à 0.01
-        globalWasteVolume: 1,
-        // précis à 0.001
-        wasteTreatmentCost: 1,
-        // précis à 0.01
+        dishCost: 3,
+        // précis à 0.01 €
+        dishWeight: 400,
+        // précis à 1 g
+        globalWasteVolume: 15,
+        // précis à 0.001 T
+        wasteTreatmentCost: 100,
+        // précis à 0.01 €
         startDate: null,
         endDate: null
       },
@@ -3180,6 +3192,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 // traite les simulations (add, remove, style...)
  // La logique principale de composant (calculs)
 
@@ -3210,7 +3228,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Vérifie que les données saisies sont valides
     isInvalid: function isInvalid() {
-      if (this.simulation.dishesNumber < 1 || this.simulation.dishCost < 0.01 || this.simulation.wasteTreatmentCost < 0.01 || this.simulation.foodWasteVolume < 0.001) {
+      if (this.simulation.dishesNumber < 1 || this.simulation.dishCost < 0.01 || this.simulation.dishWeight < 1 || this.simulation.wasteTreatmentCost < 0.01 || this.simulation.foodWasteVolume < 0.001) {
         return true;
       }
 
@@ -42845,15 +42863,15 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(this.input.dishWeight))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-div" }, [
           _c("div", [_vm._v(_vm._s(this.input.wasteTreatmentCost))])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
           _c("div", [_vm._v(_vm._s(this.foodWasteVolume))])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.wasteCostPerDish))])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
@@ -42889,15 +42907,15 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-div" }, [
+        _c("div", [_vm._v("Poids moyen d'un repas (en g)")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-div" }, [
         _c("div", [_vm._v("Coût de traitement par tonne (€)")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-div" }, [
         _c("div", [_vm._v("Volume de gaspillage alimentaire (tonnes).")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-div" }, [
-        _c("div", [_vm._v("Coût de traitement des déchets d'un repas")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-div" }, [
@@ -43190,6 +43208,8 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _c("li", [_vm._v("du poids moyen d'un repas (en g)")]),
+              _vm._v(" "),
               _c("li", [
                 _vm._v(
                   "du volume de déchets ménagers produits par votre établissement (en tonnes)"
@@ -43472,6 +43492,36 @@ var render = function() {
                       return
                     }
                     _vm.$set(_vm.userInput, "dishCost", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", [_vm._v("Poids moyen d'un repas (en g) :")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.userInput.dishWeight,
+                    expression: "userInput.dishWeight"
+                  }
+                ],
+                staticClass: "custom-input number-field browser-default",
+                attrs: {
+                  id: "dish-weight",
+                  type: "number",
+                  required: "",
+                  min: "1",
+                  step: "1"
+                },
+                domProps: { value: _vm.userInput.dishWeight },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.userInput, "dishWeight", $event.target.value)
                   }
                 }
               })
@@ -44351,6 +44401,44 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "table-div" }, [
       _c("div", { staticClass: "d-flex justify-content-around" }, [
+        _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishWeightDelta))])]),
+        _vm._v(" "),
+        _c("div", {
+          domProps: {
+            innerHTML: _vm._s(
+              _vm.getStyle(_vm.dishWeightDeltaPercentage, false)
+            )
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.simulation.dishWeight,
+            expression: "simulation.dishWeight"
+          }
+        ],
+        staticClass:
+          "ignore-draggable custom-input browser-default strong number-field",
+        attrs: { type: "number", required: "", min: "1", step: "1" },
+        domProps: { value: _vm.simulation.dishWeight },
+        on: {
+          change: _vm.saveChanges,
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.simulation, "dishWeight", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "table-div" }, [
+      _c("div", { staticClass: "d-flex justify-content-around" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -44423,24 +44511,6 @@ var render = function() {
           }
         }
       })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "table-div" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
-        _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteCostPerDishDelta))])]),
-        _vm._v(" "),
-        _c("div", {
-          domProps: {
-            innerHTML: _vm._s(
-              _vm.getStyle(_vm.wasteCostPerDishDeltaPercentage, false)
-            )
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "strong align-with-inputs" }, [
-        _vm._v(_vm._s(_vm.wasteCostPerDish))
-      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div" }, [
@@ -63296,6 +63366,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     roundToThreeDecimal: function roundToThreeDecimal(number) {
       return Math.round((number + Number.EPSILON) * 1000) / 1000;
+    },
+    // from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    separateThousands: function separateThousands(number) {
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
   }
 });
@@ -63324,7 +63398,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
     foodWasteCost: function foodWasteCost() {
-      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditRawData.wasteTreatmentCost);
+      var foodWasteVolumeInKg = this.foodWasteVolume * 1000;
+      var dishWeightInKg = this.auditRawData.dishWeight / 1000;
+      return this.roundToTwoDecimal(this.foodWasteVolume * this.auditRawData.wasteTreatmentCost + foodWasteVolumeInKg / dishWeightInKg * this.auditRawData.dishCost);
     },
     // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
     wasteCostPerDish: function wasteCostPerDish() {
@@ -63392,6 +63468,12 @@ __webpack_require__.r(__webpack_exports__);
     dishCostDeltaPercentage: function dishCostDeltaPercentage() {
       return this.getDeltaPercentage(this.simulation.dishCost, this.previousSim.dishCost);
     },
+    dishWeightDelta: function dishWeightDelta() {
+      return this.getDelta(this.simulation.dishWeight, this.previousSim.dishWeight);
+    },
+    dishWeightDeltaPercentage: function dishWeightDeltaPercentage() {
+      return this.getDeltaPercentage(this.simulation.dishWeight, this.previousSim.dishWeight);
+    },
     wasteTreatmentCostDelta: function wasteTreatmentCostDelta() {
       return this.getDelta(this.simulation.wasteTreatmentCost, this.previousSim.wasteTreatmentCost);
     },
@@ -63424,7 +63506,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     // coût du gaspillage alimentaire global = volume de gaspillage alimentaire X prix de traitement d'une T de déchets
     foodWasteCost: function foodWasteCost() {
-      return this.roundToTwoDecimal(this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost);
+      var foodWasteVolumeInKg = this.simulation.foodWasteVolume * 1000;
+      var dishWeightInKg = this.simulation.dishWeight / 1000;
+      return this.roundToTwoDecimal(this.simulation.foodWasteVolume * this.simulation.wasteTreatmentCost + foodWasteVolumeInKg / dishWeightInKg * this.simulation.dishCost);
     },
     // coût du gaspillage par repas = coût du gaspillage alimentaire global / nombre de repas produits
     wasteCostPerDish: function wasteCostPerDish() {
@@ -63524,6 +63608,7 @@ __webpack_require__.r(__webpack_exports__);
       this.simulations[simulation.index].deltas = {};
       this.simulations[simulation.index].deltas.dishesNumber = simulation.dishesNumberDelta;
       this.simulations[simulation.index].deltas.dishCost = simulation.dishCostDelta;
+      this.simulations[simulation.index].deltas.dishWeight = simulation.dishWeightDelta;
       this.simulations[simulation.index].deltas.wasteTreatmentCost = simulation.wasteTreatmentCostDelta;
       this.simulations[simulation.index].deltas.foodWasteVolume = simulation.foodWasteVolumeDelta;
       this.simulations[simulation.index].deltas.wasteCostPerDish = simulation.wasteCostPerDishDelta;
@@ -63532,6 +63617,7 @@ __webpack_require__.r(__webpack_exports__);
       this.simulations[simulation.index].percentages = {};
       this.simulations[simulation.index].percentages.dishesNumber = simulation.dishesNumberDeltaPercentage;
       this.simulations[simulation.index].percentages.dishCost = simulation.dishCostDeltaPercentage;
+      this.simulations[simulation.index].percentages.dishWeight = simulation.dishWeightDeltaPercentage;
       this.simulations[simulation.index].percentages.wasteTreatmentCost = simulation.wasteTreatmentCostDeltaPercentage;
       this.simulations[simulation.index].percentages.foodWasteVolume = simulation.foodWasteVolumeDeltaPercentage;
       this.simulations[simulation.index].percentages.wasteCostPerDish = simulation.wasteCostPerDishDeltaPercentage;
@@ -63558,6 +63644,7 @@ __webpack_require__.r(__webpack_exports__);
         name: 'simulation ' + this.counter,
         dishesNumber: this.dataSource.dishesNumber,
         dishCost: this.dataSource.dishCost,
+        dishWeight: this.dataSource.dishWeight,
         wasteTreatmentCost: this.dataSource.wasteTreatmentCost,
         foodWasteVolume: this.dataSource.foodWasteVolume,
         wasteCostPerDish: this.dataSource.wasteCostPerDish,
@@ -63606,7 +63693,7 @@ __webpack_require__.r(__webpack_exports__);
       } // Validation des données saisies (supérieures à 0)
 
 
-      if (this.userInput.dishesNumber < 1 || this.userInput.dishCost < 0.01 || this.userInput.globalWasteVolume < 0.001 || this.userInput.wasteTreatmentCost < 0.01) {
+      if (this.userInput.dishesNumber < 1 || this.userInput.dishCost < 0.01 || this.userInput.dishWeight < 1 || this.userInput.globalWasteVolume < 0.001 || this.userInput.wasteTreatmentCost < 0.01) {
         return true;
       } // Validation des dates (doivent être présentes et cohérentes)
 
