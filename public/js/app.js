@@ -2137,10 +2137,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     $("body").addClass("dark");
     $("footer").addClass("hide");
+    $("#title").addClass("hide");
   },
   destroyed: function destroyed() {
     $("body").removeClass("dark");
     $("footer").removeClass("hide");
+    $("#title").removeClass("hide");
   }
 });
 

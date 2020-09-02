@@ -16,11 +16,13 @@
         mounted() {
             $("body").addClass("dark");
             $("footer").addClass("hide");
+            $("#title").addClass("hide");
         },
 
         destroyed() {
             $("body").removeClass("dark");
             $("footer").removeClass("hide");
+            $("#title").removeClass("hide");
         }
     }
 </script>

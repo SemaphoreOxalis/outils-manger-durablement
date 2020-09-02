@@ -26,7 +26,7 @@
     <div class="d-flex flex-column align-items-end vh-100">
         <main class="container">
             <div class="py-4">
-                <h1>Simulateur de gaspillage alimentaire<br> pour la restauration collective</h1>
+                <h1 id="title">Simulateur de gaspillage alimentaire<br> pour la restauration collective</h1>
                 <router-view></router-view>
 
                 <flash message="{{ session('flash') }}"></flash>
