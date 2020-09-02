@@ -115,7 +115,7 @@ Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jo
 * :computer: Dans le terminal du serveur, tapez :
     * `git fetch --all`
     * `git reset --hard origin/master`
-    * `git fetch pull origin master`
+    * `git pull origin master`
 
 * :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`
   
