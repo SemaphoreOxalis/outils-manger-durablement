@@ -20,10 +20,10 @@
                 <div>Volume de gaspillage alimentaire (tonnes).</div>
             </div>
 
-            <div class="table-div">
+            <div class="table-div highlighted-label-1">
                 <div>Estimation du gaspillage alimentaire (en €)</div>
             </div>
-            <div class="table-div">
+            <div class="table-div highlighted-label-2">
                 <div>Estimation du gaspillage alimentaire (équivalence en nombre de repas)</div>
             </div>
         </div>

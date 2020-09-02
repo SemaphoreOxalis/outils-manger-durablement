@@ -9,14 +9,14 @@
         <router-link
             to="/input"
             class="menu-item button icon">
-            <span>Nouvelle Simulation</span>
+            <span>Nouvel audit</span>
         </router-link>
 
         <router-link
             v-if="dataInLocalStorage"
             to="/results"
             class="menu-item button icon">
-            <span>Reprendre Simulation</span>
+            <span>Reprendre simulation</span>
         </router-link>
     </div>
 </template>

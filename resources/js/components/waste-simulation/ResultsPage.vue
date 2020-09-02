@@ -76,13 +76,6 @@
                         <i class="icon mr-2"></i>Exporter le rapport de simulation
                     </button>
                 </div>
-                <div class="mt-2">
-                    <router-link to="/input" tag="span">
-                        <button class="button alter">
-                            <i class="icon mr-2"></i>J'effectue un nouvel audit
-                        </button>
-                    </router-link>
-                </div>
             </div>
 
             <div class="text-center mt-5" id="further-actions">
@@ -95,6 +88,13 @@
                     les
                     actions réalisables <span class="icon"></span></a>
                 </p>
+            </div>
+            <div class="text-center mt-2">
+                <router-link to="/input" tag="span">
+                    <button class="button alter">
+                        <i class="icon mr-2"></i>J'effectue un nouvel audit
+                    </button>
+                </router-link>
             </div>
         </div>
     </div>

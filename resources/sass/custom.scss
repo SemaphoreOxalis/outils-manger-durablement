@@ -8,6 +8,7 @@
     --dark-color: #353E53;
     --light-grey: #eef5f3;
     --error-color: #d9534f;
+    --highlighted-labels: #6A20AB;
 
     --test-color:red;
 
@@ -312,7 +313,12 @@ input:invalid {
 .simulations .table-row:nth-of-type(even) {
     background-image: linear-gradient(180deg, rgba(17, 153, 142, 0.2), rgba(17, 153, 142, 0.2));
 }
-
+.table-header .table-div.highlighted-label-2 {
+    background-color: var(--highlighted-labels);
+}
+.table-header .table-div.highlighted-label-1 {
+    background-color: rgba(106, 32, 171, 0.9);
+}
 .handle {
     cursor: move;
     cursor: -webkit-move;

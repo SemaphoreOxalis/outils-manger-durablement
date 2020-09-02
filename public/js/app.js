@@ -42761,7 +42761,7 @@ var render = function() {
       _c(
         "router-link",
         { staticClass: "menu-item button icon", attrs: { to: "/input" } },
-        [_vm._v("\n        "), _c("span", [_vm._v("Nouvelle Simulation")])]
+        [_vm._v("\n        "), _c("span", [_vm._v("Nouvel audit")])]
       ),
       _vm._v(" "),
       _vm.dataInLocalStorage
@@ -42770,7 +42770,7 @@ var render = function() {
             { staticClass: "menu-item button icon", attrs: { to: "/results" } },
             [
               _vm._v("\n        "),
-              _c("span", [_vm._v("Reprendre Simulation")])
+              _c("span", [_vm._v("Reprendre simulation")])
             ]
           )
         : _vm._e()
@@ -42931,11 +42931,11 @@ var staticRenderFns = [
         _c("div", [_vm._v("Volume de gaspillage alimentaire (tonnes).")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-div" }, [
+      _c("div", { staticClass: "table-div highlighted-label-1" }, [
         _c("div", [_vm._v("Estimation du gaspillage alimentaire (en €)")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-div" }, [
+      _c("div", { staticClass: "table-div highlighted-label-2" }, [
         _c("div", [
           _vm._v(
             "Estimation du gaspillage alimentaire (équivalence en nombre de repas)"
@@ -44199,26 +44199,26 @@ var render = function() {
                   _vm._v("Exporter le rapport de simulation\n                ")
                 ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "mt-2" },
-              [
-                _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
-                  _c("button", { staticClass: "button alter" }, [
-                    _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                    _vm._v("J'effectue un nouvel audit\n                    ")
-                  ])
-                ])
-              ],
-              1
-            )
+            ])
           ],
           1
         ),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(2),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text-center mt-2" },
+          [
+            _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
+              _c("button", { staticClass: "button alter" }, [
+                _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+                _vm._v("J'effectue un nouvel audit\n                ")
+              ])
+            ])
+          ],
+          1
+        )
       ],
       1
     )
