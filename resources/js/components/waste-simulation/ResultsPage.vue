@@ -3,7 +3,6 @@
         <div v-if="showResultsModal" id="results-modal"></div>
 
         <div>
-            <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
             <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
 
             <transition name="modal" v-if="showResultsModal">

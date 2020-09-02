@@ -1,7 +1,6 @@
 <template>
     <div class="py-4 px-4">
         <div v-if="editingReferenceValues" class="editing-mask"></div>
-        <h1 class="mb-4">Simulateur de gaspillage <br> pour la restauration collective</h1>
 
         <h4 class="text-center mb-4">Obtenez une estimation économique et quantitative du gaspillage alimentaire
             <br> de votre établissement en 15 minutes</h4>

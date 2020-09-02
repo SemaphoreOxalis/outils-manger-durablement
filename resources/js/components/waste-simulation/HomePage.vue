@@ -4,7 +4,6 @@
         <!-- fenêtre modale d'aide (HelpModal.vue) -->
         <help-modal v-if="showModal" @close="showModal = false"></help-modal>
 
-        <h1>Simulateur de gaspillage <br> pour la restauration collective</h1>
         <div class="row">
 
             <div class="col">
