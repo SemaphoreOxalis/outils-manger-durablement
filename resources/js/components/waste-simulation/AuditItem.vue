@@ -33,7 +33,7 @@
                 <div>{{ this.auditData.name }}</div>
             </div>
             <div class="table-div">
-                <div>{{ this.input.dishesNumber }}</div>
+                <div>{{ this.separateThousands(this.input.dishesNumber) }}</div>
             </div>
             <div class="table-div">
                 <div>{{ this.input.dishCost }}</div>
@@ -49,10 +49,10 @@
             </div>
 
             <div class="table-div">
-                <div>{{ this.foodWasteCost }}</div>
+                <div>{{ this.separateThousands(this.foodWasteCost) }}</div>
             </div>
             <div class="table-div">
-                <div>{{ this.amountOfDishesWasted }}</div>
+                <div>{{ this.separateThousands(this.amountOfDishesWasted) }}</div>
             </div>
         </div>
 

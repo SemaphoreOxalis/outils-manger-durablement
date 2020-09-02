@@ -74,14 +74,14 @@
                 <div><small>{{ foodWasteCostDelta }}</small></div>
                 <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
             </div>
-            <div class="strong align-with-inputs">{{ foodWasteCost }}</div>
+            <div class="strong align-with-inputs">{{ this.separateThousands(foodWasteCost) }}</div>
         </div>
         <div class="table-div">
             <div class="d-flex justify-content-around">
                 <div><small>{{ amountOfDishesWastedDelta }}</small></div>
                 <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
             </div>
-            <div class="strong align-with-inputs">{{ amountOfDishesWasted }}</div>
+            <div class="strong align-with-inputs">{{ this.separateThousands(amountOfDishesWasted) }}</div>
         </div>
 
         <div class="trash-icon">

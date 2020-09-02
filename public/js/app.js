@@ -42855,7 +42855,9 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.input.dishesNumber))])
+          _c("div", [
+            _vm._v(_vm._s(this.separateThousands(this.input.dishesNumber)))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
@@ -42875,11 +42877,15 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.foodWasteCost))])
+          _c("div", [
+            _vm._v(_vm._s(this.separateThousands(this.foodWasteCost)))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.amountOfDishesWasted))])
+          _c("div", [
+            _vm._v(_vm._s(this.separateThousands(this.amountOfDishesWasted)))
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -44527,7 +44533,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "strong align-with-inputs" }, [
-        _vm._v(_vm._s(_vm.foodWasteCost))
+        _vm._v(_vm._s(this.separateThousands(_vm.foodWasteCost)))
       ])
     ]),
     _vm._v(" "),
@@ -44547,7 +44553,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "strong align-with-inputs" }, [
-        _vm._v(_vm._s(_vm.amountOfDishesWasted))
+        _vm._v(_vm._s(this.separateThousands(_vm.amountOfDishesWasted)))
       ])
     ]),
     _vm._v(" "),
@@ -63368,8 +63374,12 @@ __webpack_require__.r(__webpack_exports__);
       return Math.round((number + Number.EPSILON) * 1000) / 1000;
     },
     // from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     separateThousands: function separateThousands(number) {
-      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      try {
+        return number.toLocaleString();
+      } catch (e) {//
+      }
     }
   }
 });
