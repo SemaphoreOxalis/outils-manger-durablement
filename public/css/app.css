@@ -11409,7 +11409,8 @@ ul.stepper .step.active::before {
   z-index: 42;
 }
 
-.modal-mask {
+.modal-mask,
+#results-modal {
   position: fixed;
   z-index: 999;
   top: 0;

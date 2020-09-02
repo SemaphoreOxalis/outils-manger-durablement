@@ -2946,6 +2946,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 // import des composants enfants
  // Logique de validation
 
@@ -2971,7 +2998,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       simulationsErrors: [],
       areSimulationsInvalid: false,
       legendShown: false,
-      auditResults: {}
+      auditResults: {},
+      showResultsModal: false
     };
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
@@ -2980,6 +3008,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     // Si on vient de la page de saisie
     if (this.userInput) {
+      this.showResultsModal = true;
       this.handleUserInput();
     } // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
     else if (localStorage.hasOwnProperty('audit')) {
@@ -43933,131 +43962,180 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "py-4 px-4" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("h4", { staticClass: "mb-4 text-center" }, [
-      _vm._v("Résultats et comparaisons de vos simulations")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "pt-4" }, [
-      _c("p", [
-        _vm._v(
-          "Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire."
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Il estime le coût de votre gaspillage alimentaire à "),
-        _c("strong", [
-          _c("span", {
-            domProps: { innerHTML: _vm._s(_vm.auditResults.foodWasteCost) }
-          })
-        ]),
-        _vm._v(" € (soit l'équivalent de\n        "),
-        _c("strong", [
-          _c("span", {
-            domProps: {
-              innerHTML: _vm._s(_vm.auditResults.amountOfDishesWasted)
-            }
-          })
-        ]),
-        _vm._v(" repas)")
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas à expérimenter !"
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "position-relative info p-3 mb-4" }, [
-      _c("div", { staticClass: "d-flex justify-content-end" }, [
-        !_vm.legendShown
-          ? _c("span", { staticClass: "mr-2 align-self-center colored" }, [
-              _vm._v("Légende")
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "button alter",
-            attrs: {
-              "data-toggle": "collapse",
-              "data-target": "#legend",
-              "aria-expanded": "true",
-              "aria-controls": "legend"
-            },
-            on: { click: _vm.toggleLegend }
-          },
-          [
-            _c("i", {
-              staticClass: "icon icon-angle-down",
-              attrs: { id: "collapse-icon" }
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(1)
-    ]),
+    _vm.showResultsModal
+      ? _c("div", { attrs: { id: "results-modal" } })
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "spacer" },
       [
-        _c("audit-item", {
-          attrs: { "audit-raw-data": this.auditRawData },
-          on: { "sent-audit-results": this.setAuditResults }
-        }),
+        _vm._m(0),
         _vm._v(" "),
-        _c("div", { staticClass: "d-flex mt-4" }, [
-          _c(
-            "button",
-            { staticClass: "button", on: { click: _vm.addSimulation } },
-            [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v("Ajouter une simulation\n            ")
-            ]
-          ),
+        _c("h4", { staticClass: "mb-4 text-center" }, [
+          _vm._v("Résultats et comparaisons de vos simulations")
+        ]),
+        _vm._v(" "),
+        _vm.showResultsModal
+          ? _c("transition", { attrs: { name: "modal" } }, [
+              _c("div", { staticClass: "modal-mask" }, [
+                _c("div", { staticClass: "modal-wrapper" }, [
+                  _c("div", { staticClass: "modal-container" }, [
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("p", [
+                        _vm._v(
+                          "Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire."
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "Il estime le coût de votre gaspillage alimentaire à "
+                        ),
+                        _c("strong", [
+                          _c("span", {
+                            domProps: {
+                              innerHTML: _vm._s(_vm.auditResults.foodWasteCost)
+                            }
+                          })
+                        ]),
+                        _vm._v(
+                          " € (soit l'équivalent de\n                                "
+                        ),
+                        _c("strong", [
+                          _c("span", {
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.auditResults.amountOfDishesWasted
+                              )
+                            }
+                          })
+                        ]),
+                        _vm._v(" repas)")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos\n                                pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas\n                                à expérimenter !"
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "modal-default-button button alter",
+                          on: {
+                            click: function($event) {
+                              _vm.showResultsModal = false
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Fermer\n                            "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("div", { staticClass: "position-relative info p-3 mb-4" }, [
+          _c("div", { staticClass: "d-flex justify-content-end" }, [
+            !_vm.legendShown
+              ? _c("span", { staticClass: "mr-2 align-self-center colored" }, [
+                  _vm._v("Mode d'emploi")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button alter",
+                attrs: {
+                  "data-toggle": "collapse",
+                  "data-target": "#legend",
+                  "aria-expanded": "true",
+                  "aria-controls": "legend"
+                },
+                on: { click: _vm.toggleLegend }
+              },
+              [
+                _c("i", {
+                  staticClass: "icon icon-angle-down",
+                  attrs: { id: "collapse-icon" }
+                })
+              ]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "button alter",
-              on: { click: _vm.resetSimulations }
-            },
-            [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v("Je réinitialise toutes mes simulations\n            ")
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "button ml-auto",
-              attrs: { disabled: _vm.areSimulationsInvalid },
-              on: { click: _vm.exportSimulations }
-            },
-            [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v("Exporter le rapport de simulation\n            ")
-            ]
-          )
-        ])
+          _vm._m(1)
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "spacer" },
+          [
+            _c("audit-item", {
+              attrs: { "audit-raw-data": this.auditRawData },
+              on: { "sent-audit-results": this.setAuditResults }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex mt-4" }, [
+              _c(
+                "button",
+                { staticClass: "button", on: { click: _vm.addSimulation } },
+                [
+                  _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+                  _vm._v("Ajouter une simulation\n                ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "button alter",
+                  on: { click: _vm.resetSimulations }
+                },
+                [
+                  _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+                  _vm._v(
+                    "Je réinitialise toutes mes simulations\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "button ml-auto",
+                  attrs: { disabled: _vm.areSimulationsInvalid },
+                  on: { click: _vm.exportSimulations }
+                },
+                [
+                  _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+                  _vm._v("Exporter le rapport de simulation\n                ")
+                ]
+              )
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _vm._m(2)
       ],
       1
-    ),
-    _vm._v(" "),
-    _vm._m(2)
+    )
   ])
 }
 var staticRenderFns = [
@@ -44088,13 +44166,13 @@ var staticRenderFns = [
           staticClass: "custom-input browser-default",
           attrs: { type: "text", value: "Les champs de ce type", readonly: "" }
         }),
-        _vm._v(" sont modifiables")
+        _vm._v("\n                    sont modifiables")
       ]),
       _vm._v(" "),
       _c("p", [
         _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
         _vm._v(
-          " Vous pouvez maintenant réorganiser vos simulations en les faisant glisser"
+          " Vous pouvez maintenant réorganiser vos simulations en les faisant\n                    glisser"
         )
       ]),
       _vm._v(" "),
@@ -44111,7 +44189,7 @@ var staticRenderFns = [
       _c("p", [
         _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
         _vm._v(
-          ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
+          ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données\n                    sur votre logiciel de tableur'
         )
       ])
     ])
@@ -44126,7 +44204,7 @@ var staticRenderFns = [
       [
         _c("p", [
           _vm._v(
-            "\n            Bravo, vous venez de franchir la première étape de la démarche de "
+            "\n                Bravo, vous venez de franchir la première étape de la démarche de "
           ),
           _c("a", { attrs: { href: "#" } }, [
             _vm._v("la loi EGALIM "),
@@ -44136,11 +44214,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n            Que faire de ces résultats ? Rendez vous sur le "
+            "\n                Que faire de ces résultats ? Rendez vous sur le "
           ),
           _c("a", { attrs: { href: "#" } }, [
             _vm._v(
-              "site ressource de l'ANAP pour découvrir les\n            actions réalisables "
+              "site ressource de l'ANAP pour découvrir\n                les\n                actions réalisables "
             ),
             _c("span", { staticClass: "icon" }, [_vm._v("")])
           ])
