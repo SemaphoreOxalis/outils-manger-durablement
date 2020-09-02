@@ -114,7 +114,7 @@
                                    class="custom-input number-field w-input browser-default">
                         </div>
                         <div class="col col-9 reference-values info p-3 mt-3">
-                            <p v-if="defaultValues">Suite à la <a href="#">caractérisation des déchets du C.H de Niort <span class="icon"></span></a>,</p>
+                            <p v-if="defaultValues">Suite à la <a href="https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html">caractérisation des déchets du C.H de Niort <span class="icon"></span></a>,</p>
                             <div :class="editingReferenceValues ? 'editing-reference-values' : ''" class="px-2 py-2">
                                 <p>Il a été constaté que la part des restes alimentaires représente environ
                                     <span v-if="editingReferenceValues">

@@ -43981,10 +43981,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _vm._v("caractérisation des déchets du C.H de Niort "),
-      _c("span", { staticClass: "icon" }, [_vm._v("")])
-    ])
+    return _c(
+      "a",
+      {
+        attrs: {
+          href:
+            "https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html"
+        }
+      },
+      [
+        _vm._v("caractérisation des déchets du C.H de Niort "),
+        _c("span", { staticClass: "icon" }, [_vm._v("")])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -44262,10 +44271,19 @@ var staticRenderFns = [
           _vm._v(
             "\n                Bravo, vous venez de franchir la première étape de la démarche de "
           ),
-          _c("a", { attrs: { href: "#" } }, [
-            _vm._v("la loi EGALIM "),
-            _c("span", { staticClass: "icon" }, [_vm._v("")])
-          ])
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation"
+              }
+            },
+            [
+              _vm._v("la loi EGALIM "),
+              _c("span", { staticClass: "icon" }, [_vm._v("")])
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("p", [
