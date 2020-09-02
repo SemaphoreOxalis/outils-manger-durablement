@@ -43993,7 +43993,8 @@ var staticRenderFns = [
       {
         attrs: {
           href:
-            "https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html"
+            "https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html",
+          target: "_blank"
         }
       },
       [
@@ -44297,7 +44298,8 @@ var staticRenderFns = [
             {
               attrs: {
                 href:
-                  "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation"
+                  "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation",
+                target: "_blank"
               }
             },
             [
