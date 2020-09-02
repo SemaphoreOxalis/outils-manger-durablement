@@ -20,10 +20,10 @@
                 <div>Volume de gaspillage alimentaire (tonnes).</div>
             </div>
 
-            <div class="table-div">
+            <div class="table-div highlighted-label-1">
                 <div>Estimation du gaspillage alimentaire (en €)</div>
             </div>
-            <div class="table-div">
+            <div class="table-div highlighted-label-2">
                 <div>Estimation du gaspillage alimentaire (équivalence en nombre de repas)</div>
             </div>
         </div>
@@ -33,7 +33,7 @@
                 <div>{{ this.auditData.name }}</div>
             </div>
             <div class="table-div">
-                <div>{{ this.input.dishesNumber }}</div>
+                <div>{{ this.separateThousands(this.input.dishesNumber) }}</div>
             </div>
             <div class="table-div">
                 <div>{{ this.input.dishCost }}</div>
@@ -49,10 +49,10 @@
             </div>
 
             <div class="table-div">
-                <div>{{ this.foodWasteCost }}</div>
+                <div>{{ this.separateThousands(this.foodWasteCost) }}</div>
             </div>
             <div class="table-div">
-                <div>{{ this.amountOfDishesWasted }}</div>
+                <div>{{ this.separateThousands(this.amountOfDishesWasted) }}</div>
             </div>
         </div>
 
@@ -69,7 +69,7 @@
 // logique du composant
 import AuditLogic from "../../helpers/waste-simulation/calculations/AuditLogic";
 // utiles pour arrondir les nombres et formatter les dates
-import NumberRounder from "../../helpers/NumberRounder";
+import NumberFormatter from "../../helpers/NumberFormatter";
 import DateFormatter from "../../helpers/DateFormatter";
 // Composant enfant
 import AuditSimulationList from "./AuditSimulationList";
@@ -84,7 +84,7 @@ export default {
     // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
     mixins: [
         AuditLogic,
-        NumberRounder,
+        NumberFormatter,
         DateFormatter
     ],
 

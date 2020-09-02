@@ -114,7 +114,7 @@
                                    class="custom-input number-field w-input browser-default">
                         </div>
                         <div class="col col-9 reference-values info p-3 mt-3">
-                            <p v-if="defaultValues">Suite à la <a href="#">caractérisation des déchets du C.H de Niort <span class="icon"></span></a>,</p>
+                            <p v-if="defaultValues">Suite à la <a href="https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html" target="_blank">caractérisation des déchets du C.H de Niort <span class="icon"></span></a>,</p>
                             <div :class="editingReferenceValues ? 'editing-reference-values' : ''" class="px-2 py-2">
                                 <p>Il a été constaté que la part des restes alimentaires représente environ
                                     <span v-if="editingReferenceValues">
@@ -187,7 +187,7 @@ import DataBase from "../../helpers/DataBase";
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 
 // Petite bibliothèque de fonctions bien pratique pour arrondir les nombres
-import NumberRounder from "../../helpers/NumberRounder";
+import NumberFormatter from "../../helpers/NumberFormatter";
 
 export default {
 
@@ -197,7 +197,7 @@ export default {
         InputLogic,
         DataBase,
         LocalStorageHelper,
-        NumberRounder
+        NumberFormatter
     ],
 
     // initialisation des données utilisées par le composant

@@ -2156,7 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/AuditLogic */ "./resources/js/helpers/waste-simulation/calculations/AuditLogic.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 /* harmony import */ var _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AuditSimulationList */ "./resources/js/components/waste-simulation/AuditSimulationList.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -2244,7 +2244,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     AuditSimulationList: _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
-  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // données récupérées du composant parent (ResultsPage.vue)
   props: {
     auditRawData: Object
@@ -2606,7 +2606,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/InputLogic */ "./resources/js/helpers/waste-simulation/calculations/InputLogic.js");
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 //
 //
 //
@@ -2797,7 +2797,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions dans des fichiers externes, dans un souci de lisibilité)
-  mixins: [_helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2890,6 +2890,13 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3103,7 +3110,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/waste-simulation/component-specific/SimulationHelper */ "./resources/js/helpers/waste-simulation/component-specific/SimulationHelper.js");
 /* harmony import */ var _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/SimulationLogic */ "./resources/js/helpers/waste-simulation/calculations/SimulationLogic.js");
 /* harmony import */ var _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/SimulationValidation */ "./resources/js/helpers/waste-simulation/validation/SimulationValidation.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 //
 //
 //
@@ -3208,7 +3215,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de dépendance vis-à-vis de ces fichiers
-  mixins: [_helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_3__["default"]],
   // données récupérées du composant parent (AuditSimulationList.vue)
   props: {
     simulation: Object,
@@ -42754,7 +42761,7 @@ var render = function() {
       _c(
         "router-link",
         { staticClass: "menu-item button icon", attrs: { to: "/input" } },
-        [_vm._v("\n        "), _c("span", [_vm._v("Nouvelle Simulation")])]
+        [_vm._v("\n        "), _c("span", [_vm._v("Nouvel audit")])]
       ),
       _vm._v(" "),
       _vm.dataInLocalStorage
@@ -42763,7 +42770,7 @@ var render = function() {
             { staticClass: "menu-item button icon", attrs: { to: "/results" } },
             [
               _vm._v("\n        "),
-              _c("span", [_vm._v("Reprendre Simulation")])
+              _c("span", [_vm._v("Reprendre simulation")])
             ]
           )
         : _vm._e()
@@ -42855,7 +42862,9 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.input.dishesNumber))])
+          _c("div", [
+            _vm._v(_vm._s(this.separateThousands(this.input.dishesNumber)))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
@@ -42875,11 +42884,15 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.foodWasteCost))])
+          _c("div", [
+            _vm._v(_vm._s(this.separateThousands(this.foodWasteCost)))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "table-div" }, [
-          _c("div", [_vm._v(_vm._s(this.amountOfDishesWasted))])
+          _c("div", [
+            _vm._v(_vm._s(this.separateThousands(this.amountOfDishesWasted)))
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -42918,11 +42931,11 @@ var staticRenderFns = [
         _c("div", [_vm._v("Volume de gaspillage alimentaire (tonnes).")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-div" }, [
+      _c("div", { staticClass: "table-div highlighted-label-1" }, [
         _c("div", [_vm._v("Estimation du gaspillage alimentaire (en €)")])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "table-div" }, [
+      _c("div", { staticClass: "table-div highlighted-label-2" }, [
         _c("div", [
           _vm._v(
             "Estimation du gaspillage alimentaire (équivalence en nombre de repas)"
@@ -43975,10 +43988,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _vm._v("caractérisation des déchets du C.H de Niort "),
-      _c("span", { staticClass: "icon" }, [_vm._v("")])
-    ])
+    return _c(
+      "a",
+      {
+        attrs: {
+          href:
+            "https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html",
+          target: "_blank"
+        }
+      },
+      [
+        _vm._v("caractérisation des déchets du C.H de Niort "),
+        _c("span", { staticClass: "icon" }, [_vm._v("")])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -44182,7 +44205,21 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(2)
+        _vm._m(2),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text-center mt-2" },
+          [
+            _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
+              _c("button", { staticClass: "button alter" }, [
+                _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+                _vm._v("J'effectue un nouvel audit\n                ")
+              ])
+            ])
+          ],
+          1
+        )
       ],
       1
     )
@@ -44256,10 +44293,20 @@ var staticRenderFns = [
           _vm._v(
             "\n                Bravo, vous venez de franchir la première étape de la démarche de "
           ),
-          _c("a", { attrs: { href: "#" } }, [
-            _vm._v("la loi EGALIM "),
-            _c("span", { staticClass: "icon" }, [_vm._v("")])
-          ])
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation",
+                target: "_blank"
+              }
+            },
+            [
+              _vm._v("la loi EGALIM "),
+              _c("span", { staticClass: "icon" }, [_vm._v("")])
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("p", [
@@ -44527,7 +44574,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "strong align-with-inputs" }, [
-        _vm._v(_vm._s(_vm.foodWasteCost))
+        _vm._v(_vm._s(this.separateThousands(_vm.foodWasteCost)))
       ])
     ]),
     _vm._v(" "),
@@ -44547,7 +44594,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "strong align-with-inputs" }, [
-        _vm._v(_vm._s(_vm.amountOfDishesWasted))
+        _vm._v(_vm._s(this.separateThousands(_vm.amountOfDishesWasted)))
       ])
     ]),
     _vm._v(" "),
@@ -63345,10 +63392,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/NumberRounder.js":
-/*!***********************************************!*\
-  !*** ./resources/js/helpers/NumberRounder.js ***!
-  \***********************************************/
+/***/ "./resources/js/helpers/NumberFormatter.js":
+/*!*************************************************!*\
+  !*** ./resources/js/helpers/NumberFormatter.js ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -63368,8 +63415,12 @@ __webpack_require__.r(__webpack_exports__);
       return Math.round((number + Number.EPSILON) * 1000) / 1000;
     },
     // from https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     separateThousands: function separateThousands(number) {
-      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      try {
+        return number.toLocaleString();
+      } catch (e) {//
+      }
     }
   }
 });

@@ -74,14 +74,14 @@
                 <div><small>{{ foodWasteCostDelta }}</small></div>
                 <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
             </div>
-            <div class="strong align-with-inputs">{{ foodWasteCost }}</div>
+            <div class="strong align-with-inputs">{{ this.separateThousands(foodWasteCost) }}</div>
         </div>
         <div class="table-div">
             <div class="d-flex justify-content-around">
                 <div><small>{{ amountOfDishesWastedDelta }}</small></div>
                 <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
             </div>
-            <div class="strong align-with-inputs">{{ amountOfDishesWasted }}</div>
+            <div class="strong align-with-inputs">{{ this.separateThousands(amountOfDishesWasted) }}</div>
         </div>
 
         <div class="trash-icon">
@@ -100,7 +100,7 @@ import SimulationLogic from "../../helpers/waste-simulation/calculations/Simulat
 // Validation
 import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // utile pour arrondir les nombres
-import NumberRounder from "../../helpers/NumberRounder";
+import NumberFormatter from "../../helpers/NumberFormatter";
 
 export default {
 
@@ -109,7 +109,7 @@ export default {
         SimulationHelper,
         SimulationLogic,
         SimulationValidation,
-        NumberRounder
+        NumberFormatter
     ],
 
     // données récupérées du composant parent (AuditSimulationList.vue)

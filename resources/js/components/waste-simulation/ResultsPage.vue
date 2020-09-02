@@ -80,7 +80,7 @@
 
             <div class="text-center mt-5" id="further-actions">
                 <p>
-                    Bravo, vous venez de franchir la première étape de la démarche de <a href="#">la loi EGALIM <span
+                    Bravo, vous venez de franchir la première étape de la démarche de <a href="https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation" target="_blank">la loi EGALIM <span
                     class="icon"></span></a>
                 </p>
                 <p>
@@ -88,6 +88,13 @@
                     les
                     actions réalisables <span class="icon"></span></a>
                 </p>
+            </div>
+            <div class="text-center mt-2">
+                <router-link to="/input" tag="span">
+                    <button class="button alter">
+                        <i class="icon mr-2"></i>J'effectue un nouvel audit
+                    </button>
+                </router-link>
             </div>
         </div>
     </div>
