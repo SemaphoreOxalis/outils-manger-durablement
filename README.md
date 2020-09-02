@@ -1,5 +1,6 @@
 - [Outil Gaspi](#recycle-outil-gaspi-recycle)
   * [Installation](#installation-floppy_disk)
+  * [Mise à jour](#mise-à-jour-ambulance)
   * [Architecture](#architecture-building_construction)
     + [Configuration](#wrench-configuration)
     + [Authentification](#key-authentification)
@@ -107,6 +108,18 @@ DEBUGBAR_ENABLED=false
     * `npm run prod` (compile et minifie le Javascript et le CSS de l'application dans le dossier `/public`)
   
   
+## Mise à jour :ambulance:
+
+Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jour l'application en production :
+
+* :computer: Dans le terminal du serveur, tapez :
+    * `git fetch --all`
+    * `git reset --hard origin/master`
+    * `git fetch pull origin master`
+
+* :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`
+  
+
 ## Architecture :building_construction:
 
 Le côté back-end en Laravel ne s'occupe que de fournir une sorte d'API pour le front, contenant les données (valeurs de référence) et mettant en place des routes permettant de les récupérer et de les modifier. Il s'occupe également de l'authentification et de l'export .xlsx
@@ -204,4 +217,4 @@ Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Lar
     * :warning: `.env` : fichier de configuration général de l'application
     * :warning: `composer.json` : dépendances PHP à installer lors de la commande `composer install`
     * :warning: `package.json` : dépendances JS à installer lors de la commande `npm install`
-    * :warning: `wabpack.mix.js` : responsable de compiler le CSS et le JS depuis le dossier `resources` dans le dossier `public`
+    * :warning: `webpack.mix.js` : responsable de compiler le CSS et le JS depuis le dossier `resources` dans le dossier `public`
