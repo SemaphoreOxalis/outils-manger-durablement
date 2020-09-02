@@ -69,7 +69,7 @@
 // logique du composant
 import AuditLogic from "../../helpers/waste-simulation/calculations/AuditLogic";
 // utiles pour arrondir les nombres et formatter les dates
-import NumberRounder from "../../helpers/NumberRounder";
+import NumberFormatter from "../../helpers/NumberFormatter";
 import DateFormatter from "../../helpers/DateFormatter";
 // Composant enfant
 import AuditSimulationList from "./AuditSimulationList";
@@ -84,7 +84,7 @@ export default {
     // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
     mixins: [
         AuditLogic,
-        NumberRounder,
+        NumberFormatter,
         DateFormatter
     ],
 

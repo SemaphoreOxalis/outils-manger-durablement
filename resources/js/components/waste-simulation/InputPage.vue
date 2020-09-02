@@ -187,7 +187,7 @@ import DataBase from "../../helpers/DataBase";
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 
 // Petite bibliothèque de fonctions bien pratique pour arrondir les nombres
-import NumberRounder from "../../helpers/NumberRounder";
+import NumberFormatter from "../../helpers/NumberFormatter";
 
 export default {
 
@@ -197,7 +197,7 @@ export default {
         InputLogic,
         DataBase,
         LocalStorageHelper,
-        NumberRounder
+        NumberFormatter
     ],
 
     // initialisation des données utilisées par le composant

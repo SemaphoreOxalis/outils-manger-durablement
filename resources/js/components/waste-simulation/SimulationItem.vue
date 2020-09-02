@@ -100,7 +100,7 @@ import SimulationLogic from "../../helpers/waste-simulation/calculations/Simulat
 // Validation
 import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // utile pour arrondir les nombres
-import NumberRounder from "../../helpers/NumberRounder";
+import NumberFormatter from "../../helpers/NumberFormatter";
 
 export default {
 
@@ -109,7 +109,7 @@ export default {
         SimulationHelper,
         SimulationLogic,
         SimulationValidation,
-        NumberRounder
+        NumberFormatter
     ],
 
     // données récupérées du composant parent (AuditSimulationList.vue)

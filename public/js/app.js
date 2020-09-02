@@ -2156,7 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/AuditLogic */ "./resources/js/helpers/waste-simulation/calculations/AuditLogic.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 /* harmony import */ var _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AuditSimulationList */ "./resources/js/components/waste-simulation/AuditSimulationList.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -2244,7 +2244,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     AuditSimulationList: _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
-  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
   // données récupérées du composant parent (ResultsPage.vue)
   props: {
     auditRawData: Object
@@ -2606,7 +2606,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/InputLogic */ "./resources/js/helpers/waste-simulation/calculations/InputLogic.js");
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 //
 //
 //
@@ -2797,7 +2797,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions dans des fichiers externes, dans un souci de lisibilité)
-  mixins: [_helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -3103,7 +3103,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/waste-simulation/component-specific/SimulationHelper */ "./resources/js/helpers/waste-simulation/component-specific/SimulationHelper.js");
 /* harmony import */ var _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/SimulationLogic */ "./resources/js/helpers/waste-simulation/calculations/SimulationLogic.js");
 /* harmony import */ var _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/SimulationValidation */ "./resources/js/helpers/waste-simulation/validation/SimulationValidation.js");
-/* harmony import */ var _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/NumberRounder */ "./resources/js/helpers/NumberRounder.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 //
 //
 //
@@ -3208,7 +3208,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de dépendance vis-à-vis de ces fichiers
-  mixins: [_helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberRounder__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_helpers_waste_simulation_component_specific_SimulationHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_SimulationLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_3__["default"]],
   // données récupérées du composant parent (AuditSimulationList.vue)
   props: {
     simulation: Object,
@@ -63345,10 +63345,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/NumberRounder.js":
-/*!***********************************************!*\
-  !*** ./resources/js/helpers/NumberRounder.js ***!
-  \***********************************************/
+/***/ "./resources/js/helpers/NumberFormatter.js":
+/*!*************************************************!*\
+  !*** ./resources/js/helpers/NumberFormatter.js ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

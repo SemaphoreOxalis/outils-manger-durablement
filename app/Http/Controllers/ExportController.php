@@ -16,7 +16,7 @@ class ExportController extends Controller {
         //Validation des données
         $request->validate([
             'audit' => 'array|required',
-            'simulations' => 'array|required'
+            'simulations' => 'array'
         ]);
 
         // création de la spreadsheet
