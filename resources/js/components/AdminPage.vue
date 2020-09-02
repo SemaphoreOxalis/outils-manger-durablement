@@ -1,7 +1,7 @@
 <template>
     <div class="mx-5">
         <div v-if="signedIn">
-            <h1 class="my-4">Panneau d'administration</h1>
+            <h2 class="my-4">Panneau d'administration</h2>
             <p class="mb-4"><strong>Ici, vous pouvez modifier simplement les valeurs de référence utilisées par
                 l'application</strong></p>
 

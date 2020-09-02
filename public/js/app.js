@@ -2542,7 +2542,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 // fenêtre modale d'aide
 
 
@@ -2607,7 +2606,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 /* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
-//
 //
 //
 //
@@ -2890,7 +2888,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -42628,7 +42625,7 @@ var render = function() {
       ? _c(
           "div",
           [
-            _c("h1", { staticClass: "my-4" }, [
+            _c("h2", { staticClass: "my-4" }, [
               _vm._v("Panneau d'administration")
             ]),
             _vm._v(" "),
@@ -43120,11 +43117,9 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col" }, [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
           _vm.previousAuditDetectedInLocalStorage
             ? _c("div", { staticClass: "info p-4 m-4" }, [
@@ -43194,7 +43189,7 @@ var render = function() {
           "div",
           { staticClass: "col p-4 m-4" },
           [
-            _vm._m(2),
+            _vm._m(1),
             _vm._v(" "),
             _c("ul", { staticClass: "browser-default" }, [
               _c("li", [
@@ -43234,7 +43229,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _vm._m(2),
             _vm._v(" "),
             _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
               _c(
@@ -43279,16 +43274,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h1", [
-      _vm._v("Simulateur de gaspillage "),
-      _c("br"),
-      _vm._v(" pour la restauration collective")
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -43353,8 +43338,6 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm._m(0),
-    _vm._v(" "),
-    _vm._m(1),
     _vm._v(" "),
     _c("ul", { staticClass: "stepper linear" }, [
       _c("li", { staticClass: "step" }, [
@@ -43431,7 +43414,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(1)
         ])
       ]),
       _vm._v(" "),
@@ -43479,7 +43462,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -43540,10 +43523,10 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _vm._m(4)
+            _vm._m(3)
           ]),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(4)
         ])
       ]),
       _vm._v(" "),
@@ -43559,7 +43542,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(6),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col col-3" }, [
@@ -43639,7 +43622,7 @@ var render = function() {
               { staticClass: "col col-9 reference-values info p-3 mt-3" },
               [
                 _vm.defaultValues
-                  ? _c("p", [_vm._v("Suite à la "), _vm._m(7), _vm._v(",")])
+                  ? _c("p", [_vm._v("Suite à la "), _vm._m(6), _vm._v(",")])
                   : _vm._e(),
                 _vm._v(" "),
                 _c(
@@ -43842,7 +43825,7 @@ var render = function() {
             "div",
             { staticClass: "step-actions pb-4" },
             [
-              _vm._m(8),
+              _vm._m(7),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -43885,16 +43868,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h1", { staticClass: "mb-4" }, [
-      _vm._v("Simulateur de gaspillage "),
-      _c("br"),
-      _vm._v(" pour la restauration collective")
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -44042,8 +44015,6 @@ var render = function() {
     _c(
       "div",
       [
-        _vm._m(0),
-        _vm._v(" "),
         _c("h4", { staticClass: "mb-4 text-center" }, [
           _vm._v("Résultats et comparaisons de vos simulations")
         ]),
@@ -44152,7 +44123,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ]),
         _vm._v(" "),
         _c(
@@ -44205,7 +44176,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "div",
@@ -44226,16 +44197,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h1", { staticClass: "mb-4" }, [
-      _vm._v("Simulateur de gaspillage "),
-      _c("br"),
-      _vm._v(" pour la restauration collective")
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
