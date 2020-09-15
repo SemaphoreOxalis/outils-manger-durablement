@@ -51,8 +51,9 @@ class ExportController extends Controller {
         $sheet->setCellValue('D5', 'Poids moyen d\'un repas');
         $sheet->setCellValue('E5', 'Coût de traitement par tonne de déchets (en €)');
         $sheet->setCellValue('F5', 'Volume de gaspillage alimentaire (en T)');
-        $sheet->setCellValue('G5', 'Estimation du gaspillage alimentaire (en €)');
-        $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
+        $sheet->setCellValue('G5', 'Estimation du gaspillage alimentaire (en g par repas)');
+        $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (en €)');
+        $sheet->setCellValue('I5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
 
         $sheet->getStyle('B5:H5')->getFont()->setBold(true);
 
@@ -63,13 +64,14 @@ class ExportController extends Controller {
         $sheet->setCellValueExplicit('D6', $request->input('audit.dishWeight'), DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('E6', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
         $sheet->setCellValueExplicit('F6', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('G6', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('H6', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('G6', $request->input('audit.ratio'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('H6', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('I6', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
 
         $sheet->getStyle('A6')->getFont()->setBold(true);
-        $sheet->getStyle('A6:H6')->getFont()->setSize(15);
-        $sheet->getStyle('A6:H6')->getFill()->setFillType(Fill::FILL_SOLID);
-        $sheet->getStyle('A6:H6')->getFill()->getStartColor()->setRGB('00bfff');
+        $sheet->getStyle('A6:I6')->getFont()->setSize(15);
+        $sheet->getStyle('A6:I6')->getFill()->setFillType(Fill::FILL_SOLID);
+        $sheet->getStyle('A6:I6')->getFill()->getStartColor()->setRGB('00bfff');
 
         // variables utiles pour les simulations
         $line = 8;
@@ -85,13 +87,14 @@ class ExportController extends Controller {
             $sheet->setCellValueExplicit('D' . $line, $sim["dishWeight"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('E' . $line, $sim["wasteTreatmentCost"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('F' . $line, $sim["foodWasteVolume"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('G' . $line, $sim["foodWasteCost"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('H' . $line, $sim["amountOfDishesWasted"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('G' . $line, $sim["ratio"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('H' . $line, $sim["foodWasteCost"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('I' . $line, $sim["amountOfDishesWasted"], DataType::TYPE_STRING);
 
             $sheet->getStyle('A' . $line)->getFont()->setBold(true);
-            $sheet->getStyle('A' . $line . ':H' . $line)->getFont()->setSize(15);
-            $sheet->getStyle('A' . $line . ':H' . $line)->getFill()->setFillType(Fill::FILL_SOLID);
-            $sheet->getStyle('A' . $line . ':H' . $line)->getFill()->getStartColor()->setRGB('00ff80');
+            $sheet->getStyle('A' . $line . ':I' . $line)->getFont()->setSize(15);
+            $sheet->getStyle('A' . $line . ':I' . $line)->getFill()->setFillType(Fill::FILL_SOLID);
+            $sheet->getStyle('A' . $line . ':I' . $line)->getFill()->getStartColor()->setRGB('00ff80');
 
             $line ++;
 
@@ -102,8 +105,9 @@ class ExportController extends Controller {
             $sheet->setCellValueExplicit('D' . $line, $sim['deltas']["dishWeight"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('E' . $line, $sim['deltas']["wasteTreatmentCost"], DataType::TYPE_STRING);
             $sheet->setCellValueExplicit('F' . $line, $sim['deltas']["foodWasteVolume"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('G' . $line, $sim['deltas']["foodWasteCost"], DataType::TYPE_STRING);
-            $sheet->setCellValueExplicit('H' . $line, $sim['deltas']["amountOfDishesWasted"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('G' . $line, $sim['deltas']["ratio"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('H' . $line, $sim['deltas']["foodWasteCost"], DataType::TYPE_STRING);
+            $sheet->setCellValueExplicit('I' . $line, $sim['deltas']["amountOfDishesWasted"], DataType::TYPE_STRING);
 
             $line ++;
 
@@ -114,8 +118,9 @@ class ExportController extends Controller {
             $sheet->setCellValue('D' . $line, $sim['percentages']["dishWeight"]);
             $sheet->setCellValue('E' . $line, $sim['percentages']["wasteTreatmentCost"]);
             $sheet->setCellValue('F' . $line, $sim['percentages']["foodWasteVolume"]);
-            $sheet->setCellValue('G' . $line, $sim['percentages']["foodWasteCost"]);
-            $sheet->setCellValue('H' . $line, $sim['percentages']["amountOfDishesWasted"]);
+            $sheet->setCellValue('G' . $line, $sim['percentages']["ratio"]);
+            $sheet->setCellValue('H' . $line, $sim['percentages']["foodWasteCost"]);
+            $sheet->setCellValue('I' . $line, $sim['percentages']["amountOfDishesWasted"]);
 
             $previous = '"' . $sim["name"] . '"';
             $line++;

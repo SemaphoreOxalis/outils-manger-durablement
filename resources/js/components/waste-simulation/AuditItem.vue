@@ -7,24 +7,32 @@
             <div class="table-div">
                 <div>Nombre de repas produits</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>Coût de revient d'un repas</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>Poids moyen d'un repas (en g)</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>Coût de traitement par tonne (€)</div>
             </div>
             <div class="table-div">
                 <div>Volume de gaspillage alimentaire (tonnes).</div>
             </div>
 
-            <div class="table-div highlighted-label-1">
-                <div>Estimation du gaspillage alimentaire (en €)</div>
-            </div>
-            <div class="table-div highlighted-label-2">
-                <div>Estimation du gaspillage alimentaire (équivalence en nombre de repas)</div>
+            <div class="flex results text-center">
+                <div class="estimate pt-2">
+                    Estimation du gaspillage alimentaire
+                </div>
+                <div class="table-div highlighted-label-1 result">
+                    <div>en g par repas</div>
+                </div>
+                <div class="table-div highlighted-label-2 result">
+                    <div>en €</div>
+                </div>
+                <div class="table-div highlighted-label-1 result">
+                    <div>en nombre de repas</div>
+                </div>
             </div>
         </div>
 
@@ -35,19 +43,22 @@
             <div class="table-div">
                 <div>{{ this.separateThousands(this.input.dishesNumber) }}</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>{{ this.input.dishCost }}</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>{{ this.input.dishWeight }}</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>{{ this.input.wasteTreatmentCost }}</div>
             </div>
             <div class="table-div">
                 <div>{{ this.foodWasteVolume }}</div>
             </div>
 
+            <div class="table-div">
+                <div>{{ this.ratio }}</div>
+            </div>
             <div class="table-div">
                 <div>{{ this.separateThousands(this.foodWasteCost) }}</div>
             </div>
@@ -114,7 +125,8 @@ export default {
             foodWasteVolume: this.foodWasteVolume,
             foodWasteCost: this.foodWasteCost,
             wasteCostPerDish: this.wasteCostPerDish,
-            amountOfDishesWasted: this.amountOfDishesWasted
+            amountOfDishesWasted: this.amountOfDishesWasted,
+            ratio: this.ratio
         };
 
         // Par souci de practicité, on stocke tout dans un unique objet

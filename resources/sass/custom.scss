@@ -277,6 +277,16 @@ input:invalid {
     text-align: left;
 }
 
+.table-div.shorter {
+    -webkit-box-flex: 0.5;
+    -webkit-flex-grow: 0.5;
+    -ms-flex-positive: 0.5;
+    flex-grow: 0.5;
+    -webkit-flex-basis: 10%;
+    -ms-flex-preferred-size: 10%;
+    flex-basis: 10%;
+}
+
 .simulations .table-row::before,
 .simulations .table-row .trash-icon {
     display: flex;
@@ -318,6 +328,19 @@ input:invalid {
 }
 .table-header .table-div.highlighted-label-1 {
     background-color: rgba(106, 32, 171, 0.9);
+}
+.results {
+    -webkit-flex: 0 39%;
+    -ms-flex: 0 39%;
+    flex: 0 39%;
+    flex-wrap: wrap;
+}
+.result {
+    flex: 1;
+}
+.estimate {
+    width: 100%;
+    background-color: var(--highlighted-labels);
 }
 .handle {
     cursor: move;

@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 // ROUTES BACK-END
 
 // Restes de l'appli CO2
-// Route::get('/api/products', 'ProductsController@index');
-// Route::get('/api/origins', 'OriginsController@index');
-// Route::get('/api/categories', 'CategoriesController@index');
+ Route::get('/api/products', 'ProductsController@index');
+ Route::get('/api/origins', 'OriginsController@index');
+ Route::get('/api/categories', 'CategoriesController@index');
 
 
 // Endpoints pour notre API

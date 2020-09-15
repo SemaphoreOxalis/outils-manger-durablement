@@ -38,5 +38,9 @@ export default {
                 this.foodWasteCost / this.auditRawData.dishCost
             );
         },
+
+        ratio: function() {
+            return this.roundToOneDecimal(this.foodWasteVolume / this.input.dishesNumber * 1000 * 1000);
+        }
     },
 }

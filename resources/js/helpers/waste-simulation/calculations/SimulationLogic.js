@@ -54,6 +54,14 @@ export default {
             return this.getDeltaPercentage(this.wasteCostPerDish, this.previousSim.wasteCostPerDish);
         },
 
+        ratioDelta() {
+            return this.getDelta(this.ratio, this.previousSim.ratio);
+        },
+
+        ratioDeltaPercentage() {
+            return this.getDeltaPercentage(this.ratio, this.previousSim.ratio);
+        },
+
         foodWasteCostDelta() {
             return this.getDelta(this.foodWasteCost, this.previousSim.foodWasteCost);
         },

@@ -8,6 +8,7 @@ export default {
             this.simulations[simulation.index].wasteCostPerDish = simulation.wasteCostPerDish;
             this.simulations[simulation.index].foodWasteCost = simulation.foodWasteCost;
             this.simulations[simulation.index].amountOfDishesWasted = simulation.amountOfDishesWasted;
+            this.simulations[simulation.index].ratio = simulation.ratio;
             this.saveChangesToLocalStorage();
         },
 
@@ -24,6 +25,7 @@ export default {
             this.simulations[simulation.index].deltas.wasteCostPerDish = simulation.wasteCostPerDishDelta;
             this.simulations[simulation.index].deltas.foodWasteCost = simulation.foodWasteCostDelta;
             this.simulations[simulation.index].deltas.amountOfDishesWasted = simulation.amountOfDishesWastedDelta;
+            this.simulations[simulation.index].deltas.ratio = simulation.ratioDelta;
 
             this.simulations[simulation.index].percentages = {};
             this.simulations[simulation.index].percentages.dishesNumber = simulation.dishesNumberDeltaPercentage;
@@ -34,6 +36,7 @@ export default {
             this.simulations[simulation.index].percentages.wasteCostPerDish = simulation.wasteCostPerDishDeltaPercentage;
             this.simulations[simulation.index].percentages.foodWasteCost = simulation.foodWasteCostDeltaPercentage;
             this.simulations[simulation.index].percentages.amountOfDishesWasted = simulation.amountOfDishesWastedDeltaPercentage;
+            this.simulations[simulation.index].percentages.ratio = simulation.ratioDeltaPercentage;
 
             this.saveChangesToLocalStorage();
         },
@@ -68,7 +71,8 @@ export default {
                     foodWasteVolume: this.dataSource.foodWasteVolume,
                     wasteCostPerDish: this.dataSource.wasteCostPerDish,
                     foodWasteCost: this.dataSource.foodWasteCost,
-                    amountOfDishesWasted: this.dataSource.amountOfDishesWasted
+                    amountOfDishesWasted: this.dataSource.amountOfDishesWasted,
+                    ratio: this.dataSource.ratio
                 }
             );
             this.saveChangesToLocalStorage();
