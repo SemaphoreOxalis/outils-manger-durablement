@@ -14,13 +14,13 @@
                 <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
             </div>
             <input v-model="simulation.dishesNumber"
-                   @change="saveChanges"
+                   @change="modifyWasteVolume()"
                    class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
                    min="1" step="1">
         </div>
-        <div class="table-div">
+        <div class="table-div shorter">
             <div class="d-flex justify-content-around">
                 <div><small>{{ dishCostDelta }}</small></div>
                 <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
@@ -32,7 +32,7 @@
                    required
                    min="0.01" step="0.01">
         </div>
-        <div class="table-div">
+        <div class="table-div shorter">
             <div class="d-flex justify-content-around">
                 <div><small>{{ dishWeightDelta }}</small></div>
                 <div v-html="getStyle(dishWeightDeltaPercentage, false)"></div>
@@ -44,7 +44,7 @@
                    required
                    min="1" step="1">
         </div>
-        <div class="table-div">
+        <div class="table-div shorter">
             <div class="d-flex justify-content-around">
                 <div><small>{{ wasteTreatmentCostDelta }}</small></div>
                 <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
@@ -62,13 +62,20 @@
                 <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
             </div>
             <input v-model="simulation.foodWasteVolume"
-                   @change="saveChanges"
+                   @change="setRatio"
                    class="ignore-draggable custom-input browser-default strong number-field"
                    type="number"
                    required
                    min="0.001" step="0.001">
         </div>
 
+        <div class="table-div">
+            <div class="d-flex justify-content-around">
+                <div><small>{{ ratioDelta }}</small></div>
+                <div v-html="getStyle(ratioDeltaPercentage, false)"></div>
+            </div>
+            <div class="strong align-with-inputs">{{ this.ratio }}</div>
+        </div>
         <div class="table-div">
             <div class="d-flex justify-content-around">
                 <div><small>{{ foodWasteCostDelta }}</small></div>
@@ -120,6 +127,12 @@ export default {
         previousSimulation: Object
     },
 
+    data() {
+        return {
+            ratio: null
+        }
+    },
+
     // Propriétés calculées du composant
     computed: {
 
@@ -159,6 +172,10 @@ export default {
         amountOfDishesWasted: function () {
             this.updateSimulationsComponent();
         },
+
+        ratio: function () {
+            this.updateSimulationsComponent();
+        },
     },
 
     // A l'initialisation du composant
@@ -167,6 +184,8 @@ export default {
         // Listeners
         events.$on('get-full-simulations-info-for-export', this.sendSimulationFullInfo);
         events.$on('validate-simulations', this.validate);
+
+        this.setRatio();
     },
 
     // Fonctions inhérentes à ce composant
@@ -181,6 +200,18 @@ export default {
         sendSimulationFullInfo() {
             this.$emit('update-simulations-component-will-full-info-for-export', this);
         },
+
+        modifyWasteVolume() {
+            this.simulation.foodWasteVolume = this.roundToThreeDecimal(
+                this.simulation.dishesNumber * this.ratio / 1000 / 1000
+            );
+            this.saveChanges();
+        },
+
+        setRatio() {
+            this.ratio = this.roundToTwoDecimal(this.simulation.foodWasteVolume / this.simulation.dishesNumber * 1000 * 1000);
+            this.saveChanges();
+        }
     },
 }
 </script>

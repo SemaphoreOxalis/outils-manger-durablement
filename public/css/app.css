@@ -11192,6 +11192,11 @@ input:invalid {
   text-align: left;
 }
 
+.table-div.shorter {
+  flex-grow: 0.5;
+  flex-basis: 10%;
+}
+
 .simulations .table-row::before,
 .simulations .table-row .trash-icon {
   display: flex;
@@ -11239,6 +11244,20 @@ input:invalid {
 
 .table-header .table-div.highlighted-label-1 {
   background-color: rgba(106, 32, 171, 0.9);
+}
+
+.results {
+  flex: 0 39%;
+  flex-wrap: wrap;
+}
+
+.result {
+  flex: 1;
+}
+
+.estimate {
+  width: 100%;
+  background-color: var(--highlighted-labels);
 }
 
 .handle {
