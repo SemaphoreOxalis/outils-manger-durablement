@@ -55,7 +55,7 @@ class ExportController extends Controller {
         $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (en €)');
         $sheet->setCellValue('I5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
 
-        $sheet->getStyle('B5:H5')->getFont()->setBold(true);
+        $sheet->getStyle('B5:I5')->getFont()->setBold(true);
 
         // Audit
         $sheet->setCellValue('A6', $request->input('audit.name'));
