@@ -9,53 +9,51 @@
             <div class="col">
                 <div class="info p-4 m-4">
                     <p>
-                        <i>Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est
-                            réalisé uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur</i>
+                        <i>{{ no_private_info_sent_disclaimer }}</i>
                     </p>
                 </div>
 
                 <div class="info p-4 m-4" v-if="previousAuditDetectedInLocalStorage">
-                    <p>
-                        Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière
-                        fois en date du <strong>{{ this.previousAuditDate }}</strong>
-                    </p>
+                    <p>{{ it_seems_you_have_sims_from }} <strong>{{ this.previousAuditDate }}</strong></p>
                     <div class="d-flex flex-column align-items-center">
                         <button class="button big-button d-flex p-4 justify-content-center mb-2" @click="goToPreviousAudit">
                             <div class="icon align-self-center mr-4"></div>
-                            <div class="text-left big-button-line-height"><strong>Reprendre</strong><br><small>la simulation<br>du {{ previousAuditDate }}</small></div>
+                            <div class="text-left big-button-line-height">
+                                <strong>{{ prevBtn.goTo }}</strong><br><small>{{ prevBtn.sim }}<br>{{ prevBtn.from }} {{ previousAuditDate }}</small>
+                            </div>
                         </button>
 
                         <div class="text-center">
-                            <button class="button alter" @click="deletePreviousAudit"><span class="icon mr-4"></span>Effacer toutes les données</button>
+                            <button class="button alter" @click="deletePreviousAudit"><span class="icon mr-4"></span>{{ delete_all_sims }}</button>
                         </div>
                     </div>
                 </div>
 
-                <p>Cet outil a été utilisé pour générer {{ this.counters.auditsCounter }} audits et {{ this.counters.simulationsCounter }} simulations</p>
+                <p>{{ cntrs.this_tool_has_generated }} {{ this.counters.auditsCounter }} {{ cntrs.audits }} {{ this.counters.simulationsCounter }} {{ cntrs.sims }}</p>
 
             </div>
 
             <div class="col p-4 m-4">
-                <p>Pour réaliser votre première simulation, <strong>vous aurez besoin</strong> :</p>
+                <p>{{ to_use_this }} <strong>{{ you_ll_need }}</strong> :</p>
                 <ul class="browser-default">
-                    <li>du nombre de repas produits dans votre établissement (par an)</li>
-                    <li>du coût de revient unitaire d'un repas
+                    <li>{{ need.dishes_number }}</li>
+                    <li>{{ need.dish_cost }}
                         <a class="button alter" @click="showModal = true">?</a>
                     </li>
-                    <li>du poids moyen d'un repas (en g)</li>
-                    <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
-                    <li>du coût de traitement des déchets (en euros par tonne)</li>
+                    <li>{{ need.dish_weight }}</li>
+                    <li>{{ need.waste_volume }}</li>
+                    <li>{{ need.waste_cost }}</li>
                 </ul>
                 <p>
-                    <strong>Grâce à ces données, vous obtiendrez une estimation économique et quantitative du gaspillage
-                    alimentaire de votre établissement en 15 minutes</strong>
+                    <strong>{{ you_ll_get_results_in_15m }}</strong>
                 </p>
 
                 <router-link to="/input" tag="span">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
                         <div class="icon align-self-center mr-4"></div>
-                        <div class="text-left big-button-line-height"><small>Je suis prêt</small> <br> <strong>Démarrer</strong> <br> <small>une nouvelle
-                            simulation</small></div>
+                        <div class="text-left big-button-line-height">
+                            <small>{{ lnchBtn.im_ready }}</small> <br> <strong>{{ lnchBtn.start }}</strong> <br> <small>{{ lnchBtn.new_sim }}</small>
+                        </div>
                     </button>
                 </router-link>
             </div>
@@ -65,6 +63,7 @@
 
 <script>
 // fenêtre modale d'aide
+import HomePageText from "../../../texts/wasteSimulator/HomePageText";
 import HelpModal from "./HelpModal";
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 import DateFormatter from "../../helpers/DateFormatter";
@@ -79,9 +78,10 @@ export default {
 
     // Bibliothèqye de fonctions custom
     mixins: [
+        HomePageText,
         LocalStorageHelper,
         DateFormatter,
-        DataBase
+        DataBase,
     ],
 
     // initialisation des données utilisées par le composant

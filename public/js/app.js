@@ -2135,6 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _texts_NotFoundPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../texts/NotFoundPageText */ "./resources/texts/NotFoundPageText.js");
 //
 //
 //
@@ -2148,7 +2149,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_texts_NotFoundPageText__WEBPACK_IMPORTED_MODULE_0__["default"]],
   mounted: function mounted() {
     $("body").addClass("dark");
     $("footer").addClass("hide");
@@ -2619,6 +2622,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/HelpModalText */ "./resources/texts/wasteSimulator/HelpModalText.js");
 //
 //
 //
@@ -2651,7 +2655,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_0__["default"]],
   methods: {
     // nécessaire pour notifier le composant parent (HomePage.vue)
     close: function close() {
@@ -2671,12 +2677,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _HelpModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelpModal */ "./resources/js/components/waste-simulation/HelpModal.vue");
-/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
-//
-//
+/* harmony import */ var _texts_wasteSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/HomePageText */ "./resources/texts/wasteSimulator/HomePageText.js");
+/* harmony import */ var _HelpModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelpModal */ "./resources/js/components/waste-simulation/HelpModal.vue");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 //
 //
 //
@@ -2745,13 +2750,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Déclaration de la parenté de ce composant
   components: {
-    HelpModal: _HelpModal__WEBPACK_IMPORTED_MODULE_0__["default"]
+    HelpModal: _HelpModal__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   // Bibliothèqye de fonctions custom
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_texts_wasteSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2806,11 +2812,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/InputValidation */ "./resources/js/helpers/waste-simulation/validation/InputValidation.js");
-/* harmony import */ var _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/InputLogic */ "./resources/js/helpers/waste-simulation/calculations/InputLogic.js");
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
-/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
+/* harmony import */ var _texts_wasteSimulator_InputPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/InputPageText */ "./resources/texts/wasteSimulator/InputPageText.js");
+/* harmony import */ var _helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/InputValidation */ "./resources/js/helpers/waste-simulation/validation/InputValidation.js");
+/* harmony import */ var _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/InputLogic */ "./resources/js/helpers/waste-simulation/calculations/InputLogic.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 //
 //
 //
@@ -2988,7 +2995,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 // import de bibliothèques de fonctions
-// validation des données saisies
+ // validation des données saisies
+
  // logique principale du composant
 
  // intéractions avec la base de donnée
@@ -3000,7 +3008,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions dans des fichiers externes, dans un souci de lisibilité)
-  mixins: [_helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_texts_wasteSimulator_InputPageText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_validation_InputValidation__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_waste_simulation_calculations_InputLogic__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_5__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -3084,10 +3092,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AuditItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AuditItem */ "./resources/js/components/waste-simulation/AuditItem.vue");
-/* harmony import */ var _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/SimulationValidation */ "./resources/js/helpers/waste-simulation/validation/SimulationValidation.js");
-/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/ResultsPageText */ "./resources/texts/wasteSimulator/ResultsPageText.js");
+/* harmony import */ var _AuditItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AuditItem */ "./resources/js/components/waste-simulation/AuditItem.vue");
+/* harmony import */ var _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/SimulationValidation */ "./resources/js/helpers/waste-simulation/validation/SimulationValidation.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3189,13 +3198,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 // import des composants enfants
+
  // Logique de validation
 
  // import des helpers
@@ -3205,10 +3209,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration des composants enfants
   components: {
-    AuditItem: _AuditItem__WEBPACK_IMPORTED_MODULE_0__["default"]
+    AuditItem: _AuditItem__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   // déclaration des helpers
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // données à récupérer de la page Input
   props: {
     userInput: [Object, undefined],
@@ -43724,11 +43728,9 @@ var render = function() {
     "div",
     { staticClass: "my-5 text-center not-found" },
     [
-      _c("h1", { staticClass: "my-5" }, [_vm._v("Oups !")]),
+      _c("h1", { staticClass: "my-5" }, [_vm._v(_vm._s(_vm.oops))]),
       _vm._v(" "),
-      _c("h3", { staticClass: "mb-4" }, [
-        _vm._v("Il semble que la page que vous avez demandée n'existe pas")
-      ]),
+      _c("h3", { staticClass: "mb-4" }, [_vm._v(_vm._s(_vm.not_found))]),
       _vm._v(" "),
       _c("router-link", { attrs: { to: "/", tag: "span" } }, [
         _c("button", { staticClass: "button big-button d-flex p-4" }, [
@@ -43737,11 +43739,11 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "big-button-line-height" }, [
-            _c("strong", [_vm._v("Retournez")]),
+            _c("strong", [_vm._v(_vm._s(_vm.go_back))]),
             _vm._v(" "),
             _c("br"),
             _vm._v(" "),
-            _c("small", [_vm._v("à l'accueil")])
+            _c("small", [_vm._v(_vm._s(_vm.to_home))])
           ])
         ])
       ])
@@ -44186,31 +44188,25 @@ var render = function() {
       _c("div", { staticClass: "modal-wrapper" }, [
         _c("div", { staticClass: "modal-container" }, [
           _c("div", { staticClass: "modal-body" }, [
-            _c("p", [
-              _vm._v("Le prix de revient peut être calculé à partir :")
-            ]),
+            _c("p", [_vm._v(_vm._s(_vm.dish_cost_is_calculated))]),
             _vm._v(" "),
             _c("ul", [
-              _c("li", [_vm._v("du montant total des achats alimentaires")]),
+              _c("li", [_vm._v(_vm._s(_vm.from.food_cost))]),
               _vm._v(" "),
-              _c("li", [
-                _vm._v("de la masse salariale de l'équipe de restauration")
-              ]),
+              _c("li", [_vm._v(_vm._s(_vm.from.team_size))]),
               _vm._v(" "),
-              _c("li", [_vm._v("du coût des investissements")]),
+              _c("li", [_vm._v(_vm._s(_vm.from.investment))]),
               _vm._v(" "),
-              _c("li", [_vm._v("du coût de l'énergie")])
+              _c("li", [_vm._v(_vm._s(_vm.from.energy_cost))])
             ]),
             _vm._v(" "),
             _c("p", [
-              _c("strong", [_vm._v("OU")]),
-              _vm._v(
-                ", dans le cas où votre établissement fait appel à un prestataire :"
-              )
+              _c("strong", [_vm._v(_vm._s(_vm.or_with))]),
+              _vm._v(", " + _vm._s(_vm.if_you_externalize))
             ]),
             _vm._v(" "),
             _c("ul", [
-              _c("li", [_vm._v("du coût unitaire d'un repas facturé")])
+              _c("li", [_vm._v(_vm._s(_vm.from.unit_cost_of_bought_dish))])
             ])
           ]),
           _vm._v(" "),
@@ -44221,7 +44217,13 @@ var render = function() {
                 staticClass: "modal-default-button button alter",
                 on: { click: _vm.close }
               },
-              [_vm._v("\n                        OK\n                    ")]
+              [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.okBtn) +
+                    "\n                    "
+                )
+              ]
             )
           ])
         ])
@@ -44267,14 +44269,16 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "info p-4 m-4" }, [
+            _c("p", [
+              _c("i", [_vm._v(_vm._s(_vm.no_private_info_sent_disclaimer))])
+            ])
+          ]),
           _vm._v(" "),
           _vm.previousAuditDetectedInLocalStorage
             ? _c("div", { staticClass: "info p-4 m-4" }, [
                 _c("p", [
-                  _vm._v(
-                    "\n                    Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière\n                    fois en date du "
-                  ),
+                  _vm._v(_vm._s(_vm.it_seems_you_have_sims_from) + " "),
                   _c("strong", [_vm._v(_vm._s(this.previousAuditDate))])
                 ]),
                 _vm._v(" "),
@@ -44300,12 +44304,16 @@ var render = function() {
                           "div",
                           { staticClass: "text-left big-button-line-height" },
                           [
-                            _c("strong", [_vm._v("Reprendre")]),
+                            _c("strong", [_vm._v(_vm._s(_vm.prevBtn.goTo))]),
                             _c("br"),
                             _c("small", [
-                              _vm._v("la simulation"),
+                              _vm._v(_vm._s(_vm.prevBtn.sim)),
                               _c("br"),
-                              _vm._v("du " + _vm._s(_vm.previousAuditDate))
+                              _vm._v(
+                                _vm._s(_vm.prevBtn.from) +
+                                  " " +
+                                  _vm._s(_vm.previousAuditDate)
+                              )
                             ])
                           ]
                         )
@@ -44323,7 +44331,7 @@ var render = function() {
                           _c("span", { staticClass: "icon mr-4" }, [
                             _vm._v("")
                           ]),
-                          _vm._v("Effacer toutes les données")
+                          _vm._v(_vm._s(_vm.delete_all_sims))
                         ]
                       )
                     ])
@@ -44334,11 +44342,15 @@ var render = function() {
           _vm._v(" "),
           _c("p", [
             _vm._v(
-              "Cet outil a été utilisé pour générer " +
+              _vm._s(_vm.cntrs.this_tool_has_generated) +
+                " " +
                 _vm._s(this.counters.auditsCounter) +
-                " audits et " +
+                " " +
+                _vm._s(_vm.cntrs.audits) +
+                " " +
                 _vm._s(this.counters.simulationsCounter) +
-                " simulations"
+                " " +
+                _vm._s(_vm.cntrs.sims)
             )
           ])
         ]),
@@ -44347,19 +44359,17 @@ var render = function() {
           "div",
           { staticClass: "col p-4 m-4" },
           [
-            _vm._m(1),
+            _c("p", [
+              _vm._v(_vm._s(_vm.to_use_this) + " "),
+              _c("strong", [_vm._v(_vm._s(_vm.you_ll_need))]),
+              _vm._v(" :")
+            ]),
             _vm._v(" "),
             _c("ul", { staticClass: "browser-default" }, [
-              _c("li", [
-                _vm._v(
-                  "du nombre de repas produits dans votre établissement (par an)"
-                )
-              ]),
+              _c("li", [_vm._v(_vm._s(_vm.need.dishes_number))]),
               _vm._v(" "),
               _c("li", [
-                _vm._v(
-                  "du coût de revient unitaire d'un repas\n                    "
-                ),
+                _vm._v(_vm._s(_vm.need.dish_cost) + "\n                    "),
                 _c(
                   "a",
                   {
@@ -44374,20 +44384,16 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("li", [_vm._v("du poids moyen d'un repas (en g)")]),
+              _c("li", [_vm._v(_vm._s(_vm.need.dish_weight))]),
               _vm._v(" "),
-              _c("li", [
-                _vm._v(
-                  "du volume de déchets ménagers produits par votre établissement (en tonnes)"
-                )
-              ]),
+              _c("li", [_vm._v(_vm._s(_vm.need.waste_volume))]),
               _vm._v(" "),
-              _c("li", [
-                _vm._v("du coût de traitement des déchets (en euros par tonne)")
-              ])
+              _c("li", [_vm._v(_vm._s(_vm.need.waste_cost))])
             ]),
             _vm._v(" "),
-            _vm._m(2),
+            _c("p", [
+              _c("strong", [_vm._v(_vm._s(_vm.you_ll_get_results_in_15m))])
+            ]),
             _vm._v(" "),
             _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
               _c(
@@ -44405,19 +44411,15 @@ var render = function() {
                     "div",
                     { staticClass: "text-left big-button-line-height" },
                     [
-                      _c("small", [_vm._v("Je suis prêt")]),
+                      _c("small", [_vm._v(_vm._s(_vm.lnchBtn.im_ready))]),
                       _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
-                      _c("strong", [_vm._v("Démarrer")]),
+                      _c("strong", [_vm._v(_vm._s(_vm.lnchBtn.start))]),
                       _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
-                      _c("small", [
-                        _vm._v(
-                          "une nouvelle\n                        simulation"
-                        )
-                      ])
+                      _c("small", [_vm._v(_vm._s(_vm.lnchBtn.new_sim))])
                     ]
                   )
                 ]
@@ -44431,44 +44433,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "info p-4 m-4" }, [
-      _c("p", [
-        _c("i", [
-          _vm._v(
-            "Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est\n                        réalisé uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur"
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Pour réaliser votre première simulation, "),
-      _c("strong", [_vm._v("vous aurez besoin")]),
-      _vm._v(" :")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("strong", [
-        _vm._v(
-          "Grâce à ces données, vous obtiendrez une estimation économique et quantitative du gaspillage\n                alimentaire de votre établissement en 15 minutes"
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -44495,20 +44460,26 @@ var render = function() {
       ? _c("div", { staticClass: "editing-mask" })
       : _vm._e(),
     _vm._v(" "),
-    _vm._m(0),
+    _c("h4", { staticClass: "text-center mb-4" }, [
+      _vm._v(_vm._s(_vm.get_an_audit) + "\n        "),
+      _c("br"),
+      _vm._v(" " + _vm._s(_vm.in_15m))
+    ]),
     _vm._v(" "),
     _c("ul", { staticClass: "stepper linear" }, [
       _c("li", { staticClass: "step" }, [
-        _c("div", { staticClass: "step-title" }, [_vm._v("Les dates")]),
+        _c("div", { staticClass: "step-title" }, [
+          _vm._v(_vm._s(_vm.steps.dates))
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "step-content" }, [
           _c("h4", { staticClass: "col-12" }, [
-            _vm._v("Précisez la période sur laquelle vos données vont porter :")
+            _vm._v(_vm._s(_vm.step_instruction.dates))
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row " }, [
             _c("div", { staticClass: "col col-6" }, [
-              _c("label", [_vm._v("Date de début :")]),
+              _c("label", [_vm._v(_vm._s(_vm.labels.start_date))]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44524,6 +44495,7 @@ var render = function() {
                 attrs: {
                   type: "date",
                   id: "start",
+                  required: "",
                   max: _vm.userInput.endDate
                 },
                 domProps: { value: _vm.userInput.startDate },
@@ -44539,7 +44511,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col col-6" }, [
-              _c("label", [_vm._v("Date de fin :")]),
+              _c("label", [_vm._v(_vm._s(_vm.labels.end_date))]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44555,6 +44527,7 @@ var render = function() {
                 attrs: {
                   type: "date",
                   id: "end",
+                  required: "",
                   min: _vm.userInput.startDate
                 },
                 domProps: { value: _vm.userInput.endDate },
@@ -44570,25 +44543,28 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "step-actions" }, [
+            _c("button", { staticClass: "button next-step" }, [
+              _vm._v(_vm._s(_vm.nextBtn) + " "),
+              _c("span", { staticClass: "icon" }, [_vm._v("")])
+            ])
+          ])
         ])
       ]),
       _vm._v(" "),
       _c("li", { staticClass: "step" }, [
         _c("div", { staticClass: "step-title waves-effect" }, [
-          _vm._v("Les repas")
+          _vm._v(_vm._s(_vm.steps.dishes))
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "step-content" }, [
           _c("h4", { staticClass: "col-12" }, [
-            _vm._v(
-              "Saisissez les informations sur les repas produits/commandés par votre cuisine\n                    sur cette période"
-            )
+            _vm._v(_vm._s(_vm.step_instruction.dishes))
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col col-4" }, [
-              _c("label", [_vm._v("Nombre de repas :")]),
+              _c("label", [_vm._v(_vm._s(_vm.labels.dishes_number) + " :")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44618,7 +44594,11 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm._m(2),
+              _c("label", [
+                _vm._v(_vm._s(_vm.labels.dish_cost)),
+                _c("sup", [_vm._v("*")]),
+                _vm._v(" :")
+              ]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44648,7 +44628,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("label", [_vm._v("Poids moyen d'un repas (en g) :")]),
+              _c("label", [_vm._v(_vm._s(_vm.labels.dish_weight) + " :")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44679,30 +44659,82 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _vm._m(3)
+            _c("div", { staticClass: "col col-8 mt-3 p-3 info" }, [
+              _c("div", { staticClass: "lighten-3" }, [
+                _c("p", [_vm._v(_vm._s(_vm.dish_cost_is_calculated_with))]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "\n                               " +
+                      _vm._s(_vm.calcul_1.line_1)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                               " +
+                      _vm._s(_vm.calcul_1.line_2)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                               " +
+                      _vm._s(_vm.calcul_1.line_3)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                               " +
+                      _vm._s(_vm.calcul_1.line_4)
+                  ),
+                  _c("br"),
+                  _vm._v(
+                    "\n                               " +
+                      _vm._s(_vm.calcul_1.line_5) +
+                      "\n                            "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("strong", [_vm._v(_vm._s(_vm.or_with))]),
+                  _vm._v(", " + _vm._s(_vm.if_you_externalize) + " :")
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v(_vm._s(_vm.calcul_2))])
+              ])
+            ])
           ]),
           _vm._v(" "),
-          _vm._m(4)
+          _c("div", { staticClass: "step-actions" }, [
+            _c("button", { staticClass: "button alter previous-step" }, [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(" " + _vm._s(_vm.prevBtn))
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "button next-step" }, [
+              _vm._v(_vm._s(_vm.nextBtn) + " "),
+              _c("span", { staticClass: "icon" }, [_vm._v("")])
+            ])
+          ])
         ])
       ]),
       _vm._v(" "),
       _c("li", { staticClass: "step" }, [
         _c("div", { staticClass: "step-title waves-effect" }, [
-          _vm._v("Les déchets")
+          _vm._v(_vm._s(_vm.steps.wastes))
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "step-content" }, [
           _c("h4", { staticClass: "col-12" }, [
-            _vm._v(
-              "Saisissez les informations sur les déchets (hors déchets médicaux pour les\n                    structures médicales) sur la même période."
-            )
+            _vm._v(_vm._s(_vm.step_instruction.wastes))
           ]),
           _vm._v(" "),
-          _vm._m(5),
+          _c("p", [
+            _c("a", { attrs: { href: "#" } }, [
+              _vm._v(_vm._s(_vm.learn_more_about_profiling_ones_wastes) + " "),
+              _c("span", { staticClass: "icon" }, [_vm._v("")])
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col col-3" }, [
-              _c("label", [_vm._v("Volume constaté (en tonnes) :")]),
+              _c("label", [_vm._v(_vm._s(_vm.labels.waste_volume) + " :")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44737,7 +44769,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("label", [_vm._v("Coût de traitement par tonnes (en €) :")]),
+              _c("label", [_vm._v(_vm._s(_vm.labels.waste_cost) + " :")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
@@ -44778,7 +44810,24 @@ var render = function() {
               { staticClass: "col col-9 reference-values info p-3 mt-3" },
               [
                 _vm.defaultValues
-                  ? _c("p", [_vm._v("Suite à la "), _vm._m(6), _vm._v(",")])
+                  ? _c("p", [
+                      _vm._v(_vm._s(_vm.following) + " "),
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html",
+                            target: "_blank"
+                          }
+                        },
+                        [
+                          _vm._v(_vm._s(_vm.niort_waste_profiling) + " "),
+                          _c("span", { staticClass: "icon" }, [_vm._v("")])
+                        ]
+                      ),
+                      _vm._v(",")
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _c(
@@ -44792,7 +44841,8 @@ var render = function() {
                   [
                     _c("p", [
                       _vm._v(
-                        "Il a été constaté que la part des restes alimentaires représente environ\n                                "
+                        _vm._s(_vm.it_has_been_discovered) +
+                          "\n                                "
                       ),
                       _vm.editingReferenceValues
                         ? _c("span", [
@@ -44847,20 +44897,25 @@ var render = function() {
                             )
                           ]),
                       _vm._v(
-                        "\n                                % du volume global des ordures ménagères, soit dans votre cas\n                                "
+                        "\n                                " +
+                          _vm._s(_vm.percent_of_global_waste_volume) +
+                          "\n                                "
                       ),
                       _c("strong", [
                         _vm._v(
                           _vm._s(
                             _vm.foodLeftoversVolumeInGlobalWasteInYourCase
-                          ) + " tonnes"
+                          ) +
+                            " " +
+                            _vm._s(_vm.tons)
                         )
                       ])
                     ]),
                     _vm._v(" "),
                     _c("p", [
                       _vm._v(
-                        "Sans action particulière,\n                                "
+                        _vm._s(_vm.without_any_change) +
+                          ",\n                                "
                       ),
                       _vm.editingReferenceValues
                         ? _c("span", [
@@ -44915,12 +44970,15 @@ var render = function() {
                             )
                           ]),
                       _vm._v(
-                        "\n                                % de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas\n                                "
+                        "\n                                " +
+                          _vm._s(_vm.percent_of_this_volume) +
+                          "\n                                "
                       ),
                       _c("strong", [
                         _vm._v(
                           _vm._s(_vm.actualFoodLeftoversInFoodWasteInYourCase) +
-                            " tonnes"
+                            " " +
+                            _vm._s(_vm.tons)
                         )
                       ])
                     ]),
@@ -44933,7 +44991,12 @@ var render = function() {
                             attrs: { disabled: _vm.areThereInvalidValues },
                             on: { click: _vm.saveLocalReferenceValues }
                           },
-                          [_vm._v("OK\n                            ")]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.okBtn) +
+                                "\n                            "
+                            )
+                          ]
                         )
                       : _vm._e()
                   ]
@@ -44943,7 +45006,8 @@ var render = function() {
                 _vm._v(" "),
                 _c("p", [
                   _vm._v(
-                    "Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n'hésitez pas à\n                            "
+                    _vm._s(_vm.dont_hesitate_to) +
+                      "\n                            "
                   ),
                   _c(
                     "button",
@@ -44956,9 +45020,11 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("modifier ces valeurs")]
+                    [_vm._v(_vm._s(_vm.edit_values))]
                   ),
-                  _vm._v("\n                            ou à "),
+                  _vm._v(
+                    "\n                            " + _vm._s(_vm.or_to) + " "
+                  ),
                   _c(
                     "button",
                     {
@@ -44970,7 +45036,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("les réinitialiser à leurs valeur par défaut")]
+                    [_vm._v(_vm._s(_vm.reset_values))]
                   )
                 ])
               ]
@@ -44981,7 +45047,10 @@ var render = function() {
             "div",
             { staticClass: "step-actions pb-4" },
             [
-              _vm._m(7),
+              _c("button", { staticClass: "button alter previous-step" }, [
+                _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                _vm._v(" " + _vm._s(_vm.prevBtn))
+              ]),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -45002,11 +45071,16 @@ var render = function() {
                     "button",
                     {
                       staticClass: "button",
-                      attrs: { id: "launching-audit-button" }
+                      attrs: {
+                        disabled: _vm.areThereInvalidData,
+                        id: "launching-audit-button"
+                      }
                     },
                     [
                       _vm._v(
-                        "\n                            Je lance ma simulation\n                        "
+                        "\n                            " +
+                          _vm._s(_vm.start_sim) +
+                          "\n                        "
                       )
                     ]
                   )
@@ -45020,125 +45094,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", { staticClass: "text-center mb-4" }, [
-      _vm._v(
-        "Obtenez une estimation économique et quantitative du gaspillage alimentaire\n        "
-      ),
-      _c("br"),
-      _vm._v(" de votre établissement en 15 minutes")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "step-actions" }, [
-      _c("button", { staticClass: "button next-step" }, [
-        _vm._v("suivant "),
-        _c("span", { staticClass: "icon" }, [_vm._v("")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [
-      _vm._v("Coût de revient d'un repas"),
-      _c("sup", [_vm._v("*")]),
-      _vm._v(" :")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col col-8 mt-3 p-3 info" }, [
-      _c("div", { staticClass: "lighten-3" }, [
-        _c("p", [
-          _vm._v(
-            "*Le prix de revient d’un repas peut être calculé grâce à la formule suivante :"
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "[(montant total des achats alimentaires (matière première)\n                                + masse salariale de l'équipe de restauration\n                                + investissements\n                                + coût de l'énergie)\n                                / nombre de repas produits]"
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _c("strong", [_vm._v("ou")]),
-          _vm._v(", en cas d'externalisation :")
-        ]),
-        _vm._v(" "),
-        _c("p", [_vm._v("[coût facturé / nombre de repas produits]")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "step-actions" }, [
-      _c("button", { staticClass: "button alter previous-step" }, [
-        _c("span", { staticClass: "icon" }, [_vm._v("")]),
-        _vm._v(" retour")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "button next-step" }, [
-        _vm._v("suivant "),
-        _c("span", { staticClass: "icon" }, [_vm._v("")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("a", { attrs: { href: "#" } }, [
-        _vm._v(
-          "En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets "
-        ),
-        _c("span", { staticClass: "icon" }, [_vm._v("")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        attrs: {
-          href:
-            "https://www.techopital.com/le-ch-de-niort-travaille-sur-un-modele-de-diagnostic-du-gaspillage-alimentaire-NS_4425.html",
-          target: "_blank"
-        }
-      },
-      [
-        _vm._v("caractérisation des déchets du C.H de Niort "),
-        _c("span", { staticClass: "icon" }, [_vm._v("")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "button alter previous-step" }, [
-      _c("span", { staticClass: "icon" }, [_vm._v("")]),
-      _vm._v(" retour")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -45169,7 +45125,7 @@ var render = function() {
       "div",
       [
         _c("h4", { staticClass: "mb-4 text-center" }, [
-          _vm._v("Résultats et comparaisons de vos simulations")
+          _vm._v(_vm._s(_vm.your_results))
         ]),
         _vm._v(" "),
         _vm.showResultsModal
@@ -45179,14 +45135,12 @@ var render = function() {
                   _c("div", { staticClass: "modal-container" }, [
                     _c("div", { staticClass: "modal-body" }, [
                       _c("p", [
-                        _vm._v(
-                          "Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire."
-                        )
+                        _vm._v(_vm._s(_vm.modal.you_just_made_an_audit))
                       ]),
                       _vm._v(" "),
                       _c("p", [
                         _vm._v(
-                          "Il estime le coût de votre gaspillage alimentaire à "
+                          _vm._s(_vm.modal.your_food_waste_amounts_to) + " "
                         ),
                         _c("strong", [
                           _c("span", {
@@ -45196,7 +45150,9 @@ var render = function() {
                           })
                         ]),
                         _vm._v(
-                          " € (soit l'équivalent de\n                                "
+                          " " +
+                            _vm._s(_vm.modal.euros_or) +
+                            "\n                                    "
                         ),
                         _c("strong", [
                           _c("span", {
@@ -45207,18 +45163,18 @@ var render = function() {
                             }
                           })
                         ]),
-                        _vm._v(" repas)")
+                        _vm._v(" " + _vm._s(_vm.modal.dishes))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(_vm._s(_vm.modal.you_can_add_sims_to_this_table))
                       ]),
                       _vm._v(" "),
                       _c("p", [
                         _vm._v(
-                          "Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos\n                                pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas..."
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [
-                        _vm._v(
-                          "Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas\n                                à expérimenter !"
+                          _vm._s(
+                            _vm.modal.each_sim_is_compared_to_the_one_above
+                          )
                         )
                       ])
                     ]),
@@ -45236,7 +45192,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                Fermer\n                            "
+                            "\n                                    " +
+                              _vm._s(_vm.modal.closeBtn) +
+                              "\n                                "
                           )
                         ]
                       )
@@ -45251,7 +45209,7 @@ var render = function() {
           _c("div", { staticClass: "d-flex justify-content-end" }, [
             !_vm.legendShown
               ? _c("span", { staticClass: "mr-2 align-self-center colored" }, [
-                  _vm._v("Mode d'emploi")
+                  _vm._v(_vm._s(_vm.how_to.title))
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -45276,9 +45234,61 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "collapse", attrs: { id: "legend" } }, [
+            _c("p", [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v(" " + _vm._s(_vm.how_to.add_sims_to_audit))
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.how_to.these_fields,
+                    expression: "how_to.these_fields"
+                  }
+                ],
+                staticClass: "custom-input browser-default",
+                attrs: { type: "text", readonly: "" },
+                domProps: { value: _vm.how_to.these_fields },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.how_to, "these_fields", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(
+                "\n                        " + _vm._s(_vm.how_to.are_editable)
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v(" " + _vm._s(_vm.how_to.reorganize_sims))
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v(" " + _vm._s(_vm.how_to.delete_one_sim))
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v(" " + _vm._s(_vm.how_to.delete_all_sims))
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+              _vm._v(" " + _vm._s(_vm.how_to.export_sims))
+            ])
+          ])
         ]),
-        _vm._v(" "),
+        _vm._v("\nhow_to.\n\n            "),
         _c(
           "div",
           { staticClass: "spacer" },
@@ -45294,7 +45304,7 @@ var render = function() {
                 { staticClass: "button", on: { click: _vm.addSimulation } },
                 [
                   _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                  _vm._v("Ajouter une simulation\n                ")
+                  _vm._v(_vm._s(_vm.btns.add_sim) + "\n                    ")
                 ]
               ),
               _vm._v(" "),
@@ -45306,9 +45316,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                  _vm._v(
-                    "Je réinitialise toutes mes simulations\n                "
-                  )
+                  _vm._v(_vm._s(_vm.btns.reset_sims) + "\n                    ")
                 ]
               ),
               _vm._v(" "),
@@ -45321,7 +45329,9 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                  _vm._v("Exporter le rapport de simulation\n                ")
+                  _vm._v(
+                    _vm._s(_vm.btns.export_sims) + "\n                    "
+                  )
                 ]
               )
             ])
@@ -45329,7 +45339,41 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _vm._m(1),
+        _c(
+          "div",
+          { staticClass: "text-center mt-5", attrs: { id: "further-actions" } },
+          [
+            _c("p", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.congrats_you_just_completed) +
+                  " "
+              ),
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href:
+                      "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation",
+                    target: "_blank"
+                  }
+                },
+                [
+                  _vm._v(_vm._s(_vm.egalim) + " "),
+                  _c("span", { staticClass: "icon" }, [_vm._v("")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v("\n                    " + _vm._s(_vm.what_to_do) + " "),
+              _c("a", { attrs: { href: "#" } }, [
+                _vm._v(_vm._s(_vm.go_to_anap_site) + " "),
+                _c("span", { staticClass: "icon" }, [_vm._v("")])
+              ])
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -45338,7 +45382,7 @@ var render = function() {
             _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
               _c("button", { staticClass: "button alter" }, [
                 _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                _vm._v("J'effectue un nouvel audit\n                ")
+                _vm._v(_vm._s(_vm.btns.new_audit) + "\n                    ")
               ])
             ])
           ],
@@ -45349,95 +45393,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "collapse", attrs: { id: "legend" } }, [
-      _c("p", [
-        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(
-          " Commencez par ajouter une ou plusieurs simulations à votre audit"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _c("input", {
-          staticClass: "custom-input browser-default",
-          attrs: { type: "text", value: "Les champs de ce type", readonly: "" }
-        }),
-        _vm._v("\n                    sont modifiables")
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(
-          " Vous pouvez maintenant réorganiser vos simulations en les faisant\n                    glisser"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(" Vous pouvez supprimer les simulations inutiles une par une")
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(" ou toutes les supprimer d'un seul clic")
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(
-          ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données\n                    sur votre logiciel de tableur'
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "text-center mt-5", attrs: { id: "further-actions" } },
-      [
-        _c("p", [
-          _vm._v(
-            "\n                Bravo, vous venez de franchir la première étape de la démarche de "
-          ),
-          _c(
-            "a",
-            {
-              attrs: {
-                href:
-                  "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation",
-                target: "_blank"
-              }
-            },
-            [
-              _vm._v("la loi EGALIM "),
-              _c("span", { staticClass: "icon" }, [_vm._v("")])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "\n                Que faire de ces résultats ? Rendez vous sur le "
-          ),
-          _c("a", { attrs: { href: "#" } }, [
-            _vm._v(
-              "site ressource de l'ANAP pour découvrir\n                les\n                actions réalisables "
-            ),
-            _c("span", { staticClass: "icon" }, [_vm._v("")])
-          ])
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -64694,7 +64650,6 @@ __webpack_require__.r(__webpack_exports__);
     // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     separateThousands: function separateThousands(number) {
       try {
-        console.log(number);
         return number.toLocaleString();
       } catch (e) {//
       }
@@ -65180,6 +65135,217 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/texts/NotFoundPageText.js":
+/*!*********************************************!*\
+  !*** ./resources/texts/NotFoundPageText.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      oops: 'Oups !',
+      not_found: 'Il semble que la page que vous avez demandée n\'existe pas',
+      go_back: 'Retournez',
+      to_home: 'à l\'accueil'
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/wasteSimulator/HelpModalText.js":
+/*!*********************************************************!*\
+  !*** ./resources/texts/wasteSimulator/HelpModalText.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      dish_cost_is_calculated: 'Le prix de revient peut être calculé à partir :',
+      from: {
+        food_cost: 'du montant total des achats alimentaires',
+        team_size: 'de la masse salariale de l\'équipe de restauration',
+        investment: 'du coût des investissements',
+        energy_cost: 'du coût de l\'énergie',
+        unit_cost_of_bought_dish: 'du coût unitaire d\'un repas facturé'
+      },
+      or_with: 'OU',
+      if_you_externalize: 'dans le cas où votre établissement fait appel à un prestataire :',
+      okBtn: 'OK'
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/wasteSimulator/HomePageText.js":
+/*!********************************************************!*\
+  !*** ./resources/texts/wasteSimulator/HomePageText.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      no_private_info_sent_disclaimer: 'Aucune des informations saisies sur cet outil ne sont sauvegardées en ligne. Le stockage est réalisé uniquement au sein de votre navigateur, et donc uniquement sur cet ordinateur',
+      it_seems_you_have_sims_from: 'Il semble que vous ayez déjà réalisé des simulations sur ce site depuis ce navigateur pour la dernière fois en date du',
+      prevBtn: {
+        goTo: 'Reprendre',
+        sim: 'la simulation',
+        from: 'du'
+      },
+      delete_all_sims: 'Effacer toutes les données',
+      cntrs: {
+        this_tool_has_generated: 'Cet outil a été utilisé pour générer',
+        audits: 'audits et',
+        sims: 'simulations'
+      },
+      to_use_this: 'Pour réaliser votre première simulation,',
+      you_ll_need: 'vous aurez besoin',
+      need: {
+        dishes_number: 'du nombre de repas produits dans votre établissement (par an)',
+        dish_cost: 'du coût de revient unitaire d\'un repas',
+        dish_weight: 'du poids moyen d\'un repas (en g)',
+        waste_volume: 'du volume de déchets ménagers produits par votre établissement (en tonnes)',
+        waste_cost: 'du coût de traitement des déchets (en euros par tonne)'
+      },
+      you_ll_get_results_in_15m: 'Grâce à ces données, vous obtiendrez une estimation économique et quantitative du gaspillage alimentaire de votre établissement en 15 minutes',
+      lnchBtn: {
+        im_ready: 'Je suis prêt',
+        start: 'Démarrer',
+        new_sim: 'une nouvelle simulation'
+      }
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/wasteSimulator/InputPageText.js":
+/*!*********************************************************!*\
+  !*** ./resources/texts/wasteSimulator/InputPageText.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      get_an_audit: 'Obtenez une estimation économique et quantitative du gaspillage alimentaire',
+      in_15m: 'de votre établissement en 15 minutes',
+      steps: {
+        dates: 'Les dates',
+        dishes: 'Les repas',
+        wastes: 'Les déchets'
+      },
+      step_instruction: {
+        dates: 'Précisez la période sur laquelle vos données vont porter :',
+        dishes: 'Saisissez les informations sur les repas produits/commandés par votre cuisine sur cette période',
+        wastes: 'Saisissez les informations sur les déchets (hors déchets médicaux pour les structures médicales) sur la même période.'
+      },
+      labels: {
+        start_date: 'Date de début :',
+        end_date: 'Date de fin :',
+        dishes_number: 'Nombre de repas',
+        dish_cost: 'Coût de revient d\'un repas',
+        dish_weight: 'Poids moyen d\'un repas (en g)',
+        waste_volume: 'Volume constaté (en tonnes)',
+        waste_cost: 'Coût de traitement par tonnes (en €)'
+      },
+      nextBtn: 'suivant',
+      prevBtn: 'retour',
+      okBtn: 'OK',
+      dish_cost_is_calculated_with: '*Le prix de revient d’un repas peut être calculé grâce à la formule suivante :',
+      calcul_1: {
+        line_1: '[(montant total des achats alimentaires (matière première)',
+        line_2: '+ masse salariale de l\'équipe de restauration',
+        line_3: '+ investissements',
+        line_4: '+ coût de l\'énergie)',
+        line_5: '/ nombre de repas produits]'
+      },
+      or_with: 'ou',
+      if_you_externalize: 'en cas d\'externalisation',
+      calcul_2: '[coût facturé / nombre de repas produits]',
+      learn_more_about_profiling_ones_wastes: 'En savoir plus sur la méthode pour réaliser la caractérisation de ses déchets',
+      following: 'Suite à la',
+      niort_waste_profiling: 'caractérisation des déchets du C.H de Niort',
+      it_has_been_discovered: 'Il a été constaté que la part des restes alimentaires représente environ',
+      percent_of_global_waste_volume: '% du volume global des ordures ménagères, soit dans votre cas',
+      tons: 'tonnes',
+      without_any_change: 'Sans action particulière',
+      percent_of_this_volume: '% de ces restes sont considérés comme des déchets issus du gaspillage, soit dans votre cas',
+      dont_hesitate_to: 'Bien sûr, si vous avez déjà effectué votre caractérisation et que vous disposez de chiffres plus précis, n\'hésitez pas à',
+      edit_values: 'modifier ces valeurs',
+      or_to: 'ou à',
+      reset_values: 'les réinitialiser à leurs valeur par défaut',
+      start_sim: 'Je lance ma simulation'
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/wasteSimulator/ResultsPageText.js":
+/*!***********************************************************!*\
+  !*** ./resources/texts/wasteSimulator/ResultsPageText.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      your_results: 'Résultats et comparaisons de vos simulations',
+      modal: {
+        you_just_made_an_audit: 'Vous venez de réaliser l\'audit simplifié de votre gaspillage alimentaire.',
+        your_food_waste_amounts_to: 'Il estime le coût de votre gaspillage alimentaire à',
+        euros_or: '€ (soit l\'équivalent de',
+        dishes: 'repas)',
+        you_can_add_sims_to_this_table: 'Le tableau ci-dessous vous permet d\'ajouter des simulations modélisant les modifications de vos pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...',
+        each_sim_is_compared_to_the_one_above: 'Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n\'hésitez pas à expérimenter !',
+        closeBtn: 'Fermer'
+      },
+      how_to: {
+        title: 'Mode d\'emploi',
+        add_sims_to_audit: 'Commencez par ajouter une ou plusieurs simulations à votre audit',
+        these_fields: 'Les champs de ce type',
+        are_editable: 'sont modifiables',
+        reorganize_sims: 'Vous pouvez maintenant réorganiser vos simulations en les faisant glisser',
+        delete_one_sim: 'Vous pouvez supprimer les simulations inutiles une par une',
+        delete_all_sims: 'ou toutes les supprimer d\'un seul clic',
+        export_sims: 'Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
+      },
+      btns: {
+        add_sim: 'Ajouter une simulation',
+        reset_sims: 'Je réinitialise toutes mes simulations',
+        export_sims: 'Exporter le rapport de simulation',
+        new_audit: 'J\'effectue un nouvel audit'
+      },
+      congrats_you_just_completed: 'Bravo, vous venez de franchir la première étape de la démarche de',
+      egalim: 'la loi EGALIM',
+      what_to_do: 'Que faire de ces résultats ? Rendez vous sur le',
+      go_to_anap_site: 'site ressource de l\'ANAP pour découvrir les actions réalisables'
+    };
+  }
+});
 
 /***/ }),
 
