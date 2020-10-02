@@ -54,7 +54,7 @@ export default {
         },
 
         // Ajoute une simulation
-        addSimulation() {
+        addSimulationToSimList() {
 
             this.getDataSourceForNewSimulation();
 

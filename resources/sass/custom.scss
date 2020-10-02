@@ -278,13 +278,13 @@ input:invalid {
 }
 
 .table-div.shorter {
-    -webkit-box-flex: 0.5;
-    -webkit-flex-grow: 0.5;
-    -ms-flex-positive: 0.5;
-    flex-grow: 0.5;
-    -webkit-flex-basis: 10%;
-    -ms-flex-preferred-size: 10%;
-    flex-basis: 10%;
+    -webkit-box-flex: 0.55;
+    -webkit-flex-grow: 0.55;
+    -ms-flex-positive: 0.55;
+    flex-grow: 0.55;
+    -webkit-flex-basis: 11%;
+    -ms-flex-preferred-size: 11%;
+    flex-basis: 11%;
 }
 
 .simulations .table-row::before,

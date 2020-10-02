@@ -132,7 +132,6 @@
                     unit: unit,
                     category: category,
                     origin: this.origins[2] // France par défaut
-
                 }
             },
             filterProducts(categoryId) {
@@ -149,37 +148,37 @@
     }
 </script>
 
-<!--<style>-->
-<!--    .left {-->
-<!--        border: 1px black solid;-->
-<!--    }-->
+<style>
+    .left {
+        border: 1px black solid;
+    }
 
-<!--    .middle {-->
-<!--        border: 1px black solid;-->
-<!--    }-->
+    .middle {
+        border: 1px black solid;
+    }
 
-<!--    .right {-->
-<!--        border: 1px black solid;-->
-<!--        min-height: 100px;-->
-<!--    }-->
+    .right {
+        border: 1px black solid;
+        min-height: 100px;
+    }
 
-<!--    .product {-->
-<!--        cursor: grab;-->
-<!--    }-->
+    .product {
+        cursor: grab;
+    }
 
-<!--    .moving {-->
-<!--        background-color: #1f6fb2;-->
-<!--    }-->
+    .moving {
+        background-color: #1f6fb2;
+    }
 
-<!--    .category {-->
-<!--        cursor: pointer;-->
-<!--    }-->
+    .category {
+        cursor: pointer;
+    }
 
-<!--    .selected {-->
-<!--        background-color: lime;-->
-<!--    }-->
+    .selected {
+        background-color: lime;
+    }
 
-<!--    input {-->
-<!--        width: 50px;-->
-<!--    }-->
-<!--</style>-->
+    input {
+        width: 50px;
+    }
+</style>

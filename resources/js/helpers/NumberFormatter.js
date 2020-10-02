@@ -17,6 +17,7 @@ export default {
         // return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
         separateThousands(number) {
             try {
+                console.log(number);
                 return number.toLocaleString();
             } catch (e) {
                 //

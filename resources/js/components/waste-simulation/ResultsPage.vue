@@ -107,6 +107,7 @@ import AuditItem from "./AuditItem"
 import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // import des helpers
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+import DataBase from "../../helpers/DataBase";
 
 export default {
 
@@ -118,7 +119,8 @@ export default {
     // déclaration des helpers
     mixins: [
         LocalStorageHelper,
-        SimulationValidation
+        SimulationValidation,
+        DataBase
     ],
 
     // données à récupérer de la page Input
@@ -145,6 +147,7 @@ export default {
         // Si on vient de la page de saisie
         if (this.userInput) {
             this.showResultsModal = true;
+            this.incrementAuditCounter();
             this.handleUserInput();
         }
 
@@ -166,7 +169,7 @@ export default {
             this.validateSimulations();
             this.fetchAuditResults();
             this.$forceUpdate();
-        }, 1);
+        }, 10);
     },
 
     // Fonctions inhérentes au composant
@@ -208,6 +211,7 @@ export default {
         // envoie une demande au composant concerné (AuditSimulationList.vue)
         addSimulation() {
             events.$emit('add-simulation');
+            this.incrementSimulationCounter();
         },
 
         // montre/cache la légende

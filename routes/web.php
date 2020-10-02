@@ -17,22 +17,26 @@ use Illuminate\Support\Facades\Route;
 // ROUTES BACK-END
 
 // Restes de l'appli CO2
-// Route::get('/api/products', 'ProductsController@index');
-// Route::get('/api/origins', 'OriginsController@index');
-// Route::get('/api/categories', 'CategoriesController@index');
+ Route::get('/api/products', 'ProductsController@index');
+ Route::get('/api/origins', 'OriginsController@index');
+ Route::get('/api/categories', 'CategoriesController@index');
 
 
 // Endpoints pour notre API
 Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
 Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesController@update');
 
+Route::get('/api/counters', 'CountersController@index');
+Route::patch('/api/counters/{counter}', 'CountersController@update');
+Route::patch('/api/counters/{counter}/increment', 'CountersController@increment');
+
 Route::post('/export', 'ExportController@export');
 
 
 // Commentez la première ligne et décommentez la 2e pour qu'il ne soit plus possible de s'enregistrer
 // ATTENTION :  tout utilisateur enregistré dispose des droits d'administrateur et peux donc accéder aux pages admin
-//Auth::routes();
-Auth::routes(['register' => false]);
+Auth::routes();
+//Auth::routes(['register' => false]);
 
 
 

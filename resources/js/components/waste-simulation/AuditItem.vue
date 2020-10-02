@@ -16,7 +16,7 @@
             <div class="table-div shorter">
                 <div>Coût de traitement par tonne (€)</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>Volume de gaspillage alimentaire (tonnes).</div>
             </div>
 
@@ -52,7 +52,7 @@
             <div class="table-div shorter">
                 <div>{{ this.input.wasteTreatmentCost }}</div>
             </div>
-            <div class="table-div">
+            <div class="table-div shorter">
                 <div>{{ this.foodWasteVolume }}</div>
             </div>
 

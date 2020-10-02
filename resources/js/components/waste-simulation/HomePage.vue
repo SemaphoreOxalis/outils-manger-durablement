@@ -30,6 +30,9 @@
                         </div>
                     </div>
                 </div>
+
+                <p>Cet outil a été utilisé pour générer {{ this.counters.auditsCounter }} audits et {{ this.counters.simulationsCounter }} simulations</p>
+
             </div>
 
             <div class="col p-4 m-4">
@@ -65,6 +68,7 @@
 import HelpModal from "./HelpModal";
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 import DateFormatter from "../../helpers/DateFormatter";
+import DataBase from "../../helpers/DataBase";
 
 export default {
 
@@ -76,12 +80,18 @@ export default {
     // Bibliothèqye de fonctions custom
     mixins: [
         LocalStorageHelper,
-        DateFormatter
+        DateFormatter,
+        DataBase
     ],
 
     // initialisation des données utilisées par le composant
     data() {
         return {
+            // initialise les compteurs
+            counters: {
+                auditsCounter: 0,
+                simulationsCounter: 0
+            },
 
             // par défaut, la fenêtre modale est masquée
             showModal: false,
@@ -95,6 +105,7 @@ export default {
     // A l'initialisation du composant
     created() {
         this.checkPreviousAuditFromLocalStorage();
+        this.fetchCountersFromDB();
     },
 
     methods: {

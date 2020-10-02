@@ -89,7 +89,7 @@ export default {
 
         // listeners
         events.$on('export-simulations', this.exportSimulations);
-        events.$on('add-simulation', this.addSimulation);
+        events.$on('add-simulation', this.addSimulationToSimList);
 
         // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
         this.getDataSourceForNewSimulation();

@@ -18,7 +18,7 @@
                             <input type="date"
                                    class="custom-input datepicker number-field browser-default"
                                    id="start"
-                                   required
+
                                    v-model="userInput.startDate"
                                    :max="userInput.endDate">
                         </div>
@@ -27,7 +27,7 @@
                             <input type="date"
                                    class="custom-input datepicker number-field browser-default"
                                    id="end"
-                                   required
+
                                    v-model="userInput.endDate"
                                    :min="userInput.startDate">
                         </div>
@@ -161,7 +161,7 @@
                     <div class="step-actions pb-4">
                         <button class="button alter previous-step"><span class="icon"></span> retour</button>
                         <router-link :to="{ name: 'results-page', params: { userInput, referenceValues }}" tag="span">
-                            <button :disabled="areThereInvalidData"
+                            <button
                                     class="button"
                                     id="launching-audit-button">
                                 Je lance ma simulation
