@@ -1938,7 +1938,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 //
 //
 //
@@ -1975,12 +1976,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-// import des fonctions utiles regroupées dans des fichiers 'helpers'
+ // import des fonctions utiles regroupées dans des fichiers 'helpers'
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de dépendance à ces bibliothèques de fonctions
-  mixins: [_helpers_DataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_texts_AdminPageText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -2084,6 +2085,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _texts_NavigationLinksText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../texts/NavigationLinksText */ "./resources/texts/NavigationLinksText.js");
 //
 //
 //
@@ -2107,7 +2109,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_texts_NavigationLinksText__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       dataInLocalStorage: false
@@ -2340,10 +2344,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/AuditLogic */ "./resources/js/helpers/waste-simulation/calculations/AuditLogic.js");
-/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
-/* harmony import */ var _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AuditSimulationList */ "./resources/js/components/waste-simulation/AuditSimulationList.vue");
+/* harmony import */ var _texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/ResultsPageText */ "./resources/texts/wasteSimulator/ResultsPageText.js");
+/* harmony import */ var _helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/calculations/AuditLogic */ "./resources/js/helpers/waste-simulation/calculations/AuditLogic.js");
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _AuditSimulationList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AuditSimulationList */ "./resources/js/components/waste-simulation/AuditSimulationList.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2427,7 +2432,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 // Imports des dépendances
-// logique du composant
+ // logique du composant
+
  // utiles pour arrondir les nombres et formatter les dates
 
 
@@ -2437,10 +2443,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Déclaration des composants enfants
   components: {
-    AuditSimulationList: _AuditSimulationList__WEBPACK_IMPORTED_MODULE_3__["default"]
+    AuditSimulationList: _AuditSimulationList__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
-  mixins: [_helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_waste_simulation_calculations_AuditLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"]],
   // données récupérées du composant parent (ResultsPage.vue)
   props: {
     auditRawData: Object
@@ -3103,7 +3109,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -43508,12 +43513,14 @@ var render = function() {
           "div",
           [
             _c("h2", { staticClass: "my-4" }, [
-              _vm._v("Panneau d'administration")
+              _vm._v(_vm._s(_vm.admin_title))
             ]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("p", { staticClass: "mb-4" }, [
+              _c("strong", [_vm._v(_vm._s(_vm.here_you_can_edit_values))])
+            ]),
             _vm._v(" "),
-            _c("h4", [_vm._v("Valeurs de référence")]),
+            _c("h4", [_vm._v(_vm._s(_vm.waste_ref_values.title))]),
             _vm._v(" "),
             _vm._l(_vm.values, function(value) {
               return _c("div", { key: value.id }, [
@@ -43556,7 +43563,7 @@ var render = function() {
               ])
             }),
             _vm._v(" "),
-            _c("h4", [_vm._v("Compteurs")]),
+            _c("h4", [_vm._v(_vm._s(_vm.cnters.title))]),
             _vm._v(" "),
             _vm._l(_vm.counters, function(counter) {
               return _c("div", { key: counter.id + 2 }, [
@@ -43592,34 +43599,17 @@ var render = function() {
                         _vm.$set(counter, "value", $event.target.value)
                       }
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v(" %")])
+                  })
                 ])
               ])
             })
           ],
           2
         )
-      : _c("div", [
-          _vm._v("\n        Vous n'avez pas l'autorisation d'être ici\n    ")
-        ])
+      : _c("div", [_vm._v("\n        " + _vm._s(_vm.go_away) + "\n    ")])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mb-4" }, [
-      _c("strong", [
-        _vm._v(
-          "Ici, vous pouvez modifier simplement les valeurs de référence utilisées par\n            l'application"
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -43679,13 +43669,13 @@ var render = function() {
       _c(
         "router-link",
         { staticClass: "menu-item button icon", attrs: { to: "/" } },
-        [_vm._v("\n        "), _c("span", [_vm._v("Accueil")])]
+        [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.home))])]
       ),
       _vm._v(" "),
       _c(
         "router-link",
         { staticClass: "menu-item button icon", attrs: { to: "/input" } },
-        [_vm._v("\n        "), _c("span", [_vm._v("Nouvel audit")])]
+        [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.new_audit))])]
       ),
       _vm._v(" "),
       _vm.dataInLocalStorage
@@ -43694,7 +43684,7 @@ var render = function() {
             { staticClass: "menu-item button icon", attrs: { to: "/results" } },
             [
               _vm._v("\n        "),
-              _c("span", [_vm._v("Reprendre simulation")])
+              _c("span", [_vm._v(_vm._s(_vm.resume_sim))])
             ]
           )
         : _vm._e()
@@ -43989,7 +43979,57 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm._m(0),
+      _c("div", { staticClass: "table-row table-header" }, [
+        _c("div", { staticClass: "table-div bigger" }, [
+          _c("div", [_vm._v(_vm._s(_vm.labels.name))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-div" }, [
+          _c("div", [_vm._v(_vm._s(_vm.labels.dishes_number))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-div shorter" }, [
+          _c("div", [_vm._v(_vm._s(_vm.labels.dish_cost))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-div shorter" }, [
+          _c("div", [_vm._v(_vm._s(_vm.labels.dish_weight))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-div shorter" }, [
+          _c("div", [_vm._v(_vm._s(_vm.labels.waste_cost))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "table-div shorter" }, [
+          _c("div", [_vm._v(_vm._s(_vm.labels.waste_volume))])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex results text-center" }, [
+          _c("div", { staticClass: "estimate pt-2" }, [
+            _vm._v(
+              "\n                " +
+                _vm._s(_vm.labels.waste_estimation.estimate) +
+                "\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-div highlighted-label-1 result" }, [
+            _c("div", [
+              _vm._v(_vm._s(_vm.labels.waste_estimation.in_g_per_dish))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-div highlighted-label-2 result" }, [
+            _c("div", [_vm._v(_vm._s(_vm.labels.waste_estimation.in_euros))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-div highlighted-label-1 result" }, [
+            _c("div", [
+              _vm._v(_vm._s(_vm.labels.waste_estimation.in_dishes_number))
+            ])
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-row ref" }, [
         _c("div", { staticClass: "table-div bigger" }, [
@@ -44040,58 +44080,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "table-row table-header" }, [
-      _c("div", { staticClass: "table-div bigger" }, [
-        _c("div", [_vm._v("Nom de la simulation")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-div" }, [
-        _c("div", [_vm._v("Nombre de repas produits")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-div shorter" }, [
-        _c("div", [_vm._v("Coût de revient d'un repas")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-div shorter" }, [
-        _c("div", [_vm._v("Poids moyen d'un repas (en g)")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-div shorter" }, [
-        _c("div", [_vm._v("Coût de traitement par tonne (€)")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-div shorter" }, [
-        _c("div", [_vm._v("Volume de gaspillage alimentaire (tonnes).")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "flex results text-center" }, [
-        _c("div", { staticClass: "estimate pt-2" }, [
-          _vm._v(
-            "\n                Estimation du gaspillage alimentaire\n            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-div highlighted-label-1 result" }, [
-          _c("div", [_vm._v("en g par repas")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-div highlighted-label-2 result" }, [
-          _c("div", [_vm._v("en €")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-div highlighted-label-1 result" }, [
-          _c("div", [_vm._v("en nombre de repas")])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -45152,7 +45141,7 @@ var render = function() {
                         _vm._v(
                           " " +
                             _vm._s(_vm.modal.euros_or) +
-                            "\n                                    "
+                            "\n                                "
                         ),
                         _c("strong", [
                           _c("span", {
@@ -45192,9 +45181,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                    " +
+                            "\n                                " +
                               _vm._s(_vm.modal.closeBtn) +
-                              "\n                                "
+                              "\n                            "
                           )
                         ]
                       )
@@ -45262,9 +45251,7 @@ var render = function() {
                   }
                 }
               }),
-              _vm._v(
-                "\n                        " + _vm._s(_vm.how_to.are_editable)
-              )
+              _vm._v("\n                    " + _vm._s(_vm.how_to.are_editable))
             ]),
             _vm._v(" "),
             _c("p", [
@@ -45288,7 +45275,7 @@ var render = function() {
             ])
           ])
         ]),
-        _vm._v("\nhow_to.\n\n            "),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "spacer" },
@@ -45304,7 +45291,7 @@ var render = function() {
                 { staticClass: "button", on: { click: _vm.addSimulation } },
                 [
                   _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                  _vm._v(_vm._s(_vm.btns.add_sim) + "\n                    ")
+                  _vm._v(_vm._s(_vm.btns.add_sim) + "\n                ")
                 ]
               ),
               _vm._v(" "),
@@ -45316,7 +45303,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                  _vm._v(_vm._s(_vm.btns.reset_sims) + "\n                    ")
+                  _vm._v(_vm._s(_vm.btns.reset_sims) + "\n                ")
                 ]
               ),
               _vm._v(" "),
@@ -45329,9 +45316,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                  _vm._v(
-                    _vm._s(_vm.btns.export_sims) + "\n                    "
-                  )
+                  _vm._v(_vm._s(_vm.btns.export_sims) + "\n                ")
                 ]
               )
             ])
@@ -45345,7 +45330,7 @@ var render = function() {
           [
             _c("p", [
               _vm._v(
-                "\n                    " +
+                "\n                " +
                   _vm._s(_vm.congrats_you_just_completed) +
                   " "
               ),
@@ -45366,7 +45351,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", [
-              _vm._v("\n                    " + _vm._s(_vm.what_to_do) + " "),
+              _vm._v("\n                " + _vm._s(_vm.what_to_do) + " "),
               _c("a", { attrs: { href: "#" } }, [
                 _vm._v(_vm._s(_vm.go_to_anap_site) + " "),
                 _c("span", { staticClass: "icon" }, [_vm._v("")])
@@ -45382,7 +45367,7 @@ var render = function() {
             _c("router-link", { attrs: { to: "/input", tag: "span" } }, [
               _c("button", { staticClass: "button alter" }, [
                 _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-                _vm._v(_vm._s(_vm.btns.new_audit) + "\n                    ")
+                _vm._v(_vm._s(_vm.btns.new_audit) + "\n                ")
               ])
             ])
           ],
@@ -65138,6 +65123,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/texts/AdminPageText.js":
+/*!******************************************!*\
+  !*** ./resources/texts/AdminPageText.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      admin_title: 'Panneau d\'administration',
+      here_you_can_edit_values: 'Ici, vous pouvez modifier simplement les valeurs de référence utilisées par l\'application',
+      waste_ref_values: {
+        title: 'Valeurs de référence'
+      },
+      cnters: {
+        title: 'Compteurs'
+      },
+      go_away: 'Vous n\'avez pas l\'autorisation d\'être ici'
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/NavigationLinksText.js":
+/*!************************************************!*\
+  !*** ./resources/texts/NavigationLinksText.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      home: 'Accueil',
+      new_audit: 'Nouvel audit',
+      resume_sim: 'Reprendre simulation'
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/texts/NotFoundPageText.js":
 /*!*********************************************!*\
   !*** ./resources/texts/NotFoundPageText.js ***!
@@ -65313,6 +65346,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      // RESULTS PAGE component
       your_results: 'Résultats et comparaisons de vos simulations',
       modal: {
         you_just_made_an_audit: 'Vous venez de réaliser l\'audit simplifié de votre gaspillage alimentaire.',
@@ -65342,7 +65376,22 @@ __webpack_require__.r(__webpack_exports__);
       congrats_you_just_completed: 'Bravo, vous venez de franchir la première étape de la démarche de',
       egalim: 'la loi EGALIM',
       what_to_do: 'Que faire de ces résultats ? Rendez vous sur le',
-      go_to_anap_site: 'site ressource de l\'ANAP pour découvrir les actions réalisables'
+      go_to_anap_site: 'site ressource de l\'ANAP pour découvrir les actions réalisables',
+      // AUDIT component
+      labels: {
+        name: 'Nom de la simulation',
+        dishes_number: 'Nombre de repas produits',
+        dish_cost: 'Coût de revient d\'un repas',
+        dish_weight: 'Poids moyen d\'un repas (en g)',
+        waste_cost: 'Coût de traitement par tonne (€)',
+        waste_volume: 'Volume de gaspillage alimentaire (tonnes).',
+        waste_estimation: {
+          estimate: 'Estimation du gaspillage alimentaire',
+          in_g_per_dish: 'en g par repas',
+          in_euros: 'en €',
+          in_dishes_number: 'en nombre de repas'
+        }
+      }
     };
   }
 });

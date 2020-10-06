@@ -1,11 +1,10 @@
 <template>
     <div class="mx-5">
         <div v-if="signedIn">
-            <h2 class="my-4">Panneau d'administration</h2>
-            <p class="mb-4"><strong>Ici, vous pouvez modifier simplement les valeurs de référence utilisées par
-                l'application</strong></p>
+            <h2 class="my-4">{{ admin_title }}</h2>
+            <p class="mb-4"><strong>{{ here_you_can_edit_values }}</strong></p>
 
-            <h4>Valeurs de référence</h4>
+            <h4>{{ waste_ref_values.title }}</h4>
 
             <div v-for="value in values"
                  :key="value.id">
@@ -17,7 +16,7 @@
                 </div>
             </div>
 
-            <h4>Compteurs</h4>
+            <h4>{{ cnters.title }}</h4>
 
             <div v-for="counter in counters"
                  :key="counter.id + 2">
@@ -25,17 +24,18 @@
                 <label>{{ counter.label }}</label>
                 <div class="form-group admin">
                     <input v-model="counter.value" @change="updateCounter(counter)" type="number" required
-                           min="0" max="100" step="0.01" class="custom-input browser-default number-field"> <span> %</span>
+                           min="0" max="100" step="0.01" class="custom-input browser-default number-field">
                 </div>
             </div>
         </div>
         <div v-else>
-            Vous n'avez pas l'autorisation d'être ici
+            {{ go_away }}
         </div>
     </div>
 </template>
 
 <script>
+    import AdminPageText from "../../texts/AdminPageText";
     // import des fonctions utiles regroupées dans des fichiers 'helpers'
     import DataBase from "../helpers/DataBase";
 
@@ -43,6 +43,7 @@
 
         // déclaration de dépendance à ces bibliothèques de fonctions
         mixins : [
+            AdminPageText,
             DataBase
         ],
 

@@ -1,6 +1,9 @@
 export default {
     data() {
         return {
+
+            // RESULTS PAGE component
+
             your_results: 'Résultats et comparaisons de vos simulations',
             modal: {
                 you_just_made_an_audit: 'Vous venez de réaliser l\'audit simplifié de votre gaspillage alimentaire.',
@@ -31,6 +34,24 @@ export default {
             egalim: 'la loi EGALIM',
             what_to_do: 'Que faire de ces résultats ? Rendez vous sur le',
             go_to_anap_site: 'site ressource de l\'ANAP pour découvrir les actions réalisables',
+
+
+            // AUDIT component
+
+            labels: {
+                name: 'Nom de la simulation',
+                dishes_number: 'Nombre de repas produits',
+                dish_cost: 'Coût de revient d\'un repas',
+                dish_weight: 'Poids moyen d\'un repas (en g)',
+                waste_cost: 'Coût de traitement par tonne (€)',
+                waste_volume: 'Volume de gaspillage alimentaire (tonnes).',
+                waste_estimation : {
+                    estimate: 'Estimation du gaspillage alimentaire',
+                    in_g_per_dish: 'en g par repas',
+                    in_euros: 'en €',
+                    in_dishes_number: 'en nombre de repas',
+                }
+            },
         }
     }
 }

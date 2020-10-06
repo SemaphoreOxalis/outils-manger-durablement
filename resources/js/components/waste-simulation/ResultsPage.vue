@@ -48,7 +48,6 @@
                     <p><i class="icon mr-2"></i> {{ how_to.export_sims }}</p>
                 </div>
             </div>
-how_to.
 
             <div class="spacer">
                 <audit-item v-bind:audit-raw-data="this.auditRawData" @sent-audit-results="this.setAuditResults">

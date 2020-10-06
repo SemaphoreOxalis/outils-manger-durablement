@@ -2,36 +2,36 @@
     <div>
         <div class="table-row table-header">
             <div class="table-div bigger">
-                <div>Nom de la simulation</div>
+                <div>{{ labels.name }}</div>
             </div>
             <div class="table-div">
-                <div>Nombre de repas produits</div>
+                <div>{{ labels.dishes_number }}</div>
             </div>
             <div class="table-div shorter">
-                <div>Coût de revient d'un repas</div>
+                <div>{{ labels.dish_cost }}</div>
             </div>
             <div class="table-div shorter">
-                <div>Poids moyen d'un repas (en g)</div>
+                <div>{{ labels.dish_weight }}</div>
             </div>
             <div class="table-div shorter">
-                <div>Coût de traitement par tonne (€)</div>
+                <div>{{ labels.waste_cost }}</div>
             </div>
             <div class="table-div shorter">
-                <div>Volume de gaspillage alimentaire (tonnes).</div>
+                <div>{{ labels.waste_volume }}</div>
             </div>
 
             <div class="flex results text-center">
                 <div class="estimate pt-2">
-                    Estimation du gaspillage alimentaire
+                    {{ labels.waste_estimation.estimate }}
                 </div>
                 <div class="table-div highlighted-label-1 result">
-                    <div>en g par repas</div>
+                    <div>{{ labels.waste_estimation.in_g_per_dish }}</div>
                 </div>
                 <div class="table-div highlighted-label-2 result">
-                    <div>en €</div>
+                    <div>{{ labels.waste_estimation.in_euros }}</div>
                 </div>
                 <div class="table-div highlighted-label-1 result">
-                    <div>en nombre de repas</div>
+                    <div>{{ labels.waste_estimation.in_dishes_number }}</div>
                 </div>
             </div>
         </div>
@@ -77,6 +77,7 @@
 <script>
 
 // Imports des dépendances
+import ResultsPageText from "../../../texts/wasteSimulator/ResultsPageText";
 // logique du composant
 import AuditLogic from "../../helpers/waste-simulation/calculations/AuditLogic";
 // utiles pour arrondir les nombres et formatter les dates
@@ -94,6 +95,7 @@ export default {
 
     // déclaration de la dépendance à ces mixins (bibliothèques de fonctions)
     mixins: [
+        ResultsPageText,
         AuditLogic,
         NumberFormatter,
         DateFormatter
