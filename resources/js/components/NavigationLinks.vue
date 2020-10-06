@@ -7,15 +7,21 @@
         </router-link>
 
         <router-link
-            to="/input"
+            to="/waste-simulator"
             class="menu-item button icon">
+            <span>{{ waste_simulator }}</span>
+        </router-link>
+
+        <router-link
+            to="/input"
+            class="menu-item button icon ml-4">
             <span>{{ new_audit }}</span>
         </router-link>
 
         <router-link
             v-if="dataInLocalStorage"
             to="/results"
-            class="menu-item button icon">
+            class="menu-item button icon ml-4">
             <span>{{ resume_sim }}</span>
         </router-link>
     </div>

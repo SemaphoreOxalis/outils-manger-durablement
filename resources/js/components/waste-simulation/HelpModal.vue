@@ -39,7 +39,7 @@
         ],
 
         methods: {
-            // nécessaire pour notifier le composant parent (HomePage.vue)
+            // nécessaire pour notifier le composant parent (WasteHomePage.vue)
             close() {
                 this.$emit('close');
             }

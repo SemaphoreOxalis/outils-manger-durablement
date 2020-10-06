@@ -125,7 +125,7 @@ Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jo
 * :pencil2: éditez à votre guise les textes contenus dans les fichiers situés dans `resources/texts` (la plupart des textes de l'application sont stockés ici, seuls quelques rares textes sont du côté serveur, en PHP (login....))
 
 * :computer: Dans le terminal du serveur, tapez :
-      * `npm run prod`
+    * `npm run prod`
   
   
 ## Architecture :building_construction:
