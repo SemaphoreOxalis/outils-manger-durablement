@@ -65,7 +65,10 @@
 // fenêtre modale d'aide
 import GeneralText from "../../../texts/GeneralText";
 import HomePageText from "../../../texts/wasteSimulator/HomePageText";
-import HelpModal from "./HelpModal";
+const HelpModal = () => import(
+    /* webpackChunkName: "js/waste-simulation/HelpModal" */
+    './HelpModal.vue'
+    );
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 import DateFormatter from "../../helpers/DateFormatter";
 import DataBase from "../../helpers/DataBase";

@@ -84,7 +84,10 @@ import AuditLogic from "../../helpers/waste-simulation/calculations/AuditLogic";
 import NumberFormatter from "../../helpers/NumberFormatter";
 import DateFormatter from "../../helpers/DateFormatter";
 // Composant enfant
-import AuditSimulationList from "./AuditSimulationList";
+const AuditSimulationList = () => import(
+    /* webpackChunkName: "js/waste-simulation/AuditSimulationList" */
+    './AuditSimulationList.vue'
+    );
 
 export default {
 

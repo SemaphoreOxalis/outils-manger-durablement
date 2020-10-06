@@ -93,10 +93,13 @@
 </template>
 
 <script>
-
-// import des composants enfants
 import ResultsPageText from "../../../texts/wasteSimulator/ResultsPageText";
-import AuditItem from "./AuditItem"
+// import des composants enfants
+const AuditItem = () => import(
+    /* webpackChunkName: "js/waste-simulation/AuditItem" */
+    './AuditItem.vue'
+    );
+
 // Logique de validation
 import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // import des helpers

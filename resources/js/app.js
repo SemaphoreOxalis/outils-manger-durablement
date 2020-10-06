@@ -54,11 +54,11 @@ const app = new Vue({
     router: new VueRouter(routes),
     components: {
         'navigation-links': () => import(
-            /* webpackChunkName: "js/nav-links" */
+            /* webpackChunkName: "js/navLinks" */
             './components/NavigationLinks.vue'
             ),
         'flash': () => import(
-            /* webpackChunkName: "js/flash-msg" */
+            /* webpackChunkName: "js/flashMsg" */
             './components/FlashMessage.vue'
             ),
     }

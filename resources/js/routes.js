@@ -1,27 +1,97 @@
-import GeneralLayout from "./components/GeneralLayout";
+const GeneralLayout = () => import(
+    /* webpackChunkName: "js/GeneralLayout" */
+    './components/GeneralLayout.vue'
+    );
 
-import AdminPage from "./components/AdminPage";
-import WasteSimulatorAdminPage from "./components/waste-simulation/WasteSimulatorAdminPage";
-import CarbonSimulatorAdminPage from "./components/carbon-simulation/admin/CarbonSimulatorAdminPage";
-import ProductsAdminPage from "./components/carbon-simulation/admin/ProductsAdminPage";
-import CategoriesAdminPage from "./components/carbon-simulation/admin/CategoriesAdminPage";
-import UnitsAdminPage from "./components/carbon-simulation/admin/UnitsAdminPage";
-import OriginsAdminPage from "./components/carbon-simulation/admin/OriginsAdminPage";
-import CountersAdminPage from "./components/CountersAdminPage";
+const AdminPage = () => import(
+    /* webpackChunkName: "js/admin/AdminPage" */
+    './components/AdminPage.vue'
+    );
 
-import NotFound from "./components/NotFound";
+const WasteSimulatorAdminPage = () => import(
+    /* webpackChunkName: "js/admin/waste-simulation/WasteSimulatorAdminPage" */
+    './components/waste-simulation/WasteSimulatorAdminPage.vue'
+    );
 
-import HomePage from "./components/HomePage";
-import AboutUs from "./components/AboutUs";
+const CarbonSimulatorAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/CarbonSimulatorAdminPage" */
+    './components/carbon-simulation/admin/CarbonSimulatorAdminPage.vue'
+    );
 
-import WasteSimulatorLayout from "./components/waste-simulation/WasteSimulatorLayout";
-import WasteHomePage from "./components/waste-simulation/WasteHomePage";
-import InputPage from "./components/waste-simulation/InputPage";
-import ResultsPage from "./components/waste-simulation/ResultsPage";
+const ProductsAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/ProductsAdminPage" */
+    './components/carbon-simulation/admin/ProductsAdminPage.vue'
+    );
 
-import CarbonSimulatorLayout from "./components/carbon-simulation/CarbonSimulatorLayout";
-import CarbonHomePage from "./components/carbon-simulation/CarbonHomePage";
-import BasketSimulator from "./components/carbon-simulation/BasketSimulator";
+const CategoriesAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/CategoriesAdminPage" */
+    './components/carbon-simulation/admin/CategoriesAdminPage.vue'
+    );
+
+const UnitsAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/UnitsAdminPage" */
+    './components/carbon-simulation/admin/UnitsAdminPage.vue'
+    );
+
+const OriginsAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/OriginsAdminPage" */
+    './components/carbon-simulation/admin/OriginsAdminPage.vue'
+    );
+
+const CountersAdminPage = () => import(
+    /* webpackChunkName: "js/admin/CountersAdminPage" */
+    './components/CountersAdminPage.vue'
+    );
+
+const NotFound = () => import(
+    /* webpackChunkName: "js/NotFound" */
+    './components/NotFound.vue'
+    );
+
+const HomePage = () => import(
+    /* webpackChunkName: "js/HomePage" */
+    './components/HomePage.vue'
+    );
+
+const AboutUs = () => import(
+    /* webpackChunkName: "js/AboutUs" */
+    './components/AboutUs.vue'
+    );
+
+const WasteSimulatorLayout = () => import(
+    /* webpackChunkName: "js/waste-simulation/wasteSimulator" */
+    './components/waste-simulation/WasteSimulatorLayout.vue'
+    );
+
+const WasteHomePage = () => import(
+    /* webpackChunkName: "js/waste-simulation/WasteHomePage" */
+    './components/waste-simulation/WasteHomePage.vue'
+    );
+
+const InputPage = () => import(
+    /* webpackChunkName: "js/waste-simulation/InputPage" */
+    './components/waste-simulation/InputPage.vue'
+    );
+
+const ResultsPage = () => import(
+    /* webpackChunkName: "js/waste-simulation/ResultsPage" */
+    './components/waste-simulation/ResultsPage.vue'
+    );
+
+const CarbonSimulatorLayout = () => import(
+    /* webpackChunkName: "js/carbon-simulation/CarbonSimulatorLayout" */
+    './components/carbon-simulation/CarbonSimulatorLayout.vue'
+    );
+
+const CarbonHomePage = () => import(
+    /* webpackChunkName: "js/carbon-simulation/CarbonHomePage" */
+    './components/carbon-simulation/CarbonHomePage.vue'
+    );
+
+const BasketSimulator = () => import(
+    /* webpackChunkName: "js/carbon-simulation/BasketSimulator" */
+    './components/carbon-simulation/BasketSimulator.vue'
+    );
 
 export default {
 
