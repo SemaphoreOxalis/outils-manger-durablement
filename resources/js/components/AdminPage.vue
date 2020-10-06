@@ -2,31 +2,20 @@
     <div class="mx-5">
         <div v-if="signedIn">
             <h2 class="my-4">{{ admin_title }}</h2>
-            <p class="mb-4"><strong>{{ here_you_can_edit_values }}</strong></p>
+            <div class="admin-nav">
+                <router-link to="/admin/waste-simulator" tag="span">
+                    <button class="button alter">Outil Gaspi</button>
+                </router-link>
 
-            <h4>{{ waste_ref_values.title }}</h4>
+                <router-link to="/admin/carbon-simulator" tag="span">
+                    <button class="button alter">Outil Carbone</button>
+                </router-link>
 
-            <div v-for="value in values"
-                 :key="value.id">
-
-                <label>{{ value.label }}</label>
-                <div class="form-group admin">
-                    <input v-model="value.value" @change="updateRefValue(value)" type="number" required
-                           min="0" max="100" step="0.01" class="custom-input browser-default number-field"> <span> %</span>
-                </div>
+                <router-link to="/admin/counters" tag="span">
+                    <button class="button alter">Compteurs</button>
+                </router-link>
             </div>
-
-            <h4>{{ cnters.title }}</h4>
-
-            <div v-for="counter in counters"
-                 :key="counter.id + 2">
-
-                <label>{{ counter.label }}</label>
-                <div class="form-group admin">
-                    <input v-model="counter.value" @change="updateCounter(counter)" type="number" required
-                           min="0" max="100" step="0.01" class="custom-input browser-default number-field">
-                </div>
-            </div>
+            <router-view></router-view>
         </div>
         <div v-else>
             {{ go_away }}
@@ -35,41 +24,32 @@
 </template>
 
 <script>
-    import AdminPageText from "../../texts/AdminPageText";
-    // import des fonctions utiles regroupées dans des fichiers 'helpers'
-    import DataBase from "../helpers/DataBase";
+import AdminPageText from "../../texts/AdminPageText";
 
-    export default {
+export default {
 
-        // déclaration de dépendance à ces bibliothèques de fonctions
-        mixins : [
-            AdminPageText,
-            DataBase
-        ],
+    // déclaration de dépendance à ces bibliothèques de fonctions
+    mixins: [
+        AdminPageText
+    ],
 
-        // initialisation des données utilisées par le composant
-        data() {
-            return {
-                values: [],
-                counters: [],
-            }
-        },
+    computed: {
 
-        // Valeurs calculées à la volée
-        computed: {
-
-            // L'utilisateur est-il bien authentifié ?
-            signedIn() {
-                return window.App.signedIn;
-            }
-        },
-
-        // A la création du composent (i.e quand on arrive sur la "page")
-        created() {
-
-            // Va chercher les valeurs de référence dans la BDD
-            this.fetchWasteReferenceValues();
-            this.fetchCountersValueFromDB();
+        // L'utilisateur est-il bien authentifié ?
+        signedIn() {
+            return window.App.signedIn;
         }
-    }
+    },
+}
 </script>
+
+<style>
+.admin-nav {
+    text-align: center;
+    padding: 10px;
+}
+
+.admin-nav span.router-link-active button.alter {
+    background-color: var(--main-color);
+}
+</style>

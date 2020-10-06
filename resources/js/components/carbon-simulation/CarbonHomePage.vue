@@ -1,0 +1,60 @@
+<template>
+    <div class="py-4 px-4">
+
+        <div class="row">
+            <div class="col">
+                <div class="info p-4 m-4">
+                    <p>
+                        <i>{{ no_private_info_sent_disclaimer }}</i>
+                    </p>
+                </div>
+
+                <div class="info p-4 m-4" v-if="true">
+                    <p>{{ it_seems_you_have_baskets_from }} <strong>66/66/6666</strong></p>
+                    <div class="d-flex flex-column align-items-center">
+                        <button class="button big-button d-flex p-4 justify-content-center mb-2">
+                            <div class="icon align-self-center mr-4"></div>
+                            <div class="text-left big-button-line-height">
+                                <strong>{{ prevBtn.goTo }}</strong><br><small>{{ prevBtn.basket }}<br>{{ prevBtn.from }} 66/66/6666</small>
+                            </div>
+                        </button>
+
+                        <div class="text-center">
+                            <button class="button alter"><span class="icon mr-4"></span>{{ delete_all_data }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col p-4 m-4">
+                <p>{{ to_use_this }} <strong>{{ you_ll_need }}</strong> :</p>
+                <ul class="browser-default">
+                    <li>{{ shopping_list }}</li>
+                </ul>
+                <p>
+                    <strong>{{ you_ll_get_results_in_15m }}</strong>
+                </p>
+
+                <router-link to="basket-simulator" tag="span">
+                    <button class="button big-button d-flex p-4 m-2 justify-content-center">
+                        <div class="icon align-self-center mr-4"></div>
+                        <div class="text-left big-button-line-height">
+                            <small>{{ lnchBtn.im_ready }}</small> <br> <strong>{{ lnchBtn.start }}</strong> <br> <small>{{ lnchBtn.new_sim }}</small>
+                        </div>
+                    </button>
+                </router-link>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import GeneralText from "../../../texts/GeneralText";
+    import HomePageText from "../../../texts/carbonSimulator/HomePageText";
+    export default {
+        mixins: [
+            GeneralText,
+            HomePageText
+        ]
+    }
+</script>

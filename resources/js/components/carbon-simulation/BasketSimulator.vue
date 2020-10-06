@@ -52,7 +52,7 @@
                         <p>
                             {{ product.id }} : {{ product.name }} -
                             <input type="number" :id="'shopping-item-' + product.id" placeholder="1"> {{
-                            product.unit.unit }}
+                                product.unit.unit }}
                         </p>
                         <p>
                             Origine :
@@ -74,111 +74,111 @@
 </template>
 
 <script>
-    import draggable from 'vuedraggable'
+import draggable from 'vuedraggable'
 
-    export default {
-        components: {
-            draggable
-        },
+export default {
+    components: {
+        draggable
+    },
 
-        data() {
-            return {
-                products: [],
-                origins: [],
-                categories: [],
-                shoppingList: [],
-                selectedCategoryId: null
-            }
-        },
+    data() {
+        return {
+            products: [],
+            origins: [],
+            categories: [],
+            shoppingList: [],
+            selectedCategoryId: null
+        }
+    },
 
-        computed: {
-            filteredProducts() {
-                if(this.selectedCategoryId === null) {
-                    return this.products;
-                } else {
-                    return this.products.filter(product => {
-                        return product.category.id === this.selectedCategoryId;
-                    });
-                }
-            }
-        },
-
-        created() {
-            this.fetchCategoriesData();
-            this.fetchProductsData();
-            this.fetchOriginsData();
-        },
-
-        methods: {
-            fetchProductsData() {
-                axios.get('/api/products').then((response) => {
-                    this.products = response.data;
+    computed: {
+        filteredProducts() {
+            if(this.selectedCategoryId === null) {
+                return this.products;
+            } else {
+                return this.products.filter(product => {
+                    return product.category.id === this.selectedCategoryId;
                 });
-            },
-            fetchOriginsData() {
-                axios.get('/api/origins').then((response) => {
-                    this.origins = response.data;
-                });
-            },
-            fetchCategoriesData() {
-                axios.get('/api/categories').then((response) => {
-                    this.categories = response.data;
-                });
-            },
-            addProduct({id, name, unit, category}) {
-                return {
-                    oldId: id,
-                    name: name,
-                    unit: unit,
-                    category: category,
-                    origin: this.origins[2] // France par défaut
-                }
-            },
-            filterProducts(categoryId) {
-                this.selectedCategoryId = categoryId;
-            },
-            getClasses(categoryId) {
-                return [
-                    'list-group-item',
-                    'category',
-                    categoryId === this.selectedCategoryId ? 'selected' : ''
-                ];
             }
         }
+    },
+
+    created() {
+        this.fetchCategoriesData();
+        this.fetchProductsData();
+        this.fetchOriginsData();
+    },
+
+    methods: {
+        fetchProductsData() {
+            axios.get('/api/products').then((response) => {
+                this.products = response.data;
+            });
+        },
+        fetchOriginsData() {
+            axios.get('/api/origins').then((response) => {
+                this.origins = response.data;
+            });
+        },
+        fetchCategoriesData() {
+            axios.get('/api/categories').then((response) => {
+                this.categories = response.data;
+            });
+        },
+        addProduct({id, name, unit, category}) {
+            return {
+                oldId: id,
+                name: name,
+                unit: unit,
+                category: category,
+                origin: this.origins[2] // France par défaut
+            }
+        },
+        filterProducts(categoryId) {
+            this.selectedCategoryId = categoryId;
+        },
+        getClasses(categoryId) {
+            return [
+                'list-group-item',
+                'category',
+                categoryId === this.selectedCategoryId ? 'selected' : ''
+            ];
+        }
     }
+}
 </script>
 
 <style>
-    .left {
-        border: 1px black solid;
-    }
+.left {
+    border: 1px black solid;
+}
 
-    .middle {
-        border: 1px black solid;
-    }
+.middle {
+    border: 1px black solid;
+}
 
-    .right {
-        border: 1px black solid;
-        min-height: 100px;
-    }
+.right {
+    border: 1px black solid;
+    min-height: 100px;
+}
 
-    .product {
-        cursor: grab;
-    }
+.product {
+    cursor: grab;
+}
 
-    .moving {
-        background-color: #1f6fb2;
-    }
+.moving {
+    background-color: #1f6fb2;
+}
 
-    .category {
-        cursor: pointer;
-    }
+.category {
+    cursor: pointer;
+}
 
-    .selected {
-        background-color: lime;
-    }
+.selected {
+    background-color: lime;
+}
 
-    input {
-        width: 50px;
-    }
+input {
+    width: 50px;
+}
 </style>

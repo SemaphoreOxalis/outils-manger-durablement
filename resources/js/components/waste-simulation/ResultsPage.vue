@@ -82,7 +82,7 @@
                 </p>
             </div>
             <div class="text-center mt-2">
-                <router-link to="/input" tag="span">
+                <router-link to="input" tag="span">
                     <button class="button alter">
                         <i class="icon mr-2"></i>{{ btns.new_audit }}
                     </button>

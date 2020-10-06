@@ -5,6 +5,8 @@ export default {
             waste_simulator: 'Outil Gaspi',
             new_audit: 'Nouvel audit',
             resume_sim: 'Reprendre simulation',
+            carbon_simulator: 'Outil Carbone',
+            resume_basket: 'reprendre panier',
         }
     }
 }

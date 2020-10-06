@@ -13,16 +13,28 @@
         </router-link>
 
         <router-link
-            to="/input"
+            to="/waste-simulator/input"
             class="menu-item button icon ml-4">
             <span>{{ new_audit }}</span>
         </router-link>
 
         <router-link
             v-if="dataInLocalStorage"
-            to="/results"
+            to="/waste-simulator/results"
             class="menu-item button icon ml-4">
             <span>{{ resume_sim }}</span>
+        </router-link>
+
+        <router-link
+            to="/carbon-simulator"
+            class="menu-item button icon">
+            <span>{{ carbon_simulator }}</span>
+        </router-link>
+
+        <router-link
+            to="/carbon-simulator/basket-simulator"
+            class="menu-item button icon ml-4">
+            <span>{{ resume_basket }}</span>
         </router-link>
     </div>
 </template>

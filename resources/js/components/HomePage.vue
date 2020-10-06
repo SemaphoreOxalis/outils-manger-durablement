@@ -30,7 +30,7 @@
             </div>
 
             <div class="col">
-                <router-link to="/waste-simulator" tag="span">
+                <router-link to="/carbon-simulator" tag="span">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
                         <div class="icon align-self-center mr-4"></div>
                         <div class="text-left big-button-line-height">

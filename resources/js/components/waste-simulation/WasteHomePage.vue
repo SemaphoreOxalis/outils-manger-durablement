@@ -24,7 +24,7 @@
                         </button>
 
                         <div class="text-center">
-                            <button class="button alter" @click="deletePreviousAudit"><span class="icon mr-4"></span>{{ delete_all_sims }}</button>
+                            <button class="button alter" @click="deletePreviousAudit"><span class="icon mr-4"></span>{{ delete_all_data }}</button>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                     <strong>{{ you_ll_get_results_in_15m }}</strong>
                 </p>
 
-                <router-link to="/input" tag="span">
+                <router-link to="input" tag="span">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
                         <div class="icon align-self-center mr-4"></div>
                         <div class="text-left big-button-line-height">
@@ -63,6 +63,7 @@
 
 <script>
 // fenêtre modale d'aide
+import GeneralText from "../../../texts/GeneralText";
 import HomePageText from "../../../texts/wasteSimulator/HomePageText";
 import HelpModal from "./HelpModal";
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
@@ -78,6 +79,7 @@ export default {
 
     // Bibliothèqye de fonctions custom
     mixins: [
+        GeneralText,
         HomePageText,
         LocalStorageHelper,
         DateFormatter,

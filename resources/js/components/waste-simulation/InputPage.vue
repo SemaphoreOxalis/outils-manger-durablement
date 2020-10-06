@@ -183,6 +183,7 @@ import InputValidation from "../../helpers/waste-simulation/validation/InputVali
 import InputLogic from "../../helpers/waste-simulation/calculations/InputLogic";
 // intéractions avec la base de donnée
 import DataBase from "../../helpers/DataBase";
+import WasteDataBase from "../../helpers/waste-simulation/WasteDataBase";
 // intéractions avec le localStorage
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 // Petite bibliothèque de fonctions bien pratique pour arrondir les nombres
@@ -196,6 +197,7 @@ export default {
         InputValidation,
         InputLogic,
         DataBase,
+        WasteDataBase,
         LocalStorageHelper,
         NumberFormatter
     ],

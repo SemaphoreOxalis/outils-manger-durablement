@@ -8,6 +8,7 @@ export default {
             },
             cnters: {
                 title: 'Compteurs',
+                waste: 'Compteurs du simulateur de gaspillage alimentaire'
             },
             go_away: 'Vous n\'avez pas l\'autorisation d\'être ici',
         }
