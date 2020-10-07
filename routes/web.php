@@ -34,6 +34,11 @@ Route::patch('/api/units/{unit}', 'UnitsController@update');
 Route::post('/api/units', 'UnitsController@store');
 Route::delete('/api/units/{unit}', 'UnitsController@destroy');
 
+Route::get('/api/origins', 'OriginsController@index');
+Route::patch('/api/origins/{origin}', 'OriginsController@update');
+Route::post('/api/origins', 'OriginsController@store');
+Route::delete('/api/origins/{origin}', 'OriginsController@destroy');
+
 // Compteurs
 Route::get('/api/counters', 'CountersController@index');
 Route::patch('/api/counters/{counter}', 'CountersController@update');
