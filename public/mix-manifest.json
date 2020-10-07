@@ -18,17 +18,14 @@
     "/js/carbon-simulation/CarbonSimulatorLayout.js": "/js/carbon-simulation/CarbonSimulatorLayout.js",
     "/js/flashMsg.js": "/js/flashMsg.js",
     "/js/navLinks.js": "/js/navLinks.js",
+    "/js/waste-simulation/AuditItem.js": "/js/waste-simulation/AuditItem.js",
+    "/js/waste-simulation/AuditSimulationList.js": "/js/waste-simulation/AuditSimulationList.js",
+    "/js/waste-simulation/HelpModal.js": "/js/waste-simulation/HelpModal.js",
     "/js/waste-simulation/InputPage.js": "/js/waste-simulation/InputPage.js",
     "/js/waste-simulation/ResultsPage.js": "/js/waste-simulation/ResultsPage.js",
+    "/js/waste-simulation/SimulationItem.js": "/js/waste-simulation/SimulationItem.js",
     "/js/waste-simulation/WasteHomePage.js": "/js/waste-simulation/WasteHomePage.js",
     "/js/waste-simulation/wasteSimulator.js": "/js/waste-simulation/wasteSimulator.js",
-    "/vendors~js/carbon-simulation/BasketSimulator~js/waste-simulation/ResultsPage.js": "/vendors~js/carbon-simulation/BasketSimulator~js/waste-simulation/ResultsPage.js",
-    "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/carbon-simulation/~405eb1fc.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/carbon-simulation/~405eb1fc.js",
-    "/js/waste-simulation/HelpModal.js": "/js/waste-simulation/HelpModal.js",
-    "/js/waste-simulation/AuditItem.js": "/js/waste-simulation/AuditItem.js",
-    "/vendors~js/carbon-simulation/BasketSimulator~js/waste-simulation/AuditItem.js": "/vendors~js/carbon-simulation/BasketSimulator~js/waste-simulation/AuditItem.js",
-    "/js/waste-simulation/AuditSimulationList.js": "/js/waste-simulation/AuditSimulationList.js",
-    "/vendors~js/carbon-simulation/BasketSimulator~js/waste-simulation/AuditSimulationList.js": "/vendors~js/carbon-simulation/BasketSimulator~js/waste-simulation/AuditSimulationList.js",
-    "/js/waste-simulation/SimulationItem.js": "/js/waste-simulation/SimulationItem.js",
-    "/vendors~js/carbon-simulation/BasketSimulator~js/draggable.js": "/vendors~js/carbon-simulation/BasketSimulator~js/draggable.js"
+    "/vendors~js/carbon-simulation/BasketSimulator~js/draggable.js": "/vendors~js/carbon-simulation/BasketSimulator~js/draggable.js",
+    "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~a5f19c3a.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~a5f19c3a.js"
 }

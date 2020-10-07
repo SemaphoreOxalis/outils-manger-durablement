@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class CountersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
+
     public function index()
     {
         return Counter::all();

@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Route;
 
 // ROUTES BACK-END
 
-// Restes de l'appli CO2
- Route::get('/api/products', 'ProductsController@index');
- Route::get('/api/origins', 'OriginsController@index');
- Route::get('/api/categories', 'CategoriesController@index');
-
-
 // Endpoints pour notre API
+// Outil Gaspi
 Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
 Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesController@update');
+// Outil Carbone
+Route::get('/api/products', 'ProductsController@index');
+Route::get('/api/origins', 'OriginsController@index');
+Route::get('/api/categories', 'CategoriesController@index');
+Route::patch('/api/categories/{category}', 'CategoriesController@update');
+Route::post('/api/categories', 'CategoriesController@store');
+Route::delete('/api/categories/{category}', 'CategoriesController@destroy');
 
+// Compteurs
 Route::get('/api/counters', 'CountersController@index');
 Route::patch('/api/counters/{counter}', 'CountersController@update');
 Route::patch('/api/counters/{counter}/increment', 'CountersController@increment');
