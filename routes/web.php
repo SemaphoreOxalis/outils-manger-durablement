@@ -23,10 +23,16 @@ Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesCon
 // Outil Carbone
 Route::get('/api/products', 'ProductsController@index');
 Route::get('/api/origins', 'OriginsController@index');
+
 Route::get('/api/categories', 'CategoriesController@index');
 Route::patch('/api/categories/{category}', 'CategoriesController@update');
 Route::post('/api/categories', 'CategoriesController@store');
 Route::delete('/api/categories/{category}', 'CategoriesController@destroy');
+
+Route::get('/api/units', 'UnitsController@index');
+Route::patch('/api/units/{unit}', 'UnitsController@update');
+Route::post('/api/units', 'UnitsController@store');
+Route::delete('/api/units/{unit}', 'UnitsController@destroy');
 
 // Compteurs
 Route::get('/api/counters', 'CountersController@index');
