@@ -83,6 +83,18 @@ export default {
             search: '',
         }
     },
+    computed: {
+        filteredProducts() {
+            return this.products.filter(product => {
+                let productName = this.areWeLookingForBeefAndEggs(product.name);
+                if(product.comment) {
+                    let productComment = this.areWeLookingForBeefAndEggs(product.comment);
+                    return this.searchByProduct(productName, this.search) || this.searchByComment(productComment, this.search);
+                }
+                return this.searchByProduct(productName, this.search);
+            });
+        }
+    },
     created() {
         this.fetchProducts();
         this.fetchCategories();

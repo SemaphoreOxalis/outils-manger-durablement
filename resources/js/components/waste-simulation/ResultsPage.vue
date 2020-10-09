@@ -13,8 +13,8 @@
                             <div class="modal-body">
                                 <p>{{ modal.you_just_made_an_audit }}</p>
                                 <p>{{ modal.your_food_waste_amounts_to }} <strong><span
-                                    v-html="auditResults.foodWasteCost"></span></strong> {{ modal.euros_or }}
-                                    <strong><span v-html="auditResults.amountOfDishesWasted"></span></strong> {{ modal.dishes }}</p>
+                                    v-html="auditResults.foodWasteCost || 'loading...'"></span></strong> {{ modal.euros_or }}
+                                    <strong><span v-html="auditResults.amountOfDishesWasted || 'loading...'"></span></strong> {{ modal.dishes }}</p>
                                 <p>{{ modal.you_can_add_sims_to_this_table }}</p>
                                 <p>{{ modal.each_sim_is_compared_to_the_one_above }}</p>
                             </div>
@@ -144,9 +144,12 @@ export default {
 
         // Si on vient de la page de saisie
         if (this.userInput) {
-            this.showResultsModal = true;
             this.incrementAuditCounter();
             this.handleUserInput();
+            setTimeout(() => {
+                this.showResultsModal = true;
+            }, 500);
+
         }
 
         // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)

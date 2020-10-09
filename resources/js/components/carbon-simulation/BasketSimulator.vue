@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div class="search mb-4">
-            <input type="text" placeholder="search">
+            <input type="text" v-model="search" placeholder="Rechercher un produit.." v-on:input="filterProductsBySearch" style="max-width: 350px;">
+            <button @click="search=''" style="display: inline-block;">X</button>
         </div>
 
         <div class="row">
@@ -11,7 +12,7 @@
                 <div v-for="category in categories"
                      :class="getClasses(category.id)"
                      :key="category.id"
-                     @click="filterProducts(category.id)">
+                     @click="filterProductsByCategory(category.id)">
 
                     {{ category.name }}
 
@@ -74,57 +75,96 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable'
+import searchBar from "../../helpers/carbon-simulation/searchBar";
+import draggable from 'vuedraggable';
+import ProductsDataBase from "../../helpers/carbon-simulation/database/ProductsDataBase";
+import CategoriesDataBase from "../../helpers/carbon-simulation/database/CategoriesDataBase";
+import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBase";
+import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
 
 export default {
     components: {
         draggable
     },
+    mixins: [
+        searchBar,
+        ProductsDataBase,
+        CategoriesDataBase,
+        UnitsDataBase,
+        OriginsDataBase,
+    ],
 
     data() {
         return {
             products: [],
-            origins: [],
             categories: [],
+            units: [],
+            origins: [],
             shoppingList: [],
-            selectedCategoryId: null
+            selectedCategoryId: null,
+            selectedByCategory: false,
+            selectedBySearchBar: false,
+            search: '',
         }
     },
 
     computed: {
         filteredProducts() {
-            if(this.selectedCategoryId === null) {
-                return this.products;
-            } else {
+            if(this.selectedByCategory && this.selectedCategoryId != null) {
                 return this.products.filter(product => {
                     return product.category.id === this.selectedCategoryId;
                 });
             }
+
+            if(this.selectedBySearchBar) {
+                this.selectedCategoryId = null;
+
+                return this.products.filter(product => {
+                    let productName = this.areWeLookingForBeefAndEggs(product.name);
+                    if(product.comment) {
+                        let productComment = this.areWeLookingForBeefAndEggs(product.comment);
+                        return this.searchByProduct(productName, this.search) || this.searchByComment(productComment, this.search);
+                    }
+                    return this.searchByProduct(productName, this.search);
+                });
+            }
+
+            return this.products;
         }
     },
 
     created() {
-        this.fetchCategoriesData();
-        this.fetchProductsData();
-        this.fetchOriginsData();
+        this.fetchProducts();
+        this.fetchCategories();
+        this.fetchUnits();
+        this.fetchOrigins();
     },
 
     methods: {
-        fetchProductsData() {
-            axios.get('/api/products').then((response) => {
-                this.products = response.data;
-            });
+        filterProductsByCategory(categoryId) {
+            this.selectedCategoryId = categoryId;
+            this.toggleSelectedBy();
         },
-        fetchOriginsData() {
-            axios.get('/api/origins').then((response) => {
-                this.origins = response.data;
-            });
+        filterProductsBySearch() {
+            this.selectedCategoryId = null;
+            this.toggleSelectedBy();
         },
-        fetchCategoriesData() {
-            axios.get('/api/categories').then((response) => {
-                this.categories = response.data;
-            });
+        toggleSelectedBy() {
+            this.selectedBySearchBar = !this.selectedBySearchBar;
+            this.selectedByCategory = !this.selectedByCategory;
         },
+
+
+
+        getClasses(categoryId) {
+            return [
+                'list-group-item',
+                'category',
+                categoryId === this.selectedCategoryId ? 'selected' : ''
+            ];
+        },
+
+
         addProduct({id, name, unit, category}) {
             return {
                 oldId: id,
@@ -134,16 +174,6 @@ export default {
                 origin: this.origins[2] // France par défaut
             }
         },
-        filterProducts(categoryId) {
-            this.selectedCategoryId = categoryId;
-        },
-        getClasses(categoryId) {
-            return [
-                'list-group-item',
-                'category',
-                categoryId === this.selectedCategoryId ? 'selected' : ''
-            ];
-        }
     }
 }
 </script>

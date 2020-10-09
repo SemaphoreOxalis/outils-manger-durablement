@@ -153,9 +153,11 @@ var AuditItem = function AuditItem() {
 
     // Si on vient de la page de saisie
     if (this.userInput) {
-      this.showResultsModal = true;
       this.incrementAuditCounter();
       this.handleUserInput();
+      setTimeout(function () {
+        _this.showResultsModal = true;
+      }, 500);
     } // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
     else if (localStorage.hasOwnProperty('audit')) {
         this.auditRawData = this.getAuditFromLocalStorage();
@@ -270,7 +272,9 @@ var render = function() {
                         _c("strong", [
                           _c("span", {
                             domProps: {
-                              innerHTML: _vm._s(_vm.auditResults.foodWasteCost)
+                              innerHTML: _vm._s(
+                                _vm.auditResults.foodWasteCost || "loading..."
+                              )
                             }
                           })
                         ]),
@@ -283,7 +287,8 @@ var render = function() {
                           _c("span", {
                             domProps: {
                               innerHTML: _vm._s(
-                                _vm.auditResults.amountOfDishesWasted
+                                _vm.auditResults.amountOfDishesWasted ||
+                                  "loading..."
                               )
                             }
                           })

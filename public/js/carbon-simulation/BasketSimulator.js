@@ -9,8 +9,14 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
+/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/ProductsDataBase */ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
+//
 //
 //
 //
@@ -87,58 +93,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_0___default.a
+    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a
   },
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"]],
   data: function data() {
     return {
       products: [],
-      origins: [],
       categories: [],
+      units: [],
+      origins: [],
       shoppingList: [],
-      selectedCategoryId: null
+      selectedCategoryId: null,
+      selectedByCategory: false,
+      selectedBySearchBar: false,
+      search: ''
     };
   },
   computed: {
     filteredProducts: function filteredProducts() {
       var _this = this;
 
-      if (this.selectedCategoryId === null) {
-        return this.products;
-      } else {
+      if (this.selectedByCategory && this.selectedCategoryId != null) {
         return this.products.filter(function (product) {
           return product.category.id === _this.selectedCategoryId;
         });
       }
+
+      if (this.selectedBySearchBar) {
+        this.selectedCategoryId = null;
+        return this.products.filter(function (product) {
+          var productName = _this.areWeLookingForBeefAndEggs(product.name);
+
+          if (product.comment) {
+            var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
+
+            return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
+          }
+
+          return _this.searchByProduct(productName, _this.search);
+        });
+      }
+
+      return this.products;
     }
   },
   created: function created() {
-    this.fetchCategoriesData();
-    this.fetchProductsData();
-    this.fetchOriginsData();
+    this.fetchProducts();
+    this.fetchCategories();
+    this.fetchUnits();
+    this.fetchOrigins();
   },
   methods: {
-    fetchProductsData: function fetchProductsData() {
-      var _this2 = this;
-
-      axios.get('/api/products').then(function (response) {
-        _this2.products = response.data;
-      });
+    filterProductsByCategory: function filterProductsByCategory(categoryId) {
+      this.selectedCategoryId = categoryId;
+      this.toggleSelectedBy();
     },
-    fetchOriginsData: function fetchOriginsData() {
-      var _this3 = this;
-
-      axios.get('/api/origins').then(function (response) {
-        _this3.origins = response.data;
-      });
+    filterProductsBySearch: function filterProductsBySearch() {
+      this.selectedCategoryId = null;
+      this.toggleSelectedBy();
     },
-    fetchCategoriesData: function fetchCategoriesData() {
-      var _this4 = this;
-
-      axios.get('/api/categories').then(function (response) {
-        _this4.categories = response.data;
-      });
+    toggleSelectedBy: function toggleSelectedBy() {
+      this.selectedBySearchBar = !this.selectedBySearchBar;
+      this.selectedByCategory = !this.selectedByCategory;
+    },
+    getClasses: function getClasses(categoryId) {
+      return ['list-group-item', 'category', categoryId === this.selectedCategoryId ? 'selected' : ''];
     },
     addProduct: function addProduct(_ref) {
       var id = _ref.id,
@@ -153,12 +179,6 @@ __webpack_require__.r(__webpack_exports__);
         origin: this.origins[2] // France par défaut
 
       };
-    },
-    filterProducts: function filterProducts(categoryId) {
-      this.selectedCategoryId = categoryId;
-    },
-    getClasses: function getClasses(categoryId) {
-      return ['list-group-item', 'category', categoryId === this.selectedCategoryId ? 'selected' : ''];
     }
   }
 });
@@ -230,7 +250,45 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "search mb-4" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticStyle: { "max-width": "350px" },
+        attrs: { type: "text", placeholder: "Rechercher un produit.." },
+        domProps: { value: _vm.search },
+        on: {
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            },
+            _vm.filterProductsBySearch
+          ]
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticStyle: { display: "inline-block" },
+          on: {
+            click: function($event) {
+              _vm.search = ""
+            }
+          }
+        },
+        [_vm._v("X")]
+      )
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
@@ -247,7 +305,7 @@ var render = function() {
                 class: _vm.getClasses(category.id),
                 on: {
                   click: function($event) {
-                    return _vm.filterProducts(category.id)
+                    return _vm.filterProductsByCategory(category.id)
                   }
                 }
               },
@@ -411,16 +469,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "search mb-4" }, [
-      _c("input", { attrs: { type: "text", placeholder: "search" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -511,6 +560,344 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasketSimulator_vue_vue_type_template_id_6f5bf55b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchCategories: function fetchCategories() {
+      var _this = this;
+
+      getCategories().then(function (response) {
+        _this.categories = response.data;
+      });
+    },
+    updateCategory: function updateCategory(category) {
+      patchCategory(category).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addCategory: function addCategory() {
+      var _this2 = this;
+
+      postCategory(this.newCategory).then(function (response) {
+        _this2.categories.push(response.data);
+
+        _this2.newCategory = '';
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteCategory: function deleteCategory(catId) {
+      var _this3 = this;
+
+      destroyCategory(catId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshCategories();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getCategories() {
+  return axios.get('/api/categories');
+}
+
+function patchCategory(category) {
+  return axios.patch('/api/categories/' + category.id, {
+    name: category.name
+  });
+}
+
+function postCategory(newCatName) {
+  return axios.post('/api/categories', {
+    name: newCatName
+  });
+}
+
+function destroyCategory(catId) {
+  return axios["delete"]('/api/categories/' + catId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchOrigins: function fetchOrigins() {
+      var _this = this;
+
+      getOrigins().then(function (response) {
+        _this.origins = response.data;
+      });
+    },
+    updateOrigin: function updateOrigin(origin) {
+      patchOrigin(origin).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addOrigin: function addOrigin() {
+      var _this2 = this;
+
+      postOrigin(this.newOrigin).then(function (response) {
+        _this2.origins.push(response.data);
+
+        _this2.newOrigin = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteOrigin: function deleteOrigin(originId) {
+      var _this3 = this;
+
+      destroyOrigin(originId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshOrigins();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getOrigins() {
+  return axios.get('/api/origins');
+}
+
+function patchOrigin(origin) {
+  return axios.patch('/api/origins/' + origin.id, {
+    from: origin.from,
+    distance: origin.distance,
+    carbonImpact: origin.carbonImpact,
+    carbonImpactPerKg: origin.carbonImpactPerKg
+  });
+}
+
+function postOrigin(newOrigin) {
+  return axios.post('/api/origins', {
+    from: newOrigin.from,
+    distance: newOrigin.distance,
+    carbonImpact: newOrigin.carbonImpact,
+    carbonImpactPerKg: newOrigin.carbonImpactPerKg
+  });
+}
+
+function destroyOrigin(originId) {
+  return axios["delete"]('/api/origins/' + originId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchProducts: function fetchProducts() {
+      var _this = this;
+
+      getProducts().then(function (response) {
+        _this.products = response.data;
+      });
+    },
+    updateProduct: function updateProduct(product) {
+      patchProduct(product).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addProduct: function addProduct() {
+      var _this2 = this;
+
+      postProduct(this.newProduct).then(function (response) {
+        _this2.products.push(response.data);
+
+        _this2.newProduct = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteProduct: function deleteProduct(productId) {
+      var _this3 = this;
+
+      destroyProduct(productId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshProducts();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getProducts() {
+  return axios.get('/api/products');
+}
+
+function patchProduct(product) {
+  return axios.patch('/api/products/' + product.id, {
+    name: product.name,
+    unit_id: product.unit_id,
+    category_id: product.category_id,
+    comment: product.comment,
+    emissionFactor: product.emissionFactor
+  });
+}
+
+function postProduct(newProduct) {
+  return axios.post('/api/products', {
+    name: newProduct.name,
+    unit_id: newProduct.unit_id,
+    category_id: newProduct.category_id,
+    comment: newProduct.comment,
+    emissionFactor: newProduct.emissionFactor
+  });
+}
+
+function destroyProduct(productId) {
+  return axios["delete"]('/api/products/' + productId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchUnits: function fetchUnits() {
+      var _this = this;
+
+      getUnits().then(function (response) {
+        _this.units = response.data;
+      });
+    },
+    updateUnit: function updateUnit(unit) {
+      patchUnit(unit).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addUnit: function addUnit() {
+      var _this2 = this;
+
+      postUnit(this.newUnit).then(function (response) {
+        _this2.units.push(response.data);
+
+        _this2.newUnit = '';
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteUnit: function deleteUnit(unitId) {
+      var _this3 = this;
+
+      destroyUnit(unitId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshUnits();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getUnits() {
+  return axios.get('/api/units');
+}
+
+function patchUnit(unit) {
+  return axios.patch('/api/units/' + unit.id, {
+    unit: unit.unit
+  });
+}
+
+function postUnit(newUnit) {
+  return axios.post('/api/units', {
+    unit: newUnit
+  });
+}
+
+function destroyUnit(unitId) {
+  return axios["delete"]('/api/units/' + unitId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/searchBar.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/searchBar.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // TODO : See if it works with IE
+    searchByProduct: function searchByProduct(productName, search) {
+      return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);
+    },
+    searchByUnaccentedProducts: function searchByUnaccentedProducts(productName, search) {
+      // from https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
+      var unaccentedProd = productName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return unaccentedProd.toLowerCase().includes(search.toLowerCase());
+    },
+    searchByComment: function searchByComment(productComment, search) {
+      return productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search);
+    },
+    searchByUnaccentedComment: function searchByUnaccentedComment(productComment, search) {
+      var unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return unaccentedComment.toLowerCase().includes(search.toLowerCase());
+    },
+    areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
+      // remplace œ par oe
+      return string.toLowerCase().replace(/[\u0153]/, "oe");
+    }
+  }
+});
 
 /***/ })
 

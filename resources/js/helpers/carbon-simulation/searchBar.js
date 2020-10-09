@@ -1,32 +1,20 @@
 export default {
-    computed: {
-        filteredProducts() {
-            return this.products.filter(product => {
-                let productName = this.areWeLookingForBeefAndEggs(product.name);
-                if(product.comment) {
-                    let productComment = this.areWeLookingForBeefAndEggs(product.comment);
-                    return this.searchByProduct(productName) || this.searchByComment(productComment);
-                }
-                return this.searchByProduct(productName);
-            });
-        }
-    },
     methods: {
         // TODO : See if it works with IE
-        searchByProduct(productName) {
-            return productName.toLowerCase().includes(this.search.toLowerCase()) || this.searchByUnaccentedProducts(productName);
+        searchByProduct(productName, search) {
+            return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);
         },
-        searchByUnaccentedProducts(productName) {
+        searchByUnaccentedProducts(productName, search) {
             // from https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
             let unaccentedProd = productName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-            return unaccentedProd.toLowerCase().includes(this.search.toLowerCase());
+            return unaccentedProd.toLowerCase().includes(search.toLowerCase());
         },
-        searchByComment(productComment) {
-            return productComment.toLowerCase().includes(this.search.toLowerCase()) || this.searchByUnaccentedComment(productComment);
+        searchByComment(productComment, search) {
+            return productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search);
         },
-        searchByUnaccentedComment(productComment) {
+        searchByUnaccentedComment(productComment, search) {
             let unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-            return unaccentedComment.toLowerCase().includes(this.search.toLowerCase());
+            return unaccentedComment.toLowerCase().includes(search.toLowerCase());
         },
         areWeLookingForBeefAndEggs(string) {
             // remplace œ par oe

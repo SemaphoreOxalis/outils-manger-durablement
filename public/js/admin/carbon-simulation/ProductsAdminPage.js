@@ -92,6 +92,23 @@ __webpack_require__.r(__webpack_exports__);
       search: ''
     };
   },
+  computed: {
+    filteredProducts: function filteredProducts() {
+      var _this = this;
+
+      return this.products.filter(function (product) {
+        var productName = _this.areWeLookingForBeefAndEggs(product.name);
+
+        if (product.comment) {
+          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
+
+          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
+        }
+
+        return _this.searchByProduct(productName, _this.search);
+      });
+    }
+  },
   created: function created() {
     this.fetchProducts();
     this.fetchCategories();
@@ -897,39 +914,22 @@ function destroyUnit(unitId) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: {
-    filteredProducts: function filteredProducts() {
-      var _this = this;
-
-      return this.products.filter(function (product) {
-        var productName = _this.areWeLookingForBeefAndEggs(product.name);
-
-        if (product.comment) {
-          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
-
-          return _this.searchByProduct(productName) || _this.searchByComment(productComment);
-        }
-
-        return _this.searchByProduct(productName);
-      });
-    }
-  },
   methods: {
     // TODO : See if it works with IE
-    searchByProduct: function searchByProduct(productName) {
-      return productName.toLowerCase().includes(this.search.toLowerCase()) || this.searchByUnaccentedProducts(productName);
+    searchByProduct: function searchByProduct(productName, search) {
+      return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);
     },
-    searchByUnaccentedProducts: function searchByUnaccentedProducts(productName) {
+    searchByUnaccentedProducts: function searchByUnaccentedProducts(productName, search) {
       // from https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
       var unaccentedProd = productName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-      return unaccentedProd.toLowerCase().includes(this.search.toLowerCase());
+      return unaccentedProd.toLowerCase().includes(search.toLowerCase());
     },
-    searchByComment: function searchByComment(productComment) {
-      return productComment.toLowerCase().includes(this.search.toLowerCase()) || this.searchByUnaccentedComment(productComment);
+    searchByComment: function searchByComment(productComment, search) {
+      return productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search);
     },
-    searchByUnaccentedComment: function searchByUnaccentedComment(productComment) {
+    searchByUnaccentedComment: function searchByUnaccentedComment(productComment, search) {
       var unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-      return unaccentedComment.toLowerCase().includes(this.search.toLowerCase());
+      return unaccentedComment.toLowerCase().includes(search.toLowerCase());
     },
     areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
       // remplace œ par oe
