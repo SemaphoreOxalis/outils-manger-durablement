@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import OriginsDataBase from "../../../helpers/carbon-simulation/OriginsDataBase";
+import OriginsDataBase from "../../../helpers/carbon-simulation/database/OriginsDataBase";
 export default {
     mixins: [
         OriginsDataBase

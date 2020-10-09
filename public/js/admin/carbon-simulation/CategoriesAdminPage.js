@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_carbon_simulation_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/CategoriesDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
 //
 //
 //
@@ -40,7 +40,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       categories: [],
@@ -320,10 +320,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/CategoriesDataBase.js":
-/*!**********************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/CategoriesDataBase.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

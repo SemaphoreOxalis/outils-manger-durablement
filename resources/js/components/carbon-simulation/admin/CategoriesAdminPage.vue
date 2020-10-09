@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import CategoriesDataBase from "../../../helpers/carbon-simulation/CategoriesDataBase";
+    import CategoriesDataBase from "../../../helpers/carbon-simulation/database/CategoriesDataBase";
     export default {
         mixins: [
             CategoriesDataBase

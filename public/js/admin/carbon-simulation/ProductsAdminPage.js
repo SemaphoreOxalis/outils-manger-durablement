@@ -9,9 +9,10 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_carbon_simulation_ProductsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/ProductsDataBase */ "./resources/js/helpers/carbon-simulation/ProductsDataBase.js");
-/* harmony import */ var _helpers_carbon_simulation_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/CategoriesDataBase.js");
-/* harmony import */ var _helpers_carbon_simulation_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/UnitsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/ProductsDataBase */ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
 //
 //
 //
@@ -67,11 +68,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_ProductsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
       products: [],
@@ -83,7 +88,8 @@ __webpack_require__.r(__webpack_exports__);
         category_id: 0,
         comment: '',
         emissionFactor: 0
-      }
+      },
+      search: ''
     };
   },
   created: function created() {
@@ -176,7 +182,42 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._l(_vm.products, function(product) {
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        staticStyle: { "max-width": "350px" },
+        attrs: { type: "text", placeholder: "Rechercher un produit.." },
+        domProps: { value: _vm.search },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticStyle: { display: "inline-block" },
+          on: {
+            click: function($event) {
+              _vm.search = ""
+            }
+          }
+        },
+        [_vm._v("X")]
+      ),
+      _vm._v(" "),
+      _vm._l(_vm.filteredProducts, function(product) {
         return _c("div", { key: product.id }, [
           _c("div", { staticClass: "form-group admin" }, [
             _c("input", {
@@ -622,10 +663,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/CategoriesDataBase.js":
-/*!**********************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/CategoriesDataBase.js ***!
-  \**********************************************************************/
+/***/ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -694,10 +735,10 @@ function destroyCategory(catId) {
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/ProductsDataBase.js":
-/*!********************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/ProductsDataBase.js ***!
-  \********************************************************************/
+/***/ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -774,10 +815,10 @@ function destroyProduct(productId) {
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/UnitsDataBase.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/UnitsDataBase.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js ***!
+  \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -843,6 +884,59 @@ function postUnit(newUnit) {
 function destroyUnit(unitId) {
   return axios["delete"]('/api/units/' + unitId);
 }
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/searchBar.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/searchBar.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    filteredProducts: function filteredProducts() {
+      var _this = this;
+
+      return this.products.filter(function (product) {
+        var productName = _this.areWeLookingForBeefAndEggs(product.name);
+
+        if (product.comment) {
+          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
+
+          return _this.searchByProduct(productName) || _this.searchByComment(productComment);
+        }
+
+        return _this.searchByProduct(productName);
+      });
+    }
+  },
+  methods: {
+    // TODO : See if it works with IE
+    searchByProduct: function searchByProduct(productName) {
+      return productName.toLowerCase().includes(this.search.toLowerCase()) || this.searchByUnaccentedProducts(productName);
+    },
+    searchByUnaccentedProducts: function searchByUnaccentedProducts(productName) {
+      // from https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
+      var unaccentedProd = productName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return unaccentedProd.toLowerCase().includes(this.search.toLowerCase());
+    },
+    searchByComment: function searchByComment(productComment) {
+      return productComment.toLowerCase().includes(this.search.toLowerCase()) || this.searchByUnaccentedComment(productComment);
+    },
+    searchByUnaccentedComment: function searchByUnaccentedComment(productComment) {
+      var unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return unaccentedComment.toLowerCase().includes(this.search.toLowerCase());
+    },
+    areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
+      // remplace œ par oe
+      return string.toLowerCase().replace(/[\u0153]/, "oe");
+    }
+  }
+});
 
 /***/ })
 

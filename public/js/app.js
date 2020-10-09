@@ -35681,7 +35681,8 @@ var CarbonHomePage = function CarbonHomePage() {
 
 var BasketSimulator = function BasketSimulator() {
   return Promise.all(/*! import() | js/carbon-simulation/BasketSimulator */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~86135cb1"), __webpack_require__.e("vendors~js/carbon-simulation/BasketSimulator~js/draggable"), __webpack_require__.e("js/carbon-simulation/BasketSimulator")]).then(__webpack_require__.bind(null, /*! ./components/carbon-simulation/BasketSimulator.vue */ "./resources/js/components/carbon-simulation/BasketSimulator.vue"));
-};
+}; // import BasketSimulator from "./components/carbon-simulation/BasketSimulator";
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // Redirection automatique en haut de la page lors de changement de vue

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import UnitsDataBase from "../../../helpers/carbon-simulation/UnitsDataBase";
+import UnitsDataBase from "../../../helpers/carbon-simulation/database/UnitsDataBase";
 export default {
     mixins: [
         UnitsDataBase

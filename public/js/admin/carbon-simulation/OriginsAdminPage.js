@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_carbon_simulation_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/OriginsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
 //
 //
 //
@@ -51,7 +51,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       origins: [],
@@ -477,10 +477,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/OriginsDataBase.js":
-/*!*******************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/OriginsDataBase.js ***!
-  \*******************************************************************/
+/***/ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js ***!
+  \****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

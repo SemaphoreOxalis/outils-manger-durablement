@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_carbon_simulation_UnitsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/UnitsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
 //
 //
 //
@@ -40,7 +40,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_UnitsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       units: [],
@@ -320,10 +320,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/UnitsDataBase.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/UnitsDataBase.js ***!
-  \*****************************************************************/
+/***/ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js ***!
+  \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 

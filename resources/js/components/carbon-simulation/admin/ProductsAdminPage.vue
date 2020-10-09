@@ -4,7 +4,10 @@
 
         <p>ici, vous pouvez renommer, modifier, ajouter ou supprimer des produits</p>
 
-        <div v-for="product in products"
+        <input type="text" v-model="search" placeholder="Rechercher un produit.." style="max-width: 350px;">
+        <button @click="search=''" style="display: inline-block;">X</button>
+
+        <div v-for="product in filteredProducts"
              :key="product.id">
 
             <div class="form-group admin">
@@ -54,14 +57,16 @@
 </template>
 
 <script>
-import ProductsDataBase from "../../../helpers/carbon-simulation/ProductsDataBase";
-import CategoriesDataBase from "../../../helpers/carbon-simulation/CategoriesDataBase";
-import UnitsDataBase from "../../../helpers/carbon-simulation/UnitsDataBase";
+import ProductsDataBase from "../../../helpers/carbon-simulation/database/ProductsDataBase";
+import CategoriesDataBase from "../../../helpers/carbon-simulation/database/CategoriesDataBase";
+import UnitsDataBase from "../../../helpers/carbon-simulation/database/UnitsDataBase";
+import searchBar from "../../../helpers/carbon-simulation/searchBar";
 export default {
     mixins: [
         ProductsDataBase,
         CategoriesDataBase,
-        UnitsDataBase
+        UnitsDataBase,
+        searchBar
     ],
     data() {
         return {
@@ -74,7 +79,8 @@ export default {
                 category_id: 0,
                 comment: '',
                 emissionFactor: 0
-            }
+            },
+            search: '',
         }
     },
     created() {
@@ -85,7 +91,7 @@ export default {
     methods: {
         refreshProducts() {
             this.fetchProducts();
-        }
+        },
     }
 }
 </script>
