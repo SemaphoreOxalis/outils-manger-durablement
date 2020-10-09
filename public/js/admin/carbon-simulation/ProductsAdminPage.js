@@ -94,19 +94,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     filteredProducts: function filteredProducts() {
-      var _this = this;
-
-      return this.products.filter(function (product) {
-        var productName = _this.areWeLookingForBeefAndEggs(product.name);
-
-        if (product.comment) {
-          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
-
-          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
-        }
-
-        return _this.searchByProduct(productName, _this.search);
-      });
+      return this.searchWithSearchBar();
     }
   },
   created: function created() {
@@ -915,6 +903,21 @@ function destroyUnit(unitId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    searchWithSearchBar: function searchWithSearchBar() {
+      var _this = this;
+
+      return this.products.filter(function (product) {
+        var productName = _this.areWeLookingForBeefAndEggs(product.name);
+
+        if (product.comment) {
+          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
+
+          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
+        }
+
+        return _this.searchByProduct(productName, _this.search);
+      });
+    },
     // TODO : See if it works with IE
     searchByProduct: function searchByProduct(productName, search) {
       return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);

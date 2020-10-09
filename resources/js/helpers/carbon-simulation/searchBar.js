@@ -1,5 +1,15 @@
 export default {
     methods: {
+        searchWithSearchBar() {
+            return this.products.filter(product => {
+                let productName = this.areWeLookingForBeefAndEggs(product.name);
+                if(product.comment) {
+                    let productComment = this.areWeLookingForBeefAndEggs(product.comment);
+                    return this.searchByProduct(productName, this.search) || this.searchByComment(productComment, this.search);
+                }
+                return this.searchByProduct(productName, this.search);
+            });
+        },
         // TODO : See if it works with IE
         searchByProduct(productName, search) {
             return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);

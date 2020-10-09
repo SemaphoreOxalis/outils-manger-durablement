@@ -10,12 +10,28 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
-/* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/ProductsDataBase */ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js");
-/* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
-/* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
-/* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/ProductsDataBase */ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -97,12 +113,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+var draggable = function draggable() {
+  return __webpack_require__.e(/*! import() | js/draggable */ "vendors~js/draggable").then(__webpack_require__.t.bind(null, /*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js", 7));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a
+    draggable: draggable
   },
-  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
       products: [],
@@ -113,7 +133,8 @@ __webpack_require__.r(__webpack_exports__);
       selectedCategoryId: null,
       selectedByCategory: false,
       selectedBySearchBar: false,
-      search: ''
+      search: '',
+      counter: 0
     };
   },
   computed: {
@@ -128,17 +149,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.selectedBySearchBar) {
         this.selectedCategoryId = null;
-        return this.products.filter(function (product) {
-          var productName = _this.areWeLookingForBeefAndEggs(product.name);
-
-          if (product.comment) {
-            var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
-
-            return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
-          }
-
-          return _this.searchByProduct(productName, _this.search);
-        });
+        return this.searchWithSearchBar();
       }
 
       return this.products;
@@ -149,36 +160,69 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchCategories();
     this.fetchUnits();
     this.fetchOrigins();
+    this.refreshCounter();
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
       this.selectedCategoryId = categoryId;
-      this.toggleSelectedBy();
+      this.selectedBySearchBar = false;
+      this.selectedByCategory = true;
     },
     filterProductsBySearch: function filterProductsBySearch() {
       this.selectedCategoryId = null;
-      this.toggleSelectedBy();
+      this.selectedBySearchBar = true;
+      this.selectedByCategory = false;
     },
-    toggleSelectedBy: function toggleSelectedBy() {
-      this.selectedBySearchBar = !this.selectedBySearchBar;
-      this.selectedByCategory = !this.selectedByCategory;
+    refreshCounter: function refreshCounter() {
+      if (this.shoppingList.length > 0) {
+        // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
+        // Plus efficace qu'un loop basique
+        this.counter = Math.max.apply(Math, _toConsumableArray(this.shoppingList.map(function (product) {
+          return product.id;
+        })));
+      } else {
+        this.counter = 0;
+      }
     },
     getClasses: function getClasses(categoryId) {
       return ['list-group-item', 'category', categoryId === this.selectedCategoryId ? 'selected' : ''];
     },
-    addProduct: function addProduct(_ref) {
+    addProductByDrag: function addProductByDrag(_ref) {
       var id = _ref.id,
           name = _ref.name,
+          comment = _ref.comment,
           unit = _ref.unit,
-          category = _ref.category;
+          category = _ref.category,
+          unit_id = _ref.unit_id,
+          category_id = _ref.category_id,
+          emissionFactor = _ref.emissionFactor;
+      this.counter++;
       return {
-        oldId: id,
+        id: this.counter,
         name: name,
+        comment: comment,
         unit: unit,
         category: category,
-        origin: this.origins[2] // France par défaut
-
+        origin: this.origins[2],
+        // France par défaut
+        unit_id: unit_id,
+        category_id: category_id,
+        emissionFactor: emissionFactor
       };
+    },
+    addProductToBasket: function addProductToBasket(product) {
+      this.counter++;
+
+      var shoppingListProduct = _objectSpread(_objectSpread({}, product), {}, {
+        origin: this.origins[2]
+      });
+
+      shoppingListProduct.id = this.counter;
+      this.shoppingList.push(shoppingListProduct);
+    },
+    removeProduct: function removeProduct(index) {
+      this.shoppingList.splice(index, 1);
+      this.refreshCounter();
     }
   }
 });
@@ -197,7 +241,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.left {\n    border: 1px black solid;\n}\n.middle {\n    border: 1px black solid;\n}\n.right {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.moving {\n    background-color: #1f6fb2;\n}\n.category {\n    cursor: pointer;\n}\n.selected {\n    background-color: lime;\n}\ninput {\n    width: 50px;\n}\n", ""]);
+exports.push([module.i, "\n.left {\n    border: 1px black solid;\n}\n.middle {\n    border: 1px black solid;\n}\n.right {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.moving {\n    background-color: #1f6fb2;\n}\n.category {\n    cursor: pointer;\n}\n.selected {\n    background-color: lime;\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
 
 // exports
 
@@ -336,7 +380,7 @@ var render = function() {
                 group: { name: "draggableProducts", pull: "clone", put: false },
                 sort: false,
                 chosenClass: "moving",
-                clone: _vm.addProduct
+                clone: _vm.addProductByDrag
               },
               model: {
                 value: _vm.filteredProducts,
@@ -352,11 +396,22 @@ var render = function() {
                 { key: product.id, staticClass: "list-group-item product" },
                 [
                   _vm._v(
-                    "\n\n                    " +
-                      _vm._s(product.id) +
-                      " : " +
+                    "\n                    " +
                       _vm._s(product.name) +
-                      "\n\n                "
+                      "\n                    "
+                  ),
+                  _c("small", [_vm._v(_vm._s(product.comment))]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.addProductToBasket(product)
+                        }
+                      }
+                    },
+                    [_vm._v("+")]
                   )
                 ]
               )
@@ -386,7 +441,7 @@ var render = function() {
                 expression: "shoppingList"
               }
             },
-            _vm._l(_vm.shoppingList, function(product) {
+            _vm._l(_vm.shoppingList, function(product, index) {
               return _c(
                 "div",
                 { key: product.id, staticClass: "list-group-item product" },
@@ -394,11 +449,25 @@ var render = function() {
                   _c("p", [
                     _vm._v(
                       "\n                        " +
-                        _vm._s(product.id) +
-                        " : " +
                         _vm._s(product.name) +
-                        " -\n                        "
+                        " - "
                     ),
+                    _c("small", [_vm._v(_vm._s(product.comment))]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "trash-icon",
+                        staticStyle: { display: "inline-block" },
+                        on: {
+                          click: function($event) {
+                            return _vm.removeProduct(index)
+                          }
+                        }
+                      },
+                      [_vm._v("X")]
+                    ),
+                    _vm._v(" "),
                     _c("input", {
                       attrs: {
                         type: "number",
@@ -876,6 +945,21 @@ function destroyUnit(unitId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    searchWithSearchBar: function searchWithSearchBar() {
+      var _this = this;
+
+      return this.products.filter(function (product) {
+        var productName = _this.areWeLookingForBeefAndEggs(product.name);
+
+        if (product.comment) {
+          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
+
+          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
+        }
+
+        return _this.searchByProduct(productName, _this.search);
+      });
+    },
     // TODO : See if it works with IE
     searchByProduct: function searchByProduct(productName, search) {
       return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);

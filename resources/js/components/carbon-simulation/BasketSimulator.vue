@@ -26,14 +26,14 @@
                            :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
                            :sort="false"
                            chosenClass="moving"
-                           :clone="addProduct">
+                           :clone="addProductByDrag">
 
                     <div v-for="product in filteredProducts"
                          class="list-group-item product"
                          :key="product.id">
-
-                        {{ product.id }} : {{ product.name }}
-
+                        {{ product.name }}
+                        <small>{{ product.comment }}</small>
+                        <button @click="addProductToBasket(product)">+</button>
                     </div>
 
                 </draggable>
@@ -46,14 +46,14 @@
                            group="draggableProducts"
                            :animation="150">
 
-                    <div v-for="product in shoppingList"
+                    <div v-for="(product,index) in shoppingList"
                          class="list-group-item product"
                          :key="product.id">
 
                         <p>
-                            {{ product.id }} : {{ product.name }} -
-                            <input type="number" :id="'shopping-item-' + product.id" placeholder="1"> {{
-                                product.unit.unit }}
+                            {{ product.name }} - <small>{{ product.comment }}</small>
+                            <button @click="removeProduct(index)" class="trash-icon" style="display: inline-block;">X</button>
+                            <input type="number" :id="'shopping-item-' + product.id" placeholder="1"> {{ product.unit.unit }}
                         </p>
                         <p>
                             Origine :
@@ -76,11 +76,14 @@
 
 <script>
 import searchBar from "../../helpers/carbon-simulation/searchBar";
-import draggable from 'vuedraggable';
 import ProductsDataBase from "../../helpers/carbon-simulation/database/ProductsDataBase";
 import CategoriesDataBase from "../../helpers/carbon-simulation/database/CategoriesDataBase";
 import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBase";
 import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
+const draggable = () => import(
+    /* webpackChunkName: "js/draggable" */
+    'vuedraggable'
+    );
 
 export default {
     components: {
@@ -105,6 +108,7 @@ export default {
             selectedByCategory: false,
             selectedBySearchBar: false,
             search: '',
+            counter:0,
         }
     },
 
@@ -119,14 +123,7 @@ export default {
             if(this.selectedBySearchBar) {
                 this.selectedCategoryId = null;
 
-                return this.products.filter(product => {
-                    let productName = this.areWeLookingForBeefAndEggs(product.name);
-                    if(product.comment) {
-                        let productComment = this.areWeLookingForBeefAndEggs(product.comment);
-                        return this.searchByProduct(productName, this.search) || this.searchByComment(productComment, this.search);
-                    }
-                    return this.searchByProduct(productName, this.search);
-                });
+                return this.searchWithSearchBar();
             }
 
             return this.products;
@@ -138,23 +135,31 @@ export default {
         this.fetchCategories();
         this.fetchUnits();
         this.fetchOrigins();
+
+        this.refreshCounter();
     },
 
     methods: {
         filterProductsByCategory(categoryId) {
             this.selectedCategoryId = categoryId;
-            this.toggleSelectedBy();
+            this.selectedBySearchBar = false;
+            this.selectedByCategory = true;
         },
         filterProductsBySearch() {
             this.selectedCategoryId = null;
-            this.toggleSelectedBy();
-        },
-        toggleSelectedBy() {
-            this.selectedBySearchBar = !this.selectedBySearchBar;
-            this.selectedByCategory = !this.selectedByCategory;
+            this.selectedBySearchBar = true;
+            this.selectedByCategory = false;
         },
 
-
+        refreshCounter() {
+            if (this.shoppingList.length > 0) {
+                // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
+                // Plus efficace qu'un loop basique
+                this.counter = Math.max(...this.shoppingList.map(product => product.id));
+            } else {
+                this.counter = 0;
+            }
+        },
 
         getClasses(categoryId) {
             return [
@@ -165,15 +170,32 @@ export default {
         },
 
 
-        addProduct({id, name, unit, category}) {
+        addProductByDrag({id, name, comment, unit, category, unit_id, category_id, emissionFactor}) {
+            this.counter++;
             return {
-                oldId: id,
+                id: this.counter,
                 name: name,
+                comment: comment,
                 unit: unit,
                 category: category,
-                origin: this.origins[2] // France par défaut
+                origin: this.origins[2], // France par défaut
+                unit_id: unit_id,
+                category_id: category_id,
+                emissionFactor: emissionFactor,
             }
         },
+
+        addProductToBasket(product) {
+            this.counter++;
+            let shoppingListProduct = {...product, origin: this.origins[2]};
+            shoppingListProduct.id = this.counter;
+            this.shoppingList.push(shoppingListProduct);
+        },
+
+        removeProduct(index) {
+            this.shoppingList.splice(index, 1);
+            this.refreshCounter();
+        }
     }
 }
 </script>
@@ -210,5 +232,10 @@ export default {
 
 input {
     width: 50px;
+}
+
+select {
+    display: inline-block;
+    max-width: 200px;
 }
 </style>

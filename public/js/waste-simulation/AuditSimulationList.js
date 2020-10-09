@@ -71,7 +71,7 @@ var SimulationItem = function SimulationItem() {
 
 
 var draggable = function draggable() {
-  return __webpack_require__.e(/*! import() | js/draggable */ "vendors~js/carbon-simulation/BasketSimulator~js/draggable").then(__webpack_require__.t.bind(null, /*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js", 7));
+  return __webpack_require__.e(/*! import() | js/draggable */ "vendors~js/draggable").then(__webpack_require__.t.bind(null, /*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js", 7));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
