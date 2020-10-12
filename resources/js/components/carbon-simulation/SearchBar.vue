@@ -105,13 +105,13 @@
 }
 
 .autocomplete-result:hover {
-    background-color: #4aae9b;
-    color: white;
+    background-color: var(--main-color-darker);
+    color: var(--light-grey);
 }
 
 .autocomplete-result.is-active,
 .autocomplete-result:hover {
-    background-color: #4aae9b;
-    color: white;
+    background-color: var(--main-color-darker);
+    color: var(--light-grey);
 }
 </style>

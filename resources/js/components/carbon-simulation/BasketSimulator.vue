@@ -1,17 +1,21 @@
 <template>
     <div class="container">
+        <add-product-pop-up v-if="showAddingModal"
+                            :product="this.productAdded"
+                            :origins="this.origins"
+                            @add="addProductToBasket"></add-product-pop-up>
+
         <div class="search mb-4">
-<!--            <input type="text" v-model="search" placeholder="Rechercher un produit.." v-on:input="filterProductsBySearch" style="max-width: 650px;">-->
-<!--            <button @click="search=''" style="display: inline-block;">X</button>-->
             <search-bar :products="this.products"
                         @search-complete="filterProductsBySearchBar"
-                        @product-chosen="addProductToBasket">
+                        @product-chosen="showAddingProductModal">
             </search-bar>
         </div>
 
-        <div class="flex">
+        <div class="row">
 
-            <product-list v-bind:categories="this.categories"
+            <product-list class="col-4"
+                          v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:search="this.search"
                           v-bind:counter="this.counter"
@@ -20,7 +24,7 @@
                           v-bind:selected-by-category="this.selectedByCategory"
                           v-bind:selected-by-search-bar="this.selectedBySearchBar"
                           @filter-products-by-category="filterProductsByCategory"
-                          @add-product-to-basket="addProductToBasket"
+                          @add-product-to-basket="showAddingProductModal"
                           @increment-counter="incrementCounter">
             </product-list>
 
@@ -31,7 +35,8 @@
                     <draggable v-model="shoppingList"
                                class="dragArea list-group h-100"
                                group="draggableProducts"
-                               :animation="150">
+                               :animation="150"
+                               @change="log">
 
                         <div v-for="(product,index) in shoppingList"
                              class="list-group-item product"
@@ -42,18 +47,16 @@
                                 <button @click="removeProduct(index)" class="trash-icon" style="display: inline-block;">
                                     X
                                 </button>
-                                <input type="number" :id="'shopping-item-' + product.id" placeholder="1">
-                                {{ product.unit.unit }}
                             </p>
-                            <p>
-                                Origine :
-                                <select v-model="product.origin">
-                                    <option v-for="origin in origins"
-                                            v-bind:value="origin">
-                                        {{ origin.from }}
-                                    </option>
-                                </select>
-                            </p>
+                            <input type="number" v-model="product.amount" min="0" style="width: 100px;"> {{ product.unit.unit }} -
+                            <input type="number" v-model="product.price" min="0" style="width: 100px;"> € -
+                            <select v-model="product.origin" style="width: 100px;">
+                                <option v-for="origin in origins"
+                                        v-bind:value="origin">
+                                    {{ origin.from }}
+                                </option>
+                            </select>
+
 
                         </div>
 
@@ -79,6 +82,10 @@ const ProductList = () => import(
     /* webpackChunkName: "js/carbon-simulation/ProductList" */
     './ProductList'
     );
+const AddProductPopUp = () => import(
+    /* webpackChunkName: "js/carbon-simulation/AddProductPopUp" */
+    './AddProductPopUp'
+    );
 const draggable = () => import(
     /* webpackChunkName: "js/draggable" */
     'vuedraggable'
@@ -88,6 +95,7 @@ export default {
     components: {
         SearchBar,
         ProductList,
+        AddProductPopUp,
         draggable
     },
     mixins: [
@@ -103,13 +111,20 @@ export default {
             categories: [],
             units: [],
             origins: [],
+
             shoppingList: [],
+
             selectedCategoryId: null,
             selectedByCategory: false,
             selectedBySearchBar: false,
+
             search: '',
             searchResults: [],
+
             counter:0,
+
+            showAddingModal: false,
+            productAdded: {},
         }
     },
 
@@ -164,12 +179,17 @@ export default {
                 this.counter = 0;
             }
         },
-        addProductToBasket(product) {
+        showAddingProductModal(product) {
             this.refreshCounter();
             this.incrementCounter();
-            let shoppingListProduct = {...product, origin: this.origins[2]};
-            shoppingListProduct.id = this.counter;
-            this.shoppingList.push(shoppingListProduct);
+            this.productAdded = product;
+            this.showAddingModal = true;
+
+        },
+        addProductToBasket(product) {
+            this.showAddingModal = false
+            product.id = this.counter;
+            this.shoppingList.push(product);
         },
 
         removeProduct(index) {
@@ -179,6 +199,9 @@ export default {
         incrementCounter() {
             this.counter++;
         },
+        log: function(evt) {
+            window.console.log(evt);
+        }
     }
 }
 </script>
@@ -194,7 +217,8 @@ export default {
 }
 
 .moving {
-    background-color: #1f6fb2;
+    background-color: var(--main-color-darker);
+    color: var(--light-grey);
 }
 
 input {

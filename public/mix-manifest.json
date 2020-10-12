@@ -31,5 +31,6 @@
     "/js/draggable.js": "/js/draggable.js",
     "/js/carbon-simulation/ProductList.js": "/js/carbon-simulation/ProductList.js",
     "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2.js",
-    "/js/carbon-simulation/SearchBar.js": "/js/carbon-simulation/SearchBar.js"
+    "/js/carbon-simulation/SearchBar.js": "/js/carbon-simulation/SearchBar.js",
+    "/js/carbon-simulation/AddProductPopUp.js": "/js/carbon-simulation/AddProductPopUp.js"
 }

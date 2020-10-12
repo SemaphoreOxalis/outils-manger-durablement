@@ -93,7 +93,9 @@ var draggable = function draggable() {
         // France par défaut
         unit_id: product.unit_id,
         category_id: product.category_id,
-        emissionFactor: product.emissionFactor
+        emissionFactor: product.emissionFactor,
+        amount: 0,
+        price: 0
       };
     }
   }
@@ -113,7 +115,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.left {\n    border: 1px black solid;\n    padding: 2px;\n}\n.middle {\n    border: 1px black solid;\n    padding: 2px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.moving {\n    background-color: #1f6fb2;\n}\n.category {\n    cursor: pointer;\n}\n.selected {\n    background-color: lime;\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.left {\n    border: 1px black solid;\n    padding: 2px;\n}\n.middle {\n    border: 1px black solid;\n    padding: 2px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.category {\n    cursor: pointer;\n}\n.selected,\n.moving {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
 
 // exports
 
@@ -168,10 +170,10 @@ var render = function() {
   return _c("div", [
     _c("h3", [_vm._v("Produits")]),
     _vm._v(" "),
-    _c("div", { staticClass: "flex col-4" }, [
+    _c("div", { staticClass: "row" }, [
       _c(
         "div",
-        { staticClass: "left" },
+        { staticClass: "left col-4" },
         _vm._l(_vm.categories, function(category) {
           return _c(
             "div",
@@ -198,7 +200,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "middle" },
+        { staticClass: "middle col-8" },
         [
           _c(
             "draggable",

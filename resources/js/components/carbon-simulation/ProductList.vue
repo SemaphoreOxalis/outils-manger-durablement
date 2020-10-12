@@ -1,8 +1,8 @@
 <template>
     <div>
         <h3>Produits</h3>
-        <div class="flex col-4">
-            <div class="left">
+        <div class="row">
+            <div class="left col-4">
                 <div v-for="category in categories"
                      :class="getClasses(category.id)"
                      :key="category.id"
@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="middle">
+            <div class="middle col-8">
                 <draggable v-model="filteredProducts"
                            class="dragArea list-group"
                            :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
@@ -36,61 +36,63 @@
 </template>
 
 <script>
-    const draggable = () => import(
-        /* webpackChunkName: "js/draggable" */
-        'vuedraggable'
-        );
-    export default {
-        components: {
-            draggable
+const draggable = () => import(
+    /* webpackChunkName: "js/draggable" */
+    'vuedraggable'
+    );
+export default {
+    components: {
+        draggable
+    },
+    props: {
+        categories: Array,
+        filteredProducts: Array,
+        selectedCategoryId: Number,
+        selectedByCategory: Boolean,
+        selectedBySearchBar: Boolean,
+        search: String,
+        counter: Number,
+        origins: Array,
+    },
+    data() {
+        return {
+            internalCounter: 0,
+        }
+    },
+    methods: {
+        getClasses(categoryId) {
+            return [
+                'list-group-item',
+                'category',
+                categoryId === this.selectedCategoryId ? 'selected' : ''
+            ];
         },
-        props: {
-            categories: Array,
-            filteredProducts: Array,
-            selectedCategoryId: Number,
-            selectedByCategory: Boolean,
-            selectedBySearchBar: Boolean,
-            search: String,
-            counter: Number,
-            origins: Array,
+        filterProdByCategory(categoryId) {
+            this.$emit('filter-products-by-category', categoryId);
         },
-        data() {
+        addProdToBasket(product) {
+            this.$emit('add-product-to-basket', product);
+        },
+        addProductByDrag(product) {
+            this.internalCounter = this.counter;
+            this.$emit('increment-counter');
+            this.internalCounter++;
             return {
-                internalCounter: 0,
+                id: this.internalCounter,
+                name: product.name,
+                comment: product.comment,
+                unit: product.unit,
+                category: product.category,
+                origin: this.origins[2], // France par défaut
+                unit_id: product.unit_id,
+                category_id: product.category_id,
+                emissionFactor: product.emissionFactor,
+                amount: 0,
+                price: 0,
             }
         },
-        methods: {
-            getClasses(categoryId) {
-                return [
-                    'list-group-item',
-                    'category',
-                    categoryId === this.selectedCategoryId ? 'selected' : ''
-                ];
-            },
-            filterProdByCategory(categoryId) {
-                this.$emit('filter-products-by-category', categoryId);
-            },
-            addProdToBasket(product) {
-                this.$emit('add-product-to-basket', product);
-            },
-            addProductByDrag(product) {
-                this.internalCounter = this.counter;
-                this.$emit('increment-counter');
-                this.internalCounter++;
-                return {
-                    id: this.internalCounter,
-                    name: product.name,
-                    comment: product.comment,
-                    unit: product.unit,
-                    category: product.category,
-                    origin: this.origins[2], // France par défaut
-                    unit_id: product.unit_id,
-                    category_id: product.category_id,
-                    emissionFactor: product.emissionFactor,
-                }
-            },
-        }
     }
+}
 </script>
 
 <style>
@@ -108,16 +110,14 @@
     cursor: grab;
 }
 
-.moving {
-    background-color: #1f6fb2;
-}
-
 .category {
     cursor: pointer;
 }
 
-.selected {
-    background-color: lime;
+.selected,
+.moving {
+    background-color: var(--main-color-darker);
+    color: var(--light-grey);
 }
 
 input {
