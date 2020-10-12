@@ -1,35 +1,36 @@
 <template>
-    <div class="row">
-        <div class="left col-3">
-            <h3>Catégories</h3>
-            <div v-for="category in categories"
-                 :class="getClasses(category.id)"
-                 :key="category.id"
-                 @click="filterProdByCategory(category.id)">
+    <div>
+        <h3>Produits</h3>
+        <div class="flex col-4">
+            <div class="left">
+                <div v-for="category in categories"
+                     :class="getClasses(category.id)"
+                     :key="category.id"
+                     @click="filterProdByCategory(category.id)">
 
-                {{ category.name }}
+                    {{ category.name }}
 
-            </div>
-        </div>
-
-        <div class="middle col-7">
-            <h3>Produits</h3>
-            <draggable v-model="filteredProducts"
-                       class="dragArea list-group"
-                       :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
-                       :sort="false"
-                       chosenClass="moving"
-                       :clone="addProductByDrag">
-
-                <div v-for="product in filteredProducts"
-                     class="list-group-item product"
-                     :key="product.id">
-                    {{ product.name }}
-                    <small>{{ product.comment }}</small>
-                    <button @click="addProdToBasket(product)">+</button>
                 </div>
+            </div>
 
-            </draggable>
+            <div class="middle">
+                <draggable v-model="filteredProducts"
+                           class="dragArea list-group"
+                           :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
+                           :sort="false"
+                           chosenClass="moving"
+                           :clone="addProductByDrag">
+
+                    <div v-for="product in filteredProducts"
+                         class="list-group-item product"
+                         :key="product.id">
+                        {{ product.name }}
+                        <small>{{ product.comment }}</small>
+                        <button @click="addProdToBasket(product)">+</button>
+                    </div>
+
+                </draggable>
+            </div>
         </div>
     </div>
 </template>
@@ -95,10 +96,12 @@
 <style>
 .left {
     border: 1px black solid;
+    padding: 2px;
 }
 
 .middle {
     border: 1px black solid;
+    padding: 2px;
 }
 
 .product {

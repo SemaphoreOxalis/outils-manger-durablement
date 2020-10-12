@@ -90,6 +90,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -187,7 +193,6 @@ var draggable = function draggable() {
       this.refreshCounter();
     },
     incrementCounter: function incrementCounter() {
-      console.log('yo');
       this.counter++;
     }
   }
@@ -270,7 +275,7 @@ var render = function() {
             expression: "search"
           }
         ],
-        staticStyle: { "max-width": "350px" },
+        staticStyle: { "max-width": "650px" },
         attrs: { type: "text", placeholder: "Rechercher un produit.." },
         domProps: { value: _vm.search },
         on: {
@@ -322,121 +327,131 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "right col-6" },
-          [
-            _c("h3", [_vm._v("Liste de courses")]),
-            _vm._v(" "),
-            _c(
-              "draggable",
-              {
-                staticClass: "dragArea list-group h-100",
-                attrs: { group: "draggableProducts", animation: 150 },
-                model: {
-                  value: _vm.shoppingList,
-                  callback: function($$v) {
-                    _vm.shoppingList = $$v
-                  },
-                  expression: "shoppingList"
-                }
-              },
-              _vm._l(_vm.shoppingList, function(product, index) {
-                return _c(
-                  "div",
-                  { key: product.id, staticClass: "list-group-item product" },
-                  [
-                    _c("p", [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(product.name) +
-                          " - "
-                      ),
-                      _c("small", [_vm._v(_vm._s(product.comment))]),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "trash-icon",
-                          staticStyle: { display: "inline-block" },
-                          on: {
-                            click: function($event) {
-                              return _vm.removeProduct(index)
+        _c("div", { staticClass: "col-8" }, [
+          _c("h3", [_vm._v("Liste de courses")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "right col-12" },
+            [
+              _c(
+                "draggable",
+                {
+                  staticClass: "dragArea list-group h-100",
+                  attrs: { group: "draggableProducts", animation: 150 },
+                  model: {
+                    value: _vm.shoppingList,
+                    callback: function($$v) {
+                      _vm.shoppingList = $$v
+                    },
+                    expression: "shoppingList"
+                  }
+                },
+                _vm._l(_vm.shoppingList, function(product, index) {
+                  return _c(
+                    "div",
+                    { key: product.id, staticClass: "list-group-item product" },
+                    [
+                      _c("p", [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(product.name) +
+                            " - "
+                        ),
+                        _c("small", [_vm._v(_vm._s(product.comment))]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "trash-icon",
+                            staticStyle: { display: "inline-block" },
+                            on: {
+                              click: function($event) {
+                                return _vm.removeProduct(index)
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("X")]
-                      ),
-                      _vm._v(" "),
-                      _c("input", {
-                        attrs: {
-                          type: "number",
-                          id: "shopping-item-" + product.id,
-                          placeholder: "1"
-                        }
-                      }),
-                      _vm._v(
-                        " " +
-                          _vm._s(product.unit.unit) +
-                          "\n                    "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "\n                        Origine :\n                        "
-                      ),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: product.origin,
-                              expression: "product.origin"
-                            }
-                          ],
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                product,
-                                "origin",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        _vm._l(_vm.origins, function(origin) {
-                          return _c("option", { domProps: { value: origin } }, [
+                          },
+                          [
                             _vm._v(
-                              "\n                                " +
-                                _vm._s(origin.from) +
-                                "\n                            "
+                              "\n                                X\n                            "
                             )
-                          ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          attrs: {
+                            type: "number",
+                            id: "shopping-item-" + product.id,
+                            placeholder: "1"
+                          }
                         }),
-                        0
-                      )
-                    ])
-                  ]
-                )
-              }),
-              0
-            )
-          ],
-          1
-        )
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(product.unit.unit) +
+                            "\n                        "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "\n                            Origine :\n                            "
+                        ),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: product.origin,
+                                expression: "product.origin"
+                              }
+                            ],
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  product,
+                                  "origin",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          _vm._l(_vm.origins, function(origin) {
+                            return _c(
+                              "option",
+                              { domProps: { value: origin } },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(origin.from) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            ],
+            1
+          )
+        ])
       ],
       1
     )

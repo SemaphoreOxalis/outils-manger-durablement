@@ -45,6 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var draggable = function draggable() {
   return __webpack_require__.e(/*! import() | js/draggable */ "vendors~js/draggable").then(__webpack_require__.t.bind(null, /*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js", 7));
 };
@@ -112,7 +113,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.left {\n    border: 1px black solid;\n}\n.middle {\n    border: 1px black solid;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.moving {\n    background-color: #1f6fb2;\n}\n.category {\n    cursor: pointer;\n}\n.selected {\n    background-color: lime;\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.left {\n    border: 1px black solid;\n    padding: 2px;\n}\n.middle {\n    border: 1px black solid;\n    padding: 2px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.moving {\n    background-color: #1f6fb2;\n}\n.category {\n    cursor: pointer;\n}\n.selected {\n    background-color: lime;\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
 
 // exports
 
@@ -164,13 +165,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "left col-3" },
-      [
-        _c("h3", [_vm._v("Catégories")]),
-        _vm._v(" "),
+  return _c("div", [
+    _c("h3", [_vm._v("Produits")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex col-4" }, [
+      _c(
+        "div",
+        { staticClass: "left" },
         _vm._l(_vm.categories, function(category) {
           return _c(
             "div",
@@ -185,70 +186,70 @@ var render = function() {
             },
             [
               _vm._v(
-                "\n\n            " + _vm._s(category.name) + "\n\n        "
+                "\n\n                " +
+                  _vm._s(category.name) +
+                  "\n\n            "
               )
             ]
           )
-        })
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "middle col-7" },
-      [
-        _c("h3", [_vm._v("Produits")]),
-        _vm._v(" "),
-        _c(
-          "draggable",
-          {
-            staticClass: "dragArea list-group",
-            attrs: {
-              group: { name: "draggableProducts", pull: "clone", put: false },
-              sort: false,
-              chosenClass: "moving",
-              clone: _vm.addProductByDrag
-            },
-            model: {
-              value: _vm.filteredProducts,
-              callback: function($$v) {
-                _vm.filteredProducts = $$v
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "middle" },
+        [
+          _c(
+            "draggable",
+            {
+              staticClass: "dragArea list-group",
+              attrs: {
+                group: { name: "draggableProducts", pull: "clone", put: false },
+                sort: false,
+                chosenClass: "moving",
+                clone: _vm.addProductByDrag
               },
-              expression: "filteredProducts"
-            }
-          },
-          _vm._l(_vm.filteredProducts, function(product) {
-            return _c(
-              "div",
-              { key: product.id, staticClass: "list-group-item product" },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(product.name) +
-                    "\n                "
-                ),
-                _c("small", [_vm._v(_vm._s(product.comment))]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        return _vm.addProdToBasket(product)
+              model: {
+                value: _vm.filteredProducts,
+                callback: function($$v) {
+                  _vm.filteredProducts = $$v
+                },
+                expression: "filteredProducts"
+              }
+            },
+            _vm._l(_vm.filteredProducts, function(product) {
+              return _c(
+                "div",
+                { key: product.id, staticClass: "list-group-item product" },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(product.name) +
+                      "\n                    "
+                  ),
+                  _c("small", [_vm._v(_vm._s(product.comment))]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      on: {
+                        click: function($event) {
+                          return _vm.addProdToBasket(product)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("+")]
-                )
-              ]
-            )
-          }),
-          0
-        )
-      ],
-      1
-    )
+                    },
+                    [_vm._v("+")]
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        ],
+        1
+      )
+    ])
   ])
 }
 var staticRenderFns = []

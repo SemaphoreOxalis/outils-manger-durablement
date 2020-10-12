@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="search mb-4">
-            <input type="text" v-model="search" placeholder="Rechercher un produit.." v-on:input="filterProductsBySearch" style="max-width: 350px;">
+            <input type="text" v-model="search" placeholder="Rechercher un produit.." v-on:input="filterProductsBySearch" style="max-width: 650px;">
             <button @click="search=''" style="display: inline-block;">X</button>
         </div>
 
@@ -21,35 +21,41 @@
             >
             </product-list>
 
-            <div class="right col-6">
+
+            <div class="col-8">
                 <h3>Liste de courses</h3>
-                <draggable v-model="shoppingList"
-                           class="dragArea list-group h-100"
-                           group="draggableProducts"
-                           :animation="150">
+                <div class="right col-12">
+                    <draggable v-model="shoppingList"
+                               class="dragArea list-group h-100"
+                               group="draggableProducts"
+                               :animation="150">
 
-                    <div v-for="(product,index) in shoppingList"
-                         class="list-group-item product"
-                         :key="product.id">
+                        <div v-for="(product,index) in shoppingList"
+                             class="list-group-item product"
+                             :key="product.id">
 
-                        <p>
-                            {{ product.name }} - <small>{{ product.comment }}</small>
-                            <button @click="removeProduct(index)" class="trash-icon" style="display: inline-block;">X</button>
-                            <input type="number" :id="'shopping-item-' + product.id" placeholder="1"> {{ product.unit.unit }}
-                        </p>
-                        <p>
-                            Origine :
-                            <select v-model="product.origin">
-                                <option v-for="origin in origins"
-                                        v-bind:value="origin">
-                                    {{ origin.from }}
-                                </option>
-                            </select>
-                        </p>
+                            <p>
+                                {{ product.name }} - <small>{{ product.comment }}</small>
+                                <button @click="removeProduct(index)" class="trash-icon" style="display: inline-block;">
+                                    X
+                                </button>
+                                <input type="number" :id="'shopping-item-' + product.id" placeholder="1">
+                                {{ product.unit.unit }}
+                            </p>
+                            <p>
+                                Origine :
+                                <select v-model="product.origin">
+                                    <option v-for="origin in origins"
+                                            v-bind:value="origin">
+                                        {{ origin.from }}
+                                    </option>
+                                </select>
+                            </p>
 
-                    </div>
+                        </div>
 
-                </draggable>
+                    </draggable>
+                </div>
             </div>
         </div>
     </div>
@@ -137,7 +143,6 @@ export default {
             this.selectedBySearchBar = true;
             this.selectedByCategory = false;
         },
-
         refreshCounter() {
             if (this.shoppingList.length > 0) {
                 // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
@@ -147,7 +152,6 @@ export default {
                 this.counter = 0;
             }
         },
-
         addProductToBasket(product) {
             this.refreshCounter();
             this.incrementCounter();
@@ -161,7 +165,6 @@ export default {
             this.refreshCounter();
         },
         incrementCounter() {
-            console.log('yo');
             this.counter++;
         }
     }
