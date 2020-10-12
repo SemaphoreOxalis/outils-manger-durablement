@@ -5,39 +5,21 @@
             <button @click="search=''" style="display: inline-block;">X</button>
         </div>
 
-        <div class="row">
+        <div class="flex">
 
-            <div class="left col-2">
-                <h3>Catégories</h3>
-                <div v-for="category in categories"
-                     :class="getClasses(category.id)"
-                     :key="category.id"
-                     @click="filterProductsByCategory(category.id)">
-
-                    {{ category.name }}
-
-                </div>
-            </div>
-
-            <div class="middle col-4">
-                <h3>Produits</h3>
-                <draggable v-model="filteredProducts"
-                           class="dragArea list-group"
-                           :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
-                           :sort="false"
-                           chosenClass="moving"
-                           :clone="addProductByDrag">
-
-                    <div v-for="product in filteredProducts"
-                         class="list-group-item product"
-                         :key="product.id">
-                        {{ product.name }}
-                        <small>{{ product.comment }}</small>
-                        <button @click="addProductToBasket(product)">+</button>
-                    </div>
-
-                </draggable>
-            </div>
+            <product-list v-bind:categories="this.categories"
+                          v-bind:origins="this.origins"
+                          v-bind:search="this.search"
+                          v-bind:counter="this.counter"
+                          v-bind:filtered-products="this.filteredProducts"
+                          v-bind:selected-category-id="this.selectedCategoryId"
+                          v-bind:selected-by-category="this.selectedByCategory"
+                          v-bind:selected-by-search-bar="this.selectedBySearchBar"
+                          @filter-products-by-category="filterProductsByCategory"
+                          @add-product-to-basket="addProductToBasket"
+                          @increment-counter="incrementCounter"
+            >
+            </product-list>
 
             <div class="right col-6">
                 <h3>Liste de courses</h3>
@@ -80,6 +62,10 @@ import ProductsDataBase from "../../helpers/carbon-simulation/database/ProductsD
 import CategoriesDataBase from "../../helpers/carbon-simulation/database/CategoriesDataBase";
 import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBase";
 import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
+const ProductList = () => import(
+    /* webpackChunkName: "js/carbon-simulation/ProductList" */
+    './ProductList'
+    );
 const draggable = () => import(
     /* webpackChunkName: "js/draggable" */
     'vuedraggable'
@@ -87,6 +73,7 @@ const draggable = () => import(
 
 export default {
     components: {
+        ProductList,
         draggable
     },
     mixins: [
@@ -161,32 +148,9 @@ export default {
             }
         },
 
-        getClasses(categoryId) {
-            return [
-                'list-group-item',
-                'category',
-                categoryId === this.selectedCategoryId ? 'selected' : ''
-            ];
-        },
-
-
-        addProductByDrag({id, name, comment, unit, category, unit_id, category_id, emissionFactor}) {
-            this.counter++;
-            return {
-                id: this.counter,
-                name: name,
-                comment: comment,
-                unit: unit,
-                category: category,
-                origin: this.origins[2], // France par défaut
-                unit_id: unit_id,
-                category_id: category_id,
-                emissionFactor: emissionFactor,
-            }
-        },
-
         addProductToBasket(product) {
-            this.counter++;
+            this.refreshCounter();
+            this.incrementCounter();
             let shoppingListProduct = {...product, origin: this.origins[2]};
             shoppingListProduct.id = this.counter;
             this.shoppingList.push(shoppingListProduct);
@@ -195,20 +159,16 @@ export default {
         removeProduct(index) {
             this.shoppingList.splice(index, 1);
             this.refreshCounter();
+        },
+        incrementCounter() {
+            console.log('yo');
+            this.counter++;
         }
     }
 }
 </script>
 
 <style>
-.left {
-    border: 1px black solid;
-}
-
-.middle {
-    border: 1px black solid;
-}
-
 .right {
     border: 1px black solid;
     min-height: 100px;
@@ -220,14 +180,6 @@ export default {
 
 .moving {
     background-color: #1f6fb2;
-}
-
-.category {
-    cursor: pointer;
-}
-
-.selected {
-    background-color: lime;
 }
 
 input {
