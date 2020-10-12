@@ -1,8 +1,12 @@
 <template>
     <div class="container">
         <div class="search mb-4">
-            <input type="text" v-model="search" placeholder="Rechercher un produit.." v-on:input="filterProductsBySearch" style="max-width: 650px;">
-            <button @click="search=''" style="display: inline-block;">X</button>
+<!--            <input type="text" v-model="search" placeholder="Rechercher un produit.." v-on:input="filterProductsBySearch" style="max-width: 650px;">-->
+<!--            <button @click="search=''" style="display: inline-block;">X</button>-->
+            <search-bar :products="this.products"
+                        @search-complete="filterProductsBySearchBar"
+                        @product-chosen="addProductToBasket">
+            </search-bar>
         </div>
 
         <div class="flex">
@@ -17,8 +21,7 @@
                           v-bind:selected-by-search-bar="this.selectedBySearchBar"
                           @filter-products-by-category="filterProductsByCategory"
                           @add-product-to-basket="addProductToBasket"
-                          @increment-counter="incrementCounter"
-            >
+                          @increment-counter="incrementCounter">
             </product-list>
 
 
@@ -68,6 +71,10 @@ import ProductsDataBase from "../../helpers/carbon-simulation/database/ProductsD
 import CategoriesDataBase from "../../helpers/carbon-simulation/database/CategoriesDataBase";
 import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBase";
 import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
+const SearchBar = () => import(
+    /* webpackChunkName: "js/carbon-simulation/SearchBar" */
+    './SearchBar'
+    );
 const ProductList = () => import(
     /* webpackChunkName: "js/carbon-simulation/ProductList" */
     './ProductList'
@@ -79,6 +86,7 @@ const draggable = () => import(
 
 export default {
     components: {
+        SearchBar,
         ProductList,
         draggable
     },
@@ -89,7 +97,6 @@ export default {
         UnitsDataBase,
         OriginsDataBase,
     ],
-
     data() {
         return {
             products: [],
@@ -101,6 +108,7 @@ export default {
             selectedByCategory: false,
             selectedBySearchBar: false,
             search: '',
+            searchResults: [],
             counter:0,
         }
     },
@@ -116,7 +124,7 @@ export default {
             if(this.selectedBySearchBar) {
                 this.selectedCategoryId = null;
 
-                return this.searchWithSearchBar();
+                return this.searchResults;
             }
 
             return this.products;
@@ -143,6 +151,10 @@ export default {
             this.selectedBySearchBar = true;
             this.selectedByCategory = false;
         },
+        filterProductsBySearchBar(results) {
+            this.searchResults = results;
+            this.filterProductsBySearch()
+        },
         refreshCounter() {
             if (this.shoppingList.length > 0) {
                 // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
@@ -166,7 +178,7 @@ export default {
         },
         incrementCounter() {
             this.counter++;
-        }
+        },
     }
 }
 </script>

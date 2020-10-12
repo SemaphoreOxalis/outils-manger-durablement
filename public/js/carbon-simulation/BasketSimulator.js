@@ -96,11 +96,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 
 
 
 
 
+
+var SearchBar = function SearchBar() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/SearchBar */ "js/carbon-simulation/SearchBar").then(__webpack_require__.bind(null, /*! ./SearchBar */ "./resources/js/components/carbon-simulation/SearchBar.vue"));
+};
 
 var ProductList = function ProductList() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/ProductList */ "js/carbon-simulation/ProductList").then(__webpack_require__.bind(null, /*! ./ProductList */ "./resources/js/components/carbon-simulation/ProductList.vue"));
@@ -112,6 +119,7 @@ var draggable = function draggable() {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
+    SearchBar: SearchBar,
     ProductList: ProductList,
     draggable: draggable
   },
@@ -127,6 +135,7 @@ var draggable = function draggable() {
       selectedByCategory: false,
       selectedBySearchBar: false,
       search: '',
+      searchResults: [],
       counter: 0
     };
   },
@@ -142,7 +151,7 @@ var draggable = function draggable() {
 
       if (this.selectedBySearchBar) {
         this.selectedCategoryId = null;
-        return this.searchWithSearchBar();
+        return this.searchResults;
       }
 
       return this.products;
@@ -165,6 +174,10 @@ var draggable = function draggable() {
       this.selectedCategoryId = null;
       this.selectedBySearchBar = true;
       this.selectedByCategory = false;
+    },
+    filterProductsBySearchBar: function filterProductsBySearchBar(results) {
+      this.searchResults = results;
+      this.filterProductsBySearch();
     },
     refreshCounter: function refreshCounter() {
       if (this.shoppingList.length > 0) {
@@ -265,45 +278,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "search mb-4" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.search,
-            expression: "search"
-          }
-        ],
-        staticStyle: { "max-width": "650px" },
-        attrs: { type: "text", placeholder: "Rechercher un produit.." },
-        domProps: { value: _vm.search },
-        on: {
-          input: [
-            function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            },
-            _vm.filterProductsBySearch
-          ]
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticStyle: { display: "inline-block" },
+    _c(
+      "div",
+      { staticClass: "search mb-4" },
+      [
+        _c("search-bar", {
+          attrs: { products: this.products },
           on: {
-            click: function($event) {
-              _vm.search = ""
-            }
+            "search-complete": _vm.filterProductsBySearchBar,
+            "product-chosen": _vm.addProductToBasket
           }
-        },
-        [_vm._v("X")]
-      )
-    ]),
+        })
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -354,7 +342,7 @@ var render = function() {
                     [
                       _c("p", [
                         _vm._v(
-                          "\n                            " +
+                          "\n                                " +
                             _vm._s(product.name) +
                             " - "
                         ),
@@ -373,7 +361,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                                X\n                            "
+                              "\n                                    X\n                                "
                             )
                           ]
                         ),
@@ -386,15 +374,15 @@ var render = function() {
                           }
                         }),
                         _vm._v(
-                          "\n                            " +
+                          "\n                                " +
                             _vm._s(product.unit.unit) +
-                            "\n                        "
+                            "\n                            "
                         )
                       ]),
                       _vm._v(" "),
                       _c("p", [
                         _vm._v(
-                          "\n                            Origine :\n                            "
+                          "\n                                Origine :\n                                "
                         ),
                         _c(
                           "select",
@@ -433,9 +421,9 @@ var render = function() {
                               { domProps: { value: origin } },
                               [
                                 _vm._v(
-                                  "\n                                    " +
+                                  "\n                                        " +
                                     _vm._s(origin.from) +
-                                    "\n                                "
+                                    "\n                                    "
                                 )
                               ]
                             )
