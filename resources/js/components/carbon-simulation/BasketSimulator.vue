@@ -3,12 +3,17 @@
         <add-product-pop-up v-if="showAddingModal"
                             :product="this.productAdded"
                             :origins="this.origins"
-                            @add="addProductToBasket"></add-product-pop-up>
+                            ref="searchBar"
+                            @add="addProductToBasket"
+                            @exit-without-adding="showAddingModal = false">
+        </add-product-pop-up>
 
         <div class="search mb-4">
             <search-bar :products="this.products"
+                        :focus="this.focusOnSearchBar"
                         @search-complete="filterProductsBySearchBar"
-                        @product-chosen="showAddingProductModal">
+                        @product-chosen="showAddingProductModal"
+                        @lose-focus="loseFocusOnSearchBar">
             </search-bar>
         </div>
 
@@ -125,6 +130,7 @@ export default {
 
             showAddingModal: false,
             productAdded: {},
+            focusOnSearchBar: false,
         }
     },
 
@@ -170,6 +176,7 @@ export default {
             this.searchResults = results;
             this.filterProductsBySearch()
         },
+
         refreshCounter() {
             if (this.shoppingList.length > 0) {
                 // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
@@ -179,28 +186,30 @@ export default {
                 this.counter = 0;
             }
         },
+        incrementCounter() {
+            this.counter++;
+        },
+
         showAddingProductModal(product) {
+            this.loseFocusOnSearchBar();
             this.refreshCounter();
             this.incrementCounter();
             this.productAdded = product;
             this.showAddingModal = true;
-
         },
         addProductToBasket(product) {
-            this.showAddingModal = false
+            this.showAddingModal = false;
             product.id = this.counter;
             this.shoppingList.push(product);
+            this.focusOnSearchBar = true;
         },
-
         removeProduct(index) {
             this.shoppingList.splice(index, 1);
             this.refreshCounter();
         },
-        incrementCounter() {
-            this.counter++;
-        },
-        log: function(evt) {
-            window.console.log(evt);
+
+        loseFocusOnSearchBar() {
+            this.focusOnSearchBar = false;
         }
     }
 }

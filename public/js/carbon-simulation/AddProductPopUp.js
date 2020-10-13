@@ -49,6 +49,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -59,17 +65,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       productToAdd: {}
     };
   },
+  computed: {
+    isInputInvalid: function isInputInvalid() {
+      if (this.productToAdd.amount < 0.01) {
+        return true;
+      }
+
+      if (this.productToAdd.price < 0.01) {
+        return true;
+      }
+
+      return false;
+    }
+  },
   created: function created() {
     this.productToAdd = _objectSpread(_objectSpread({}, this.product), {}, {
-      amount: 0,
-      price: 0,
+      amount: null,
+      price: null,
       origin: this.origins[2],
       baskets: ['panier 1', 'panier 2']
+    });
+    var self = this;
+    Vue.nextTick().then(function () {
+      self.$refs.qty.focus();
     });
   },
   methods: {
     add: function add() {
       this.$emit('add', this.productToAdd);
+    },
+    exit: function exit() {
+      console.log('exit');
+      this.productToAdd = {};
+      this.$emit('exit-without-adding');
     }
   }
 });
@@ -94,7 +122,7 @@ var render = function() {
   return _c("transition", { attrs: { name: "modal" } }, [
     _c("div", { staticClass: "modal-mask" }, [
       _c("div", { staticClass: "modal-wrapper" }, [
-        _c("div", { staticClass: "modal-container" }, [
+        _c("div", { ref: "modal", staticClass: "modal-container" }, [
           _c("div", { staticClass: "modal-header" }, [
             _c("p", [
               _vm._v("Utilisez les touches tabulation et entrée bla bla")
@@ -119,6 +147,7 @@ var render = function() {
                     expression: "productToAdd.amount"
                   }
                 ],
+                ref: "qty",
                 attrs: { type: "number", min: "0", required: "" },
                 domProps: { value: _vm.productToAdd.amount },
                 on: {
@@ -217,6 +246,20 @@ var render = function() {
               "button",
               {
                 staticClass: "modal-default-button button alter",
+                on: { click: _vm.exit }
+              },
+              [
+                _vm._v(
+                  "\n                        Annuler\n                    "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "modal-default-button button",
+                attrs: { disabled: _vm.isInputInvalid },
                 on: { click: _vm.add }
               },
               [_vm._v("\n                        OK\n                    ")]

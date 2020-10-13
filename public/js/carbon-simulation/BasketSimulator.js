@@ -96,6 +96,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -140,7 +145,8 @@ var draggable = function draggable() {
       searchResults: [],
       counter: 0,
       showAddingModal: false,
-      productAdded: {}
+      productAdded: {},
+      focusOnSearchBar: false
     };
   },
   computed: {
@@ -194,7 +200,11 @@ var draggable = function draggable() {
         this.counter = 0;
       }
     },
+    incrementCounter: function incrementCounter() {
+      this.counter++;
+    },
     showAddingProductModal: function showAddingProductModal(product) {
+      this.loseFocusOnSearchBar();
       this.refreshCounter();
       this.incrementCounter();
       this.productAdded = product;
@@ -204,16 +214,14 @@ var draggable = function draggable() {
       this.showAddingModal = false;
       product.id = this.counter;
       this.shoppingList.push(product);
+      this.focusOnSearchBar = true;
     },
     removeProduct: function removeProduct(index) {
       this.shoppingList.splice(index, 1);
       this.refreshCounter();
     },
-    incrementCounter: function incrementCounter() {
-      this.counter++;
-    },
-    log: function log(evt) {
-      window.console.log(evt);
+    loseFocusOnSearchBar: function loseFocusOnSearchBar() {
+      this.focusOnSearchBar = false;
     }
   }
 });
@@ -290,8 +298,14 @@ var render = function() {
     [
       _vm.showAddingModal
         ? _c("add-product-pop-up", {
+            ref: "searchBar",
             attrs: { product: this.productAdded, origins: this.origins },
-            on: { add: _vm.addProductToBasket }
+            on: {
+              add: _vm.addProductToBasket,
+              "exit-without-adding": function($event) {
+                _vm.showAddingModal = false
+              }
+            }
           })
         : _vm._e(),
       _vm._v(" "),
@@ -300,10 +314,11 @@ var render = function() {
         { staticClass: "search mb-4" },
         [
           _c("search-bar", {
-            attrs: { products: this.products },
+            attrs: { products: this.products, focus: this.focusOnSearchBar },
             on: {
               "search-complete": _vm.filterProductsBySearchBar,
-              "product-chosen": _vm.showAddingProductModal
+              "product-chosen": _vm.showAddingProductModal,
+              "lose-focus": _vm.loseFocusOnSearchBar
             }
           })
         ],

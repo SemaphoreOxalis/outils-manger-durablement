@@ -33,6 +33,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // from https://www.digitalocean.com/community/tutorials/vuejs-vue-autocomplete-component
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -44,7 +45,8 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return [];
       }
-    }
+    },
+    focus: Boolean
   },
   data: function data() {
     return {
@@ -54,6 +56,13 @@ __webpack_require__.r(__webpack_exports__);
       isOpen: false,
       arrowCounter: -1
     };
+  },
+  watch: {
+    focus: function focus(newVal, oldVal) {
+      if (newVal === true) {
+        this.setFocus();
+      }
+    }
   },
   mounted: function mounted() {
     document.addEventListener('click', this.handleClickOutside);
@@ -91,7 +100,14 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$el.contains(evt.target)) {
         this.isOpen = false;
         this.arrowCounter = -1;
+        this.$emit('lose-focus', this.chosen);
       }
+    },
+    setFocus: function setFocus() {
+      var self = this;
+      Vue.nextTick().then(function () {
+        self.$refs.searchBar.focus();
+      });
     }
   }
 });
@@ -172,6 +188,7 @@ var render = function() {
           expression: "search"
         }
       ],
+      ref: "searchBar",
       attrs: { type: "text" },
       domProps: { value: _vm.search },
       on: {

@@ -2,6 +2,7 @@
     <div class="autocomplete">
         <input type="text"
                v-model="search"
+               ref="searchBar"
                @input="onChange"
                @keydown.down="onArrowDown"
                @keydown.up="onArrowUp"
@@ -34,7 +35,8 @@
                 type: Array,
                 required: false,
                 default: () => [],
-            }
+            },
+            focus: Boolean,
         },
         data() {
             return {
@@ -43,6 +45,13 @@
                 results: [],
                 isOpen: false,
                 arrowCounter: -1,
+            }
+        },
+        watch: {
+            focus: function(newVal, oldVal) {
+                if (newVal === true) {
+                    this.setFocus();
+                }
             }
         },
         mounted() {
@@ -82,7 +91,14 @@
                 if (!this.$el.contains(evt.target)) {
                     this.isOpen = false;
                     this.arrowCounter = -1;
+                    this.$emit('lose-focus', this.chosen);
                 }
+            },
+            setFocus() {
+                let self = this;
+                Vue.nextTick().then(function () {
+                    self.$refs.searchBar.focus();
+                });
             },
         }
     }
