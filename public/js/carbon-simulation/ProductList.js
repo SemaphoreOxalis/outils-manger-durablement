@@ -61,12 +61,11 @@ var draggable = function draggable() {
     selectedByCategory: Boolean,
     selectedBySearchBar: Boolean,
     search: String,
-    counter: Number,
     origins: Array
   },
   data: function data() {
     return {
-      internalCounter: 0
+      internalCounter: 6000
     };
   },
   methods: {
@@ -80,7 +79,6 @@ var draggable = function draggable() {
       this.$emit('add-product-to-basket', product);
     },
     addProductByDrag: function addProductByDrag(product) {
-      this.internalCounter = this.counter;
       this.$emit('increment-counter');
       this.internalCounter++;
       return {

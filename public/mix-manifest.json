@@ -30,5 +30,8 @@
     "/js/waste-simulation/WasteHomePage.js": "/js/waste-simulation/WasteHomePage.js",
     "/js/waste-simulation/wasteSimulator.js": "/js/waste-simulation/wasteSimulator.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~86135cb1.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~86135cb1.js"
+    "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~86135cb1.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~86135cb1.js",
+    "/js/carbon-simulation/BasketsList.js": "/js/carbon-simulation/BasketsList.js",
+    "/js/carbon-simulation/BasketItem.js": "/js/carbon-simulation/BasketItem.js",
+    "/js/carbon-simulation/BasketProduct.js": "/js/carbon-simulation/BasketProduct.js"
 }

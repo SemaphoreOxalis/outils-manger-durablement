@@ -23,51 +23,20 @@
                           v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:search="this.search"
-                          v-bind:counter="this.counter"
                           v-bind:filtered-products="this.filteredProducts"
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
                           v-bind:selected-by-search-bar="this.selectedBySearchBar"
                           @filter-products-by-category="filterProductsByCategory"
-                          @add-product-to-basket="showAddingProductModal"
-                          @increment-counter="incrementCounter">
+                          @add-product-to-basket="showAddingProductModal">
             </product-list>
 
 
-            <div class="col-8">
-                <h3>Liste de courses</h3>
-                <div class="right col-12">
-                    <draggable v-model="shoppingList"
-                               class="dragArea list-group h-100"
-                               group="draggableProducts"
-                               :animation="150"
-                               @change="log">
+            <baskets-list class="col-8"
+                          v-bind:origins="this.origins"
+                          @selected-baskets="setSelectedBaskets">
+            </baskets-list>
 
-                        <div v-for="(product,index) in shoppingList"
-                             class="list-group-item product"
-                             :key="product.id">
-
-                            <p>
-                                {{ product.name }} - <small>{{ product.comment }}</small>
-                                <button @click="removeProduct(index)" class="trash-icon" style="display: inline-block;">
-                                    X
-                                </button>
-                            </p>
-                            <input type="number" v-model="product.amount" min="0" style="width: 100px;"> {{ product.unit.unit }} -
-                            <input type="number" v-model="product.price" min="0" style="width: 100px;"> € -
-                            <select v-model="product.origin" style="width: 100px;">
-                                <option v-for="origin in origins"
-                                        v-bind:value="origin">
-                                    {{ origin.from }}
-                                </option>
-                            </select>
-
-
-                        </div>
-
-                    </draggable>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -91,9 +60,9 @@ const AddProductPopUp = () => import(
     /* webpackChunkName: "js/carbon-simulation/AddProductPopUp" */
     './AddProductPopUp'
     );
-const draggable = () => import(
-    /* webpackChunkName: "js/draggable" */
-    'vuedraggable'
+const BasketsList = () => import(
+    /* webpackChunkName: "js/carbon-simulation/BasketsList" */
+    './BasketsList'
     );
 
 export default {
@@ -101,7 +70,7 @@ export default {
         SearchBar,
         ProductList,
         AddProductPopUp,
-        draggable
+        BasketsList
     },
     mixins: [
         searchBar,
@@ -117,8 +86,6 @@ export default {
             units: [],
             origins: [],
 
-            shoppingList: [],
-
             selectedCategoryId: null,
             selectedByCategory: false,
             selectedBySearchBar: false,
@@ -126,7 +93,7 @@ export default {
             search: '',
             searchResults: [],
 
-            counter:0,
+            selectedBaskets: [],
 
             showAddingModal: false,
             productAdded: {},
@@ -158,7 +125,7 @@ export default {
         this.fetchUnits();
         this.fetchOrigins();
 
-        this.refreshCounter();
+        this.refreshCounters();
     },
 
     methods: {
@@ -177,40 +144,40 @@ export default {
             this.filterProductsBySearch()
         },
 
-        refreshCounter() {
-            if (this.shoppingList.length > 0) {
-                // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
-                // Plus efficace qu'un loop basique
-                this.counter = Math.max(...this.shoppingList.map(product => product.id));
-            } else {
-                this.counter = 0;
-            }
-        },
-        incrementCounter() {
-            this.counter++;
-        },
-
         showAddingProductModal(product) {
             this.loseFocusOnSearchBar();
-            this.refreshCounter();
-            this.incrementCounter();
+            this.refreshCounters();
+            this.incrementCounters();
             this.productAdded = product;
             this.showAddingModal = true;
         },
         addProductToBasket(product) {
             this.showAddingModal = false;
-            product.id = this.counter;
-            this.shoppingList.push(product);
+            this.getSelectedBaskets();
+            this.addProductToSelectedBaskets(product);
             this.focusOnSearchBar = true;
         },
-        removeProduct(index) {
-            this.shoppingList.splice(index, 1);
-            this.refreshCounter();
+        addProductToSelectedBaskets(product) {
+            this.refreshCounters();
+            events.$emit('add-products-to-selected-baskets', product);
         },
 
+        getSelectedBaskets() {
+              events.$emit('send-selected-baskets');
+        },
+        setSelectedBaskets(baskets) {
+            this.selectedBaskets = baskets;
+        },
+
+        refreshCounters() {
+            events.$emit('refresh-counters');
+        },
+        incrementCounters() {
+            events.$emit('increment-counters');
+        },
         loseFocusOnSearchBar() {
             this.focusOnSearchBar = false;
-        }
+        },
     }
 }
 </script>

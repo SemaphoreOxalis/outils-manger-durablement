@@ -14,49 +14,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -119,8 +76,8 @@ var AddProductPopUp = function AddProductPopUp() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/AddProductPopUp */ "js/carbon-simulation/AddProductPopUp").then(__webpack_require__.bind(null, /*! ./AddProductPopUp */ "./resources/js/components/carbon-simulation/AddProductPopUp.vue"));
 };
 
-var draggable = function draggable() {
-  return __webpack_require__.e(/*! import() | js/draggable */ "vendors~js/draggable").then(__webpack_require__.t.bind(null, /*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js", 7));
+var BasketsList = function BasketsList() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketsList */ "js/carbon-simulation/BasketsList").then(__webpack_require__.bind(null, /*! ./BasketsList */ "./resources/js/components/carbon-simulation/BasketsList.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -128,7 +85,7 @@ var draggable = function draggable() {
     SearchBar: SearchBar,
     ProductList: ProductList,
     AddProductPopUp: AddProductPopUp,
-    draggable: draggable
+    BasketsList: BasketsList
   },
   mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
@@ -137,13 +94,12 @@ var draggable = function draggable() {
       categories: [],
       units: [],
       origins: [],
-      shoppingList: [],
       selectedCategoryId: null,
       selectedByCategory: false,
       selectedBySearchBar: false,
       search: '',
       searchResults: [],
-      counter: 0,
+      selectedBaskets: [],
       showAddingModal: false,
       productAdded: {},
       focusOnSearchBar: false
@@ -172,7 +128,7 @@ var draggable = function draggable() {
     this.fetchCategories();
     this.fetchUnits();
     this.fetchOrigins();
-    this.refreshCounter();
+    this.refreshCounters();
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
@@ -189,36 +145,34 @@ var draggable = function draggable() {
       this.searchResults = results;
       this.filterProductsBySearch();
     },
-    refreshCounter: function refreshCounter() {
-      if (this.shoppingList.length > 0) {
-        // inspiré de www.danvega.dev/blog/2019/03/14/find-max-array-objects-javascript
-        // Plus efficace qu'un loop basique
-        this.counter = Math.max.apply(Math, _toConsumableArray(this.shoppingList.map(function (product) {
-          return product.id;
-        })));
-      } else {
-        this.counter = 0;
-      }
-    },
-    incrementCounter: function incrementCounter() {
-      this.counter++;
-    },
     showAddingProductModal: function showAddingProductModal(product) {
       this.loseFocusOnSearchBar();
-      this.refreshCounter();
-      this.incrementCounter();
+      this.refreshCounters();
+      this.incrementCounters();
       this.productAdded = product;
       this.showAddingModal = true;
     },
     addProductToBasket: function addProductToBasket(product) {
       this.showAddingModal = false;
-      product.id = this.counter;
-      this.shoppingList.push(product);
+      this.getSelectedBaskets();
+      this.addProductToSelectedBaskets(product);
       this.focusOnSearchBar = true;
     },
-    removeProduct: function removeProduct(index) {
-      this.shoppingList.splice(index, 1);
-      this.refreshCounter();
+    addProductToSelectedBaskets: function addProductToSelectedBaskets(product) {
+      this.refreshCounters();
+      events.$emit('add-products-to-selected-baskets', product);
+    },
+    getSelectedBaskets: function getSelectedBaskets() {
+      events.$emit('send-selected-baskets');
+    },
+    setSelectedBaskets: function setSelectedBaskets(baskets) {
+      this.selectedBaskets = baskets;
+    },
+    refreshCounters: function refreshCounters() {
+      events.$emit('refresh-counters');
+    },
+    incrementCounters: function incrementCounters() {
+      events.$emit('increment-counters');
     },
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       this.focusOnSearchBar = false;
@@ -335,7 +289,6 @@ var render = function() {
               categories: this.categories,
               origins: this.origins,
               search: this.search,
-              counter: this.counter,
               "filtered-products": this.filteredProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
@@ -343,171 +296,15 @@ var render = function() {
             },
             on: {
               "filter-products-by-category": _vm.filterProductsByCategory,
-              "add-product-to-basket": _vm.showAddingProductModal,
-              "increment-counter": _vm.incrementCounter
+              "add-product-to-basket": _vm.showAddingProductModal
             }
           }),
           _vm._v(" "),
-          _c("div", { staticClass: "col-8" }, [
-            _c("h3", [_vm._v("Liste de courses")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "right col-12" },
-              [
-                _c(
-                  "draggable",
-                  {
-                    staticClass: "dragArea list-group h-100",
-                    attrs: { group: "draggableProducts", animation: 150 },
-                    on: { change: _vm.log },
-                    model: {
-                      value: _vm.shoppingList,
-                      callback: function($$v) {
-                        _vm.shoppingList = $$v
-                      },
-                      expression: "shoppingList"
-                    }
-                  },
-                  _vm._l(_vm.shoppingList, function(product, index) {
-                    return _c(
-                      "div",
-                      {
-                        key: product.id,
-                        staticClass: "list-group-item product"
-                      },
-                      [
-                        _c("p", [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(product.name) +
-                              " - "
-                          ),
-                          _c("small", [_vm._v(_vm._s(product.comment))]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "trash-icon",
-                              staticStyle: { display: "inline-block" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.removeProduct(index)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                X\n                            "
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: product.amount,
-                              expression: "product.amount"
-                            }
-                          ],
-                          staticStyle: { width: "100px" },
-                          attrs: { type: "number", min: "0" },
-                          domProps: { value: product.amount },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(product, "amount", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          " " +
-                            _vm._s(product.unit.unit) +
-                            " -\n                        "
-                        ),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: product.price,
-                              expression: "product.price"
-                            }
-                          ],
-                          staticStyle: { width: "100px" },
-                          attrs: { type: "number", min: "0" },
-                          domProps: { value: product.price },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(product, "price", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" € -\n                        "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: product.origin,
-                                expression: "product.origin"
-                              }
-                            ],
-                            staticStyle: { width: "100px" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  product,
-                                  "origin",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          _vm._l(_vm.origins, function(origin) {
-                            return _c(
-                              "option",
-                              { domProps: { value: origin } },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(origin.from) +
-                                    "\n                            "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ],
-              1
-            )
-          ])
+          _c("baskets-list", {
+            staticClass: "col-8",
+            attrs: { origins: this.origins },
+            on: { "selected-baskets": _vm.setSelectedBaskets }
+          })
         ],
         1
       )

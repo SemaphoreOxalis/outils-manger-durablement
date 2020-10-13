@@ -84,6 +84,9 @@
                 }
             },
             onEnter() {
+                if(this.arrowCounter === -1) {
+                    return;
+                }
                 this.setResult(this.results[this.arrowCounter]);
                 this.arrowCounter = -1;
             },

@@ -93,6 +93,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     onEnter: function onEnter() {
+      if (this.arrowCounter === -1) {
+        return;
+      }
+
       this.setResult(this.results[this.arrowCounter]);
       this.arrowCounter = -1;
     },

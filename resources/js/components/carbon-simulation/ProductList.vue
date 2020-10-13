@@ -51,12 +51,11 @@ export default {
         selectedByCategory: Boolean,
         selectedBySearchBar: Boolean,
         search: String,
-        counter: Number,
         origins: Array,
     },
     data() {
         return {
-            internalCounter: 0,
+            internalCounter: 6000,
         }
     },
     methods: {
@@ -74,7 +73,6 @@ export default {
             this.$emit('add-product-to-basket', product);
         },
         addProductByDrag(product) {
-            this.internalCounter = this.counter;
             this.$emit('increment-counter');
             this.internalCounter++;
             return {
