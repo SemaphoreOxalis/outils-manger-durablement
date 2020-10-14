@@ -23,6 +23,7 @@
                           v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:search="this.search"
+                          v-bind:counters="this.internalCounters"
                           v-bind:filtered-products="this.filteredProducts"
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
@@ -32,7 +33,7 @@
             </product-list>
 
 
-            <baskets-list class="col-8"
+            <baskets-list class="col-8 flex"
                           v-bind:origins="this.origins"
                           @selected-baskets="setSelectedBaskets">
             </baskets-list>
@@ -94,6 +95,7 @@ export default {
             searchResults: [],
 
             selectedBaskets: [],
+            internalCounters: [],
 
             showAddingModal: false,
             productAdded: {},
@@ -126,6 +128,8 @@ export default {
         this.fetchOrigins();
 
         this.refreshCounters();
+        this.getInternalCounters();
+        events.$on('internal-counters', this.setInternalCounters);
     },
 
     methods: {
@@ -163,7 +167,7 @@ export default {
         },
 
         getSelectedBaskets() {
-              events.$emit('send-selected-baskets');
+            events.$emit('send-selected-baskets');
         },
         setSelectedBaskets(baskets) {
             this.selectedBaskets = baskets;
@@ -174,6 +178,12 @@ export default {
         },
         incrementCounters() {
             events.$emit('increment-counters');
+        },
+        getInternalCounters() {
+            events.$emit('get-internal-counters');
+        },
+        setInternalCounters(basketId, counter) {
+            this.internalCounters[basketId] = counter;
         },
         loseFocusOnSearchBar() {
             this.focusOnSearchBar = false;

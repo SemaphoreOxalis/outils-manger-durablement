@@ -63,9 +63,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "list-group-item product" }, [
-    _c("p", [
-      _vm._v("\n        " + _vm._s(_vm.product.name) + " - "),
-      _c("small", [_vm._v(_vm._s(_vm.product.comment))]),
+    _c("p", { staticClass: "flex justify-content-between" }, [
+      _c("span", [
+        _vm._v(_vm._s(_vm.product.name) + " - "),
+        _c("small", [_vm._v(_vm._s(_vm.product.id))])
+      ]),
       _vm._v(" "),
       _c(
         "button",
@@ -91,6 +93,7 @@ var render = function() {
           expression: "product.amount"
         }
       ],
+      staticClass: "number-field custom-input browser-default",
       staticStyle: { width: "100px" },
       attrs: { type: "number", min: "0" },
       domProps: { value: _vm.product.amount },
@@ -103,7 +106,9 @@ var render = function() {
         }
       }
     }),
-    _vm._v(" " + _vm._s(_vm.product.unit.unit) + "\n    -\n    "),
+    _vm._v(" "),
+    _c("small", [_vm._v(_vm._s(_vm.product.unit.unit))]),
+    _vm._v("\n    -\n    "),
     _c("input", {
       directives: [
         {
@@ -113,6 +118,7 @@ var render = function() {
           expression: "product.price"
         }
       ],
+      staticClass: "number-field custom-input browser-default",
       staticStyle: { width: "100px" },
       attrs: { type: "number", min: "0" },
       domProps: { value: _vm.product.price },

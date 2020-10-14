@@ -44,6 +44,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 var BasketProduct = function BasketProduct() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketProduct */ "js/carbon-simulation/BasketProduct").then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
 };
@@ -65,36 +68,57 @@ var draggable = function draggable() {
   data: function data() {
     return {
       products: [],
-      counter: 0
+      productCounter: 0,
+      id: null,
+      isSelected: false
     };
   },
   created: function created() {
+    this.isSelected = this.basket.isSelected;
+    this.id = this.basket.id;
     this.refreshCounter();
+    this.sendInternalCounter();
     events.$on('refresh-counters', this.refreshCounter);
     events.$on('increment-counters', this.incrementCounter);
     events.$on('add-products-to-selected-baskets', this.addProduct);
+    events.$on('get-internal-counters', this.sendInternalCounter);
   },
   methods: {
     refreshCounter: function refreshCounter() {
       if (this.products.length > 0) {
-        this.counter = Math.max.apply(Math, _toConsumableArray(this.products.map(function (product) {
+        this.productCounter = Math.max.apply(Math, _toConsumableArray(this.products.map(function (product) {
           return product.id;
         })));
       } else {
-        this.counter = 0;
+        this.productCounter = 0;
       }
     },
     incrementCounter: function incrementCounter() {
-      this.counter++;
+      this.productCounter++;
     },
     addProduct: function addProduct(product) {
-      if (this.basket.selected) {
+      var _this = this;
+
+      this.refreshCounter();
+
+      if (this.isSelected) {
+        this.incrementCounter();
+        product.id = this.productCounter;
         this.products.push(product);
+        this.sendInternalCounter();
+        setTimeout(function () {
+          console.log(_this.products[_this.products.length - 1].id);
+        }, 1000);
       }
     },
     remove: function remove(productIndex) {
       this.products.splice(productIndex, 1);
       this.refreshCounter();
+      this.sendInternalCounter();
+    },
+    sendInternalCounter: function sendInternalCounter() {
+      this.refreshCounter();
+      events.$emit('internal-counters', this.id, this.productCounter);
     }
   }
 });
@@ -117,7 +141,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", [_vm._v(_vm._s(_vm.basket.name))]),
+    _c("div", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.isSelected,
+            expression: "isSelected"
+          }
+        ],
+        attrs: { type: "checkbox" },
+        domProps: {
+          checked: Array.isArray(_vm.isSelected)
+            ? _vm._i(_vm.isSelected, null) > -1
+            : _vm.isSelected
+        },
+        on: {
+          change: function($event) {
+            var $$a = _vm.isSelected,
+              $$el = $event.target,
+              $$c = $$el.checked ? true : false
+            if (Array.isArray($$a)) {
+              var $$v = null,
+                $$i = _vm._i($$a, $$v)
+              if ($$el.checked) {
+                $$i < 0 && (_vm.isSelected = $$a.concat([$$v]))
+              } else {
+                $$i > -1 &&
+                  (_vm.isSelected = $$a
+                    .slice(0, $$i)
+                    .concat($$a.slice($$i + 1)))
+              }
+            } else {
+              _vm.isSelected = $$c
+            }
+          }
+        }
+      }),
+      _vm._v(" Ajouter dans ce panier\n    ")
+    ]),
+    _vm._v(" "),
+    _c("h5", { staticClass: "text-center" }, [_vm._v(_vm._s(_vm.basket.name))]),
     _vm._v(" "),
     _c(
       "div",
@@ -136,10 +201,10 @@ var render = function() {
               expression: "products"
             }
           },
-          _vm._l(_vm.products, function(product, index) {
+          _vm._l(this.products, function(product, i) {
             return _c("basket-product", {
-              key: product.id,
-              attrs: { product: product, index: index, origins: _vm.origins },
+              key: i,
+              attrs: { product: product, index: i, origins: _vm.origins },
               on: { "remove-product": _vm.remove }
             })
           }),

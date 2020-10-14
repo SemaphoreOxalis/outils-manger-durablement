@@ -1,9 +1,10 @@
 <template>
-    <div>
-        <basket-item v-for="(basket, index) in baskets"
+    <div class="row">
+        <basket-item class="col"
+                     v-for="(basket, i) in baskets"
                      v-bind:key="basket.id"
                      v-bind:basket="basket"
-                     v-bind:index="index"
+                     v-bind:index="i"
                      v-bind:origins="origins">
         </basket-item>
     </div>
@@ -25,7 +26,7 @@ export default {
     data() {
         return {
             baskets: [],
-            counter: 0,
+            basketsCounter: 0,
         }
     },
     computed: {
@@ -36,18 +37,35 @@ export default {
         }
     },
     created() {
+        this.refreshCounter();
         this.baskets.push({
-            id: this.counter,
-            name: 'panier ' + this.counter,
+            id: this.basketsCounter,
+            name: 'votre panier',
             products: [],
-            selected: true,
+            isSelected: true,
+        });
+        this.baskets.push({
+            id: this.basketsCounter + 1,
+            name: 'panier 1',
+            products: [],
+            isSelected: false,
         });
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
     },
     methods: {
         sendSelectedBaskets() {
             this.$emit('selected-baskets', this.selectedBaskets);
-        }
+        },
+        refreshCounter() {
+            if (this.baskets.length > 0) {
+                this.basketsCounter = Math.max(...this.baskets.map(basket => basket.id));
+            } else {
+                this.basketsCounter = 0;
+            }
+        },
+        incrementCounter() {
+            this.basketsCounter++;
+        },
     }
 }
 </script>

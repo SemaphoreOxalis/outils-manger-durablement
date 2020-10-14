@@ -52,10 +52,11 @@ export default {
         selectedBySearchBar: Boolean,
         search: String,
         origins: Array,
+        counters: Array,
     },
     data() {
         return {
-            internalCounter: 6000,
+            productListInternalCounter: null,
         }
     },
     methods: {
@@ -73,10 +74,11 @@ export default {
             this.$emit('add-product-to-basket', product);
         },
         addProductByDrag(product) {
-            this.$emit('increment-counter');
-            this.internalCounter++;
+            events.$emit('get-internal-counters');
+            this.getMaxCounter();
+            this.productListInternalCounter++;
             return {
-                id: this.internalCounter,
+                id: this.productListInternalCounter,
                 name: product.name,
                 comment: product.comment,
                 unit: product.unit,
@@ -89,6 +91,13 @@ export default {
                 price: 0,
             }
         },
+        getMaxCounter() {
+            if (this.counters.length > 0) {
+                this.productListInternalCounter = Math.max(...this.counters);
+            } else {
+                this.productListInternalCounter = 0;
+            }
+        }
     }
 }
 </script>

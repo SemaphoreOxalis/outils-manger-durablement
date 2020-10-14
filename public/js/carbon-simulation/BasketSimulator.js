@@ -58,6 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -100,6 +101,7 @@ var BasketsList = function BasketsList() {
       search: '',
       searchResults: [],
       selectedBaskets: [],
+      internalCounters: [],
       showAddingModal: false,
       productAdded: {},
       focusOnSearchBar: false
@@ -129,6 +131,8 @@ var BasketsList = function BasketsList() {
     this.fetchUnits();
     this.fetchOrigins();
     this.refreshCounters();
+    this.getInternalCounters();
+    events.$on('internal-counters', this.setInternalCounters);
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
@@ -173,6 +177,12 @@ var BasketsList = function BasketsList() {
     },
     incrementCounters: function incrementCounters() {
       events.$emit('increment-counters');
+    },
+    getInternalCounters: function getInternalCounters() {
+      events.$emit('get-internal-counters');
+    },
+    setInternalCounters: function setInternalCounters(basketId, counter) {
+      this.internalCounters[basketId] = counter;
     },
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       this.focusOnSearchBar = false;
@@ -289,6 +299,7 @@ var render = function() {
               categories: this.categories,
               origins: this.origins,
               search: this.search,
+              counters: this.internalCounters,
               "filtered-products": this.filteredProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
@@ -301,7 +312,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("baskets-list", {
-            staticClass: "col-8",
+            staticClass: "col-8 flex",
             attrs: { origins: this.origins },
             on: { "selected-baskets": _vm.setSelectedBaskets }
           })

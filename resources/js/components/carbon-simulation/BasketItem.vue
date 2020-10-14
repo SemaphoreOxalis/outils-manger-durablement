@@ -1,16 +1,19 @@
 <template>
     <div>
-        <h3>{{ basket.name }}</h3>
+        <div>
+            <input type="checkbox" v-model="isSelected"> Ajouter dans ce panier
+        </div>
+        <h5 class="text-center">{{ basket.name }}</h5>
         <div class="right col-12">
             <draggable v-model="products"
                        class="dragArea list-group h-100"
                        group="draggableProducts"
                        :animation="150">
 
-                <basket-product v-for="(product, index) in products"
-                                v-bind:key="product.id"
+                <basket-product v-for="(product, i) in this.products"
+                                v-bind:key="i"
                                 v-bind:product="product"
-                                v-bind:index="index"
+                                v-bind:index="i"
                                 v-bind:origins="origins"
                                 @remove-product="remove">
                 </basket-product>
@@ -44,35 +47,54 @@ const draggable = () => import(
         data() {
             return {
                 products: [],
-                counter: 0,
+                productCounter: 0,
+                id: null,
+                isSelected: false,
             }
         },
         created() {
+            this.isSelected = this.basket.isSelected;
+            this.id = this.basket.id;
             this.refreshCounter();
+            this.sendInternalCounter();
             events.$on('refresh-counters', this.refreshCounter);
             events.$on('increment-counters', this.incrementCounter);
-            events.$on('add-products-to-selected-baskets', this.addProduct)
+            events.$on('add-products-to-selected-baskets', this.addProduct);
+            events.$on('get-internal-counters', this.sendInternalCounter);
         },
         methods: {
             refreshCounter() {
                 if (this.products.length > 0) {
-                    this.counter = Math.max(...this.products.map(product => product.id));
+                    this.productCounter = Math.max(...this.products.map(product => product.id));
                 } else {
-                    this.counter = 0;
+                    this.productCounter = 0;
                 }
             },
             incrementCounter() {
-                this.counter++;
+                this.productCounter++;
             },
             addProduct(product) {
-                if (this.basket.selected) {
+                this.refreshCounter();
+
+                if (this.isSelected) {
+                    this.incrementCounter();
+                    product.id = this.productCounter;
                     this.products.push(product);
+                    this.sendInternalCounter();
+                    setTimeout(() => {
+                        console.log(this.products[this.products.length - 1].id);
+                    }, 1000);
                 }
             },
             remove(productIndex) {
                 this.products.splice(productIndex, 1);
                 this.refreshCounter();
+                this.sendInternalCounter();
             },
+            sendInternalCounter() {
+                this.refreshCounter();
+                events.$emit('internal-counters', this.id, this.productCounter);
+            }
         }
     }
 </script>

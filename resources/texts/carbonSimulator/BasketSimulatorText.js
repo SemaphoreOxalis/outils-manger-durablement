@@ -52,13 +52,15 @@ export default {
             btn: {
                 export_btn: 'Exporter les paniers au format tableur'
             },
-            add: {
-                help: 'Utilisez les touches tabulation et entrée pour passer d\'un champs à l\'autre et valider votre produit',
+            add_popup: {
+                help: 'Utilisez les touches tabulation et entrée pour passer d\'un champ à l\'autre et valider votre produit',
                 you_are_adding: 'Vous ajoutez le produit',
                 by_this_amount: 'en quantité de',
                 for_that_much_$: 'pour un montant de',
                 from: 'originaire de',
                 in_baskets: 'dans les paniers nommés',
+                cancel: 'annuler',
+                ok: 'OK',
             },
             edit: {
               i_am_editing_to: 'Je modifie ce panier',

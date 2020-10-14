@@ -9,6 +9,19 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
 //
 //
 //
@@ -34,7 +47,7 @@ var BasketItem = function BasketItem() {
   data: function data() {
     return {
       baskets: [],
-      counter: 0
+      basketsCounter: 0
     };
   },
   computed: {
@@ -45,17 +58,36 @@ var BasketItem = function BasketItem() {
     }
   },
   created: function created() {
+    this.refreshCounter();
     this.baskets.push({
-      id: this.counter,
-      name: 'panier ' + this.counter,
+      id: this.basketsCounter,
+      name: 'votre panier',
       products: [],
-      selected: true
+      isSelected: true
+    });
+    this.baskets.push({
+      id: this.basketsCounter + 1,
+      name: 'panier 1',
+      products: [],
+      isSelected: false
     });
     events.$on('send-selected-baskets', this.sendSelectedBaskets);
   },
   methods: {
     sendSelectedBaskets: function sendSelectedBaskets() {
       this.$emit('selected-baskets', this.selectedBaskets);
+    },
+    refreshCounter: function refreshCounter() {
+      if (this.baskets.length > 0) {
+        this.basketsCounter = Math.max.apply(Math, _toConsumableArray(this.baskets.map(function (basket) {
+          return basket.id;
+        })));
+      } else {
+        this.basketsCounter = 0;
+      }
+    },
+    incrementCounter: function incrementCounter() {
+      this.basketsCounter++;
     }
   }
 });
@@ -79,10 +111,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    _vm._l(_vm.baskets, function(basket, index) {
+    { staticClass: "row" },
+    _vm._l(_vm.baskets, function(basket, i) {
       return _c("basket-item", {
         key: basket.id,
-        attrs: { basket: basket, index: index, origins: _vm.origins }
+        staticClass: "col",
+        attrs: { basket: basket, index: i, origins: _vm.origins }
       })
     }),
     1
