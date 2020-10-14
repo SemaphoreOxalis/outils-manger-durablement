@@ -56,7 +56,7 @@ export default {
     },
     data() {
         return {
-            productListInternalCounter: null,
+            productListInternalCounter: 6666,
         }
     },
     methods: {
@@ -74,8 +74,8 @@ export default {
             this.$emit('add-product-to-basket', product);
         },
         addProductByDrag(product) {
-            events.$emit('get-internal-counters');
-            this.getMaxCounter();
+            // events.$emit('get-internal-counters');
+            // this.getMaxCounter();
             this.productListInternalCounter++;
             return {
                 id: this.productListInternalCounter,
@@ -91,13 +91,13 @@ export default {
                 price: 0,
             }
         },
-        getMaxCounter() {
-            if (this.counters.length > 0) {
-                this.productListInternalCounter = Math.max(...this.counters);
-            } else {
-                this.productListInternalCounter = 0;
-            }
-        }
+        // getMaxCounter() {
+        //     if (this.counters.length > 0) {
+        //         this.productListInternalCounter = Math.max(...this.counters);
+        //     } else {
+        //         this.productListInternalCounter = 0;
+        //     }
+        // }
     }
 }
 </script>

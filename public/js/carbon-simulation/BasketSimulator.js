@@ -58,7 +58,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -100,10 +99,11 @@ var BasketsList = function BasketsList() {
       selectedBySearchBar: false,
       search: '',
       searchResults: [],
-      selectedBaskets: [],
-      internalCounters: [],
+      // selectedBaskets: [],
+      // internalCounters: [],
       showAddingModal: false,
       productAdded: {},
+      productToAddWithDetails: {},
       focusOnSearchBar: false
     };
   },
@@ -129,10 +129,9 @@ var BasketsList = function BasketsList() {
     this.fetchProducts();
     this.fetchCategories();
     this.fetchUnits();
-    this.fetchOrigins();
-    this.refreshCounters();
-    this.getInternalCounters();
-    events.$on('internal-counters', this.setInternalCounters);
+    this.fetchOrigins(); // this.refreshCounters();
+    // this.getInternalCounters();
+    // events.$on('internal-counters', this.setInternalCounters);
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
@@ -150,40 +149,40 @@ var BasketsList = function BasketsList() {
       this.filterProductsBySearch();
     },
     showAddingProductModal: function showAddingProductModal(product) {
-      this.loseFocusOnSearchBar();
-      this.refreshCounters();
-      this.incrementCounters();
+      this.loseFocusOnSearchBar(); // this.refreshCounters();
+      // this.incrementCounters();
+
       this.productAdded = product;
       this.showAddingModal = true;
     },
     addProductToBasket: function addProductToBasket(product) {
-      this.showAddingModal = false;
-      this.getSelectedBaskets();
+      this.showAddingModal = false; //this.getSelectedBaskets();
+
       this.addProductToSelectedBaskets(product);
       this.focusOnSearchBar = true;
     },
     addProductToSelectedBaskets: function addProductToSelectedBaskets(product) {
-      this.refreshCounters();
-      events.$emit('add-products-to-selected-baskets', product);
+      //events.$emit('add-products-to-selected-baskets', product);
+      this.productToAddWithDetails = product;
     },
-    getSelectedBaskets: function getSelectedBaskets() {
-      events.$emit('send-selected-baskets');
-    },
-    setSelectedBaskets: function setSelectedBaskets(baskets) {
-      this.selectedBaskets = baskets;
-    },
-    refreshCounters: function refreshCounters() {
-      events.$emit('refresh-counters');
-    },
-    incrementCounters: function incrementCounters() {
-      events.$emit('increment-counters');
-    },
-    getInternalCounters: function getInternalCounters() {
-      events.$emit('get-internal-counters');
-    },
-    setInternalCounters: function setInternalCounters(basketId, counter) {
-      this.internalCounters[basketId] = counter;
-    },
+    // getSelectedBaskets() {
+    //     events.$emit('send-selected-baskets');
+    // },
+    // setSelectedBaskets(baskets) {
+    //     this.selectedBaskets = baskets;
+    // },
+    // refreshCounters() {
+    //     events.$emit('refresh-counters');
+    // },
+    // incrementCounters() {
+    //     events.$emit('increment-counters');
+    // },
+    // getInternalCounters() {
+    //     events.$emit('get-internal-counters');
+    // },
+    // setInternalCounters(basketId, counter) {
+    //     this.internalCounters[basketId] = counter;
+    // },
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       this.focusOnSearchBar = false;
     }
@@ -299,7 +298,6 @@ var render = function() {
               categories: this.categories,
               origins: this.origins,
               search: this.search,
-              counters: this.internalCounters,
               "filtered-products": this.filteredProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
@@ -313,8 +311,10 @@ var render = function() {
           _vm._v(" "),
           _c("baskets-list", {
             staticClass: "col-8 flex",
-            attrs: { origins: this.origins },
-            on: { "selected-baskets": _vm.setSelectedBaskets }
+            attrs: {
+              origins: this.origins,
+              "product-to-add": this.productToAddWithDetails
+            }
           })
         ],
         1

@@ -33,6 +33,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
 var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
@@ -42,52 +47,60 @@ var BasketItem = function BasketItem() {
     BasketItem: BasketItem
   },
   props: {
-    origins: Array
+    origins: Array,
+    productToAdd: Object
   },
   data: function data() {
     return {
-      baskets: [],
-      basketsCounter: 0
+      baskets: []
     };
   },
   computed: {
-    selectedBaskets: function selectedBaskets() {
-      return this.baskets.filter(function (basket) {
-        return basket.selected === true;
-      });
-    }
-  },
-  created: function created() {
-    this.refreshCounter();
-    this.baskets.push({
-      id: this.basketsCounter,
-      name: 'votre panier',
-      products: [],
-      isSelected: true
-    });
-    this.baskets.push({
-      id: this.basketsCounter + 1,
-      name: 'panier 1',
-      products: [],
-      isSelected: false
-    });
-    events.$on('send-selected-baskets', this.sendSelectedBaskets);
-  },
-  methods: {
-    sendSelectedBaskets: function sendSelectedBaskets() {
-      this.$emit('selected-baskets', this.selectedBaskets);
-    },
-    refreshCounter: function refreshCounter() {
+    // selectedBaskets: function () {
+    //     return this.baskets.filter(basket => {
+    //         return basket.selected === true;
+    //     });
+    // },
+    basketsCounter: function basketsCounter() {
       if (this.baskets.length > 0) {
-        this.basketsCounter = Math.max.apply(Math, _toConsumableArray(this.baskets.map(function (basket) {
+        return Math.max.apply(Math, _toConsumableArray(this.baskets.map(function (basket) {
           return basket.id;
         })));
       } else {
-        this.basketsCounter = 0;
+        return 0;
       }
+    }
+  },
+  created: function created() {
+    this.addBasket('votre panier'); // events.$on('send-selected-baskets', this.sendSelectedBaskets);
+  },
+  methods: {
+    // sendSelectedBaskets() {
+    //     this.$emit('selected-baskets', this.selectedBaskets);
+    // },
+    addBasket: function addBasket() {
+      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var products = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+      if (name === '') {
+        name = 'panier ' + (this.basketsCounter + 1);
+      }
+
+      this.baskets.push({
+        id: this.basketsCounter + 1,
+        name: name,
+        products: products,
+        isSelected: true
+      });
     },
-    incrementCounter: function incrementCounter() {
-      this.basketsCounter++;
+    deleteBasket: function deleteBasket(basketIndex) {
+      this.baskets.splice(basketIndex, 1);
+    },
+    copyBasket: function copyBasket(basket) {
+      //let tempBasket = { ...basket};
+      var tempBasket = JSON.parse(JSON.stringify(basket)); //tempBasket.products = [...basket.products];
+
+      this.addBasket('Copie de ' + tempBasket.name, tempBasket.products);
     }
   }
 });
@@ -111,15 +124,39 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row" },
-    _vm._l(_vm.baskets, function(basket, i) {
-      return _c("basket-item", {
-        key: basket.id,
-        staticClass: "col",
-        attrs: { basket: basket, index: i, origins: _vm.origins }
-      })
-    }),
-    1
+    { staticClass: "d-flex" },
+    [
+      _vm._l(this.baskets, function(basket, i) {
+        return _c("basket-item", {
+          key: basket.id,
+          attrs: {
+            basket: basket,
+            index: i,
+            origins: _vm.origins,
+            "product-to-add": _vm.productToAdd
+          },
+          on: {
+            "copy-basket": _vm.copyBasket,
+            "delete-basket": _vm.deleteBasket
+          }
+        })
+      }),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          {
+            on: {
+              click: function($event) {
+                return _vm.addBasket()
+              }
+            }
+          },
+          [_vm._v("+")]
+        )
+      ])
+    ],
+    2
   )
 }
 var staticRenderFns = []

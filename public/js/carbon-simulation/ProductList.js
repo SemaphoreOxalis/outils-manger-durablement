@@ -9,18 +9,6 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 //
 //
 //
@@ -78,7 +66,7 @@ var draggable = function draggable() {
   },
   data: function data() {
     return {
-      productListInternalCounter: null
+      productListInternalCounter: 6666
     };
   },
   methods: {
@@ -92,8 +80,8 @@ var draggable = function draggable() {
       this.$emit('add-product-to-basket', product);
     },
     addProductByDrag: function addProductByDrag(product) {
-      events.$emit('get-internal-counters');
-      this.getMaxCounter();
+      // events.$emit('get-internal-counters');
+      // this.getMaxCounter();
       this.productListInternalCounter++;
       return {
         id: this.productListInternalCounter,
@@ -109,14 +97,14 @@ var draggable = function draggable() {
         amount: 0,
         price: 0
       };
-    },
-    getMaxCounter: function getMaxCounter() {
-      if (this.counters.length > 0) {
-        this.productListInternalCounter = Math.max.apply(Math, _toConsumableArray(this.counters));
-      } else {
-        this.productListInternalCounter = 0;
-      }
-    }
+    } // getMaxCounter() {
+    //     if (this.counters.length > 0) {
+    //         this.productListInternalCounter = Math.max(...this.counters);
+    //     } else {
+    //         this.productListInternalCounter = 0;
+    //     }
+    // }
+
   }
 });
 

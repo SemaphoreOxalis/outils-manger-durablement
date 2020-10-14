@@ -23,7 +23,6 @@
                           v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:search="this.search"
-                          v-bind:counters="this.internalCounters"
                           v-bind:filtered-products="this.filteredProducts"
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
@@ -35,7 +34,7 @@
 
             <baskets-list class="col-8 flex"
                           v-bind:origins="this.origins"
-                          @selected-baskets="setSelectedBaskets">
+                          v-bind:product-to-add="this.productToAddWithDetails">
             </baskets-list>
 
         </div>
@@ -94,11 +93,12 @@ export default {
             search: '',
             searchResults: [],
 
-            selectedBaskets: [],
-            internalCounters: [],
+            // selectedBaskets: [],
+            // internalCounters: [],
 
             showAddingModal: false,
             productAdded: {},
+            productToAddWithDetails: {},
             focusOnSearchBar: false,
         }
     },
@@ -127,9 +127,9 @@ export default {
         this.fetchUnits();
         this.fetchOrigins();
 
-        this.refreshCounters();
-        this.getInternalCounters();
-        events.$on('internal-counters', this.setInternalCounters);
+        // this.refreshCounters();
+        // this.getInternalCounters();
+        // events.$on('internal-counters', this.setInternalCounters);
     },
 
     methods: {
@@ -150,41 +150,41 @@ export default {
 
         showAddingProductModal(product) {
             this.loseFocusOnSearchBar();
-            this.refreshCounters();
-            this.incrementCounters();
+            // this.refreshCounters();
+            // this.incrementCounters();
             this.productAdded = product;
             this.showAddingModal = true;
         },
         addProductToBasket(product) {
             this.showAddingModal = false;
-            this.getSelectedBaskets();
+            //this.getSelectedBaskets();
             this.addProductToSelectedBaskets(product);
             this.focusOnSearchBar = true;
         },
         addProductToSelectedBaskets(product) {
-            this.refreshCounters();
-            events.$emit('add-products-to-selected-baskets', product);
+            //events.$emit('add-products-to-selected-baskets', product);
+            this.productToAddWithDetails = product;
         },
 
-        getSelectedBaskets() {
-            events.$emit('send-selected-baskets');
-        },
-        setSelectedBaskets(baskets) {
-            this.selectedBaskets = baskets;
-        },
+        // getSelectedBaskets() {
+        //     events.$emit('send-selected-baskets');
+        // },
+        // setSelectedBaskets(baskets) {
+        //     this.selectedBaskets = baskets;
+        // },
 
-        refreshCounters() {
-            events.$emit('refresh-counters');
-        },
-        incrementCounters() {
-            events.$emit('increment-counters');
-        },
-        getInternalCounters() {
-            events.$emit('get-internal-counters');
-        },
-        setInternalCounters(basketId, counter) {
-            this.internalCounters[basketId] = counter;
-        },
+        // refreshCounters() {
+        //     events.$emit('refresh-counters');
+        // },
+        // incrementCounters() {
+        //     events.$emit('increment-counters');
+        // },
+        // getInternalCounters() {
+        //     events.$emit('get-internal-counters');
+        // },
+        // setInternalCounters(basketId, counter) {
+        //     this.internalCounters[basketId] = counter;
+        // },
         loseFocusOnSearchBar() {
             this.focusOnSearchBar = false;
         },

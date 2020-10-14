@@ -9,6 +9,12 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -21,6 +27,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63,62 +76,66 @@ var draggable = function draggable() {
   props: {
     basket: Object,
     index: Number,
-    origins: Array
+    origins: Array,
+    productToAdd: Object
   },
   data: function data() {
-    return {
-      products: [],
-      productCounter: 0,
-      id: null,
-      isSelected: false
+    return {// ownBasket: {
+      //     id: -1,
+      //     name: '',
+      //     products: [],
+      //     isSelected: false,
+      // },
     };
   },
-  created: function created() {
-    this.isSelected = this.basket.isSelected;
-    this.id = this.basket.id;
-    this.refreshCounter();
-    this.sendInternalCounter();
-    events.$on('refresh-counters', this.refreshCounter);
-    events.$on('increment-counters', this.incrementCounter);
-    events.$on('add-products-to-selected-baskets', this.addProduct);
-    events.$on('get-internal-counters', this.sendInternalCounter);
+  watch: {
+    productToAdd: function productToAdd(newProduct) {
+      if (this.basket.isSelected) {
+        this.addProduct(newProduct);
+      }
+    }
   },
-  methods: {
-    refreshCounter: function refreshCounter() {
-      if (this.products.length > 0) {
-        this.productCounter = Math.max.apply(Math, _toConsumableArray(this.products.map(function (product) {
+  computed: {
+    productCounter: function productCounter() {
+      if (this.basket.products.length > 0) {
+        return Math.max.apply(Math, _toConsumableArray(this.basket.products.map(function (product) {
           return product.id;
         })));
       } else {
-        this.productCounter = 0;
+        return 0;
       }
-    },
-    incrementCounter: function incrementCounter() {
-      this.productCounter++;
-    },
+    }
+  },
+  created: function created() {// this.id = this.basket.id;
+    // this.name = this.basket.name;
+    // this.products = this.basket.products;
+    // this.isSelected = this.basket.isSelected;
+    //this.ownBasket = this.basket;
+    //events.$on('add-products-to-selected-baskets', this.addProduct);
+  },
+  // destroyed() {
+  //     events.$off('add-products-to-selected-baskets', this.addProduct);
+  // },
+  methods: {
     addProduct: function addProduct(product) {
-      var _this = this;
+      var tempProd = _objectSpread({}, product);
 
-      this.refreshCounter();
-
-      if (this.isSelected) {
-        this.incrementCounter();
-        product.id = this.productCounter;
-        this.products.push(product);
-        this.sendInternalCounter();
-        setTimeout(function () {
-          console.log(_this.products[_this.products.length - 1].id);
-        }, 1000);
-      }
+      tempProd.id = this.productCounter + 1;
+      console.log('adding from ' + this.basket.name + ' - productId = ' + tempProd.id);
+      this.basket.products.push(tempProd);
     },
-    remove: function remove(productIndex) {
-      this.products.splice(productIndex, 1);
-      this.refreshCounter();
-      this.sendInternalCounter();
+    removeProduct: function removeProduct(productIndex) {
+      this.basket.products.splice(productIndex, 1);
     },
-    sendInternalCounter: function sendInternalCounter() {
-      this.refreshCounter();
-      events.$emit('internal-counters', this.id, this.productCounter);
+    deleteBasket: function deleteBasket() {
+      //this.ownBasket.isSelected = false;
+      this.$emit('delete-basket', this.index);
+    },
+    copyBasket: function copyBasket() {
+      this.$emit('copy-basket', this.basket);
+    },
+    getRandomId: function getRandomId() {
+      return Date.now() + Math.random();
     }
   }
 });
@@ -140,41 +157,43 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "flex-grow-1" }, [
     _c("div", [
       _c("input", {
         directives: [
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.isSelected,
-            expression: "isSelected"
+            value: _vm.basket.isSelected,
+            expression: "basket.isSelected"
           }
         ],
         attrs: { type: "checkbox" },
         domProps: {
-          checked: Array.isArray(_vm.isSelected)
-            ? _vm._i(_vm.isSelected, null) > -1
-            : _vm.isSelected
+          checked: Array.isArray(_vm.basket.isSelected)
+            ? _vm._i(_vm.basket.isSelected, null) > -1
+            : _vm.basket.isSelected
         },
         on: {
           change: function($event) {
-            var $$a = _vm.isSelected,
+            var $$a = _vm.basket.isSelected,
               $$el = $event.target,
               $$c = $$el.checked ? true : false
             if (Array.isArray($$a)) {
               var $$v = null,
                 $$i = _vm._i($$a, $$v)
               if ($$el.checked) {
-                $$i < 0 && (_vm.isSelected = $$a.concat([$$v]))
+                $$i < 0 && _vm.$set(_vm.basket, "isSelected", $$a.concat([$$v]))
               } else {
                 $$i > -1 &&
-                  (_vm.isSelected = $$a
-                    .slice(0, $$i)
-                    .concat($$a.slice($$i + 1)))
+                  _vm.$set(
+                    _vm.basket,
+                    "isSelected",
+                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                  )
               }
             } else {
-              _vm.isSelected = $$c
+              _vm.$set(_vm.basket, "isSelected", $$c)
             }
           }
         }
@@ -182,7 +201,17 @@ var render = function() {
       _vm._v(" Ajouter dans ce panier\n    ")
     ]),
     _vm._v(" "),
-    _c("h5", { staticClass: "text-center" }, [_vm._v(_vm._s(_vm.basket.name))]),
+    _c("div", { staticClass: "flex" }, [
+      _c("h5", { staticClass: "text-center" }, [
+        _vm._v(_vm._s(_vm.basket.name))
+      ]),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.copyBasket } }, [_vm._v("copy")])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex" }, [
+      _c("button", { on: { click: _vm.deleteBasket } }, [_vm._v("X")])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -194,18 +223,18 @@ var render = function() {
             staticClass: "dragArea list-group h-100",
             attrs: { group: "draggableProducts", animation: 150 },
             model: {
-              value: _vm.products,
+              value: _vm.basket.products,
               callback: function($$v) {
-                _vm.products = $$v
+                _vm.$set(_vm.basket, "products", $$v)
               },
-              expression: "products"
+              expression: "basket.products"
             }
           },
-          _vm._l(this.products, function(product, i) {
+          _vm._l(_vm.basket.products, function(product, i) {
             return _c("basket-product", {
-              key: i,
+              key: product.id,
               attrs: { product: product, index: i, origins: _vm.origins },
-              on: { "remove-product": _vm.remove }
+              on: { "remove-product": _vm.removeProduct }
             })
           }),
           1

@@ -1,21 +1,28 @@
 <template>
-    <div>
+    <div class="flex-grow-1">
         <div>
-            <input type="checkbox" v-model="isSelected"> Ajouter dans ce panier
+            <input type="checkbox" v-model="basket.isSelected"> Ajouter dans ce panier
         </div>
-        <h5 class="text-center">{{ basket.name }}</h5>
+        <div class="flex">
+            <h5 class="text-center">{{ basket.name }}</h5>
+            <button @click="copyBasket">copy</button>
+        </div>
+
+        <div class="flex">
+            <button @click="deleteBasket">X</button>
+        </div>
         <div class="right col-12">
-            <draggable v-model="products"
+            <draggable v-model="basket.products"
                        class="dragArea list-group h-100"
                        group="draggableProducts"
                        :animation="150">
 
-                <basket-product v-for="(product, i) in this.products"
-                                v-bind:key="i"
+                <basket-product v-for="(product, i) in basket.products"
+                                v-bind:key="product.id"
                                 v-bind:product="product"
                                 v-bind:index="i"
                                 v-bind:origins="origins"
-                                @remove-product="remove">
+                                @remove-product="removeProduct">
                 </basket-product>
 
             </draggable>
@@ -43,58 +50,65 @@ const draggable = () => import(
             basket: Object,
             index: Number,
             origins: Array,
+            productToAdd: Object,
         },
         data() {
             return {
-                products: [],
-                productCounter: 0,
-                id: null,
-                isSelected: false,
+                // ownBasket: {
+                //     id: -1,
+                //     name: '',
+                //     products: [],
+                //     isSelected: false,
+                // },
+            }
+        },
+        watch: {
+            productToAdd(newProduct) {
+                if(this.basket.isSelected) {
+                    this.addProduct(newProduct);
+                }
+            }
+        },
+        computed: {
+            productCounter: function() {
+                if (this.basket.products.length > 0) {
+                    return Math.max(...this.basket.products.map(product => product.id));
+                } else {
+                    return 0;
+                }
             }
         },
         created() {
-            this.isSelected = this.basket.isSelected;
-            this.id = this.basket.id;
-            this.refreshCounter();
-            this.sendInternalCounter();
-            events.$on('refresh-counters', this.refreshCounter);
-            events.$on('increment-counters', this.incrementCounter);
-            events.$on('add-products-to-selected-baskets', this.addProduct);
-            events.$on('get-internal-counters', this.sendInternalCounter);
+            // this.id = this.basket.id;
+            // this.name = this.basket.name;
+            // this.products = this.basket.products;
+            // this.isSelected = this.basket.isSelected;
+            //this.ownBasket = this.basket;
+            //events.$on('add-products-to-selected-baskets', this.addProduct);
         },
+        // destroyed() {
+        //     events.$off('add-products-to-selected-baskets', this.addProduct);
+        // },
         methods: {
-            refreshCounter() {
-                if (this.products.length > 0) {
-                    this.productCounter = Math.max(...this.products.map(product => product.id));
-                } else {
-                    this.productCounter = 0;
-                }
-            },
-            incrementCounter() {
-                this.productCounter++;
-            },
             addProduct(product) {
-                this.refreshCounter();
-
-                if (this.isSelected) {
-                    this.incrementCounter();
-                    product.id = this.productCounter;
-                    this.products.push(product);
-                    this.sendInternalCounter();
-                    setTimeout(() => {
-                        console.log(this.products[this.products.length - 1].id);
-                    }, 1000);
-                }
+                let tempProd = { ...product};
+                tempProd.id = (this.productCounter + 1);
+                console.log('adding from ' + this.basket.name + ' - productId = ' + tempProd.id);
+                this.basket.products.push(tempProd);
             },
-            remove(productIndex) {
-                this.products.splice(productIndex, 1);
-                this.refreshCounter();
-                this.sendInternalCounter();
+            removeProduct(productIndex) {
+                this.basket.products.splice(productIndex, 1);
             },
-            sendInternalCounter() {
-                this.refreshCounter();
-                events.$emit('internal-counters', this.id, this.productCounter);
-            }
+            deleteBasket() {
+                //this.ownBasket.isSelected = false;
+                this.$emit('delete-basket', this.index);
+            },
+            copyBasket() {
+                this.$emit('copy-basket', this.basket);
+            },
+            getRandomId() {
+                return Date.now() + Math.random();
+            },
         }
     }
 </script>

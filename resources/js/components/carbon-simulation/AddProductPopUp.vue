@@ -67,7 +67,7 @@ export default {
         }
     },
     created() {
-        this.productToAdd = {...this.product, amount: null, price: null, origin: this.origins[2], baskets: ['panier 1', 'panier 2']};
+        this.productToAdd = {...this.product, amount: 1, price: 1, origin: this.origins[2], baskets: ['panier 1', 'panier 2']};
         let self = this;
         Vue.nextTick().then(function () {
             self.$refs.qty.focus();
@@ -75,6 +75,7 @@ export default {
     },
     methods: {
         add() {
+            console.log(this.productToAdd);
             this.$emit('add', this.productToAdd);
         },
         exit() {

@@ -84,8 +84,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.productToAdd = _objectSpread(_objectSpread({}, this.product), {}, {
-      amount: null,
-      price: null,
+      amount: 1,
+      price: 1,
       origin: this.origins[2],
       baskets: ['panier 1', 'panier 2']
     });
@@ -96,6 +96,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     add: function add() {
+      console.log(this.productToAdd);
       this.$emit('add', this.productToAdd);
     },
     exit: function exit() {
