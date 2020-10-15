@@ -75,7 +75,6 @@ export default {
     },
     methods: {
         add() {
-            console.log(this.productToAdd);
             this.$emit('add', this.productToAdd);
         },
         exit() {

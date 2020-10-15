@@ -27,6 +27,7 @@
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
                           v-bind:selected-by-search-bar="this.selectedBySearchBar"
+                          v-bind:counters="this.internalCounters"
                           @filter-products-by-category="filterProductsByCategory"
                           @add-product-to-basket="showAddingProductModal">
             </product-list>
@@ -94,7 +95,7 @@ export default {
             searchResults: [],
 
             // selectedBaskets: [],
-            // internalCounters: [],
+            internalCounters: [],
 
             showAddingModal: false,
             productAdded: {},
@@ -128,8 +129,8 @@ export default {
         this.fetchOrigins();
 
         // this.refreshCounters();
-        // this.getInternalCounters();
-        // events.$on('internal-counters', this.setInternalCounters);
+        this.getInternalCounters();
+        events.$on('internal-counters', this.setInternalCounters);
     },
 
     methods: {
@@ -179,12 +180,12 @@ export default {
         // incrementCounters() {
         //     events.$emit('increment-counters');
         // },
-        // getInternalCounters() {
-        //     events.$emit('get-internal-counters');
-        // },
-        // setInternalCounters(basketId, counter) {
-        //     this.internalCounters[basketId] = counter;
-        // },
+        getInternalCounters() {
+            events.$emit('get-internal-counters');
+        },
+        setInternalCounters(basketId, counter) {
+            this.internalCounters[basketId - 1] = counter;
+        },
         loseFocusOnSearchBar() {
             this.focusOnSearchBar = false;
         },

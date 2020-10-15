@@ -85,6 +85,7 @@ const draggable = () => import(
             // this.isSelected = this.basket.isSelected;
             //this.ownBasket = this.basket;
             //events.$on('add-products-to-selected-baskets', this.addProduct);
+            events.$on('get-internal-counters', this.sendInternalCounter);
         },
         // destroyed() {
         //     events.$off('add-products-to-selected-baskets', this.addProduct);
@@ -93,21 +94,20 @@ const draggable = () => import(
             addProduct(product) {
                 let tempProd = { ...product};
                 tempProd.id = (this.productCounter + 1);
-                console.log('adding from ' + this.basket.name + ' - productId = ' + tempProd.id);
                 this.basket.products.push(tempProd);
+                this.sendInternalCounter();
             },
             removeProduct(productIndex) {
                 this.basket.products.splice(productIndex, 1);
             },
             deleteBasket() {
-                //this.ownBasket.isSelected = false;
                 this.$emit('delete-basket', this.index);
             },
             copyBasket() {
                 this.$emit('copy-basket', this.basket);
             },
-            getRandomId() {
-                return Date.now() + Math.random();
+            sendInternalCounter() {
+                events.$emit('internal-counters', this.basket.id, this.productCounter);
             },
         }
     }

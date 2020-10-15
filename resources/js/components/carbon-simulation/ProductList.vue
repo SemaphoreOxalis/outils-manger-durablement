@@ -56,7 +56,7 @@ export default {
     },
     data() {
         return {
-            productListInternalCounter: 6666,
+            productListInternalCounter: 0,
         }
     },
     methods: {
@@ -74,11 +74,11 @@ export default {
             this.$emit('add-product-to-basket', product);
         },
         addProductByDrag(product) {
-            // events.$emit('get-internal-counters');
-            // this.getMaxCounter();
-            this.productListInternalCounter++;
+            events.$emit('get-internal-counters');
+            this.productListInternalCounter = this.getMaxCounter();
+            console.log(this.productListInternalCounter);
             return {
-                id: this.productListInternalCounter,
+                id: this.productListInternalCounter + 1,
                 name: product.name,
                 comment: product.comment,
                 unit: product.unit,
@@ -91,13 +91,13 @@ export default {
                 price: 0,
             }
         },
-        // getMaxCounter() {
-        //     if (this.counters.length > 0) {
-        //         this.productListInternalCounter = Math.max(...this.counters);
-        //     } else {
-        //         this.productListInternalCounter = 0;
-        //     }
-        // }
+        getMaxCounter() {
+            if (this.counters.length > 0) {
+                return Math.max(...this.counters);
+            } else {
+                return 0;
+            }
+        }
     }
 }
 </script>

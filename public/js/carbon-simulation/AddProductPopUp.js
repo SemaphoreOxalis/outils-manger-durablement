@@ -96,7 +96,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     add: function add() {
-      console.log(this.productToAdd);
       this.$emit('add', this.productToAdd);
     },
     exit: function exit() {

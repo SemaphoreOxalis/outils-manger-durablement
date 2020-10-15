@@ -58,6 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -100,7 +101,7 @@ var BasketsList = function BasketsList() {
       search: '',
       searchResults: [],
       // selectedBaskets: [],
-      // internalCounters: [],
+      internalCounters: [],
       showAddingModal: false,
       productAdded: {},
       productToAddWithDetails: {},
@@ -130,8 +131,9 @@ var BasketsList = function BasketsList() {
     this.fetchCategories();
     this.fetchUnits();
     this.fetchOrigins(); // this.refreshCounters();
-    // this.getInternalCounters();
-    // events.$on('internal-counters', this.setInternalCounters);
+
+    this.getInternalCounters();
+    events.$on('internal-counters', this.setInternalCounters);
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
@@ -177,12 +179,12 @@ var BasketsList = function BasketsList() {
     // incrementCounters() {
     //     events.$emit('increment-counters');
     // },
-    // getInternalCounters() {
-    //     events.$emit('get-internal-counters');
-    // },
-    // setInternalCounters(basketId, counter) {
-    //     this.internalCounters[basketId] = counter;
-    // },
+    getInternalCounters: function getInternalCounters() {
+      events.$emit('get-internal-counters');
+    },
+    setInternalCounters: function setInternalCounters(basketId, counter) {
+      this.internalCounters[basketId - 1] = counter;
+    },
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       this.focusOnSearchBar = false;
     }
@@ -301,7 +303,8 @@ var render = function() {
               "filtered-products": this.filteredProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
-              "selected-by-search-bar": this.selectedBySearchBar
+              "selected-by-search-bar": this.selectedBySearchBar,
+              counters: this.internalCounters
             },
             on: {
               "filter-products-by-category": _vm.filterProductsByCategory,

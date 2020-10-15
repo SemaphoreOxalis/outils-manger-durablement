@@ -106,12 +106,14 @@ var draggable = function draggable() {
       }
     }
   },
-  created: function created() {// this.id = this.basket.id;
+  created: function created() {
+    // this.id = this.basket.id;
     // this.name = this.basket.name;
     // this.products = this.basket.products;
     // this.isSelected = this.basket.isSelected;
     //this.ownBasket = this.basket;
     //events.$on('add-products-to-selected-baskets', this.addProduct);
+    events.$on('get-internal-counters', this.sendInternalCounter);
   },
   // destroyed() {
   //     events.$off('add-products-to-selected-baskets', this.addProduct);
@@ -121,21 +123,20 @@ var draggable = function draggable() {
       var tempProd = _objectSpread({}, product);
 
       tempProd.id = this.productCounter + 1;
-      console.log('adding from ' + this.basket.name + ' - productId = ' + tempProd.id);
       this.basket.products.push(tempProd);
+      this.sendInternalCounter();
     },
     removeProduct: function removeProduct(productIndex) {
       this.basket.products.splice(productIndex, 1);
     },
     deleteBasket: function deleteBasket() {
-      //this.ownBasket.isSelected = false;
       this.$emit('delete-basket', this.index);
     },
     copyBasket: function copyBasket() {
       this.$emit('copy-basket', this.basket);
     },
-    getRandomId: function getRandomId() {
-      return Date.now() + Math.random();
+    sendInternalCounter: function sendInternalCounter() {
+      events.$emit('internal-counters', this.basket.id, this.productCounter);
     }
   }
 });
