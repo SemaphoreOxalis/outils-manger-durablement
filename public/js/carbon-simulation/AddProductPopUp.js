@@ -57,12 +57,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     product: Object,
-    origins: Array
+    origins: Array,
+    selectedBaskets: Array
   },
   data: function data() {
     return {
@@ -86,8 +91,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.productToAdd = _objectSpread(_objectSpread({}, this.product), {}, {
       amount: 1,
       price: 1,
-      origin: this.origins[2],
-      baskets: ['panier 1', 'panier 2']
+      origin: this.origins[2]
     });
     var self = this;
     Vue.nextTick().then(function () {
@@ -241,9 +245,15 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c("br"),
-                _vm._v(_vm._s(_vm.add_popup.in_baskets) + " "),
-                _vm._l(this.productToAdd.baskets, function(basket) {
-                  return _c("span", [_vm._v(" " + _vm._s(basket))])
+                _vm._v(
+                  _vm._s(_vm.add_popup.in_baskets) + "\n                    "
+                ),
+                _vm._l(_vm.selectedBaskets, function(basket, i) {
+                  return _c("span", [
+                    i == _vm.selectedBaskets.length - 1
+                      ? _c("span", [_vm._v('"' + _vm._s(basket.name) + '"')])
+                      : _c("span", [_vm._v('"' + _vm._s(basket.name) + '", ')])
+                  ])
                 })
               ],
               2

@@ -35,11 +35,11 @@ export default {
         }
     },
     computed: {
-        // selectedBaskets: function () {
-        //     return this.baskets.filter(basket => {
-        //         return basket.selected === true;
-        //     });
-        // },
+        selectedBaskets: function () {
+            return this.baskets.filter(basket => {
+                return basket.isSelected === true;
+            });
+        },
         basketsCounter: function() {
             if (this.baskets.length > 0) {
                 return Math.max(...this.baskets.map(basket => basket.id));
@@ -50,12 +50,13 @@ export default {
     },
     created() {
         this.addBasket('votre panier');
-        // events.$on('send-selected-baskets', this.sendSelectedBaskets);
+        events.$on('send-selected-baskets', this.sendSelectedBaskets);
     },
     methods: {
-        // sendSelectedBaskets() {
-        //     this.$emit('selected-baskets', this.selectedBaskets);
-        // },
+        sendSelectedBaskets() {
+            console.log('send ' + this.selectedBaskets);
+            this.$emit('selected-baskets', this.selectedBaskets);
+        },
 
         addBasket(name = '', products = []) {
             if(name === '') {
@@ -72,9 +73,7 @@ export default {
             this.baskets.splice(basketIndex, 1);
         },
         copyBasket(basket) {
-            //let tempBasket = { ...basket};
             let tempBasket = JSON.parse(JSON.stringify(basket));
-            //tempBasket.products = [...basket.products];
             this.addBasket('Copie de ' + tempBasket.name, tempBasket.products);
         }
     }

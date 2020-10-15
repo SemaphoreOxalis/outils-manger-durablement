@@ -56,11 +56,11 @@ var BasketItem = function BasketItem() {
     };
   },
   computed: {
-    // selectedBaskets: function () {
-    //     return this.baskets.filter(basket => {
-    //         return basket.selected === true;
-    //     });
-    // },
+    selectedBaskets: function selectedBaskets() {
+      return this.baskets.filter(function (basket) {
+        return basket.isSelected === true;
+      });
+    },
     basketsCounter: function basketsCounter() {
       if (this.baskets.length > 0) {
         return Math.max.apply(Math, _toConsumableArray(this.baskets.map(function (basket) {
@@ -72,12 +72,14 @@ var BasketItem = function BasketItem() {
     }
   },
   created: function created() {
-    this.addBasket('votre panier'); // events.$on('send-selected-baskets', this.sendSelectedBaskets);
+    this.addBasket('votre panier');
+    events.$on('send-selected-baskets', this.sendSelectedBaskets);
   },
   methods: {
-    // sendSelectedBaskets() {
-    //     this.$emit('selected-baskets', this.selectedBaskets);
-    // },
+    sendSelectedBaskets: function sendSelectedBaskets() {
+      console.log('send ' + this.selectedBaskets);
+      this.$emit('selected-baskets', this.selectedBaskets);
+    },
     addBasket: function addBasket() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var products = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -97,9 +99,7 @@ var BasketItem = function BasketItem() {
       this.baskets.splice(basketIndex, 1);
     },
     copyBasket: function copyBasket(basket) {
-      //let tempBasket = { ...basket};
-      var tempBasket = JSON.parse(JSON.stringify(basket)); //tempBasket.products = [...basket.products];
-
+      var tempBasket = JSON.parse(JSON.stringify(basket));
       this.addBasket('Copie de ' + tempBasket.name, tempBasket.products);
     }
   }

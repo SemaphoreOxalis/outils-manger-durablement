@@ -52,16 +52,6 @@ const draggable = () => import(
             origins: Array,
             productToAdd: Object,
         },
-        data() {
-            return {
-                // ownBasket: {
-                //     id: -1,
-                //     name: '',
-                //     products: [],
-                //     isSelected: false,
-                // },
-            }
-        },
         watch: {
             productToAdd(newProduct) {
                 if(this.basket.isSelected) {
@@ -79,17 +69,8 @@ const draggable = () => import(
             }
         },
         created() {
-            // this.id = this.basket.id;
-            // this.name = this.basket.name;
-            // this.products = this.basket.products;
-            // this.isSelected = this.basket.isSelected;
-            //this.ownBasket = this.basket;
-            //events.$on('add-products-to-selected-baskets', this.addProduct);
             events.$on('get-internal-counters', this.sendInternalCounter);
         },
-        // destroyed() {
-        //     events.$off('add-products-to-selected-baskets', this.addProduct);
-        // },
         methods: {
             addProduct(product) {
                 let tempProd = { ...product};

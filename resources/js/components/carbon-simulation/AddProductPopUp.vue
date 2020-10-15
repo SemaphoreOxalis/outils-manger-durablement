@@ -18,7 +18,11 @@
                                                   {{ origin.from }}
                                               </option>
                                           </select>
-                        <br>{{ add_popup.in_baskets }} <span v-for="basket in this.productToAdd.baskets"> {{ basket }}</span>
+                        <br>{{ add_popup.in_baskets }}
+                        <span v-for="(basket, i) in selectedBaskets">
+                            <span v-if="i == selectedBaskets.length - 1">"{{ basket.name }}"</span>
+                            <span v-else>"{{ basket.name }}", </span>
+                        </span>
                     </div>
 
                     <div class="modal-footer">
@@ -48,6 +52,7 @@ export default {
     props: {
         product: Object,
         origins: Array,
+        selectedBaskets: Array,
     },
     data() {
         return {
@@ -67,7 +72,7 @@ export default {
         }
     },
     created() {
-        this.productToAdd = {...this.product, amount: 1, price: 1, origin: this.origins[2], baskets: ['panier 1', 'panier 2']};
+        this.productToAdd = {...this.product, amount: 1, price: 1, origin: this.origins[2]};
         let self = this;
         Vue.nextTick().then(function () {
             self.$refs.qty.focus();

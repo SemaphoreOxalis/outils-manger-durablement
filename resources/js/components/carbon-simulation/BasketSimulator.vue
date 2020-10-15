@@ -3,6 +3,7 @@
         <add-product-pop-up v-if="showAddingModal"
                             :product="this.productAdded"
                             :origins="this.origins"
+                            :selected-baskets="this.selectedBaskets"
                             ref="searchBar"
                             @add="addProductToBasket"
                             @exit-without-adding="showAddingModal = false">
@@ -35,7 +36,8 @@
 
             <baskets-list class="col-8 flex"
                           v-bind:origins="this.origins"
-                          v-bind:product-to-add="this.productToAddWithDetails">
+                          v-bind:product-to-add="this.productToAddWithDetails"
+                          @selected-baskets="setSelectedBaskets">
             </baskets-list>
 
         </div>
@@ -94,7 +96,7 @@ export default {
             search: '',
             searchResults: [],
 
-            // selectedBaskets: [],
+            selectedBaskets: [],
             internalCounters: [],
 
             showAddingModal: false,
@@ -128,7 +130,6 @@ export default {
         this.fetchUnits();
         this.fetchOrigins();
 
-        // this.refreshCounters();
         this.getInternalCounters();
         events.$on('internal-counters', this.setInternalCounters);
     },
@@ -150,36 +151,31 @@ export default {
         },
 
         showAddingProductModal(product) {
+            this.getSelectedBaskets();
             this.loseFocusOnSearchBar();
-            // this.refreshCounters();
-            // this.incrementCounters();
             this.productAdded = product;
-            this.showAddingModal = true;
+            this.$nextTick(() => {
+                this.showAddingModal = true;
+            });
         },
         addProductToBasket(product) {
             this.showAddingModal = false;
-            //this.getSelectedBaskets();
             this.addProductToSelectedBaskets(product);
             this.focusOnSearchBar = true;
         },
         addProductToSelectedBaskets(product) {
-            //events.$emit('add-products-to-selected-baskets', product);
             this.productToAddWithDetails = product;
         },
 
-        // getSelectedBaskets() {
-        //     events.$emit('send-selected-baskets');
-        // },
-        // setSelectedBaskets(baskets) {
-        //     this.selectedBaskets = baskets;
-        // },
+        getSelectedBaskets() {
+            console.log('get-baskets');
+            events.$emit('send-selected-baskets');
+        },
+        setSelectedBaskets(baskets) {
+            console.log(baskets);
+            this.selectedBaskets = baskets;
+        },
 
-        // refreshCounters() {
-        //     events.$emit('refresh-counters');
-        // },
-        // incrementCounters() {
-        //     events.$emit('increment-counters');
-        // },
         getInternalCounters() {
             events.$emit('get-internal-counters');
         },
