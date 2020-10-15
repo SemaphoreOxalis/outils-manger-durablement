@@ -94,7 +94,6 @@ var draggable = function draggable() {
     addProductByDrag: function addProductByDrag(product) {
       events.$emit('get-internal-counters');
       this.productListInternalCounter = this.getMaxCounter();
-      console.log(this.productListInternalCounter);
       return {
         id: this.productListInternalCounter + 1,
         name: product.name,

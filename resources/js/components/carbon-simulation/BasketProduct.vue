@@ -61,7 +61,7 @@ a span {
     position: absolute;
     margin-top: 23px;
     margin-left: -35px;
-    background-color: var(--main-color-darker);
+    background-color: var(--main-color);
     color: var(--second-color-lighter);
     padding: 15px;
     border-radius: 3px;

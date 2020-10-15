@@ -69,7 +69,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\na {\n    color: #ccc;\n}\na:hover, a:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\na span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color-darker);\n    color: var(--second-color-lighter);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n}\na:hover span, a:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n\n", ""]);
+exports.push([module.i, "\na {\n    color: #ccc;\n}\na:hover, a:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\na span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--second-color-lighter);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n}\na:hover span, a:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n\n", ""]);
 
 // exports
 

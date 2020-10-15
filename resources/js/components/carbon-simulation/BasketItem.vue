@@ -14,7 +14,7 @@
         <div class="right col-12">
             <draggable v-model="basket.products"
                        class="dragArea list-group h-100"
-                       group="draggableProducts"
+                       :group="{ name: 'draggableProducts', pull: false }"
                        :animation="150">
 
                 <basket-product v-for="(product, i) in basket.products"

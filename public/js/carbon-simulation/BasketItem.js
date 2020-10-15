@@ -204,7 +204,10 @@ var render = function() {
           "draggable",
           {
             staticClass: "dragArea list-group h-100",
-            attrs: { group: "draggableProducts", animation: 150 },
+            attrs: {
+              group: { name: "draggableProducts", pull: false },
+              animation: 150
+            },
             model: {
               value: _vm.basket.products,
               callback: function($$v) {
