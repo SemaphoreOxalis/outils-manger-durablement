@@ -77,10 +77,20 @@ var BasketItem = function BasketItem() {
   },
   methods: {
     sendSelectedBaskets: function sendSelectedBaskets() {
-      console.log('send ' + this.selectedBaskets);
       this.$emit('selected-baskets', this.selectedBaskets);
     },
     addBasket: function addBasket() {
+      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      this.baskets.push(this.prepareBasketToAdd(name));
+    },
+    deleteBasket: function deleteBasket(basketIndex) {
+      this.baskets.splice(basketIndex, 1);
+    },
+    copyBasket: function copyBasket(basket, index) {
+      var tempBasket = JSON.parse(JSON.stringify(basket));
+      this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+    },
+    prepareBasketToAdd: function prepareBasketToAdd() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var products = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
@@ -88,19 +98,12 @@ var BasketItem = function BasketItem() {
         name = 'panier ' + (this.basketsCounter + 1);
       }
 
-      this.baskets.push({
+      return {
         id: this.basketsCounter + 1,
         name: name,
         products: products,
         isSelected: true
-      });
-    },
-    deleteBasket: function deleteBasket(basketIndex) {
-      this.baskets.splice(basketIndex, 1);
-    },
-    copyBasket: function copyBasket(basket) {
-      var tempBasket = JSON.parse(JSON.stringify(basket));
-      this.addBasket('Copie de ' + tempBasket.name, tempBasket.products);
+      };
     }
   }
 });

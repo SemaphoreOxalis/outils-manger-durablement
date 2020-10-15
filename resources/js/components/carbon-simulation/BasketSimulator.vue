@@ -154,9 +154,7 @@ export default {
             this.getSelectedBaskets();
             this.loseFocusOnSearchBar();
             this.productAdded = product;
-            this.$nextTick(() => {
-                this.showAddingModal = true;
-            });
+            this.showAddingModal = true;
         },
         addProductToBasket(product) {
             this.showAddingModal = false;
@@ -168,11 +166,9 @@ export default {
         },
 
         getSelectedBaskets() {
-            console.log('get-baskets');
             events.$emit('send-selected-baskets');
         },
         setSelectedBaskets(baskets) {
-            console.log(baskets);
             this.selectedBaskets = baskets;
         },
 
@@ -182,6 +178,7 @@ export default {
         setInternalCounters(basketId, counter) {
             this.internalCounters[basketId - 1] = counter;
         },
+
         loseFocusOnSearchBar() {
             this.focusOnSearchBar = false;
         },

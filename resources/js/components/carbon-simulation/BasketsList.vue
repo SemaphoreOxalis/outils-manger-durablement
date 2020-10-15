@@ -54,27 +54,30 @@ export default {
     },
     methods: {
         sendSelectedBaskets() {
-            console.log('send ' + this.selectedBaskets);
             this.$emit('selected-baskets', this.selectedBaskets);
         },
 
-        addBasket(name = '', products = []) {
-            if(name === '') {
-                name = 'panier ' + (this.basketsCounter + 1);
-            }
-            this.baskets.push({
-                id: (this.basketsCounter + 1),
-                name: name,
-                products: products,
-                isSelected: true,
-            })
+        addBasket(name = '') {
+            this.baskets.push(this.prepareBasketToAdd(name));
         },
         deleteBasket(basketIndex) {
             this.baskets.splice(basketIndex, 1);
         },
-        copyBasket(basket) {
+        copyBasket(basket, index) {
             let tempBasket = JSON.parse(JSON.stringify(basket));
-            this.addBasket('Copie de ' + tempBasket.name, tempBasket.products);
+            this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+        },
+
+        prepareBasketToAdd(name = '', products = []) {
+            if(name === '') {
+                name = 'panier ' + (this.basketsCounter + 1);
+            }
+            return {
+                id: (this.basketsCounter + 1),
+                name: name,
+                products: products,
+                isSelected: true,
+            };
         }
     }
 }

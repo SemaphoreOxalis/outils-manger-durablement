@@ -81,12 +81,14 @@ const draggable = () => import(
             removeProduct(productIndex) {
                 this.basket.products.splice(productIndex, 1);
             },
+
             deleteBasket() {
                 this.$emit('delete-basket', this.index);
             },
             copyBasket() {
-                this.$emit('copy-basket', this.basket);
+                this.$emit('copy-basket', this.basket, this.index);
             },
+
             sendInternalCounter() {
                 events.$emit('internal-counters', this.basket.id, this.productCounter);
             },

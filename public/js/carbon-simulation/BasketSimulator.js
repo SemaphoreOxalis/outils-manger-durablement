@@ -152,14 +152,10 @@ var BasketsList = function BasketsList() {
       this.filterProductsBySearch();
     },
     showAddingProductModal: function showAddingProductModal(product) {
-      var _this2 = this;
-
       this.getSelectedBaskets();
       this.loseFocusOnSearchBar();
       this.productAdded = product;
-      this.$nextTick(function () {
-        _this2.showAddingModal = true;
-      });
+      this.showAddingModal = true;
     },
     addProductToBasket: function addProductToBasket(product) {
       this.showAddingModal = false;
@@ -170,11 +166,9 @@ var BasketsList = function BasketsList() {
       this.productToAddWithDetails = product;
     },
     getSelectedBaskets: function getSelectedBaskets() {
-      console.log('get-baskets');
       events.$emit('send-selected-baskets');
     },
     setSelectedBaskets: function setSelectedBaskets(baskets) {
-      console.log(baskets);
       this.selectedBaskets = baskets;
     },
     getInternalCounters: function getInternalCounters() {

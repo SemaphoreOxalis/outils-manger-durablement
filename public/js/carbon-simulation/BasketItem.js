@@ -115,7 +115,7 @@ var draggable = function draggable() {
       this.$emit('delete-basket', this.index);
     },
     copyBasket: function copyBasket() {
-      this.$emit('copy-basket', this.basket);
+      this.$emit('copy-basket', this.basket, this.index);
     },
     sendInternalCounter: function sendInternalCounter() {
       events.$emit('internal-counters', this.basket.id, this.productCounter);
