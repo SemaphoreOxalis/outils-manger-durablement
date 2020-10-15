@@ -92,7 +92,7 @@ const BasketSimulator = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketSimulator" */
     './components/carbon-simulation/BasketSimulator.vue'
     );
-// import BasketSimulator from "./components/carbon-simulation/BasketSimulator";
+//import BasketSimulator from "./components/carbon-simulation/BasketSimulator";
 
 export default {
 

@@ -23,26 +23,31 @@ class UnitsController extends Controller
         try
         {
             $request->validate([
-                'unit' => 'required|string|unique:units,unit',
+                'unit' => 'required|string|unique:units,unit,' . $unit->id,
+                'shortUnit' => 'required|string'
             ]);
-            $unit->update(request(['unit']));
+            $unit->update(request(['unit', 'shortUnit']));
 
             return response('Vos modifications ont été enregistrées', 202);
         } catch (\Exception $e)
         {
-            return response('Erreur de sauvegarde', 422);
+            return response($e, 422);
         }
     }
 
     public function store(Request $request) {
         try {
             $request->validate([
-                'unit' => 'required|string|unique:units,unit',
+                'unit' => 'required|string|unique:units',
+                'shortUnit' => 'required|string'
             ]);
-            return Unit::create(['unit' => $request->unit]);
+            return Unit::create([
+                'unit' => $request->unit,
+                'shortUnit' => $request->shortUnit
+            ]);
         } catch (\Exception $e)
         {
-            return response('Erreur de sauvegarde', 422);
+            return response($e, 422);
         }
     }
 

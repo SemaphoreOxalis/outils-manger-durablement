@@ -876,13 +876,15 @@ function getUnits() {
 
 function patchUnit(unit) {
   return axios.patch('/api/units/' + unit.id, {
-    unit: unit.unit
+    unit: unit.unit,
+    shortUnit: unit.shortUnit
   });
 }
 
 function postUnit(newUnit) {
   return axios.post('/api/units', {
-    unit: newUnit
+    unit: newUnit.unit,
+    shortUnit: newUnit.shortUnit
   });
 }
 

@@ -11,7 +11,8 @@ class UnitSeeder extends CsvSeeder
         $this->csv_delimiter = ';';
         $this->filename = base_path().'/database/seeds/csvs/UnitData.csv';
         $this->mapping = [
-            0 => 'unit'
+            0 => 'unit',
+            1 => 'shortUnit'
         ];
     }
 

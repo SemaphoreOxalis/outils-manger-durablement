@@ -38,13 +38,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       units: [],
-      newUnit: ''
+      newUnit: {
+        unit: '',
+        shortUnit: ''
+      }
     };
   },
   created: function created() {
@@ -163,6 +170,31 @@ var render = function() {
               }
             }),
             _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: unit.shortUnit,
+                  expression: "unit.shortUnit"
+                }
+              ],
+              staticClass: "custom-input browser-default number-field",
+              attrs: { type: "text", required: "" },
+              domProps: { value: unit.shortUnit },
+              on: {
+                change: function($event) {
+                  return _vm.updateUnit(unit)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(unit, "shortUnit", $event.target.value)
+                }
+              }
+            }),
+            _vm._v(" "),
             _c(
               "a",
               {
@@ -185,8 +217,8 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.newUnit,
-              expression: "newUnit"
+              value: _vm.newUnit.unit,
+              expression: "newUnit.unit"
             }
           ],
           staticClass: "custom-input browser-default number-field",
@@ -195,13 +227,39 @@ var render = function() {
             required: "",
             placeholder: "ajouter une unité"
           },
-          domProps: { value: _vm.newUnit },
+          domProps: { value: _vm.newUnit.unit },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.newUnit = $event.target.value
+              _vm.$set(_vm.newUnit, "unit", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.newUnit.shortUnit,
+              expression: "newUnit.shortUnit"
+            }
+          ],
+          staticClass: "custom-input browser-default number-field",
+          attrs: {
+            type: "text",
+            required: "",
+            placeholder: "ajouter une unité"
+          },
+          domProps: { value: _vm.newUnit.shortUnit },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.newUnit, "shortUnit", $event.target.value)
             }
           }
         }),
@@ -376,13 +434,15 @@ function getUnits() {
 
 function patchUnit(unit) {
   return axios.patch('/api/units/' + unit.id, {
-    unit: unit.unit
+    unit: unit.unit,
+    shortUnit: unit.shortUnit
   });
 }
 
 function postUnit(newUnit) {
   return axios.post('/api/units', {
-    unit: newUnit
+    unit: newUnit.unit,
+    shortUnit: newUnit.shortUnit
   });
 }
 
