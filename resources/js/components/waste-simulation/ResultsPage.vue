@@ -3,7 +3,7 @@
         <div v-if="showResultsModal" id="results-modal"></div>
 
         <div>
-            <h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>
+            <h4 class="mb-4 text-center">{{ your_results }}</h4>
 
             <transition name="modal" v-if="showResultsModal">
                 <div class="modal-mask">
@@ -11,19 +11,17 @@
                         <div class="modal-container">
 
                             <div class="modal-body">
-                                <p>Vous venez de réaliser l'audit simplifié de votre gaspillage alimentaire.</p>
-                                <p>Il estime le coût de votre gaspillage alimentaire à <strong><span
-                                    v-html="auditResults.foodWasteCost"></span></strong> € (soit l'équivalent de
-                                    <strong><span v-html="auditResults.amountOfDishesWasted"></span></strong> repas)</p>
-                                <p>Le tableau ci-dessous vous permet d'ajouter des simulations modélisant les modifications de vos
-                                    pratiques: réduction du volume de gaspillage alimentaire, optimisation du nombre de repas...</p>
-                                <p>Chaque simulation est comparée en temps réel avec celle qui la précède dans le tableau, n'hésitez pas
-                                    à expérimenter !</p>
+                                <p>{{ modal.you_just_made_an_audit }}</p>
+                                <p>{{ modal.your_food_waste_amounts_to }} <strong><span
+                                    v-html="auditResults.foodWasteCost || 'loading...'"></span></strong> {{ modal.euros_or }}
+                                    <strong><span v-html="auditResults.amountOfDishesWasted || 'loading...'"></span></strong> {{ modal.dishes }}</p>
+                                <p>{{ modal.you_can_add_sims_to_this_table }}</p>
+                                <p>{{ modal.each_sim_is_compared_to_the_one_above }}</p>
                             </div>
 
                             <div class="modal-footer">
                                 <button class="modal-default-button button alter" @click="showResultsModal = false">
-                                    Fermer
+                                    {{ modal.closeBtn }}
                                 </button>
                             </div>
 
@@ -34,25 +32,22 @@
 
             <div class="position-relative info p-3 mb-4">
                 <div class="d-flex justify-content-end">
-                    <span v-if="!legendShown" class="mr-2 align-self-center colored">Mode d'emploi</span>
+                    <span v-if="!legendShown" class="mr-2 align-self-center colored">{{ how_to.title }}</span>
                     <button class="button alter" data-toggle="collapse" data-target="#legend" @click="toggleLegend"
                             aria-expanded="true" aria-controls="legend">
                         <i id="collapse-icon" class="icon icon-angle-down"></i>
                     </button>
                 </div>
                 <div class="collapse" id="legend">
-                    <p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
-                    <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly>
-                        sont modifiables</p>
-                    <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant
-                        glisser</p>
-                    <p><i class="icon mr-2"></i> Vous pouvez supprimer les simulations inutiles une par une</p>
-                    <p><i class="icon mr-2"></i> ou toutes les supprimer d'un seul clic</p>
-                    <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l'ensemble des données
-                        sur votre logiciel de tableur</p>
+                    <p><i class="icon mr-2"></i> {{ how_to.add_sims_to_audit }}</p>
+                    <p><input type="text" class="custom-input browser-default" v-model="how_to.these_fields" readonly>
+                        {{ how_to.are_editable }}</p>
+                    <p><i class="icon mr-2"></i> {{ how_to.reorganize_sims }}</p>
+                    <p><i class="icon mr-2"></i> {{ how_to.delete_one_sim }}</p>
+                    <p><i class="icon mr-2"></i> {{ how_to.delete_all_sims }}</p>
+                    <p><i class="icon mr-2"></i> {{ how_to.export_sims }}</p>
                 </div>
             </div>
-
 
             <div class="spacer">
                 <audit-item v-bind:audit-raw-data="this.auditRawData" @sent-audit-results="this.setAuditResults">
@@ -61,37 +56,35 @@
                 <div class="d-flex mt-4">
                     <button class="button"
                             @click="addSimulation">
-                        <i class="icon mr-2"></i>Ajouter une simulation
+                        <i class="icon mr-2"></i>{{ btns.add_sim }}
                     </button>
 
                     <button class="button alter"
                             @click="resetSimulations">
-                        <i class="icon mr-2"></i>Je réinitialise toutes mes simulations
+                        <i class="icon mr-2"></i>{{ btns.reset_sims }}
                     </button>
 
                     <button class="button ml-auto"
                             @click="exportSimulations"
                             :disabled="areSimulationsInvalid">
-                        <i class="icon mr-2"></i>Exporter le rapport de simulation
+                        <i class="icon mr-2"></i>{{ btns.export_sims }}
                     </button>
                 </div>
             </div>
 
             <div class="text-center mt-5" id="further-actions">
                 <p>
-                    Bravo, vous venez de franchir la première étape de la démarche de <a href="https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation" target="_blank">la loi EGALIM <span
+                    {{ congrats_you_just_completed }} <a href="https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation" target="_blank">{{ egalim }} <span
                     class="icon"></span></a>
                 </p>
                 <p>
-                    Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l'ANAP pour découvrir
-                    les
-                    actions réalisables <span class="icon"></span></a>
+                    {{ what_to_do }} <a href="#">{{ go_to_anap_site }} <span class="icon"></span></a>
                 </p>
             </div>
             <div class="text-center mt-2">
-                <router-link to="/input" tag="span">
+                <router-link to="input" tag="span">
                     <button class="button alter">
-                        <i class="icon mr-2"></i>J'effectue un nouvel audit
+                        <i class="icon mr-2"></i>{{ btns.new_audit }}
                     </button>
                 </router-link>
             </div>
@@ -100,13 +93,18 @@
 </template>
 
 <script>
-
+import ResultsPageText from "../../../texts/wasteSimulator/ResultsPageText";
 // import des composants enfants
-import AuditItem from "./AuditItem"
+const AuditItem = () => import(
+    /* webpackChunkName: "js/waste-simulation/AuditItem" */
+    './AuditItem.vue'
+    );
+
 // Logique de validation
 import SimulationValidation from "../../helpers/waste-simulation/validation/SimulationValidation";
 // import des helpers
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+import DataBase from "../../helpers/DataBase";
 
 export default {
 
@@ -117,8 +115,10 @@ export default {
 
     // déclaration des helpers
     mixins: [
+        ResultsPageText,
         LocalStorageHelper,
-        SimulationValidation
+        SimulationValidation,
+        DataBase
     ],
 
     // données à récupérer de la page Input
@@ -144,8 +144,12 @@ export default {
 
         // Si on vient de la page de saisie
         if (this.userInput) {
-            this.showResultsModal = true;
+            this.incrementAuditCounter();
             this.handleUserInput();
+            setTimeout(() => {
+                this.showResultsModal = true;
+            }, 500);
+
         }
 
         // sinon (i.e si on vient directement de l'accueil par ex. on veut récupérer l'audit stocké en localStorage)
@@ -166,7 +170,7 @@ export default {
             this.validateSimulations();
             this.fetchAuditResults();
             this.$forceUpdate();
-        }, 1);
+        }, 10);
     },
 
     // Fonctions inhérentes au composant
@@ -208,6 +212,7 @@ export default {
         // envoie une demande au composant concerné (AuditSimulationList.vue)
         addSimulation() {
             events.$emit('add-simulation');
+            this.incrementSimulationCounter();
         },
 
         // montre/cache la légende

@@ -37,11 +37,6 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Composants enfants généraux à toute l'application
-Vue.component('flash', require('./components/FlashMessage.vue').default);
-Vue.component('navigation-links', require('./components/NavigationLinks.vue').default);
-
-
 // Bus d'évenements qui va nous permettre de lancer des évenements entre composants qui ne sont pas forcément parent/enfants
 window.events = new Vue();
 
@@ -56,5 +51,15 @@ window.flash = function (message, level = 'success') {
 // Initialisation de Vue
 const app = new Vue({
     el: '#app',
-    router: new VueRouter(routes)
+    router: new VueRouter(routes),
+    components: {
+        'navigation-links': () => import(
+            /* webpackChunkName: "js/navLinks" */
+            './components/NavigationLinks.vue'
+            ),
+        'flash': () => import(
+            /* webpackChunkName: "js/flashMsg" */
+            './components/FlashMessage.vue'
+            ),
+    }
 });

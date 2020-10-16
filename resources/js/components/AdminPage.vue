@@ -1,59 +1,55 @@
 <template>
     <div class="mx-5">
         <div v-if="signedIn">
-            <h2 class="my-4">Panneau d'administration</h2>
-            <p class="mb-4"><strong>Ici, vous pouvez modifier simplement les valeurs de référence utilisées par
-                l'application</strong></p>
+            <h2 class="my-4">{{ admin_title }}</h2>
+            <div class="admin-nav">
+                <router-link to="/admin/waste-simulator" tag="span">
+                    <button class="button alter">Outil Gaspi</button>
+                </router-link>
 
-            <div v-for="value in values"
-                 :key="value.id">
+                <router-link to="/admin/carbon-simulator" tag="span">
+                    <button class="button alter">Outil Carbone</button>
+                </router-link>
 
-                <label>{{ value.label }}</label>
-                <div class="form-group admin">
-                    <input v-model="value.value" @change="update(value)" type="number" required
-                           min="0" max="100" step="0.01" class="custom-input browser-default number-field"> <span> %</span>
-                </div>
+                <router-link to="/admin/counters" tag="span">
+                    <button class="button alter">Compteurs</button>
+                </router-link>
             </div>
-
+            <router-view></router-view>
         </div>
         <div v-else>
-            Vous n'avez pas l'autorisation d'être ici
+            {{ go_away }}
         </div>
     </div>
 </template>
 
 <script>
-    // import des fonctions utiles regroupées dans des fichiers 'helpers'
-    import DataBase from "../helpers/DataBase";
+import AdminPageText from "../../texts/AdminPageText";
 
-    export default {
+export default {
 
-        // déclaration de dépendance à ces bibliothèques de fonctions
-        mixins : [
-            DataBase
-        ],
+    // déclaration de dépendance à ces bibliothèques de fonctions
+    mixins: [
+        AdminPageText
+    ],
 
-        // initialisation des données utilisées par le composant
-        data() {
-            return {
-                values: []
-            }
-        },
+    computed: {
 
-        // Valeurs calculées à la volée
-        computed: {
-
-            // L'utilisateur est-il bien authentifié ?
-            signedIn() {
-                return window.App.signedIn;
-            }
-        },
-
-        // A la création du composent (i.e quand on arrive sur la "page")
-        created() {
-
-            // Va chercher les valeurs de référence dans la BDD
-            this.fetchWasteReferenceValues();
-        },
-    }
+        // L'utilisateur est-il bien authentifié ?
+        signedIn() {
+            return window.App.signedIn;
+        }
+    },
+}
 </script>
+
+<style>
+.admin-nav {
+    text-align: center;
+    padding: 10px;
+}
+
+.admin-nav span.router-link-active button.alter {
+    background-color: var(--main-color);
+}
+</style>

@@ -40,9 +40,15 @@ import ExportHelper from "../../helpers/ExportHelper";
 // pratique pour formatter les dates
 import DateFormatter from "../../helpers/DateFormatter";
 // composant enfant
-import SimulationItem from "./SimulationItem";
+const SimulationItem = () => import(
+    /* webpackChunkName: "js/waste-simulation/SimulationItem" */
+    './SimulationItem.vue'
+    );
 // Vue-draggable (https://github.com/SortableJS/Vue.Draggable) pour le drag'n'drop
-import draggable from 'vuedraggable'
+const draggable = () => import(
+    /* webpackChunkName: "js/draggable" */
+    'vuedraggable'
+    );
 
 export default {
 
@@ -89,7 +95,7 @@ export default {
 
         // listeners
         events.$on('export-simulations', this.exportSimulations);
-        events.$on('add-simulation', this.addSimulation);
+        events.$on('add-simulation', this.addSimulationToSimList);
 
         // nécessaire pour savoir sur quoi se baser en cas de clic sur "nouvelle simulation"
         this.getDataSourceForNewSimulation();

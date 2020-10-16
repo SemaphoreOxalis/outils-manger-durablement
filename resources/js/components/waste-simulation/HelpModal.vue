@@ -5,22 +5,22 @@
                 <div class="modal-container">
 
                     <div class="modal-body">
-                        <p>Le prix de revient peut être calculé à partir :</p>
+                        <p>{{ dish_cost_is_calculated }}</p>
                         <ul>
-                            <li>du montant total des achats alimentaires</li>
-                            <li>de la masse salariale de l'équipe de restauration</li>
-                            <li>du coût des investissements</li>
-                            <li>du coût de l'énergie</li>
+                            <li>{{ from.food_cost }}</li>
+                            <li>{{ from.team_size }}</li>
+                            <li>{{ from.investment }}</li>
+                            <li>{{ from.energy_cost }}</li>
                         </ul>
-                        <p><strong>OU</strong>, dans le cas où votre établissement fait appel à un prestataire :</p>
+                        <p><strong>{{ or_with }}</strong>, {{ if_you_externalize }}</p>
                         <ul>
-                            <li>du coût unitaire d'un repas facturé</li>
+                            <li>{{ from.unit_cost_of_bought_dish }}</li>
                         </ul>
                     </div>
 
                     <div class="modal-footer">
                         <button class="modal-default-button button alter" @click="close">
-                            OK
+                            {{ okBtn }}
                         </button>
                     </div>
 
@@ -31,9 +31,15 @@
 </template>
 
 <script>
+    import HelpModalText from "../../../texts/wasteSimulator/HelpModalText";
+
     export default {
+        mixins: [
+            HelpModalText
+        ],
+
         methods: {
-            // nécessaire pour notifier le composant parent (HomePage.vue)
+            // nécessaire pour notifier le composant parent (WasteHomePage.vue)
             close() {
                 this.$emit('close');
             }

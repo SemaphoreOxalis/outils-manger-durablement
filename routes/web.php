@@ -16,16 +16,38 @@ use Illuminate\Support\Facades\Route;
 
 // ROUTES BACK-END
 
-// Restes de l'appli CO2
-// Route::get('/api/products', 'ProductsController@index');
-// Route::get('/api/origins', 'OriginsController@index');
-// Route::get('/api/categories', 'CategoriesController@index');
-
-
 // Endpoints pour notre API
+// Outil Gaspi
 Route::get('/api/waste-values', 'WasteReferenceValuesController@index');
 Route::patch('/api/waste-values/{wasteReferenceValue}', 'WasteReferenceValuesController@update');
 
+// Outil Carbone
+Route::get('/api/categories', 'CategoriesController@index');
+Route::patch('/api/categories/{category}', 'CategoriesController@update');
+Route::post('/api/categories', 'CategoriesController@store');
+Route::delete('/api/categories/{category}', 'CategoriesController@destroy');
+
+Route::get('/api/units', 'UnitsController@index');
+Route::patch('/api/units/{unit}', 'UnitsController@update');
+Route::post('/api/units', 'UnitsController@store');
+Route::delete('/api/units/{unit}', 'UnitsController@destroy');
+
+Route::get('/api/products', 'ProductsController@index');
+Route::patch('/api/products/{product}', 'ProductsController@update');
+Route::post('/api/products', 'ProductsController@store');
+Route::delete('/api/products/{product}', 'ProductsController@destroy');
+
+Route::get('/api/origins', 'OriginsController@index');
+Route::patch('/api/origins/{origin}', 'OriginsController@update');
+Route::post('/api/origins', 'OriginsController@store');
+Route::delete('/api/origins/{origin}', 'OriginsController@destroy');
+
+// Compteurs
+Route::get('/api/counters', 'CountersController@index');
+Route::patch('/api/counters/{counter}', 'CountersController@update');
+Route::patch('/api/counters/{counter}/increment', 'CountersController@increment');
+
+// Controller d'export
 Route::post('/export', 'ExportController@export');
 
 

@@ -1,6 +1,7 @@
 - [Outil Gaspi](#recycle-outil-gaspi-recycle)
   * [Installation](#installation-floppy_disk)
   * [Mise à jour](#mise-à-jour-ambulance)
+    + [Mise à jour des textes uniquement](#speech_balloon-mise-à-jour-des-textes-uniquement)
   * [Architecture](#architecture-building_construction)
     + [Configuration](#wrench-configuration)
     + [Authentification](#key-authentification)
@@ -89,7 +90,7 @@ DEBUGBAR_ENABLED=false
     * `php artisan key:generate` (crée une clé de chiffrage unique à l'application pour générer les tokens CSRF et les cookies de session)
     * `php artisan migrate:fresh` (crée les tables de la base de données - tapez 'yes' si on vous le demande)
 
-* :pencil2: Editez le fichier routes/web.php :
+* :pencil2: Editez le fichier `routes/web.php` :
     * Décommentez la ligne `Auth::routes();`
     * Commentez la ligne `Auth::routes(['register' => false]);`
 
@@ -119,7 +120,14 @@ Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jo
 
 * :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`
   
+### :speech_balloon: Mise à jour des textes uniquement 
 
+* :pencil2: éditez à votre guise les textes contenus dans les fichiers situés dans `resources/texts` (la plupart des textes de l'application sont stockés ici, seuls quelques rares textes sont du côté serveur, en PHP (login....))
+
+* :computer: Dans le terminal du serveur, tapez :
+    * `npm run prod`
+  
+  
 ## Architecture :building_construction:
 
 Le côté back-end en Laravel ne s'occupe que de fournir une sorte d'API pour le front, contenant les données (valeurs de référence) et mettant en place des routes permettant de les récupérer et de les modifier. Il s'occupe également de l'authentification et de l'export .xlsx

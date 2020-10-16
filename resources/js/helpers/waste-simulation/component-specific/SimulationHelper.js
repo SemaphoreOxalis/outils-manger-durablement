@@ -16,7 +16,6 @@ export default {
 
             // Envoie la demande au composant parent (AuditSimulationList.vue) qui s'en occupe
             this.$emit('save-changes');
-            flash('Vos modifications ont été sauvegardées');
         },
 
         // Style appliqué aux pourcentages (flèches et couleurs)

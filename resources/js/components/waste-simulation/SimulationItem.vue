@@ -56,7 +56,7 @@
                    required
                    min="0.01" step="0.01">
         </div>
-        <div class="table-div">
+        <div class="table-div shorter">
             <div class="d-flex justify-content-around">
                 <div><small>{{ foodWasteVolumeDelta }}</small></div>
                 <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>

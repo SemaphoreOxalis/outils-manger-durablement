@@ -11193,8 +11193,8 @@ input:invalid {
 }
 
 .table-div.shorter {
-  flex-grow: 0.5;
-  flex-basis: 10%;
+  flex-grow: 0.55;
+  flex-basis: 11%;
 }
 
 .simulations .table-row::before,
@@ -11599,6 +11599,12 @@ label {
 .login label {
   margin: 0 0 0.5rem;
 }
+
+/**********************************/
+
+/* CARBON SIMULATOR               */
+
+/**********************************/
 
 /*--------------------------------
 
