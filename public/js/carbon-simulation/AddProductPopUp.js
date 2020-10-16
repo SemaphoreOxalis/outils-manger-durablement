@@ -89,6 +89,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.productToAdd = _objectSpread(_objectSpread({}, this.product), {}, {
+      id: 'product_to_add_' + this.product.id,
       amount: 1,
       price: 1,
       origin: this.origins[2]

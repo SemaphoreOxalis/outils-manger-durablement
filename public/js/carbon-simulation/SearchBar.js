@@ -10,6 +10,12 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -78,7 +84,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('search-complete', this.results);
     },
     setResult: function setResult(result) {
-      this.chosen = result;
+      this.chosen = _objectSpread(_objectSpread({}, result), {}, {
+        id: 'chosen_product_' + result.id
+      });
+      console.log(this.chosen.id);
       this.search = '';
       this.isOpen = false;
       this.$emit('product-chosen', this.chosen);
@@ -103,6 +112,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleClickOutside: function handleClickOutside(evt) {
       if (!this.$el.contains(evt.target)) {
+        this.search = '';
         this.isOpen = false;
         this.arrowCounter = -1;
         this.$emit('lose-focus', this.chosen);

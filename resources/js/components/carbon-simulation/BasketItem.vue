@@ -83,7 +83,9 @@ const draggable = () => import(
             },
             productCounter: function() {
                 if (this.basket.products.length > 0) {
-                    return Math.max(...this.basket.products.map(product => product.id));
+                    return Math.max(...this.basket.products.map(product => {
+                        return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
+                    }));
                 } else {
                     return 0;
                 }
@@ -95,7 +97,7 @@ const draggable = () => import(
         methods: {
             addProduct(product) {
                 let tempProd = { ...product};
-                tempProd.id = (this.productCounter + 1);
+                tempProd.id = ('basket_product_' + (this.productCounter + 1));
                 this.basket.products.push(tempProd);
                 this.sendInternalCounter();
             },

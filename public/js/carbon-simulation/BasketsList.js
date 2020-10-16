@@ -64,7 +64,7 @@ var BasketItem = function BasketItem() {
     basketsCounter: function basketsCounter() {
       if (this.baskets.length > 0) {
         return Math.max.apply(Math, _toConsumableArray(this.baskets.map(function (basket) {
-          return basket.id;
+          return basket.id.substring(7); // "basket_" id prefix is 7 characters long
         })));
       } else {
         return 0;
@@ -99,7 +99,7 @@ var BasketItem = function BasketItem() {
       }
 
       return {
-        id: this.basketsCounter + 1,
+        id: 'basket_' + (this.basketsCounter + 1),
         name: name,
         products: products,
         isSelected: true

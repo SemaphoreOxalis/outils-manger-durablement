@@ -68,7 +68,8 @@
                 this.$emit('search-complete', this.results);
             },
             setResult(result) {
-                this.chosen = result;
+                this.chosen = { ...result, id: 'chosen_product_' + result.id};
+                console.log(this.chosen.id);
                 this.search = '';
                 this.isOpen = false;
 
@@ -93,6 +94,7 @@
             },
             handleClickOutside(evt) {
                 if (!this.$el.contains(evt.target)) {
+                    this.search = '';
                     this.isOpen = false;
                     this.arrowCounter = -1;
                     this.$emit('lose-focus', this.chosen);

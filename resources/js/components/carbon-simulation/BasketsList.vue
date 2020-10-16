@@ -42,7 +42,9 @@ export default {
         },
         basketsCounter: function() {
             if (this.baskets.length > 0) {
-                return Math.max(...this.baskets.map(basket => basket.id));
+                return Math.max(...this.baskets.map(basket => {
+                    return basket.id.substring(7); // "basket_" id prefix is 7 characters long
+                }));
             } else {
                 return 0;
             }
@@ -73,7 +75,7 @@ export default {
                 name = 'panier ' + (this.basketsCounter + 1);
             }
             return {
-                id: (this.basketsCounter + 1),
+                id: 'basket_' + (this.basketsCounter + 1),
                 name: name,
                 products: products,
                 isSelected: true,

@@ -111,7 +111,7 @@ var draggable = function draggable() {
     productCounter: function productCounter() {
       if (this.basket.products.length > 0) {
         return Math.max.apply(Math, _toConsumableArray(this.basket.products.map(function (product) {
-          return product.id;
+          return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
         })));
       } else {
         return 0;
@@ -125,7 +125,7 @@ var draggable = function draggable() {
     addProduct: function addProduct(product) {
       var tempProd = _objectSpread({}, product);
 
-      tempProd.id = this.productCounter + 1;
+      tempProd.id = 'basket_product_' + (this.productCounter + 1);
       this.basket.products.push(tempProd);
       this.sendInternalCounter();
     },
