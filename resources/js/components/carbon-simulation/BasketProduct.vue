@@ -3,7 +3,7 @@
         <div class="flex justify-content-between">
             <div>
                 <span>{{ product.name }}</span>
-                <a v-if="product.comment" href="#" class="product-comment">?
+                <a v-if="product.comment" href="#" class="info-bubble">?
                     <span>{{ product.comment }}</span>
                 </a>
             </div>
@@ -14,7 +14,7 @@
         </div>
         <input type="number" class="number-field custom-input browser-default" v-model="product.amount" min="0" style="width: 100px;">
         <small>{{ product.unit.shortUnit }}</small>
-        <a href="#" class="product-comment">?
+        <a href="#" class="info-bubble">?
             <span>{{ product.unit.unit }}</span>
         </a>
         -
@@ -49,15 +49,15 @@ export default {
 </script>
 
 <style>
-a {
+.info-bubble {
     color: #ccc;
 }
-a:hover, a:focus {
+.info-bubble:hover, .info-bubble:focus {
     background: rgba(0,0,0,.4);
     box-shadow: 0 1px 0 rgba(255,255,255,.4);
 }
 
-a span {
+.info-bubble span {
     position: absolute;
     margin-top: 23px;
     margin-left: -35px;
@@ -70,7 +70,7 @@ a span {
     transition: all .25s;
     opacity: 0;
 }
-a:hover span, a:focus span {
+.info-bubble:hover span, .info-bubble:focus span {
     transform: scale(1) rotate(0);
     opacity: 1;
 }
