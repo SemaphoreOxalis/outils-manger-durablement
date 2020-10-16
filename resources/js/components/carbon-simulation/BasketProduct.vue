@@ -62,7 +62,7 @@ a span {
     margin-top: 23px;
     margin-left: -35px;
     background-color: var(--main-color);
-    color: var(--second-color-lighter);
+    color: var(--dark-color);
     padding: 15px;
     border-radius: 3px;
     box-shadow: 0 0 2px rgba(0,0,0,.5);

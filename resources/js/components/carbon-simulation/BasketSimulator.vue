@@ -12,7 +12,7 @@
         <div class="search mb-4">
             <search-bar :products="this.products"
                         :focus="this.focusOnSearchBar"
-                        @search-complete="filterProductsBySearchBar"
+                        @search-complete="filterProductsBySearch"
                         @product-chosen="showAddingProductModal"
                         @lose-focus="loseFocusOnSearchBar">
             </search-bar>
@@ -94,7 +94,7 @@ export default {
             selectedBySearchBar: false,
 
             search: '',
-            searchResults: [],
+            //searchResults: [],
 
             selectedBaskets: [],
             internalCounters: [],
@@ -114,11 +114,11 @@ export default {
                 });
             }
 
-            if(this.selectedBySearchBar) {
-                this.selectedCategoryId = null;
-
-                return this.searchResults;
-            }
+            // if(this.selectedBySearchBar) {
+            //     this.selectedCategoryId = null;
+            //
+            //     //return this.searchResults;
+            // }
 
             return this.products;
         }
@@ -145,10 +145,10 @@ export default {
             this.selectedBySearchBar = true;
             this.selectedByCategory = false;
         },
-        filterProductsBySearchBar(results) {
-            this.searchResults = results;
-            this.filterProductsBySearch()
-        },
+        // filterProductsBySearchBar(results) {
+        //     this.searchResults = results;
+        //     this.filterProductsBySearch()
+        // },
 
         showAddingProductModal(product) {
             this.getSelectedBaskets();

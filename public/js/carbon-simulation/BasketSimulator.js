@@ -101,7 +101,7 @@ var BasketsList = function BasketsList() {
       selectedByCategory: false,
       selectedBySearchBar: false,
       search: '',
-      searchResults: [],
+      //searchResults: [],
       selectedBaskets: [],
       internalCounters: [],
       showAddingModal: false,
@@ -118,12 +118,12 @@ var BasketsList = function BasketsList() {
         return this.products.filter(function (product) {
           return product.category.id === _this.selectedCategoryId;
         });
-      }
+      } // if(this.selectedBySearchBar) {
+      //     this.selectedCategoryId = null;
+      //
+      //     //return this.searchResults;
+      // }
 
-      if (this.selectedBySearchBar) {
-        this.selectedCategoryId = null;
-        return this.searchResults;
-      }
 
       return this.products;
     }
@@ -147,10 +147,10 @@ var BasketsList = function BasketsList() {
       this.selectedBySearchBar = true;
       this.selectedByCategory = false;
     },
-    filterProductsBySearchBar: function filterProductsBySearchBar(results) {
-      this.searchResults = results;
-      this.filterProductsBySearch();
-    },
+    // filterProductsBySearchBar(results) {
+    //     this.searchResults = results;
+    //     this.filterProductsBySearch()
+    // },
     showAddingProductModal: function showAddingProductModal(product) {
       this.getSelectedBaskets();
       this.loseFocusOnSearchBar();
@@ -277,7 +277,7 @@ var render = function() {
           _c("search-bar", {
             attrs: { products: this.products, focus: this.focusOnSearchBar },
             on: {
-              "search-complete": _vm.filterProductsBySearchBar,
+              "search-complete": _vm.filterProductsBySearch,
               "product-chosen": _vm.showAddingProductModal,
               "lose-focus": _vm.loseFocusOnSearchBar
             }
