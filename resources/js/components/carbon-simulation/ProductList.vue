@@ -1,6 +1,9 @@
 <template>
     <div>
         <h3>Produits</h3>
+        <input type="text"
+               v-model="search"
+               placeholder="Chercher un produit">
         <div class="row">
             <div class="left col-4">
                 <div v-for="category in categories"
@@ -36,6 +39,7 @@
 </template>
 
 <script>
+import searchBar from "../../helpers/carbon-simulation/searchBar";
 const draggable = () => import(
     /* webpackChunkName: "js/draggable" */
     'vuedraggable'
@@ -44,20 +48,40 @@ export default {
     components: {
         draggable
     },
+    mixins: [
+        searchBar
+    ],
     props: {
         categories: Array,
-        filteredProducts: Array,
+        products: Array,
         selectedCategoryId: Number,
         selectedByCategory: Boolean,
-        selectedBySearchBar: Boolean,
-        search: String,
         origins: Array,
         counters: Array,
     },
     data() {
         return {
+            search: '',
             productListInternalCounter: 0,
         }
+    },
+    computed: {
+        filteredProducts() {
+            if(this.search) {
+                this.$emit('deselect-category');
+                return this.searchWithSearchBar(this.products);
+            }
+            if(this.selectedByCategory && this.selectedCategoryId != null) {
+                return this.products.filter(product => {
+                    return product.category.id === this.selectedCategoryId;
+                });
+            }
+
+            return this.products;
+        }
+    },
+    created() {
+        events.$on('clear-search-bar', this.clearSearchBar);
     },
     methods: {
         getClasses(categoryId) {
@@ -89,6 +113,9 @@ export default {
                 amount: 0,
                 price: 0,
             }
+        },
+        clearSearchBar() {
+            this.search = '';
         },
         getMaxCounter() {
             if (this.counters.length > 0) {

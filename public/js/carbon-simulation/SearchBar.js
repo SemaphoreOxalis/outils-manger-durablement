@@ -34,6 +34,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // from https://www.digitalocean.com/community/tutorials/vuejs-vue-autocomplete-component
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -73,7 +74,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onChange: function onChange() {
       this.isOpen = true;
-      this.results = this.searchWithSearchBar();
+      this.results = this.searchWithSearchBar(this.products);
       this.$emit('search-complete', this.results);
     },
     setResult: function setResult(result) {
@@ -193,7 +194,7 @@ var render = function() {
         }
       ],
       ref: "searchBar",
-      attrs: { type: "text" },
+      attrs: { type: "text", placeholder: "Taper le nom de votre produit" },
       domProps: { value: _vm.search },
       on: {
         input: [

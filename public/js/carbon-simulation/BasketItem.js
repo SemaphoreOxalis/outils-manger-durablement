@@ -9,6 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -60,6 +61,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+
+
 var BasketProduct = function BasketProduct() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketProduct */ "js/carbon-simulation/BasketProduct").then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
 };
@@ -73,11 +81,17 @@ var draggable = function draggable() {
     BasketProduct: BasketProduct,
     draggable: draggable
   },
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     basket: Object,
     index: Number,
     origins: Array,
     productToAdd: Object
+  },
+  data: function data() {
+    return {
+      search: ''
+    };
   },
   watch: {
     productToAdd: function productToAdd(newProduct) {
@@ -87,6 +101,13 @@ var draggable = function draggable() {
     }
   },
   computed: {
+    filteredProducts: function filteredProducts() {
+      if (this.search) {
+        return this.searchWithSearchBar(this.basket.products);
+      }
+
+      return this.basket.products;
+    },
     productCounter: function productCounter() {
       if (this.basket.products.length > 0) {
         return Math.max.apply(Math, _toConsumableArray(this.basket.products.map(function (product) {
@@ -116,6 +137,9 @@ var draggable = function draggable() {
     },
     copyBasket: function copyBasket() {
       this.$emit('copy-basket', this.basket, this.index);
+    },
+    searchInBasket: function searchInBasket() {
+      this.$emit('search-in-basket', this.search, this.index);
     },
     sendInternalCounter: function sendInternalCounter() {
       events.$emit('internal-counters', this.basket.id, this.productCounter);
@@ -192,6 +216,30 @@ var render = function() {
       _c("button", { on: { click: _vm.copyBasket } }, [_vm._v("copy")])
     ]),
     _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.search,
+          expression: "search"
+        }
+      ],
+      attrs: { type: "text", placeholder: "Chercher dans le panier" },
+      domProps: { value: _vm.search },
+      on: {
+        input: [
+          function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.search = $event.target.value
+          },
+          _vm.searchInBasket
+        ]
+      }
+    }),
+    _vm._v(" "),
     _c("div", { staticClass: "flex" }, [
       _c("button", { on: { click: _vm.deleteBasket } }, [_vm._v("X")])
     ]),
@@ -216,7 +264,7 @@ var render = function() {
               expression: "basket.products"
             }
           },
-          _vm._l(_vm.basket.products, function(product, i) {
+          _vm._l(_vm.filteredProducts, function(product, i) {
             return _c("basket-product", {
               key: product.id,
               attrs: { product: product, index: i, origins: _vm.origins },

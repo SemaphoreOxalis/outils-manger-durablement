@@ -9,6 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -58,6 +59,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+
+
 var draggable = function draggable() {
   return __webpack_require__.e(/*! import() | js/draggable */ "vendors~js/draggable").then(__webpack_require__.t.bind(null, /*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js", 7));
 };
@@ -66,20 +72,41 @@ var draggable = function draggable() {
   components: {
     draggable: draggable
   },
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     categories: Array,
-    filteredProducts: Array,
+    products: Array,
     selectedCategoryId: Number,
     selectedByCategory: Boolean,
-    selectedBySearchBar: Boolean,
-    search: String,
     origins: Array,
     counters: Array
   },
   data: function data() {
     return {
+      search: '',
       productListInternalCounter: 0
     };
+  },
+  computed: {
+    filteredProducts: function filteredProducts() {
+      var _this = this;
+
+      if (this.search) {
+        this.$emit('deselect-category');
+        return this.searchWithSearchBar(this.products);
+      }
+
+      if (this.selectedByCategory && this.selectedCategoryId != null) {
+        return this.products.filter(function (product) {
+          return product.category.id === _this.selectedCategoryId;
+        });
+      }
+
+      return this.products;
+    }
+  },
+  created: function created() {
+    events.$on('clear-search-bar', this.clearSearchBar);
   },
   methods: {
     getClasses: function getClasses(categoryId) {
@@ -108,6 +135,9 @@ var draggable = function draggable() {
         amount: 0,
         price: 0
       };
+    },
+    clearSearchBar: function clearSearchBar() {
+      this.search = '';
     },
     getMaxCounter: function getMaxCounter() {
       if (this.counters.length > 0) {
@@ -187,6 +217,27 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("h3", [_vm._v("Produits")]),
+    _vm._v(" "),
+    _c("input", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.search,
+          expression: "search"
+        }
+      ],
+      attrs: { type: "text", placeholder: "Chercher un produit" },
+      domProps: { value: _vm.search },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.search = $event.target.value
+        }
+      }
+    }),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(

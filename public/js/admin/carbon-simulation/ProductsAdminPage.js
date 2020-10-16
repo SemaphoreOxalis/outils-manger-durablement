@@ -94,7 +94,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     filteredProducts: function filteredProducts() {
-      return this.searchWithSearchBar();
+      return this.searchWithSearchBar(this.products);
     }
   },
   created: function created() {
@@ -905,10 +905,10 @@ function destroyUnit(unitId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    searchWithSearchBar: function searchWithSearchBar() {
+    searchWithSearchBar: function searchWithSearchBar(products) {
       var _this = this;
 
-      return this.products.filter(function (product) {
+      return products.filter(function (product) {
         var productName = _this.areWeLookingForBeefAndEggs(product.name);
 
         if (product.comment) {

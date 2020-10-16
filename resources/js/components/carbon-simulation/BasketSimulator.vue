@@ -23,13 +23,12 @@
             <product-list class="col-4"
                           v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
-                          v-bind:search="this.search"
-                          v-bind:filtered-products="this.filteredProducts"
+                          v-bind:products="this.products"
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
-                          v-bind:selected-by-search-bar="this.selectedBySearchBar"
                           v-bind:counters="this.internalCounters"
                           @filter-products-by-category="filterProductsByCategory"
+                          @deselect-category="deselectCategories"
                           @add-product-to-basket="showAddingProductModal">
             </product-list>
 
@@ -106,24 +105,6 @@ export default {
         }
     },
 
-    computed: {
-        filteredProducts() {
-            if(this.selectedByCategory && this.selectedCategoryId != null) {
-                return this.products.filter(product => {
-                    return product.category.id === this.selectedCategoryId;
-                });
-            }
-
-            // if(this.selectedBySearchBar) {
-            //     this.selectedCategoryId = null;
-            //
-            //     //return this.searchResults;
-            // }
-
-            return this.products;
-        }
-    },
-
     created() {
         this.fetchProducts();
         this.fetchCategories();
@@ -141,14 +122,13 @@ export default {
             this.selectedByCategory = true;
         },
         filterProductsBySearch() {
-            this.selectedCategoryId = null;
+            this.deselectCategories();
             this.selectedBySearchBar = true;
+        },
+        deselectCategories() {
+            this.selectedCategoryId = null;
             this.selectedByCategory = false;
         },
-        // filterProductsBySearchBar(results) {
-        //     this.searchResults = results;
-        //     this.filterProductsBySearch()
-        // },
 
         showAddingProductModal(product) {
             this.getSelectedBaskets();
@@ -180,6 +160,7 @@ export default {
         },
 
         loseFocusOnSearchBar() {
+            events.$emit('clear-search-bar');
             this.focusOnSearchBar = false;
         },
     }

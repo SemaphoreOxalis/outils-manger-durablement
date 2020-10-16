@@ -8,6 +8,11 @@
             <button @click="copyBasket">copy</button>
         </div>
 
+        <input type="text"
+               v-model="search"
+               placeholder="Chercher dans le panier"
+               @input="searchInBasket">
+
         <div class="flex">
             <button @click="deleteBasket">X</button>
         </div>
@@ -17,7 +22,7 @@
                        :group="{ name: 'draggableProducts', pull: false }"
                        :animation="150">
 
-                <basket-product v-for="(product, i) in basket.products"
+                <basket-product v-for="(product, i) in filteredProducts"
                                 v-bind:key="product.id"
                                 v-bind:product="product"
                                 v-bind:index="i"
@@ -32,6 +37,8 @@
 </template>
 
 <script>
+import searchBar from "../../helpers/carbon-simulation/searchBar";
+
 const BasketProduct = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketProduct" */
     './BasketProduct'
@@ -46,11 +53,19 @@ const draggable = () => import(
             BasketProduct,
             draggable
         },
+        mixins: [
+            searchBar
+        ],
         props: {
             basket: Object,
             index: Number,
             origins: Array,
             productToAdd: Object,
+        },
+        data() {
+            return {
+                search: '',
+            }
         },
         watch: {
             productToAdd(newProduct) {
@@ -60,6 +75,12 @@ const draggable = () => import(
             }
         },
         computed: {
+            filteredProducts: function() {
+                if (this.search) {
+                    return this.searchWithSearchBar(this.basket.products);
+                }
+                return this.basket.products;
+            },
             productCounter: function() {
                 if (this.basket.products.length > 0) {
                     return Math.max(...this.basket.products.map(product => product.id));
@@ -87,6 +108,10 @@ const draggable = () => import(
             },
             copyBasket() {
                 this.$emit('copy-basket', this.basket, this.index);
+            },
+
+            searchInBasket() {
+                this.$emit('search-in-basket', this.search, this.index);
             },
 
             sendInternalCounter() {

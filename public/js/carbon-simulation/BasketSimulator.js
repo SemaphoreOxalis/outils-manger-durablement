@@ -60,7 +60,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -110,24 +109,6 @@ var BasketsList = function BasketsList() {
       focusOnSearchBar: false
     };
   },
-  computed: {
-    filteredProducts: function filteredProducts() {
-      var _this = this;
-
-      if (this.selectedByCategory && this.selectedCategoryId != null) {
-        return this.products.filter(function (product) {
-          return product.category.id === _this.selectedCategoryId;
-        });
-      } // if(this.selectedBySearchBar) {
-      //     this.selectedCategoryId = null;
-      //
-      //     //return this.searchResults;
-      // }
-
-
-      return this.products;
-    }
-  },
   created: function created() {
     this.fetchProducts();
     this.fetchCategories();
@@ -143,14 +124,13 @@ var BasketsList = function BasketsList() {
       this.selectedByCategory = true;
     },
     filterProductsBySearch: function filterProductsBySearch() {
-      this.selectedCategoryId = null;
+      this.deselectCategories();
       this.selectedBySearchBar = true;
+    },
+    deselectCategories: function deselectCategories() {
+      this.selectedCategoryId = null;
       this.selectedByCategory = false;
     },
-    // filterProductsBySearchBar(results) {
-    //     this.searchResults = results;
-    //     this.filterProductsBySearch()
-    // },
     showAddingProductModal: function showAddingProductModal(product) {
       this.getSelectedBaskets();
       this.loseFocusOnSearchBar();
@@ -178,6 +158,7 @@ var BasketsList = function BasketsList() {
       this.internalCounters[basketId - 1] = counter;
     },
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
+      events.$emit('clear-search-bar');
       this.focusOnSearchBar = false;
     }
   }
@@ -295,15 +276,14 @@ var render = function() {
             attrs: {
               categories: this.categories,
               origins: this.origins,
-              search: this.search,
-              "filtered-products": this.filteredProducts,
+              products: this.products,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
-              "selected-by-search-bar": this.selectedBySearchBar,
               counters: this.internalCounters
             },
             on: {
               "filter-products-by-category": _vm.filterProductsByCategory,
+              "deselect-category": _vm.deselectCategories,
               "add-product-to-basket": _vm.showAddingProductModal
             }
           }),
@@ -732,10 +712,10 @@ function destroyUnit(unitId) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    searchWithSearchBar: function searchWithSearchBar() {
+    searchWithSearchBar: function searchWithSearchBar(products) {
       var _this = this;
 
-      return this.products.filter(function (product) {
+      return products.filter(function (product) {
         var productName = _this.areWeLookingForBeefAndEggs(product.name);
 
         if (product.comment) {

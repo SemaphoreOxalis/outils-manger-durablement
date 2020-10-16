@@ -2,6 +2,7 @@
     <div class="autocomplete">
         <input type="text"
                v-model="search"
+               placeholder="Taper le nom de votre produit"
                ref="searchBar"
                @input="onChange"
                @keydown.down="onArrowDown"
@@ -63,7 +64,7 @@
         methods: {
             onChange() {
                 this.isOpen = true;
-                this.results = this.searchWithSearchBar();
+                this.results = this.searchWithSearchBar(this.products);
                 this.$emit('search-complete', this.results);
             },
             setResult(result) {

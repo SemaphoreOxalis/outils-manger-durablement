@@ -1,7 +1,7 @@
 export default {
     methods: {
-        searchWithSearchBar() {
-            return this.products.filter(product => {
+        searchWithSearchBar(products) {
+            return products.filter(product => {
                 let productName = this.areWeLookingForBeefAndEggs(product.name);
                 if(product.comment) {
                     let productComment = this.areWeLookingForBeefAndEggs(product.comment);
