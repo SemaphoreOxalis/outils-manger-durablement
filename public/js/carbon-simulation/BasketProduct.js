@@ -175,9 +175,9 @@ var render = function() {
           expression: "product.amount"
         }
       ],
-      staticClass: "number-field custom-input browser-default",
+      staticClass: "ignore-draggable custom-input browser-default number-field",
       staticStyle: { width: "100px" },
-      attrs: { type: "number", min: "0", required: "" },
+      attrs: { type: "number", min: "0", step: "1", required: "" },
       domProps: { value: _vm.product.amount },
       on: {
         change: _vm.save,
@@ -206,9 +206,9 @@ var render = function() {
           expression: "product.price"
         }
       ],
-      staticClass: "number-field custom-input browser-default",
+      staticClass: "ignore-draggable custom-input browser-default number-field",
       staticStyle: { width: "100px" },
-      attrs: { type: "number", min: "0", required: "" },
+      attrs: { type: "number", min: "0", step: "1", required: "" },
       domProps: { value: _vm.product.price },
       on: {
         change: _vm.save,

@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
     './BasketItem'
@@ -41,6 +43,9 @@ export default {
         BasketItem,
         ActionConfirmation
     },
+    mixins: [
+        LocalStorageHelper,
+    ],
     props: {
         origins: Array,
         productToAdd: Object,
@@ -131,16 +136,7 @@ export default {
             this.showConfirmationModal = true;
         },
 
-        saveBasketsToLocalStorage() {
-            const basketsDate = Date.now();
-            const baskets = JSON.stringify(this.baskets);
 
-            localStorage.setItem('baskets', baskets);
-            localStorage.setItem('basketsDate', basketsDate);
-        },
-        deleteBasketsFromLocalStorage() {
-            localStorage.removeItem('baskets');
-        },
     }
 }
 </script>

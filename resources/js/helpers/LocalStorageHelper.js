@@ -3,56 +3,79 @@
 export default {
     methods: {
 
-        // HOME component
-        // récupère la date de l'audit et la formatte
-        getAuditDateFromLocalStorage() {
-            return this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
-        },
+        // WASTE-SIMULATOR
 
-        // INPUT component
-        // Va chercher les valeurs de référence depuis le localStorage
-        fetchWasteReferenceValuesFromLocalStorage() {
-            return JSON.parse(localStorage.getItem('localReferenceValues'));
-        },
+            // HOME component
+            // récupère la date de l'audit et la formatte
+            getAuditDateFromLocalStorage() {
+                return this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
+            },
 
-        // Enregistre les valeurs de référence personnalisées en localStorage
-        savePersonalValuesToLocalStorage(values) {
-            localStorage.setItem('localReferenceValues', values);
-        },
+            // INPUT component
+            // Va chercher les valeurs de référence depuis le localStorage
+            fetchWasteReferenceValuesFromLocalStorage() {
+                return JSON.parse(localStorage.getItem('localReferenceValues'));
+            },
 
-        //RESULTS component
-        // efface le localStorage
-        clearLocalStorage() {
-            localStorage.removeItem('audit');
-            localStorage.removeItem('simulations');
-            events.$emit('check-data-in-local-storage');
-        },
+            // Enregistre les valeurs de référence personnalisées en localStorage
+            savePersonalValuesToLocalStorage(values) {
+                localStorage.setItem('localReferenceValues', values);
+            },
 
-        // Enregistre l'audit en localStorage
-        saveAuditToLocalStorage(audit) {
-            localStorage.setItem('audit', audit);
-            events.$emit('check-data-in-local-storage');
-        },
+            //RESULTS component
+            // efface le localStorage
+            clearLocalStorage() {
+                localStorage.removeItem('audit');
+                localStorage.removeItem('simulations');
+                events.$emit('check-data-in-local-storage');
+            },
 
-        // Récupère l'audit du localStorage
-        getAuditFromLocalStorage() {
-            return JSON.parse(localStorage.getItem('audit'));
-        },
+            // Enregistre l'audit en localStorage
+            saveAuditToLocalStorage(audit) {
+                localStorage.setItem('audit', audit);
+                events.$emit('check-data-in-local-storage');
+            },
 
-        //SIMULATIONS component
-        // Récupère les simulations du localStorage
-        getSimulationsFromLocalStorage() {
-            return JSON.parse(localStorage.getItem('simulations'));
-        },
+            // Récupère l'audit du localStorage
+            getAuditFromLocalStorage() {
+                return JSON.parse(localStorage.getItem('audit'));
+            },
 
-        // Efface les simulations du localStorage (pas l'audit)
-        deleteSimulationsFromLocalStorage() {
-            localStorage.removeItem('simulations');
-        },
+            //SIMULATIONS component
+            // Récupère les simulations du localStorage
+            getSimulationsFromLocalStorage() {
+                return JSON.parse(localStorage.getItem('simulations'));
+            },
 
-        // Enregistre les simulations en localStorage
-        saveSimulationsToLocalStorage(sims) {
-            localStorage.setItem('simulations', sims);
-        }
+            // Efface les simulations du localStorage (pas l'audit)
+            deleteSimulationsFromLocalStorage() {
+                localStorage.removeItem('simulations');
+            },
+
+            // Enregistre les simulations en localStorage
+            saveSimulationsToLocalStorage(sims) {
+                localStorage.setItem('simulations', sims);
+            },
+
+        // CARBON-SIMULATOR
+
+            // HOME
+
+            deleteBasketsFromLocalStorage() {
+                localStorage.removeItem('baskets');
+            },
+            getBasketsDateFromLocalStorage() {
+                return this.formatToFrench(JSON.parse(localStorage.getItem('basketsDate')));
+            },
+
+            // BASKET LIST
+
+            saveBasketsToLocalStorage() {
+                const basketsDate = Date.now();
+                const baskets = JSON.stringify(this.baskets);
+
+                localStorage.setItem('baskets', baskets);
+                localStorage.setItem('basketsDate', basketsDate);
+            },
     },
 }

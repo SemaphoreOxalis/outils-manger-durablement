@@ -75,6 +75,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -242,8 +245,7 @@ var render = function() {
               expression: "basket.name"
             }
           ],
-          staticClass:
-            "ignore-draggable custom-input browser-default align-self-end",
+          staticClass: "custom-input browser-default align-self-end",
           attrs: { type: "text", required: "" },
           domProps: { value: _vm.basket.name },
           on: {
@@ -307,8 +309,11 @@ var render = function() {
             staticClass: "dragArea list-group h-100",
             attrs: {
               group: { name: "draggableProducts", pull: false },
+              filter: ".ignore-draggable",
+              preventOnFilter: false,
               animation: 150
             },
+            on: { change: _vm.saveBasket },
             model: {
               value: _vm.basket.products,
               callback: function($$v) {

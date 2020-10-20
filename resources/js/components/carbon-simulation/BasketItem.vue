@@ -7,7 +7,7 @@
             <h5 class="text-center">
                 <input v-model="basket.name"
                        @change="saveBasket"
-                       class="ignore-draggable custom-input browser-default align-self-end"
+                       class="custom-input browser-default align-self-end"
                        type="text"
                        required>
             </h5>
@@ -28,6 +28,9 @@
             <draggable v-model="basket.products"
                        class="dragArea list-group h-100"
                        :group="{ name: 'draggableProducts', pull: false }"
+                       @change="saveBasket"
+                       filter=".ignore-draggable"
+                       :preventOnFilter="false"
                        :animation="150">
 
                 <basket-product v-for="(product, i) in filteredProducts"

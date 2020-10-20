@@ -13,9 +13,9 @@
             </button>
         </div>
         <input type="number"
-               class="number-field custom-input browser-default"
+               class="ignore-draggable custom-input browser-default number-field"
                v-model="product.amount"
-               min="0"
+               min="0" step="1"
                required
                @change="save"
                style="width: 100px;">
@@ -25,9 +25,9 @@
         </a>
         -
         <input type="number"
-               class="number-field custom-input browser-default"
+               class="ignore-draggable custom-input browser-default number-field"
                v-model="product.price"
-               min="0"
+               min="0" step="1"
                required
                @change="save"
                style="width: 100px;"> € -

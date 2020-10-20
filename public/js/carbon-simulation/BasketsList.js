@@ -9,6 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -49,6 +50,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+
+
 var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
@@ -62,6 +65,7 @@ var ActionConfirmation = function ActionConfirmation() {
     BasketItem: BasketItem,
     ActionConfirmation: ActionConfirmation
   },
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     origins: Array,
     productToAdd: Object
@@ -155,15 +159,6 @@ var ActionConfirmation = function ActionConfirmation() {
       this.affectedBasket = basket;
       this.affectedBasketIndex = index;
       this.showConfirmationModal = true;
-    },
-    saveBasketsToLocalStorage: function saveBasketsToLocalStorage() {
-      var basketsDate = Date.now();
-      var baskets = JSON.stringify(this.baskets);
-      localStorage.setItem('baskets', baskets);
-      localStorage.setItem('basketsDate', basketsDate);
-    },
-    deleteBasketsFromLocalStorage: function deleteBasketsFromLocalStorage() {
-      localStorage.removeItem('baskets');
     }
   }
 });
@@ -314,6 +309,82 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasketsList_vue_vue_type_template_id_703443b0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/LocalStorageHelper.js":
+/*!****************************************************!*\
+  !*** ./resources/js/helpers/LocalStorageHelper.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Intéractions avec le localStorage
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // WASTE-SIMULATOR
+    // HOME component
+    // récupère la date de l'audit et la formatte
+    getAuditDateFromLocalStorage: function getAuditDateFromLocalStorage() {
+      return this.formatToFrench(JSON.parse(localStorage.getItem('audit')).auditDate);
+    },
+    // INPUT component
+    // Va chercher les valeurs de référence depuis le localStorage
+    fetchWasteReferenceValuesFromLocalStorage: function fetchWasteReferenceValuesFromLocalStorage() {
+      return JSON.parse(localStorage.getItem('localReferenceValues'));
+    },
+    // Enregistre les valeurs de référence personnalisées en localStorage
+    savePersonalValuesToLocalStorage: function savePersonalValuesToLocalStorage(values) {
+      localStorage.setItem('localReferenceValues', values);
+    },
+    //RESULTS component
+    // efface le localStorage
+    clearLocalStorage: function clearLocalStorage() {
+      localStorage.removeItem('audit');
+      localStorage.removeItem('simulations');
+      events.$emit('check-data-in-local-storage');
+    },
+    // Enregistre l'audit en localStorage
+    saveAuditToLocalStorage: function saveAuditToLocalStorage(audit) {
+      localStorage.setItem('audit', audit);
+      events.$emit('check-data-in-local-storage');
+    },
+    // Récupère l'audit du localStorage
+    getAuditFromLocalStorage: function getAuditFromLocalStorage() {
+      return JSON.parse(localStorage.getItem('audit'));
+    },
+    //SIMULATIONS component
+    // Récupère les simulations du localStorage
+    getSimulationsFromLocalStorage: function getSimulationsFromLocalStorage() {
+      return JSON.parse(localStorage.getItem('simulations'));
+    },
+    // Efface les simulations du localStorage (pas l'audit)
+    deleteSimulationsFromLocalStorage: function deleteSimulationsFromLocalStorage() {
+      localStorage.removeItem('simulations');
+    },
+    // Enregistre les simulations en localStorage
+    saveSimulationsToLocalStorage: function saveSimulationsToLocalStorage(sims) {
+      localStorage.setItem('simulations', sims);
+    },
+    // CARBON-SIMULATOR
+    // HOME
+    deleteBasketsFromLocalStorage: function deleteBasketsFromLocalStorage() {
+      localStorage.removeItem('baskets');
+    },
+    getBasketsDateFromLocalStorage: function getBasketsDateFromLocalStorage() {
+      return this.formatToFrench(JSON.parse(localStorage.getItem('basketsDate')));
+    },
+    // BASKET LIST
+    saveBasketsToLocalStorage: function saveBasketsToLocalStorage() {
+      var basketsDate = Date.now();
+      var baskets = JSON.stringify(this.baskets);
+      localStorage.setItem('baskets', baskets);
+      localStorage.setItem('basketsDate', basketsDate);
+    }
+  }
+});
 
 /***/ })
 

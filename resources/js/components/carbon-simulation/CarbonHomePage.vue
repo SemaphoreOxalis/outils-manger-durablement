@@ -52,11 +52,13 @@
     import GeneralText from "../../../texts/GeneralText";
     import HomePageText from "../../../texts/carbonSimulator/HomePageText";
     import DateFormatter from "../../helpers/DateFormatter";
+    import LocalStorageHelper from "../../helpers/LocalStorageHelper";
     export default {
         mixins: [
             GeneralText,
             HomePageText,
-            DateFormatter
+            DateFormatter,
+            LocalStorageHelper,
         ],
         data() {
             return {
@@ -78,13 +80,10 @@
                 this.$router.push({name: 'basket-simulator'})
             },
             deleteBaskets() {
-                localStorage.removeItem('baskets');
+                this.deleteBasketsFromLocalStorage();
                 this.previousBasketsDetectedInLocalStorage = false;
 
                 flash("Vos paniers ont bien été supprimés");
-            },
-            getBasketsDateFromLocalStorage() {
-                return this.formatToFrench(JSON.parse(localStorage.getItem('basketsDate')));
             },
         },
     }
