@@ -68,6 +68,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -126,6 +133,9 @@ var draggable = function draggable() {
   created: function created() {
     events.$on('get-internal-counters', this.sendInternalCounter);
   },
+  mounted: function mounted() {
+    this.sendInternalCounter();
+  },
   methods: {
     addProduct: function addProduct(product) {
       var tempProd = _objectSpread({}, product);
@@ -133,9 +143,11 @@ var draggable = function draggable() {
       tempProd.id = 'basket_product_' + (this.productCounter + 1);
       this.basket.products.unshift(tempProd);
       this.sendInternalCounter();
+      this.saveBasket();
     },
     removeProduct: function removeProduct(productIndex) {
       this.basket.products.splice(productIndex, 1);
+      this.saveBasket();
     },
     copyBasket: function copyBasket() {
       this.$emit('copy-basket', this.basket, this.index);
@@ -146,11 +158,14 @@ var draggable = function draggable() {
     clearBasket: function clearBasket() {
       this.$emit('clear-basket', this.basket, this.index, 'clear');
     },
+    saveBasket: function saveBasket() {
+      this.$emit('save-baskets');
+    },
     searchInBasket: function searchInBasket() {
       this.$emit('search-in-basket', this.search, this.index);
     },
     sendInternalCounter: function sendInternalCounter() {
-      events.$emit('internal-counters', this.basket.id, this.productCounter);
+      events.$emit('internal-counters', this.index, this.productCounter);
     }
   }
 });
@@ -218,7 +233,29 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "flex" }, [
       _c("h5", { staticClass: "text-center" }, [
-        _vm._v(_vm._s(_vm.basket.name))
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.basket.name,
+              expression: "basket.name"
+            }
+          ],
+          staticClass:
+            "ignore-draggable custom-input browser-default align-self-end",
+          attrs: { type: "text", required: "" },
+          domProps: { value: _vm.basket.name },
+          on: {
+            change: _vm.saveBasket,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.basket, "name", $event.target.value)
+            }
+          }
+        })
       ]),
       _vm._v(" "),
       _c("button", { on: { click: _vm.copyBasket } }, [_vm._v("copy")])
@@ -284,7 +321,10 @@ var render = function() {
             return _c("basket-product", {
               key: product.id,
               attrs: { product: product, index: i, origins: _vm.origins },
-              on: { "remove-product": _vm.removeProduct }
+              on: {
+                "save-changes": _vm.saveBasket,
+                "remove-product": _vm.removeProduct
+              }
             })
           }),
           1

@@ -110,12 +110,12 @@ var BasketsList = function BasketsList() {
     };
   },
   created: function created() {
+    events.$on('internal-counters', this.setInternalCounters);
     this.fetchProducts();
     this.fetchCategories();
     this.fetchUnits();
     this.fetchOrigins();
     this.getInternalCounters();
-    events.$on('internal-counters', this.setInternalCounters);
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
@@ -154,8 +154,8 @@ var BasketsList = function BasketsList() {
     getInternalCounters: function getInternalCounters() {
       events.$emit('get-internal-counters');
     },
-    setInternalCounters: function setInternalCounters(basketId, counter) {
-      this.internalCounters[basketId - 1] = counter;
+    setInternalCounters: function setInternalCounters(basketI, counter) {
+      this.internalCounters[basketI] = counter;
     },
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       events.$emit('clear-search-bar');

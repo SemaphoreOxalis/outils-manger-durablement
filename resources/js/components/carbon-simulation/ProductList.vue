@@ -98,6 +98,7 @@ export default {
             this.$emit('add-product-to-basket', product);
         },
         addProductByDrag(product) {
+
             events.$emit('get-internal-counters');
             this.productListInternalCounter = this.getMaxCounter();
             return {
@@ -110,8 +111,8 @@ export default {
                 unit_id: product.unit_id,
                 category_id: product.category_id,
                 emissionFactor: product.emissionFactor,
-                amount: 0,
-                price: 0,
+                amount: 1,
+                price: 1,
             }
         },
         clearSearchBar() {

@@ -106,13 +106,13 @@ export default {
     },
 
     created() {
+        events.$on('internal-counters', this.setInternalCounters);
         this.fetchProducts();
         this.fetchCategories();
         this.fetchUnits();
         this.fetchOrigins();
 
         this.getInternalCounters();
-        events.$on('internal-counters', this.setInternalCounters);
     },
 
     methods: {
@@ -155,8 +155,8 @@ export default {
         getInternalCounters() {
             events.$emit('get-internal-counters');
         },
-        setInternalCounters(basketId, counter) {
-            this.internalCounters[basketId - 1] = counter;
+        setInternalCounters(basketI, counter) {
+            this.internalCounters[basketI] = counter;
         },
 
         loseFocusOnSearchBar() {

@@ -15,6 +15,7 @@
                      v-bind:index="i"
                      v-bind:origins="origins"
                      v-bind:product-to-add="productToAdd"
+                     @save-baskets="saveBasketsToLocalStorage"
                      @copy-basket="copyBasket"
                      @clear-basket="showConfirmationPopUp"
                      @delete-basket="showConfirmationPopUp">
@@ -71,8 +72,15 @@ export default {
         }
     },
     created() {
-        this.addBasket('votre panier');
+        if (localStorage.hasOwnProperty('baskets')) {
+            this.baskets = JSON.parse(localStorage.getItem('baskets'));
+        } else {
+            this.addBasket('votre panier');
+        }
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
+    },
+    mounted() {
+        events.$emit('get-internal-counters');
     },
     methods: {
         sendSelectedBaskets() {
@@ -81,18 +89,28 @@ export default {
 
         addBasket(name = '') {
             this.baskets.push(this.prepareBasketToAdd(name));
+            this.saveBasketsToLocalStorage();
         },
         copyBasket(basket, index) {
             let tempBasket = JSON.parse(JSON.stringify(basket));
             this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+            this.saveBasketsToLocalStorage();
         },
         deleteBasket(basketIndex) {
             this.showConfirmationModal = false;
             this.baskets.splice(basketIndex, 1);
+            if (this.baskets.length === 0) {
+                this.deleteBasketsFromLocalStorage();
+            } else {
+                this.saveBasketsToLocalStorage();
+            }
+            events.$emit('get-internal-counters');
         },
         clearBasket(basketIndex) {
             this.showConfirmationModal = false;
             this.baskets[basketIndex].products = [];
+            this.saveBasketsToLocalStorage();
+            events.$emit('get-internal-counters');
         },
 
         prepareBasketToAdd(name = '', products = []) {
@@ -111,6 +129,17 @@ export default {
             this.affectedBasket = basket;
             this.affectedBasketIndex = index;
             this.showConfirmationModal = true;
+        },
+
+        saveBasketsToLocalStorage() {
+            const basketsDate = Date.now();
+            const baskets = JSON.stringify(this.baskets);
+
+            localStorage.setItem('baskets', baskets);
+            localStorage.setItem('basketsDate', basketsDate);
+        },
+        deleteBasketsFromLocalStorage() {
+            localStorage.removeItem('baskets');
         },
     }
 }

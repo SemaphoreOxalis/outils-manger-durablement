@@ -48,6 +48,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
@@ -91,8 +92,16 @@ var ActionConfirmation = function ActionConfirmation() {
     }
   },
   created: function created() {
-    this.addBasket('votre panier');
+    if (localStorage.hasOwnProperty('baskets')) {
+      this.baskets = JSON.parse(localStorage.getItem('baskets'));
+    } else {
+      this.addBasket('votre panier');
+    }
+
     events.$on('send-selected-baskets', this.sendSelectedBaskets);
+  },
+  mounted: function mounted() {
+    events.$emit('get-internal-counters');
   },
   methods: {
     sendSelectedBaskets: function sendSelectedBaskets() {
@@ -101,18 +110,30 @@ var ActionConfirmation = function ActionConfirmation() {
     addBasket: function addBasket() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       this.baskets.push(this.prepareBasketToAdd(name));
+      this.saveBasketsToLocalStorage();
     },
     copyBasket: function copyBasket(basket, index) {
       var tempBasket = JSON.parse(JSON.stringify(basket));
       this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+      this.saveBasketsToLocalStorage();
     },
     deleteBasket: function deleteBasket(basketIndex) {
       this.showConfirmationModal = false;
       this.baskets.splice(basketIndex, 1);
+
+      if (this.baskets.length === 0) {
+        this.deleteBasketsFromLocalStorage();
+      } else {
+        this.saveBasketsToLocalStorage();
+      }
+
+      events.$emit('get-internal-counters');
     },
     clearBasket: function clearBasket(basketIndex) {
       this.showConfirmationModal = false;
       this.baskets[basketIndex].products = [];
+      this.saveBasketsToLocalStorage();
+      events.$emit('get-internal-counters');
     },
     prepareBasketToAdd: function prepareBasketToAdd() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -134,6 +155,15 @@ var ActionConfirmation = function ActionConfirmation() {
       this.affectedBasket = basket;
       this.affectedBasketIndex = index;
       this.showConfirmationModal = true;
+    },
+    saveBasketsToLocalStorage: function saveBasketsToLocalStorage() {
+      var basketsDate = Date.now();
+      var baskets = JSON.stringify(this.baskets);
+      localStorage.setItem('baskets', baskets);
+      localStorage.setItem('basketsDate', basketsDate);
+    },
+    deleteBasketsFromLocalStorage: function deleteBasketsFromLocalStorage() {
+      localStorage.removeItem('baskets');
     }
   }
 });
@@ -186,6 +216,7 @@ var render = function() {
             "product-to-add": _vm.productToAdd
           },
           on: {
+            "save-baskets": _vm.saveBasketsToLocalStorage,
             "copy-basket": _vm.copyBasket,
             "clear-basket": _vm.showConfirmationPopUp,
             "delete-basket": _vm.showConfirmationPopUp

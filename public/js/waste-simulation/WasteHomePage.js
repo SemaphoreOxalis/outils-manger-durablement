@@ -177,70 +177,64 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm.previousAuditDetectedInLocalStorage
-            ? _c("div", { staticClass: "info p-4 m-4" }, [
-                _c("p", [
-                  _vm._v(_vm._s(_vm.it_seems_you_have_sims_from) + " "),
-                  _c("strong", [_vm._v(_vm._s(this.previousAuditDate))])
-                ]),
-                _vm._v(" "),
+          _c("div", { staticClass: "info p-4 m-4", attrs: { c: "" } }, [
+            _c("p", [
+              _vm._v(_vm._s(_vm.it_seems_you_have_sims_from) + " "),
+              _c("strong", [_vm._v(_vm._s(this.previousAuditDate))])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "d-flex flex-column align-items-center" },
+              [
                 _c(
-                  "div",
-                  { staticClass: "d-flex flex-column align-items-center" },
+                  "button",
+                  {
+                    staticClass:
+                      "button big-button d-flex p-4 justify-content-center mb-2",
+                    on: { click: _vm.goToPreviousAudit }
+                  },
                   [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "button big-button d-flex p-4 justify-content-center mb-2",
-                        on: { click: _vm.goToPreviousAudit }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "icon align-self-center mr-4" },
-                          [_vm._v("")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "text-left big-button-line-height" },
-                          [
-                            _c("strong", [_vm._v(_vm._s(_vm.prevBtn.goTo))]),
-                            _c("br"),
-                            _c("small", [
-                              _vm._v(_vm._s(_vm.prevBtn.sim)),
-                              _c("br"),
-                              _vm._v(
-                                _vm._s(_vm.prevBtn.from) +
-                                  " " +
-                                  _vm._s(_vm.previousAuditDate)
-                              )
-                            ])
-                          ]
-                        )
-                      ]
-                    ),
+                    _c("div", { staticClass: "icon align-self-center mr-4" }, [
+                      _vm._v("")
+                    ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "text-center" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button alter",
-                          on: { click: _vm.deletePreviousAudit }
-                        },
-                        [
-                          _c("span", { staticClass: "icon mr-4" }, [
-                            _vm._v("")
-                          ]),
-                          _vm._v(_vm._s(_vm.delete_all_data))
-                        ]
-                      )
-                    ])
+                    _c(
+                      "div",
+                      { staticClass: "text-left big-button-line-height" },
+                      [
+                        _c("strong", [_vm._v(_vm._s(_vm.prevBtn.goTo))]),
+                        _c("br"),
+                        _c("small", [
+                          _vm._v(_vm._s(_vm.prevBtn.sim)),
+                          _c("br"),
+                          _vm._v(
+                            _vm._s(_vm.prevBtn.from) +
+                              " " +
+                              _vm._s(_vm.previousAuditDate)
+                          )
+                        ])
+                      ]
+                    )
                   ]
-                )
-              ])
-            : _vm._e(),
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-center" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button alter",
+                      on: { click: _vm.deletePreviousAudit }
+                    },
+                    [
+                      _c("span", { staticClass: "icon mr-4" }, [_vm._v("")]),
+                      _vm._v(_vm._s(_vm.delete_all_data))
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c("p", [
             _vm._v(

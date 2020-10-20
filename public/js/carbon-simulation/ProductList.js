@@ -132,8 +132,8 @@ var draggable = function draggable() {
         unit_id: product.unit_id,
         category_id: product.category_id,
         emissionFactor: product.emissionFactor,
-        amount: 0,
-        price: 0
+        amount: 1,
+        price: 1
       };
     },
     clearSearchBar: function clearSearchBar() {

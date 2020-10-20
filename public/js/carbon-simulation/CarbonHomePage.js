@@ -11,6 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/GeneralText */ "./resources/texts/GeneralText.js");
 /* harmony import */ var _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../texts/carbonSimulator/HomePageText */ "./resources/texts/carbonSimulator/HomePageText.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 //
 //
 //
@@ -61,10 +62,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__["default"]]
+  mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  data: function data() {
+    return {
+      previousBasketsDate: null,
+      previousBasketsDetectedInLocalStorage: false
+    };
+  },
+  created: function created() {
+    this.checkPreviousBasketsFromLocalStorage();
+  },
+  methods: {
+    checkPreviousBasketsFromLocalStorage: function checkPreviousBasketsFromLocalStorage() {
+      if (localStorage.hasOwnProperty('baskets')) {
+        this.previousBasketsDetectedInLocalStorage = true;
+        this.previousBasketsDate = this.getBasketsDateFromLocalStorage();
+      }
+    },
+    goToPreviousBaskets: function goToPreviousBaskets() {
+      this.$router.push({
+        name: 'basket-simulator'
+      });
+    },
+    deleteBaskets: function deleteBaskets() {
+      localStorage.removeItem('baskets');
+      this.previousBasketsDetectedInLocalStorage = false;
+      flash("Vos paniers ont bien été supprimés");
+    },
+    getBasketsDateFromLocalStorage: function getBasketsDateFromLocalStorage() {
+      return this.formatToFrench(JSON.parse(localStorage.getItem('basketsDate')));
+    }
+  }
 });
 
 /***/ }),
@@ -93,11 +125,11 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        true
+        _vm.previousBasketsDetectedInLocalStorage
           ? _c("div", { staticClass: "info p-4 m-4" }, [
               _c("p", [
                 _vm._v(_vm._s(_vm.it_seems_you_have_baskets_from) + " "),
-                _c("strong", [_vm._v("66/66/6666")])
+                _c("strong", [_vm._v(_vm._s(this.previousBasketsDate))])
               ]),
               _vm._v(" "),
               _c(
@@ -108,7 +140,8 @@ var render = function() {
                     "button",
                     {
                       staticClass:
-                        "button big-button d-flex p-4 justify-content-center mb-2"
+                        "button big-button d-flex p-4 justify-content-center mb-2",
+                      on: { click: _vm.goToPreviousBaskets }
                     },
                     [
                       _c(
@@ -126,7 +159,11 @@ var render = function() {
                           _c("small", [
                             _vm._v(_vm._s(_vm.prevBtn.basket)),
                             _c("br"),
-                            _vm._v(_vm._s(_vm.prevBtn.from) + " 66/66/6666")
+                            _vm._v(
+                              _vm._s(_vm.prevBtn.from) +
+                                " " +
+                                _vm._s(this.previousBasketsDate)
+                            )
                           ])
                         ]
                       )
@@ -134,15 +171,22 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "text-center" }, [
-                    _c("button", { staticClass: "button alter" }, [
-                      _c("span", { staticClass: "icon mr-4" }, [_vm._v("")]),
-                      _vm._v(_vm._s(_vm.delete_all_data))
-                    ])
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button alter",
+                        on: { click: _vm.deleteBaskets }
+                      },
+                      [
+                        _c("span", { staticClass: "icon mr-4" }, [_vm._v("")]),
+                        _vm._v(_vm._s(_vm.delete_all_data))
+                      ]
+                    )
                   ])
                 ]
               )
             ])
-          : undefined
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c(
@@ -388,6 +432,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarbonHomePage_vue_vue_type_template_id_335fe7a4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/DateFormatter.js":
+/*!***********************************************!*\
+  !*** ./resources/js/helpers/DateFormatter.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Petit helper pour formatter les dates en français
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    formatToFrench: function formatToFrench(date) {
+      var formattedDate = new Date(date);
+      return formattedDate.toLocaleDateString();
+    }
+  }
+});
 
 /***/ }),
 

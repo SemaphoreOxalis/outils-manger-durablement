@@ -39,6 +39,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -51,6 +65,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     removeProduct: function removeProduct(index) {
       this.$emit('remove-product', index);
+    },
+    save: function save() {
+      this.$emit('save-changes');
     }
   }
 });
@@ -160,9 +177,10 @@ var render = function() {
       ],
       staticClass: "number-field custom-input browser-default",
       staticStyle: { width: "100px" },
-      attrs: { type: "number", min: "0" },
+      attrs: { type: "number", min: "0", required: "" },
       domProps: { value: _vm.product.amount },
       on: {
+        change: _vm.save,
         input: function($event) {
           if ($event.target.composing) {
             return
@@ -190,9 +208,10 @@ var render = function() {
       ],
       staticClass: "number-field custom-input browser-default",
       staticStyle: { width: "100px" },
-      attrs: { type: "number", min: "0" },
+      attrs: { type: "number", min: "0", required: "" },
       domProps: { value: _vm.product.price },
       on: {
+        change: _vm.save,
         input: function($event) {
           if ($event.target.composing) {
             return
@@ -215,21 +234,24 @@ var render = function() {
         ],
         staticStyle: { width: "100px" },
         on: {
-          change: function($event) {
-            var $$selectedVal = Array.prototype.filter
-              .call($event.target.options, function(o) {
-                return o.selected
-              })
-              .map(function(o) {
-                var val = "_value" in o ? o._value : o.value
-                return val
-              })
-            _vm.$set(
-              _vm.product,
-              "origin",
-              $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-            )
-          }
+          change: [
+            function($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function(o) {
+                  return o.selected
+                })
+                .map(function(o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.$set(
+                _vm.product,
+                "origin",
+                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+              )
+            },
+            _vm.save
+          ]
         }
       },
       _vm._l(_vm.origins, function(origin) {

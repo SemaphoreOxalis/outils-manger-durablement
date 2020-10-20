@@ -4,7 +4,13 @@
             <input type="checkbox" v-model="basket.isSelected"> Ajouter dans ce panier
         </div>
         <div class="flex">
-            <h5 class="text-center">{{ basket.name }}</h5>
+            <h5 class="text-center">
+                <input v-model="basket.name"
+                       @change="saveBasket"
+                       class="ignore-draggable custom-input browser-default align-self-end"
+                       type="text"
+                       required>
+            </h5>
             <button @click="copyBasket">copy</button>
         </div>
 
@@ -29,6 +35,7 @@
                                 v-bind:product="product"
                                 v-bind:index="i"
                                 v-bind:origins="origins"
+                                @save-changes="saveBasket"
                                 @remove-product="removeProduct">
                 </basket-product>
 
@@ -99,15 +106,20 @@ const draggable = () => import(
         created() {
             events.$on('get-internal-counters', this.sendInternalCounter);
         },
+        mounted() {
+            this.sendInternalCounter();
+        },
         methods: {
             addProduct(product) {
                 let tempProd = { ...product};
                 tempProd.id = ('basket_product_' + (this.productCounter + 1));
                 this.basket.products.unshift(tempProd);
                 this.sendInternalCounter();
+                this.saveBasket();
             },
             removeProduct(productIndex) {
                 this.basket.products.splice(productIndex, 1);
+                this.saveBasket();
             },
 
             copyBasket() {
@@ -119,13 +131,16 @@ const draggable = () => import(
             clearBasket() {
                 this.$emit('clear-basket', this.basket, this.index, 'clear');
             },
+            saveBasket() {
+                this.$emit('save-baskets');
+            },
 
             searchInBasket() {
                 this.$emit('search-in-basket', this.search, this.index);
             },
 
             sendInternalCounter() {
-                events.$emit('internal-counters', this.basket.id, this.productCounter);
+                events.$emit('internal-counters', this.index, this.productCounter);
             },
         }
     }

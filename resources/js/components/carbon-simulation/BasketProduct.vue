@@ -12,14 +12,28 @@
                 X
             </button>
         </div>
-        <input type="number" class="number-field custom-input browser-default" v-model="product.amount" min="0" style="width: 100px;">
+        <input type="number"
+               class="number-field custom-input browser-default"
+               v-model="product.amount"
+               min="0"
+               required
+               @change="save"
+               style="width: 100px;">
         <small>{{ product.unit.shortUnit }}</small>
         <a href="#" class="info-bubble">?
             <span>{{ product.unit.unit }}</span>
         </a>
         -
-        <input type="number" class="number-field custom-input browser-default" v-model="product.price" min="0" style="width: 100px;"> € -
-        <select v-model="product.origin" style="width: 100px;">
+        <input type="number"
+               class="number-field custom-input browser-default"
+               v-model="product.price"
+               min="0"
+               required
+               @change="save"
+               style="width: 100px;"> € -
+        <select v-model="product.origin"
+                @change="save"
+                style="width: 100px;">
             <option v-for="origin in origins"
                     v-bind:value="origin">
                 {{ origin.from }}
@@ -44,6 +58,9 @@ export default {
         removeProduct(index) {
             this.$emit('remove-product', index);
         },
+        save() {
+            this.$emit('save-changes');
+        }
     }
 }
 </script>
