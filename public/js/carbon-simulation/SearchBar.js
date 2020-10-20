@@ -87,7 +87,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.chosen = _objectSpread(_objectSpread({}, result), {}, {
         id: 'chosen_product_' + result.id
       });
-      console.log(this.chosen.id);
       this.search = '';
       this.isOpen = false;
       this.$emit('product-chosen', this.chosen);

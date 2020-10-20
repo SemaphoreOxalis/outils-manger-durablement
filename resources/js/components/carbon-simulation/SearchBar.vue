@@ -69,7 +69,6 @@
             },
             setResult(result) {
                 this.chosen = { ...result, id: 'chosen_product_' + result.id};
-                console.log(this.chosen.id);
                 this.search = '';
                 this.isOpen = false;
 

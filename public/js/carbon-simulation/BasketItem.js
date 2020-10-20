@@ -126,7 +126,7 @@ var draggable = function draggable() {
       var tempProd = _objectSpread({}, product);
 
       tempProd.id = 'basket_product_' + (this.productCounter + 1);
-      this.basket.products.push(tempProd);
+      this.basket.products.unshift(tempProd);
       this.sendInternalCounter();
     },
     removeProduct: function removeProduct(productIndex) {

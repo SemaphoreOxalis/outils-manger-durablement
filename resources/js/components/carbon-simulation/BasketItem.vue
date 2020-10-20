@@ -98,7 +98,7 @@ const draggable = () => import(
             addProduct(product) {
                 let tempProd = { ...product};
                 tempProd.id = ('basket_product_' + (this.productCounter + 1));
-                this.basket.products.push(tempProd);
+                this.basket.products.unshift(tempProd);
                 this.sendInternalCounter();
             },
             removeProduct(productIndex) {
