@@ -79,10 +79,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 
 var BasketProduct = function BasketProduct() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketProduct */ "js/carbon-simulation/BasketProduct").then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
+};
+
+var BasketResult = function BasketResult() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketResult */ "js/carbon-simulation/BasketResult").then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
 };
 
 var draggable = function draggable() {
@@ -92,6 +100,7 @@ var draggable = function draggable() {
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BasketProduct: BasketProduct,
+    BasketResult: BasketResult,
     draggable: draggable
   },
   mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -339,7 +348,11 @@ var render = function() {
             })
           }),
           1
-        )
+        ),
+        _vm._v(" "),
+        _c("basket-result", {
+          attrs: { products: _vm.basket.products, "basket-id": _vm.basket.id }
+        })
       ],
       1
     )

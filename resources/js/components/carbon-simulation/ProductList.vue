@@ -25,11 +25,13 @@
                            :clone="addProductByDrag">
 
                     <div v-for="product in filteredProducts"
-                         class="list-group-item product"
+                         class="list-group-item product d-flex justify-content-between"
                          :key="product.id">
-                        {{ product.name }}
-                        <small>{{ product.comment }}</small>
-                        <button @click="addProdToBasket(product)">+</button>
+                        <div>
+                            {{ product.name }}
+                            <small>{{ product.comment }}</small>
+                        </div>
+                        <button @click="addProdToBasket(product)" class="align-self-start">+</button>
                     </div>
 
                 </draggable>

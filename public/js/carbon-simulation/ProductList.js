@@ -62,6 +62,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 
 var draggable = function draggable() {
@@ -292,18 +294,25 @@ var render = function() {
             _vm._l(_vm.filteredProducts, function(product) {
               return _c(
                 "div",
-                { key: product.id, staticClass: "list-group-item product" },
+                {
+                  key: product.id,
+                  staticClass:
+                    "list-group-item product d-flex justify-content-between"
+                },
                 [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(product.name) +
-                      "\n                    "
-                  ),
-                  _c("small", [_vm._v(_vm._s(product.comment))]),
+                  _c("div", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(product.name) +
+                        "\n                        "
+                    ),
+                    _c("small", [_vm._v(_vm._s(product.comment))])
+                  ]),
                   _vm._v(" "),
                   _c(
                     "button",
                     {
+                      staticClass: "align-self-start",
                       on: {
                         click: function($event) {
                           return _vm.addProdToBasket(product)

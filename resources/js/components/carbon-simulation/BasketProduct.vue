@@ -2,7 +2,7 @@
     <div class="list-group-item product">
 
         <div class="position-relative">
-            <div class="d-flex justify-content-between" :id="'header-' + basketId + index">
+            <div class="d-flex justify-content-between" :id="'header-' + basketId + '-' + product.id">
 
                 <div class="flex justify-content-between">
                     <div>
@@ -16,12 +16,12 @@
                 <div>
                     <button class="button alter"
                             data-toggle="collapse"
-                            :data-target="'#body-' + basketId + index"
-                            aria-expanded="true"
-                            :aria-controls="'body-' + basketId + index"
+                            :data-target="'#body-' + basketId + '-' + product.id"
+                            aria-expanded="false"
+                            :aria-controls="'body-' + basketId + '-' + product.id"
                             @click="toggleFullProduct"
                     >
-                        <i :id="'collapse-icon-' + basketId + index" class="icon icon-angle-down"></i>
+                        <i :id="'collapse-icon-' + basketId + '-' + product.id" class="icon icon-angle-down"></i>
                     </button>
                     <button class="button alter trash-icon" @click="removeProduct(index)"
                             style="display: inline-block;">
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div :class="'collapse collapse-' + basketId + index" :id="'body-' + basketId + index">
+            <div :class="'collapse collapse-' + basketId + '-' + product.id" :id="'body-' + basketId + '-' + product.id">
                 <input type="number"
                        class="ignore-draggable custom-input browser-default number-field"
                        v-model="product.amount"
@@ -62,16 +62,6 @@
                     <label :for="'origin-' + basketId + index + origin.id">{{ origin.from }}</label>
                 </div>
 
-<!--                <select v-model="product.origin"-->
-<!--                        @change="save"-->
-<!--                        style="width: 100px;">-->
-<!--                    <option v-for="origin in origins"-->
-<!--                            v-bind:value="origin">-->
-<!--                        {{ origin.from }}-->
-<!--                    </option>-->
-<!--                </select>-->
-
-
             </div>
         </div>
 
@@ -91,6 +81,14 @@ export default {
             fullProductShown: false,
         }
     },
+    computed: {
+        collapseClass: function() {
+            return '.collapse-' + this.basketId + '-' + this.product.id;
+        },
+        headerId: function() {
+            return '#header-' + this.basketId + '-' + this.product.id;
+        },
+    },
     methods: {
         removeProduct(index) {
             this.$emit('remove-product', index);
@@ -100,17 +98,17 @@ export default {
         },
         toggleFullProduct() {
             this.fullProductShown = !this.fullProductShown;
-            let collapseClass = '.collapse-' + this.basketId + this.index;
-            let headerId = '#header-' + this.basketId + this.index;
-            let bodyId = '#body-' + this.basketId + this.index;
+            let collapseClass = this.collapseClass;
+            let headerId = this.headerId;
 
             $(collapseClass).on('show.bs.collapse', function() {
+                console.log(headerId);
                 $(headerId + " i").addClass("reversed");
                 $(headerId).addClass("opened");
             }).on('hide.bs.collapse', function() {
                 $(headerId + " i").removeClass("reversed");
                 $(headerId).removeClass("opened");
-            })
+            });
         }
     }
 }

@@ -79,16 +79,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -101,6 +91,14 @@ __webpack_require__.r(__webpack_exports__);
       fullProductShown: false
     };
   },
+  computed: {
+    collapseClass: function collapseClass() {
+      return '.collapse-' + this.basketId + '-' + this.product.id;
+    },
+    headerId: function headerId() {
+      return '#header-' + this.basketId + '-' + this.product.id;
+    }
+  },
   methods: {
     removeProduct: function removeProduct(index) {
       this.$emit('remove-product', index);
@@ -110,10 +108,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleFullProduct: function toggleFullProduct() {
       this.fullProductShown = !this.fullProductShown;
-      var collapseClass = '.collapse-' + this.basketId + this.index;
-      var headerId = '#header-' + this.basketId + this.index;
-      var bodyId = '#body-' + this.basketId + this.index;
+      var collapseClass = this.collapseClass;
+      var headerId = this.headerId;
       $(collapseClass).on('show.bs.collapse', function () {
+        console.log(headerId);
         $(headerId + " i").addClass("reversed");
         $(headerId).addClass("opened");
       }).on('hide.bs.collapse', function () {
@@ -196,7 +194,7 @@ var render = function() {
         "div",
         {
           staticClass: "d-flex justify-content-between",
-          attrs: { id: "header-" + _vm.basketId + _vm.index }
+          attrs: { id: "header-" + _vm.basketId + "-" + _vm.product.id }
         },
         [
           _c("div", { staticClass: "flex justify-content-between" }, [
@@ -208,7 +206,7 @@ var render = function() {
                     "a",
                     { staticClass: "info-bubble", attrs: { href: "#" } },
                     [
-                      _vm._v("?\n                            "),
+                      _vm._v("?\n                        "),
                       _c("span", [_vm._v(_vm._s(_vm.product.comment))])
                     ]
                   )
@@ -223,16 +221,18 @@ var render = function() {
                 staticClass: "button alter",
                 attrs: {
                   "data-toggle": "collapse",
-                  "data-target": "#body-" + _vm.basketId + _vm.index,
-                  "aria-expanded": "true",
-                  "aria-controls": "body-" + _vm.basketId + _vm.index
+                  "data-target": "#body-" + _vm.basketId + "-" + _vm.product.id,
+                  "aria-expanded": "false",
+                  "aria-controls": "body-" + _vm.basketId + "-" + _vm.product.id
                 },
                 on: { click: _vm.toggleFullProduct }
               },
               [
                 _c("i", {
                   staticClass: "icon icon-angle-down",
-                  attrs: { id: "collapse-icon-" + _vm.basketId + _vm.index }
+                  attrs: {
+                    id: "collapse-icon-" + _vm.basketId + "-" + _vm.product.id
+                  }
                 })
               ]
             ),
@@ -248,7 +248,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("\n                        X\n                    ")]
+              [_vm._v("\n                    X\n                ")]
             )
           ])
         ]
@@ -257,8 +257,8 @@ var render = function() {
       _c(
         "div",
         {
-          class: "collapse collapse-" + _vm.basketId + _vm.index,
-          attrs: { id: "body-" + _vm.basketId + _vm.index }
+          class: "collapse collapse-" + _vm.basketId + "-" + _vm.product.id,
+          attrs: { id: "body-" + _vm.basketId + "-" + _vm.product.id }
         },
         [
           _c("input", {
@@ -289,10 +289,10 @@ var render = function() {
           _c("small", [_vm._v(_vm._s(_vm.product.unit.shortUnit))]),
           _vm._v(" "),
           _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-            _vm._v("?\n                    "),
+            _vm._v("?\n                "),
             _c("span", [_vm._v(_vm._s(_vm.product.unit.unit))])
           ]),
-          _vm._v("\n                -\n                "),
+          _vm._v("\n            -\n            "),
           _c("input", {
             directives: [
               {
@@ -317,7 +317,7 @@ var render = function() {
               }
             }
           }),
-          _vm._v(" € -\n\n                "),
+          _vm._v(" € -\n\n            "),
           _vm._l(_vm.origins, function(origin) {
             return _c("div", [
               _c("input", {

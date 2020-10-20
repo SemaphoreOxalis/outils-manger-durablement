@@ -44,6 +44,10 @@
                 </basket-product>
 
             </draggable>
+
+            <basket-result :products="basket.products"
+                           :basket-id="basket.id">
+            </basket-result>
         </div>
     </div>
 
@@ -56,6 +60,10 @@ const BasketProduct = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketProduct" */
     './BasketProduct'
     );
+const BasketResult = () => import(
+    /* webpackChunkName: "js/carbon-simulation/BasketResult" */
+    './BasketResult'
+    );
 const draggable = () => import(
     /* webpackChunkName: "js/draggable" */
     'vuedraggable'
@@ -64,6 +72,7 @@ const draggable = () => import(
     export default {
         components: {
             BasketProduct,
+            BasketResult,
             draggable
         },
         mixins: [
