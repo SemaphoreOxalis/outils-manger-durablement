@@ -19,7 +19,7 @@
                    v-model="search"
                    placeholder="Chercher dans le panier"
                    @input="searchInBasket">
-            <button v-if="containsProducts" @click="">Do</button>
+            <button v-if="containsProducts" @click="doStuff">Do</button>
             <button v-if="containsProducts" @click="clearBasket">Empty</button>
             <button @click="deleteBasket">X</button>
         </div>
@@ -146,6 +146,9 @@ const draggable = () => import(
             },
             saveBasket() {
                 this.$emit('save-baskets');
+            },
+            doStuff() {
+                this.$emit('do-stuff', this.index);
             },
 
             searchInBasket() {

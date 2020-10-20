@@ -9,6 +9,12 @@
                             @clear="clearBasket">
         </action-confirmation>
 
+        <grouped-action-pop-up v-if="showGroupedActionModal"
+                               :affected-basket="this.affectedBasket"
+                               @exit-without-grouped-action="showGroupedActionModal = false">
+
+        </grouped-action-pop-up>
+
         <basket-item v-for="(basket, i) in this.baskets"
                      v-bind:key="basket.id"
                      v-bind:basket="basket"
@@ -16,6 +22,7 @@
                      v-bind:origins="origins"
                      v-bind:product-to-add="productToAdd"
                      @save-baskets="saveBasketsToLocalStorage"
+                     @do-stuff="showGroupedActionPopUp"
                      @copy-basket="copyBasket"
                      @clear-basket="showConfirmationPopUp"
                      @delete-basket="showConfirmationPopUp">
@@ -37,11 +44,16 @@ const ActionConfirmation = () => import(
     /* webpackChunkName: "js/carbon-simulation/ActionConfirmation" */
     './ActionConfirmation'
     );
+const GroupedActionPopUp = () => import(
+    /* webpackChunkName: "js/carbon-simulation/GroupedActionPopUp" */
+    './GroupedActionPopUp'
+    );
 
 export default {
     components: {
         BasketItem,
-        ActionConfirmation
+        ActionConfirmation,
+        GroupedActionPopUp
     },
     mixins: [
         LocalStorageHelper,
@@ -58,6 +70,8 @@ export default {
             action: '',
             affectedBasket: {},
             affectedBasketIndex: -1,
+
+            showGroupedActionModal: false,
         }
     },
     computed: {
@@ -135,8 +149,10 @@ export default {
             this.affectedBasketIndex = index;
             this.showConfirmationModal = true;
         },
-
-
+        showGroupedActionPopUp(index) {
+            this.affectedBasket = this.baskets[index];
+            this.showGroupedActionModal = true;
+        },
     }
 }
 </script>

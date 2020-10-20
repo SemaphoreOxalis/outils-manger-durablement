@@ -50,6 +50,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 var BasketItem = function BasketItem() {
@@ -60,10 +67,15 @@ var ActionConfirmation = function ActionConfirmation() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/ActionConfirmation */ "js/carbon-simulation/ActionConfirmation").then(__webpack_require__.bind(null, /*! ./ActionConfirmation */ "./resources/js/components/carbon-simulation/ActionConfirmation.vue"));
 };
 
+var GroupedActionPopUp = function GroupedActionPopUp() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/GroupedActionPopUp */ "js/carbon-simulation/GroupedActionPopUp").then(__webpack_require__.bind(null, /*! ./GroupedActionPopUp */ "./resources/js/components/carbon-simulation/GroupedActionPopUp.vue"));
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BasketItem: BasketItem,
-    ActionConfirmation: ActionConfirmation
+    ActionConfirmation: ActionConfirmation,
+    GroupedActionPopUp: GroupedActionPopUp
   },
   mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
@@ -76,7 +88,8 @@ var ActionConfirmation = function ActionConfirmation() {
       showConfirmationModal: false,
       action: '',
       affectedBasket: {},
-      affectedBasketIndex: -1
+      affectedBasketIndex: -1,
+      showGroupedActionModal: false
     };
   },
   computed: {
@@ -159,6 +172,10 @@ var ActionConfirmation = function ActionConfirmation() {
       this.affectedBasket = basket;
       this.affectedBasketIndex = index;
       this.showConfirmationModal = true;
+    },
+    showGroupedActionPopUp: function showGroupedActionPopUp(index) {
+      this.affectedBasket = this.baskets[index];
+      this.showGroupedActionModal = true;
     }
   }
 });
@@ -201,6 +218,17 @@ var render = function() {
           })
         : _vm._e(),
       _vm._v(" "),
+      _vm.showGroupedActionModal
+        ? _c("grouped-action-pop-up", {
+            attrs: { "affected-basket": this.affectedBasket },
+            on: {
+              "exit-without-grouped-action": function($event) {
+                _vm.showGroupedActionModal = false
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _vm._l(this.baskets, function(basket, i) {
         return _c("basket-item", {
           key: basket.id,
@@ -212,6 +240,7 @@ var render = function() {
           },
           on: {
             "save-baskets": _vm.saveBasketsToLocalStorage,
+            "do-stuff": _vm.showGroupedActionPopUp,
             "copy-basket": _vm.copyBasket,
             "clear-basket": _vm.showConfirmationPopUp,
             "delete-basket": _vm.showConfirmationPopUp

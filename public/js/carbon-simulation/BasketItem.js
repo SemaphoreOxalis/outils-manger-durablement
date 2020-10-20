@@ -174,6 +174,9 @@ var draggable = function draggable() {
     saveBasket: function saveBasket() {
       this.$emit('save-baskets');
     },
+    doStuff: function doStuff() {
+      this.$emit('do-stuff', this.index);
+    },
     searchInBasket: function searchInBasket() {
       this.$emit('search-in-basket', this.search, this.index);
     },
@@ -299,7 +302,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm.containsProducts
-        ? _c("button", { on: { click: function($event) {} } }, [_vm._v("Do")])
+        ? _c("button", { on: { click: _vm.doStuff } }, [_vm._v("Do")])
         : _vm._e(),
       _vm._v(" "),
       _vm.containsProducts
