@@ -123,7 +123,7 @@ export default {
                 name = 'panier ' + (this.basketsCounter + 1);
             }
             return {
-                id: 'basket_' + (this.basketsCounter + 1),
+                id: 'basket-' + (this.basketsCounter + 1),
                 name: name,
                 products: products,
                 isSelected: true,

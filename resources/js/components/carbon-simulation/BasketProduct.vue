@@ -1,44 +1,80 @@
 <template>
     <div class="list-group-item product">
-        <div class="flex justify-content-between">
-            <div>
-                <span>{{ product.name }}</span>
-                <a v-if="product.comment" href="#" class="info-bubble">?
-                    <span>{{ product.comment }}</span>
-                </a>
+
+        <div class="position-relative">
+            <div class="d-flex justify-content-between" :id="'header-' + basketId + index">
+
+                <div class="flex justify-content-between">
+                    <div>
+                        <span>{{ product.name }}</span>
+                        <a v-if="product.comment" href="#" class="info-bubble">?
+                            <span>{{ product.comment }}</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="button alter"
+                            data-toggle="collapse"
+                            :data-target="'#body-' + basketId + index"
+                            aria-expanded="true"
+                            :aria-controls="'body-' + basketId + index"
+                            @click="toggleFullProduct"
+                    >
+                        <i :id="'collapse-icon-' + basketId + index" class="icon icon-angle-down"></i>
+                    </button>
+                    <button class="button alter trash-icon" @click="removeProduct(index)"
+                            style="display: inline-block;">
+                        X
+                    </button>
+                </div>
             </div>
 
-            <button @click="removeProduct(index)" class="trash-icon" style="display: inline-block;">
-                X
-            </button>
+            <div :class="'collapse collapse-' + basketId + index" :id="'body-' + basketId + index">
+                <input type="number"
+                       class="ignore-draggable custom-input browser-default number-field"
+                       v-model="product.amount"
+                       min="0" step="1"
+                       required
+                       @change="save"
+                       style="width: 100px;">
+                <small>{{ product.unit.shortUnit }}</small>
+                <a href="#" class="info-bubble">?
+                    <span>{{ product.unit.unit }}</span>
+                </a>
+                -
+                <input type="number"
+                       class="ignore-draggable custom-input browser-default number-field"
+                       v-model="product.price"
+                       min="0" step="1"
+                       required
+                       @change="save"
+                       style="width: 100px;"> € -
+
+                <div v-for="origin in origins">
+
+                    <input type="radio"
+                           class="radio-boxes"
+                           :id="'origin-' + basketId + index + origin.id"
+                           v-model="product.origin"
+                           :value="origin"
+                           @change="save">
+                    <label :for="'origin-' + basketId + index + origin.id">{{ origin.from }}</label>
+                </div>
+
+<!--                <select v-model="product.origin"-->
+<!--                        @change="save"-->
+<!--                        style="width: 100px;">-->
+<!--                    <option v-for="origin in origins"-->
+<!--                            v-bind:value="origin">-->
+<!--                        {{ origin.from }}-->
+<!--                    </option>-->
+<!--                </select>-->
+
+
+            </div>
         </div>
-        <input type="number"
-               class="ignore-draggable custom-input browser-default number-field"
-               v-model="product.amount"
-               min="0" step="1"
-               required
-               @change="save"
-               style="width: 100px;">
-        <small>{{ product.unit.shortUnit }}</small>
-        <a href="#" class="info-bubble">?
-            <span>{{ product.unit.unit }}</span>
-        </a>
-        -
-        <input type="number"
-               class="ignore-draggable custom-input browser-default number-field"
-               v-model="product.price"
-               min="0" step="1"
-               required
-               @change="save"
-               style="width: 100px;"> € -
-        <select v-model="product.origin"
-                @change="save"
-                style="width: 100px;">
-            <option v-for="origin in origins"
-                    v-bind:value="origin">
-                {{ origin.from }}
-            </option>
-        </select>
+
     </div>
 </template>
 
@@ -46,12 +82,13 @@
 export default {
     props: {
         product: Object,
+        basketId: String,
         index: Number,
         origins: Array,
     },
     data() {
         return {
-
+            fullProductShown: false,
         }
     },
     methods: {
@@ -60,6 +97,20 @@ export default {
         },
         save() {
             this.$emit('save-changes');
+        },
+        toggleFullProduct() {
+            this.fullProductShown = !this.fullProductShown;
+            let collapseClass = '.collapse-' + this.basketId + this.index;
+            let headerId = '#header-' + this.basketId + this.index;
+            let bodyId = '#body-' + this.basketId + this.index;
+
+            $(collapseClass).on('show.bs.collapse', function() {
+                $(headerId + " i").addClass("reversed");
+                $(headerId).addClass("opened");
+            }).on('hide.bs.collapse', function() {
+                $(headerId + " i").removeClass("reversed");
+                $(headerId).removeClass("opened");
+            })
         }
     }
 }
@@ -86,10 +137,18 @@ export default {
     transform: scale(0) rotate(-12deg);
     transition: all .25s;
     opacity: 0;
+    z-index: 10;
 }
 .info-bubble:hover span, .info-bubble:focus span {
     transform: scale(1) rotate(0);
     opacity: 1;
+}
+
+.opened {
+    background-color: var(--second-color);
+}
+.radio-boxes {
+    opacity: 1 !important;
 }
 
 </style>

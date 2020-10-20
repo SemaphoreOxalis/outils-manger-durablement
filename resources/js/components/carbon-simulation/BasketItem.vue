@@ -36,6 +36,7 @@
                 <basket-product v-for="(product, i) in filteredProducts"
                                 v-bind:key="product.id"
                                 v-bind:product="product"
+                                v-bind:basket-id="basket.id"
                                 v-bind:index="i"
                                 v-bind:origins="origins"
                                 @save-changes="saveBasket"
@@ -115,7 +116,7 @@ const draggable = () => import(
         methods: {
             addProduct(product) {
                 let tempProd = { ...product};
-                tempProd.id = ('basket_product_' + (this.productCounter + 1));
+                tempProd.id = ('basket-product-' + (this.productCounter + 1));
                 this.basket.products.unshift(tempProd);
                 this.sendInternalCounter();
                 this.saveBasket();

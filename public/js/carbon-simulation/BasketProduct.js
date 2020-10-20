@@ -53,14 +53,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
+    basketId: String,
     index: Number,
     origins: Array
   },
   data: function data() {
-    return {};
+    return {
+      fullProductShown: false
+    };
   },
   methods: {
     removeProduct: function removeProduct(index) {
@@ -68,6 +107,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       this.$emit('save-changes');
+    },
+    toggleFullProduct: function toggleFullProduct() {
+      this.fullProductShown = !this.fullProductShown;
+      var collapseClass = '.collapse-' + this.basketId + this.index;
+      var headerId = '#header-' + this.basketId + this.index;
+      var bodyId = '#body-' + this.basketId + this.index;
+      $(collapseClass).on('show.bs.collapse', function () {
+        $(headerId + " i").addClass("reversed");
+        $(headerId).addClass("opened");
+      }).on('hide.bs.collapse', function () {
+        $(headerId + " i").removeClass("reversed");
+        $(headerId).removeClass("opened");
+      });
     }
   }
 });
@@ -86,7 +138,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.info-bubble {\n    color: #ccc;\n}\n.info-bubble:hover, .info-bubble:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\n.info-bubble span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--dark-color);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n}\n.info-bubble:hover span, .info-bubble:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n\n", ""]);
+exports.push([module.i, "\n.info-bubble {\n    color: #ccc;\n}\n.info-bubble:hover, .info-bubble:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\n.info-bubble span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--dark-color);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n    z-index: 10;\n}\n.info-bubble:hover span, .info-bubble:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n.opened {\n    background-color: var(--second-color);\n}\n.radio-boxes {\n    opacity: 1 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -139,128 +191,178 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "list-group-item product" }, [
-    _c("div", { staticClass: "flex justify-content-between" }, [
-      _c("div", [
-        _c("span", [_vm._v(_vm._s(_vm.product.name))]),
-        _vm._v(" "),
-        _vm.product.comment
-          ? _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-              _vm._v("?\n                "),
-              _c("span", [_vm._v(_vm._s(_vm.product.comment))])
+    _c("div", { staticClass: "position-relative" }, [
+      _c(
+        "div",
+        {
+          staticClass: "d-flex justify-content-between",
+          attrs: { id: "header-" + _vm.basketId + _vm.index }
+        },
+        [
+          _c("div", { staticClass: "flex justify-content-between" }, [
+            _c("div", [
+              _c("span", [_vm._v(_vm._s(_vm.product.name))]),
+              _vm._v(" "),
+              _vm.product.comment
+                ? _c(
+                    "a",
+                    { staticClass: "info-bubble", attrs: { href: "#" } },
+                    [
+                      _vm._v("?\n                            "),
+                      _c("span", [_vm._v(_vm._s(_vm.product.comment))])
+                    ]
+                  )
+                : _vm._e()
             ])
-          : _vm._e()
-      ]),
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "button",
+              {
+                staticClass: "button alter",
+                attrs: {
+                  "data-toggle": "collapse",
+                  "data-target": "#body-" + _vm.basketId + _vm.index,
+                  "aria-expanded": "true",
+                  "aria-controls": "body-" + _vm.basketId + _vm.index
+                },
+                on: { click: _vm.toggleFullProduct }
+              },
+              [
+                _c("i", {
+                  staticClass: "icon icon-angle-down",
+                  attrs: { id: "collapse-icon-" + _vm.basketId + _vm.index }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button alter trash-icon",
+                staticStyle: { display: "inline-block" },
+                on: {
+                  click: function($event) {
+                    return _vm.removeProduct(_vm.index)
+                  }
+                }
+              },
+              [_vm._v("\n                        X\n                    ")]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
-        "button",
+        "div",
         {
-          staticClass: "trash-icon",
-          staticStyle: { display: "inline-block" },
-          on: {
-            click: function($event) {
-              return _vm.removeProduct(_vm.index)
-            }
-          }
+          class: "collapse collapse-" + _vm.basketId + _vm.index,
+          attrs: { id: "body-" + _vm.basketId + _vm.index }
         },
-        [_vm._v("\n            X\n        ")]
-      )
-    ]),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.product.amount,
-          expression: "product.amount"
-        }
-      ],
-      staticClass: "ignore-draggable custom-input browser-default number-field",
-      staticStyle: { width: "100px" },
-      attrs: { type: "number", min: "0", step: "1", required: "" },
-      domProps: { value: _vm.product.amount },
-      on: {
-        change: _vm.save,
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.$set(_vm.product, "amount", $event.target.value)
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("small", [_vm._v(_vm._s(_vm.product.unit.shortUnit))]),
-    _vm._v(" "),
-    _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-      _vm._v("?\n        "),
-      _c("span", [_vm._v(_vm._s(_vm.product.unit.unit))])
-    ]),
-    _vm._v("\n    -\n    "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.product.price,
-          expression: "product.price"
-        }
-      ],
-      staticClass: "ignore-draggable custom-input browser-default number-field",
-      staticStyle: { width: "100px" },
-      attrs: { type: "number", min: "0", step: "1", required: "" },
-      domProps: { value: _vm.product.price },
-      on: {
-        change: _vm.save,
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.$set(_vm.product, "price", $event.target.value)
-        }
-      }
-    }),
-    _vm._v(" € -\n    "),
-    _c(
-      "select",
-      {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.product.origin,
-            expression: "product.origin"
-          }
-        ],
-        staticStyle: { width: "100px" },
-        on: {
-          change: [
-            function($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function(o) {
-                  return o.selected
-                })
-                .map(function(o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.$set(
-                _vm.product,
-                "origin",
-                $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.product.amount,
+                expression: "product.amount"
+              }
+            ],
+            staticClass:
+              "ignore-draggable custom-input browser-default number-field",
+            staticStyle: { width: "100px" },
+            attrs: { type: "number", min: "0", step: "1", required: "" },
+            domProps: { value: _vm.product.amount },
+            on: {
+              change: _vm.save,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.product, "amount", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("small", [_vm._v(_vm._s(_vm.product.unit.shortUnit))]),
+          _vm._v(" "),
+          _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
+            _vm._v("?\n                    "),
+            _c("span", [_vm._v(_vm._s(_vm.product.unit.unit))])
+          ]),
+          _vm._v("\n                -\n                "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.product.price,
+                expression: "product.price"
+              }
+            ],
+            staticClass:
+              "ignore-draggable custom-input browser-default number-field",
+            staticStyle: { width: "100px" },
+            attrs: { type: "number", min: "0", step: "1", required: "" },
+            domProps: { value: _vm.product.price },
+            on: {
+              change: _vm.save,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.product, "price", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" € -\n\n                "),
+          _vm._l(_vm.origins, function(origin) {
+            return _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.product.origin,
+                    expression: "product.origin"
+                  }
+                ],
+                staticClass: "radio-boxes",
+                attrs: {
+                  type: "radio",
+                  id: "origin-" + _vm.basketId + _vm.index + origin.id
+                },
+                domProps: {
+                  value: origin,
+                  checked: _vm._q(_vm.product.origin, origin)
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      return _vm.$set(_vm.product, "origin", origin)
+                    },
+                    _vm.save
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  attrs: {
+                    for: "origin-" + _vm.basketId + _vm.index + origin.id
+                  }
+                },
+                [_vm._v(_vm._s(origin.from))]
               )
-            },
-            _vm.save
-          ]
-        }
-      },
-      _vm._l(_vm.origins, function(origin) {
-        return _c("option", { domProps: { value: origin } }, [
-          _vm._v("\n            " + _vm._s(origin.from) + "\n        ")
-        ])
-      }),
-      0
-    )
+            ])
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = []

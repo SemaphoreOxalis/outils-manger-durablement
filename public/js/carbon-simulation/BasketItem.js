@@ -78,6 +78,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -143,7 +144,7 @@ var draggable = function draggable() {
     addProduct: function addProduct(product) {
       var tempProd = _objectSpread({}, product);
 
-      tempProd.id = 'basket_product_' + (this.productCounter + 1);
+      tempProd.id = 'basket-product-' + (this.productCounter + 1);
       this.basket.products.unshift(tempProd);
       this.sendInternalCounter();
       this.saveBasket();
@@ -325,7 +326,12 @@ var render = function() {
           _vm._l(_vm.filteredProducts, function(product, i) {
             return _c("basket-product", {
               key: product.id,
-              attrs: { product: product, index: i, origins: _vm.origins },
+              attrs: {
+                product: product,
+                "basket-id": _vm.basket.id,
+                index: i,
+                origins: _vm.origins
+              },
               on: {
                 "save-changes": _vm.saveBasket,
                 "remove-product": _vm.removeProduct

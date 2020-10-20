@@ -102,7 +102,7 @@ export default {
             events.$emit('get-internal-counters');
             this.productListInternalCounter = this.getMaxCounter();
             return {
-                id: 'basket_product_' + (this.productListInternalCounter + 1),
+                id: 'basket-product-' + (this.productListInternalCounter + 1),
                 name: product.name,
                 comment: product.comment,
                 unit: product.unit,
