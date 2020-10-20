@@ -66,6 +66,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -116,6 +118,9 @@ var draggable = function draggable() {
       } else {
         return 0;
       }
+    },
+    containsProducts: function containsProducts() {
+      return this.basket.products.length > 0;
     }
   },
   created: function created() {
@@ -132,11 +137,14 @@ var draggable = function draggable() {
     removeProduct: function removeProduct(productIndex) {
       this.basket.products.splice(productIndex, 1);
     },
-    deleteBasket: function deleteBasket() {
-      this.$emit('delete-basket', this.index);
-    },
     copyBasket: function copyBasket() {
       this.$emit('copy-basket', this.basket, this.index);
+    },
+    deleteBasket: function deleteBasket() {
+      this.$emit('delete-basket', this.basket, this.index, 'delete');
+    },
+    clearBasket: function clearBasket() {
+      this.$emit('clear-basket', this.basket, this.index, 'clear');
     },
     searchInBasket: function searchInBasket() {
       this.$emit('search-in-basket', this.search, this.index);
@@ -216,31 +224,39 @@ var render = function() {
       _c("button", { on: { click: _vm.copyBasket } }, [_vm._v("copy")])
     ]),
     _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.search,
-          expression: "search"
-        }
-      ],
-      attrs: { type: "text", placeholder: "Chercher dans le panier" },
-      domProps: { value: _vm.search },
-      on: {
-        input: [
-          function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.search = $event.target.value
-          },
-          _vm.searchInBasket
-        ]
-      }
-    }),
-    _vm._v(" "),
     _c("div", { staticClass: "flex" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.search,
+            expression: "search"
+          }
+        ],
+        attrs: { type: "text", placeholder: "Chercher dans le panier" },
+        domProps: { value: _vm.search },
+        on: {
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            },
+            _vm.searchInBasket
+          ]
+        }
+      }),
+      _vm._v(" "),
+      _vm.containsProducts
+        ? _c("button", { on: { click: function($event) {} } }, [_vm._v("Do")])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.containsProducts
+        ? _c("button", { on: { click: _vm.clearBasket } }, [_vm._v("Empty")])
+        : _vm._e(),
+      _vm._v(" "),
       _c("button", { on: { click: _vm.deleteBasket } }, [_vm._v("X")])
     ]),
     _vm._v(" "),

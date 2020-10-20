@@ -1,5 +1,14 @@
 <template>
     <div class="d-flex">
+        <action-confirmation v-if="showConfirmationModal"
+                            :action="this.action"
+                            :affected-basket="this.affectedBasket"
+                            :affected-basket-index="this.affectedBasketIndex"
+                            @exit-without-action="showConfirmationModal = false"
+                            @delete="deleteBasket"
+                            @clear="clearBasket">
+        </action-confirmation>
+
         <basket-item v-for="(basket, i) in this.baskets"
                      v-bind:key="basket.id"
                      v-bind:basket="basket"
@@ -7,7 +16,8 @@
                      v-bind:origins="origins"
                      v-bind:product-to-add="productToAdd"
                      @copy-basket="copyBasket"
-                     @delete-basket="deleteBasket">
+                     @clear-basket="showConfirmationPopUp"
+                     @delete-basket="showConfirmationPopUp">
         </basket-item>
         <div>
             <button @click="addBasket()">+</button>
@@ -20,10 +30,15 @@ const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
     './BasketItem'
     );
+const ActionConfirmation = () => import(
+    /* webpackChunkName: "js/carbon-simulation/ActionConfirmation" */
+    './ActionConfirmation'
+    );
 
 export default {
     components: {
-        BasketItem
+        BasketItem,
+        ActionConfirmation
     },
     props: {
         origins: Array,
@@ -32,6 +47,11 @@ export default {
     data() {
         return {
             baskets: [],
+
+            showConfirmationModal: false,
+            action: '',
+            affectedBasket: {},
+            affectedBasketIndex: -1,
         }
     },
     computed: {
@@ -62,12 +82,17 @@ export default {
         addBasket(name = '') {
             this.baskets.push(this.prepareBasketToAdd(name));
         },
-        deleteBasket(basketIndex) {
-            this.baskets.splice(basketIndex, 1);
-        },
         copyBasket(basket, index) {
             let tempBasket = JSON.parse(JSON.stringify(basket));
             this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+        },
+        deleteBasket(basketIndex) {
+            this.showConfirmationModal = false;
+            this.baskets.splice(basketIndex, 1);
+        },
+        clearBasket(basketIndex) {
+            this.showConfirmationModal = false;
+            this.baskets[basketIndex].products = [];
         },
 
         prepareBasketToAdd(name = '', products = []) {
@@ -80,7 +105,13 @@ export default {
                 products: products,
                 isSelected: true,
             };
-        }
+        },
+        showConfirmationPopUp(basket, index, action) {
+            this.action = action;
+            this.affectedBasket = basket;
+            this.affectedBasketIndex = index;
+            this.showConfirmationModal = true;
+        },
     }
 }
 </script>

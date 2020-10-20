@@ -8,14 +8,16 @@
             <button @click="copyBasket">copy</button>
         </div>
 
-        <input type="text"
-               v-model="search"
-               placeholder="Chercher dans le panier"
-               @input="searchInBasket">
-
         <div class="flex">
+            <input type="text"
+                   v-model="search"
+                   placeholder="Chercher dans le panier"
+                   @input="searchInBasket">
+            <button v-if="containsProducts" @click="">Do</button>
+            <button v-if="containsProducts" @click="clearBasket">Empty</button>
             <button @click="deleteBasket">X</button>
         </div>
+
         <div class="right col-12">
             <draggable v-model="basket.products"
                        class="dragArea list-group h-100"
@@ -89,7 +91,10 @@ const draggable = () => import(
                 } else {
                     return 0;
                 }
-            }
+            },
+            containsProducts: function() {
+                return this.basket.products.length > 0;
+            },
         },
         created() {
             events.$on('get-internal-counters', this.sendInternalCounter);
@@ -105,11 +110,14 @@ const draggable = () => import(
                 this.basket.products.splice(productIndex, 1);
             },
 
-            deleteBasket() {
-                this.$emit('delete-basket', this.index);
-            },
             copyBasket() {
                 this.$emit('copy-basket', this.basket, this.index);
+            },
+            deleteBasket() {
+                this.$emit('delete-basket', this.basket, this.index, 'delete');
+            },
+            clearBasket() {
+                this.$emit('clear-basket', this.basket, this.index, 'clear');
             },
 
             searchInBasket() {

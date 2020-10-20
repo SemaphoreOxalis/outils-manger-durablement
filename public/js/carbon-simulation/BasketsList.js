@@ -38,13 +38,28 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
 
+var ActionConfirmation = function ActionConfirmation() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/ActionConfirmation */ "js/carbon-simulation/ActionConfirmation").then(__webpack_require__.bind(null, /*! ./ActionConfirmation */ "./resources/js/components/carbon-simulation/ActionConfirmation.vue"));
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BasketItem: BasketItem
+    BasketItem: BasketItem,
+    ActionConfirmation: ActionConfirmation
   },
   props: {
     origins: Array,
@@ -52,7 +67,11 @@ var BasketItem = function BasketItem() {
   },
   data: function data() {
     return {
-      baskets: []
+      baskets: [],
+      showConfirmationModal: false,
+      action: '',
+      affectedBasket: {},
+      affectedBasketIndex: -1
     };
   },
   computed: {
@@ -83,12 +102,17 @@ var BasketItem = function BasketItem() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       this.baskets.push(this.prepareBasketToAdd(name));
     },
-    deleteBasket: function deleteBasket(basketIndex) {
-      this.baskets.splice(basketIndex, 1);
-    },
     copyBasket: function copyBasket(basket, index) {
       var tempBasket = JSON.parse(JSON.stringify(basket));
       this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+    },
+    deleteBasket: function deleteBasket(basketIndex) {
+      this.showConfirmationModal = false;
+      this.baskets.splice(basketIndex, 1);
+    },
+    clearBasket: function clearBasket(basketIndex) {
+      this.showConfirmationModal = false;
+      this.baskets[basketIndex].products = [];
     },
     prepareBasketToAdd: function prepareBasketToAdd() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -104,6 +128,12 @@ var BasketItem = function BasketItem() {
         products: products,
         isSelected: true
       };
+    },
+    showConfirmationPopUp: function showConfirmationPopUp(basket, index, action) {
+      this.action = action;
+      this.affectedBasket = basket;
+      this.affectedBasketIndex = index;
+      this.showConfirmationModal = true;
     }
   }
 });
@@ -129,6 +159,23 @@ var render = function() {
     "div",
     { staticClass: "d-flex" },
     [
+      _vm.showConfirmationModal
+        ? _c("action-confirmation", {
+            attrs: {
+              action: this.action,
+              "affected-basket": this.affectedBasket,
+              "affected-basket-index": this.affectedBasketIndex
+            },
+            on: {
+              "exit-without-action": function($event) {
+                _vm.showConfirmationModal = false
+              },
+              delete: _vm.deleteBasket,
+              clear: _vm.clearBasket
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
       _vm._l(this.baskets, function(basket, i) {
         return _c("basket-item", {
           key: basket.id,
@@ -140,7 +187,8 @@ var render = function() {
           },
           on: {
             "copy-basket": _vm.copyBasket,
-            "delete-basket": _vm.deleteBasket
+            "clear-basket": _vm.showConfirmationPopUp,
+            "delete-basket": _vm.showConfirmationPopUp
           }
         })
       }),
