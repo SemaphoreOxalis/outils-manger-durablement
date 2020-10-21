@@ -10,9 +10,9 @@
         </action-confirmation>
 
         <grouped-action-pop-up v-if="showGroupedActionModal"
-                               :affected-basket="this.affectedBasket"
+                               :affected-basket-index="this.affectedBasketIndex"
+                               @francify-basket="francifyBasket"
                                @exit-without-grouped-action="showGroupedActionModal = false">
-
         </grouped-action-pop-up>
 
         <basket-item v-for="(basket, i) in this.baskets"
@@ -20,6 +20,7 @@
                      v-bind:basket="basket"
                      v-bind:index="i"
                      v-bind:origins="origins"
+                     v-bind:categories="categories"
                      v-bind:product-to-add="productToAdd"
                      @save-baskets="saveBasketsToLocalStorage"
                      @do-stuff="showGroupedActionPopUp"
@@ -35,6 +36,8 @@
 
 <script>
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+import groupedActionFilters from "../../helpers/carbon-simulation/groupedActionFilters";
+import basketsListHelper from "../../helpers/carbon-simulation/component-specific/basketsListHelper";
 
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
@@ -57,9 +60,12 @@ export default {
     },
     mixins: [
         LocalStorageHelper,
+        groupedActionFilters,
+        basketsListHelper,
     ],
     props: {
         origins: Array,
+        categories: Array,
         productToAdd: Object,
     },
     data() {
@@ -106,43 +112,6 @@ export default {
             this.$emit('selected-baskets', this.selectedBaskets);
         },
 
-        addBasket(name = '') {
-            this.baskets.push(this.prepareBasketToAdd(name));
-            this.saveBasketsToLocalStorage();
-        },
-        copyBasket(basket, index) {
-            let tempBasket = JSON.parse(JSON.stringify(basket));
-            this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
-            this.saveBasketsToLocalStorage();
-        },
-        deleteBasket(basketIndex) {
-            this.showConfirmationModal = false;
-            this.baskets.splice(basketIndex, 1);
-            if (this.baskets.length === 0) {
-                this.deleteBasketsFromLocalStorage();
-            } else {
-                this.saveBasketsToLocalStorage();
-            }
-            events.$emit('get-internal-counters');
-        },
-        clearBasket(basketIndex) {
-            this.showConfirmationModal = false;
-            this.baskets[basketIndex].products = [];
-            this.saveBasketsToLocalStorage();
-            events.$emit('get-internal-counters');
-        },
-
-        prepareBasketToAdd(name = '', products = []) {
-            if(name === '') {
-                name = 'panier ' + (this.basketsCounter + 1);
-            }
-            return {
-                id: 'basket-' + (this.basketsCounter + 1),
-                name: name,
-                products: products,
-                isSelected: true,
-            };
-        },
         showConfirmationPopUp(basket, index, action) {
             this.action = action;
             this.affectedBasket = basket;
@@ -150,7 +119,7 @@ export default {
             this.showConfirmationModal = true;
         },
         showGroupedActionPopUp(index) {
-            this.affectedBasket = this.baskets[index];
+            this.affectedBasketIndex = index;
             this.showGroupedActionModal = true;
         },
     }

@@ -38,13 +38,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    affectedBasket: Object
+    affectedBasketIndex: Number
+  },
+  data: function data() {
+    return {
+      action: 'francify'
+    };
   },
   methods: {
     cancel: function cancel() {
       this.$emit('exit-without-grouped-action');
+    },
+    performActions: function performActions() {
+      if (this.action === 'francify') {
+        this.$emit('francify-basket', this.affectedBasketIndex);
+      }
     }
   }
 });
@@ -73,12 +91,38 @@ var render = function() {
           "div",
           { ref: "modal", staticClass: "modal-container text-center" },
           [
+            _c("div", { staticClass: "modal-header" }, [
+              _c("span", [_vm._v("Je modifie ce panier pour :")])
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
-              _c("p", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.action,
+                    expression: "action"
+                  }
+                ],
+                staticClass: "radio-boxes",
+                attrs: {
+                  type: "radio",
+                  id: "francify",
+                  value: "francify",
+                  checked: "checked"
+                },
+                domProps: { checked: _vm._q(_vm.action, "francify") },
+                on: {
+                  change: function($event) {
+                    _vm.action = "francify"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "francify" } }, [
                 _vm._v(
-                  "\n                        Yo " +
-                    _vm._s(_vm.affectedBasket.name) +
-                    "\n                    "
+                  "Je modifie tous les produits qui le peuvent en origine France"
                 )
               ])
             ]),
@@ -88,7 +132,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "modal-default-button button",
-                  on: { click: function($event) {} }
+                  on: { click: _vm.performActions }
                 },
                 [_vm._v("\n                        OK\n                    ")]
               ),

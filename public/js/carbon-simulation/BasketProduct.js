@@ -79,6 +79,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -111,7 +118,6 @@ __webpack_require__.r(__webpack_exports__);
       var collapseClass = this.collapseClass;
       var headerId = this.headerId;
       $(collapseClass).on('show.bs.collapse', function () {
-        console.log(headerId);
         $(headerId + " i").addClass("reversed");
         $(headerId).addClass("opened");
       }).on('hide.bs.collapse', function () {
@@ -206,7 +212,7 @@ var render = function() {
                     "a",
                     { staticClass: "info-bubble", attrs: { href: "#" } },
                     [
-                      _vm._v("?\n                        "),
+                      _vm._v("?\n                            "),
                       _c("span", [_vm._v(_vm._s(_vm.product.comment))])
                     ]
                   )
@@ -248,7 +254,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("\n                    X\n                ")]
+              [_vm._v("\n                        X\n                    ")]
             )
           ])
         ]
@@ -289,10 +295,10 @@ var render = function() {
           _c("small", [_vm._v(_vm._s(_vm.product.unit.shortUnit))]),
           _vm._v(" "),
           _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-            _vm._v("?\n                "),
+            _vm._v("?\n                    "),
             _c("span", [_vm._v(_vm._s(_vm.product.unit.unit))])
           ]),
-          _vm._v("\n            -\n            "),
+          _vm._v("\n                -\n                "),
           _c("input", {
             directives: [
               {
@@ -317,50 +323,53 @@ var render = function() {
               }
             }
           }),
-          _vm._v(" € -\n\n            "),
-          _vm._l(_vm.origins, function(origin) {
-            return _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.product.origin,
-                    expression: "product.origin"
-                  }
-                ],
-                staticClass: "radio-boxes",
-                attrs: {
-                  type: "radio",
-                  id: "origin-" + _vm.basketId + _vm.index + origin.id
-                },
-                domProps: {
-                  value: origin,
-                  checked: _vm._q(_vm.product.origin, origin)
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      return _vm.$set(_vm.product, "origin", origin)
-                    },
-                    _vm.save
-                  ]
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
+          _vm._v(" € -\n\n"),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
                 {
-                  attrs: {
-                    for: "origin-" + _vm.basketId + _vm.index + origin.id
-                  }
-                },
-                [_vm._v(_vm._s(origin.from))]
-              )
-            ])
-          })
-        ],
-        2
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.origin,
+                  expression: "product.origin"
+                }
+              ],
+              staticStyle: { width: "100px" },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.product,
+                      "origin",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                  _vm.save
+                ]
+              }
+            },
+            _vm._l(_vm.origins, function(origin) {
+              return _c("option", { domProps: { value: origin } }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(origin.from) +
+                    "\n                    "
+                )
+              ])
+            }),
+            0
+          )
+        ]
       )
     ])
   ])

@@ -45,7 +45,9 @@
 
             </draggable>
 
-            <basket-result :products="basket.products"
+            <basket-result v-if="containsProducts"
+                           :products="basket.products"
+                           :categories="categories"
                            :basket-id="basket.id">
             </basket-result>
         </div>
@@ -82,6 +84,7 @@ const draggable = () => import(
             basket: Object,
             index: Number,
             origins: Array,
+            categories: Array,
             productToAdd: Object,
         },
         data() {

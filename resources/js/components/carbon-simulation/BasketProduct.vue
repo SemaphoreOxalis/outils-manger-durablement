@@ -51,16 +51,23 @@
                        @change="save"
                        style="width: 100px;"> € -
 
-                <div v-for="origin in origins">
+<!--                <div v-for="origin in origins">-->
+<!--                    <input type="radio"-->
+<!--                           class="radio-boxes"-->
+<!--                           :id="'origin-' + basketId + index + origin.id"-->
+<!--                           v-model="product.origin"-->
+<!--                           :value="origin"-->
+<!--                           @change="save">-->
+<!--                    <label :for="'origin-' + basketId + index + origin.id">{{ origin.from }}</label>-->
+<!--                </div>-->
 
-                    <input type="radio"
-                           class="radio-boxes"
-                           :id="'origin-' + basketId + index + origin.id"
-                           v-model="product.origin"
-                           :value="origin"
-                           @change="save">
-                    <label :for="'origin-' + basketId + index + origin.id">{{ origin.from }}</label>
-                </div>
+                <select v-model="product.origin"
+                        @change="save"
+                        style="width: 100px;">
+                    <option v-for="origin in origins" :value="origin">
+                        {{ origin.from }}
+                    </option>
+                </select>
 
             </div>
         </div>
@@ -102,7 +109,6 @@ export default {
             let headerId = this.headerId;
 
             $(collapseClass).on('show.bs.collapse', function() {
-                console.log(headerId);
                 $(headerId + " i").addClass("reversed");
                 $(headerId).addClass("opened");
             }).on('hide.bs.collapse', function() {

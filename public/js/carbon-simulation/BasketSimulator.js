@@ -60,6 +60,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -292,6 +293,7 @@ var render = function() {
             staticClass: "col-8 flex",
             attrs: {
               origins: this.origins,
+              categories: this.categories,
               "product-to-add": this.productToAddWithDetails
             },
             on: { "selected-baskets": _vm.setSelectedBaskets }

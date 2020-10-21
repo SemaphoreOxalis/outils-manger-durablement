@@ -10,6 +10,8 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/carbon-simulation/groupedActionFilters */ "./resources/js/helpers/carbon-simulation/groupedActionFilters.js");
+/* harmony import */ var _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/component-specific/basketsListHelper */ "./resources/js/helpers/carbon-simulation/component-specific/basketsListHelper.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -57,6 +59,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+
+
 
 
 var BasketItem = function BasketItem() {
@@ -77,9 +82,10 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     ActionConfirmation: ActionConfirmation,
     GroupedActionPopUp: GroupedActionPopUp
   },
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     origins: Array,
+    categories: Array,
     productToAdd: Object
   },
   data: function data() {
@@ -124,49 +130,6 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     sendSelectedBaskets: function sendSelectedBaskets() {
       this.$emit('selected-baskets', this.selectedBaskets);
     },
-    addBasket: function addBasket() {
-      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      this.baskets.push(this.prepareBasketToAdd(name));
-      this.saveBasketsToLocalStorage();
-    },
-    copyBasket: function copyBasket(basket, index) {
-      var tempBasket = JSON.parse(JSON.stringify(basket));
-      this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
-      this.saveBasketsToLocalStorage();
-    },
-    deleteBasket: function deleteBasket(basketIndex) {
-      this.showConfirmationModal = false;
-      this.baskets.splice(basketIndex, 1);
-
-      if (this.baskets.length === 0) {
-        this.deleteBasketsFromLocalStorage();
-      } else {
-        this.saveBasketsToLocalStorage();
-      }
-
-      events.$emit('get-internal-counters');
-    },
-    clearBasket: function clearBasket(basketIndex) {
-      this.showConfirmationModal = false;
-      this.baskets[basketIndex].products = [];
-      this.saveBasketsToLocalStorage();
-      events.$emit('get-internal-counters');
-    },
-    prepareBasketToAdd: function prepareBasketToAdd() {
-      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      var products = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-      if (name === '') {
-        name = 'panier ' + (this.basketsCounter + 1);
-      }
-
-      return {
-        id: 'basket-' + (this.basketsCounter + 1),
-        name: name,
-        products: products,
-        isSelected: true
-      };
-    },
     showConfirmationPopUp: function showConfirmationPopUp(basket, index, action) {
       this.action = action;
       this.affectedBasket = basket;
@@ -174,7 +137,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
       this.showConfirmationModal = true;
     },
     showGroupedActionPopUp: function showGroupedActionPopUp(index) {
-      this.affectedBasket = this.baskets[index];
+      this.affectedBasketIndex = index;
       this.showGroupedActionModal = true;
     }
   }
@@ -220,8 +183,9 @@ var render = function() {
       _vm._v(" "),
       _vm.showGroupedActionModal
         ? _c("grouped-action-pop-up", {
-            attrs: { "affected-basket": this.affectedBasket },
+            attrs: { "affected-basket-index": this.affectedBasketIndex },
             on: {
+              "francify-basket": _vm.francifyBasket,
               "exit-without-grouped-action": function($event) {
                 _vm.showGroupedActionModal = false
               }
@@ -236,6 +200,7 @@ var render = function() {
             basket: basket,
             index: i,
             origins: _vm.origins,
+            categories: _vm.categories,
             "product-to-add": _vm.productToAdd
           },
           on: {
@@ -411,6 +376,90 @@ __webpack_require__.r(__webpack_exports__);
       var baskets = JSON.stringify(this.baskets);
       localStorage.setItem('baskets', baskets);
       localStorage.setItem('basketsDate', basketsDate);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/component-specific/basketsListHelper.js":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/component-specific/basketsListHelper.js ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    addBasket: function addBasket() {
+      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      this.baskets.push(this.prepareBasketToAdd(name));
+      this.saveBasketsToLocalStorage();
+    },
+    copyBasket: function copyBasket(basket, index) {
+      var tempBasket = JSON.parse(JSON.stringify(basket));
+      this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+      this.saveBasketsToLocalStorage();
+    },
+    deleteBasket: function deleteBasket(basketIndex) {
+      this.showConfirmationModal = false;
+      this.baskets.splice(basketIndex, 1);
+
+      if (this.baskets.length === 0) {
+        this.deleteBasketsFromLocalStorage();
+      } else {
+        this.saveBasketsToLocalStorage();
+      }
+
+      events.$emit('get-internal-counters');
+    },
+    clearBasket: function clearBasket(basketIndex) {
+      this.showConfirmationModal = false;
+      this.baskets[basketIndex].products = [];
+      this.saveBasketsToLocalStorage();
+      events.$emit('get-internal-counters');
+    },
+    prepareBasketToAdd: function prepareBasketToAdd() {
+      var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var products = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+      if (name === '') {
+        name = 'panier ' + (this.basketsCounter + 1);
+      }
+
+      return {
+        id: 'basket-' + (this.basketsCounter + 1),
+        name: name,
+        products: products,
+        isSelected: true
+      };
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/groupedActionFilters.js":
+/*!************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/groupedActionFilters.js ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    francifyBasket: function francifyBasket(basketIndex) {
+      var _this = this;
+
+      this.baskets[basketIndex].products.forEach(function (product) {
+        product.origin = _this.origins[2]; // France
+      });
+      this.showGroupedActionModal = false;
+      this.saveBasketsToLocalStorage();
     }
   }
 });

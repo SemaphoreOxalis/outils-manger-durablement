@@ -35,6 +35,7 @@
 
             <baskets-list class="col-8 flex"
                           v-bind:origins="this.origins"
+                          v-bind:categories="this.categories"
                           v-bind:product-to-add="this.productToAddWithDetails"
                           @selected-baskets="setSelectedBaskets">
             </baskets-list>
