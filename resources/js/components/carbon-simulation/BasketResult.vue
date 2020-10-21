@@ -15,11 +15,18 @@
                  :id="basketId + '-carbon-results'">
                 <p>catégorie - impact produit - impact transport - impact global</p>
                 <p v-for="category in categories">
-                    {{ category.name }} : {{ category.globalProductImpact }} gCO² - {{ category.globalTransportationImpact }} gCO² - {{ category.globalCarbonImpact }} gCO²
+                    {{ category.name }} :
+                    {{ category.productFormattedImpact }} {{ category.productImpactUnit }} -
+                    {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }} -
+                    {{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
                 </p>
-                <p><strong>Total</strong> : {{ globalProductImpact.impact }} {{ globalProductImpact.unit }} - {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }} - {{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}</p>
+                <p>
+                    <strong>Total</strong> :
+                    {{ globalProductImpact.impact }} {{ globalProductImpact.unit }} -
+                    {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }} -
+                    {{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
+                </p>
             </div>
-
 
             <div class="tab-pane"
                  :id="basketId + '-money-results'">
@@ -74,9 +81,9 @@
                 })
             },
             getCarbonImpactFor(category) {
-                let globalProductImpact = 0;
-                let globalTransportationImpact = 0;
-                let globalCarbonImpact = 0;
+                let categoryProductImpact = 0;
+                let categoryTransportationImpact = 0;
+                let categoryCarbonImpact = 0;
 
                 let categoryProducts = this.products.filter(product => {
                     return product.category.id === category.id
@@ -91,14 +98,22 @@
                     transportationImpact = (product.amount * product.origin.carbonImpactPerKg);
                     carbonImpact = productImpact + transportationImpact;
 
-                    globalProductImpact += productImpact;
-                    globalTransportationImpact += transportationImpact;
-                    globalCarbonImpact += carbonImpact;
+                    categoryProductImpact += productImpact;
+                    categoryTransportationImpact += transportationImpact;
+                    categoryCarbonImpact += carbonImpact;
                 });
 
-                category.globalProductImpact = this.roundToTwoDecimal(globalProductImpact);
-                category.globalTransportationImpact = this.roundToTwoDecimal(globalTransportationImpact);
-                category.globalCarbonImpact = this.roundToTwoDecimal(globalCarbonImpact);
+                category.productImpact = this.roundToThreeDecimal(categoryProductImpact);
+                category.transportationImpact = this.roundToThreeDecimal(categoryTransportationImpact);
+                category.carbonImpact = this.roundToThreeDecimal(categoryCarbonImpact);
+
+                category.productFormattedImpact = this.divideIfNecessary(categoryProductImpact);
+                category.transportationFormattedImpact = this.divideIfNecessary(categoryTransportationImpact);
+                category.carbonFormattedImpact = this.divideIfNecessary(categoryCarbonImpact);
+
+                category.productImpactUnit = this.getUnit(categoryProductImpact);
+                category.transportationImpactUnit = this.getUnit(categoryTransportationImpact);
+                category.carbonImpactUnit = this.getUnit(categoryCarbonImpact);
             },
             getGlobalCarbonImpact() {
                 this.globalProductImpact.impact = 0;
@@ -106,9 +121,9 @@
                 this.globalCarbonImpact.impact = 0;
 
                 this.categories.forEach(category => {
-                    this.globalProductImpact.impact += category.globalProductImpact;
-                    this.globalTransportationImpact.impact += category.globalTransportationImpact;
-                    this.globalCarbonImpact.impact += category.globalCarbonImpact;
+                    this.globalProductImpact.impact += category.productImpact;
+                    this.globalTransportationImpact.impact += category.transportationImpact;
+                    this.globalCarbonImpact.impact += category.carbonImpact;
                 });
 
                 this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
@@ -126,7 +141,7 @@
                 if (amount >= 1000) {
                     return this.roundToThreeDecimal(amount / 1000);
                 }
-                return this.roundToThreeDecimal(amount);
+                return this.roundToOneDecimal(amount);
             },
             getUnit(amount) {
                 if (amount >= 2000000) {

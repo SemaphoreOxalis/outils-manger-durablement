@@ -41,6 +41,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -82,9 +89,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getCarbonImpactFor: function getCarbonImpactFor(category) {
-      var globalProductImpact = 0;
-      var globalTransportationImpact = 0;
-      var globalCarbonImpact = 0;
+      var categoryProductImpact = 0;
+      var categoryTransportationImpact = 0;
+      var categoryCarbonImpact = 0;
       var categoryProducts = this.products.filter(function (product) {
         return product.category.id === category.id;
       });
@@ -95,13 +102,19 @@ __webpack_require__.r(__webpack_exports__);
         productImpact = product.amount * product.emissionFactor;
         transportationImpact = product.amount * product.origin.carbonImpactPerKg;
         carbonImpact = productImpact + transportationImpact;
-        globalProductImpact += productImpact;
-        globalTransportationImpact += transportationImpact;
-        globalCarbonImpact += carbonImpact;
+        categoryProductImpact += productImpact;
+        categoryTransportationImpact += transportationImpact;
+        categoryCarbonImpact += carbonImpact;
       });
-      category.globalProductImpact = this.roundToTwoDecimal(globalProductImpact);
-      category.globalTransportationImpact = this.roundToTwoDecimal(globalTransportationImpact);
-      category.globalCarbonImpact = this.roundToTwoDecimal(globalCarbonImpact);
+      category.productImpact = this.roundToThreeDecimal(categoryProductImpact);
+      category.transportationImpact = this.roundToThreeDecimal(categoryTransportationImpact);
+      category.carbonImpact = this.roundToThreeDecimal(categoryCarbonImpact);
+      category.productFormattedImpact = this.divideIfNecessary(categoryProductImpact);
+      category.transportationFormattedImpact = this.divideIfNecessary(categoryTransportationImpact);
+      category.carbonFormattedImpact = this.divideIfNecessary(categoryCarbonImpact);
+      category.productImpactUnit = this.getUnit(categoryProductImpact);
+      category.transportationImpactUnit = this.getUnit(categoryTransportationImpact);
+      category.carbonImpactUnit = this.getUnit(categoryCarbonImpact);
     },
     getGlobalCarbonImpact: function getGlobalCarbonImpact() {
       var _this2 = this;
@@ -110,9 +123,9 @@ __webpack_require__.r(__webpack_exports__);
       this.globalTransportationImpact.impact = 0;
       this.globalCarbonImpact.impact = 0;
       this.categories.forEach(function (category) {
-        _this2.globalProductImpact.impact += category.globalProductImpact;
-        _this2.globalTransportationImpact.impact += category.globalTransportationImpact;
-        _this2.globalCarbonImpact.impact += category.globalCarbonImpact;
+        _this2.globalProductImpact.impact += category.productImpact;
+        _this2.globalTransportationImpact.impact += category.transportationImpact;
+        _this2.globalCarbonImpact.impact += category.carbonImpact;
       });
       this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
       this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
@@ -130,7 +143,7 @@ __webpack_require__.r(__webpack_exports__);
         return this.roundToThreeDecimal(amount / 1000);
       }
 
-      return this.roundToThreeDecimal(amount);
+      return this.roundToOneDecimal(amount);
     },
     getUnit: function getUnit(amount) {
       if (amount >= 2000000) {
@@ -262,13 +275,19 @@ var render = function() {
               _vm._v(
                 "\n                " +
                   _vm._s(category.name) +
-                  " : " +
-                  _vm._s(category.globalProductImpact) +
-                  " gCO² - " +
-                  _vm._s(category.globalTransportationImpact) +
-                  " gCO² - " +
-                  _vm._s(category.globalCarbonImpact) +
-                  " gCO²\n            "
+                  " :\n                " +
+                  _vm._s(category.productFormattedImpact) +
+                  " " +
+                  _vm._s(category.productImpactUnit) +
+                  " -\n                " +
+                  _vm._s(category.transportationFormattedImpact) +
+                  " " +
+                  _vm._s(category.transportationImpactUnit) +
+                  " -\n                " +
+                  _vm._s(category.carbonFormattedImpact) +
+                  " " +
+                  _vm._s(category.carbonImpactUnit) +
+                  "\n            "
               )
             ])
           }),
@@ -276,18 +295,19 @@ var render = function() {
           _c("p", [
             _c("strong", [_vm._v("Total")]),
             _vm._v(
-              " : " +
+              " :\n                " +
                 _vm._s(_vm.globalProductImpact.impact) +
                 " " +
                 _vm._s(_vm.globalProductImpact.unit) +
-                " - " +
+                " -\n                " +
                 _vm._s(_vm.globalTransportationImpact.impact) +
                 " " +
                 _vm._s(_vm.globalTransportationImpact.unit) +
-                " - " +
+                " -\n                " +
                 _vm._s(_vm.globalCarbonImpact.impact) +
                 " " +
-                _vm._s(_vm.globalCarbonImpact.unit)
+                _vm._s(_vm.globalCarbonImpact.unit) +
+                "\n            "
             )
           ])
         ],
