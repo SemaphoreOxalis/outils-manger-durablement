@@ -48,6 +48,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -69,7 +78,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       globalProductImpact: {},
       globalTransportationImpact: {},
-      globalCarbonImpact: {}
+      globalCarbonImpact: {},
+      globalMoneySpend: Number,
+      globalCO2PerEuro: Number,
+      globalCO2PerEuroFormatted: Number,
+      globalCO2PerEuroUnit: String
     };
   },
   created: function created() {
@@ -79,6 +92,8 @@ __webpack_require__.r(__webpack_exports__);
     updateResults: function updateResults() {
       this.getCarbonImpactByCategory();
       this.getGlobalCarbonImpact();
+      this.getMoneyImpactByCategory();
+      this.getGlobalMoneyImpact();
       this.$forceUpdate();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
@@ -119,20 +134,61 @@ __webpack_require__.r(__webpack_exports__);
     getGlobalCarbonImpact: function getGlobalCarbonImpact() {
       var _this2 = this;
 
-      this.globalProductImpact.impact = 0;
-      this.globalTransportationImpact.impact = 0;
-      this.globalCarbonImpact.impact = 0;
       this.categories.forEach(function (category) {
-        _this2.globalProductImpact.impact += category.productImpact;
-        _this2.globalTransportationImpact.impact += category.transportationImpact;
-        _this2.globalCarbonImpact.impact += category.carbonImpact;
+        _this2.globalProductImpact.impact = 0;
+        _this2.globalTransportationImpact.impact = 0;
+        _this2.globalCarbonImpact.impact = 0;
+
+        _this2.categories.forEach(function (category) {
+          _this2.globalProductImpact.impact += category.productImpact;
+          _this2.globalTransportationImpact.impact += category.transportationImpact;
+          _this2.globalCarbonImpact.impact += category.carbonImpact;
+        });
+
+        _this2.globalProductImpact.unit = _this2.getUnit(_this2.globalProductImpact.impact);
+        _this2.globalTransportationImpact.unit = _this2.getUnit(_this2.globalTransportationImpact.impact);
+        _this2.globalCarbonImpact.unit = _this2.getUnit(_this2.globalCarbonImpact.impact);
+        _this2.globalProductImpact.impact = _this2.divideIfNecessary(_this2.globalProductImpact.impact);
+        _this2.globalTransportationImpact.impact = _this2.divideIfNecessary(_this2.globalTransportationImpact.impact);
+        _this2.globalCarbonImpact.impact = _this2.divideIfNecessary(_this2.globalCarbonImpact.impact);
       });
-      this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
-      this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
-      this.globalCarbonImpact.unit = this.getUnit(this.globalCarbonImpact.impact);
-      this.globalProductImpact.impact = this.divideIfNecessary(this.globalProductImpact.impact);
-      this.globalTransportationImpact.impact = this.divideIfNecessary(this.globalTransportationImpact.impact);
-      this.globalCarbonImpact.impact = this.divideIfNecessary(this.globalCarbonImpact.impact);
+    },
+    getMoneyImpactByCategory: function getMoneyImpactByCategory() {
+      var _this3 = this;
+
+      this.categories.forEach(function (category) {
+        _this3.getMoneyImpactFor(category);
+      });
+    },
+    getMoneyImpactFor: function getMoneyImpactFor(category) {
+      var categoryMoneySpent = 0;
+      var categoryProducts = this.products.filter(function (product) {
+        return product.category.id === category.id;
+      });
+      categoryProducts.forEach(function (product) {
+        var productPrice = parseFloat(product.price);
+        categoryMoneySpent += productPrice;
+      });
+      category.moneySpent = categoryMoneySpent;
+      category.co2PerEuro = category.carbonImpact / categoryMoneySpent;
+      category.co2PerEuroFormatted = this.divideIfNecessary(category.co2PerEuro);
+      category.co2PerEuroUnit = this.getUnit(category.co2PerEuro) + '/€';
+    },
+    getGlobalMoneyImpact: function getGlobalMoneyImpact() {
+      var _this4 = this;
+
+      this.categories.forEach(function (category) {
+        _this4.globalMoneySpend = 0;
+        _this4.globalCO2PerEuro = 0;
+
+        _this4.categories.forEach(function (category) {
+          _this4.globalMoneySpend += category.moneySpent;
+          _this4.globalCO2PerEuro += category.co2PerEuro;
+        });
+
+        _this4.globalCO2PerEuroFormatted = _this4.divideIfNecessary(_this4.globalCO2PerEuro);
+        _this4.globalCO2PerEuroUnit = _this4.getUnit(_this4.globalCO2PerEuro) + '/€';
+      });
     },
     divideIfNecessary: function divideIfNecessary(amount) {
       if (amount >= 1000000) {
@@ -292,10 +348,12 @@ var render = function() {
             ])
           }),
           _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c("p", [
-            _c("strong", [_vm._v("Total")]),
+            _c("strong", [_vm._v("Total :")]),
             _vm._v(
-              " :\n                " +
+              "\n                " +
                 _vm._s(_vm.globalProductImpact.impact) +
                 " " +
                 _vm._s(_vm.globalProductImpact.unit) +
@@ -320,12 +378,39 @@ var render = function() {
           staticClass: "tab-pane",
           attrs: { id: _vm.basketId + "-money-results" }
         },
-        _vm._l(_vm.products, function(product) {
-          return _c("p", [
-            _vm._v(_vm._s(product.name) + " - " + _vm._s(product.price) + " €")
+        [
+          _c("p", [_vm._v("catégorie - montant - CO2 par €")]),
+          _vm._v(" "),
+          _vm._l(_vm.categories, function(category) {
+            return _c("p", [
+              _vm._v(
+                "\n                " +
+                  _vm._s(category.name) +
+                  " :\n                " +
+                  _vm._s(category.moneySpent) +
+                  " € -\n                " +
+                  _vm._s(category.co2PerEuroFormatted) +
+                  " " +
+                  _vm._s(category.co2PerEuroUnit) +
+                  " -\n            "
+              )
+            ])
+          }),
+          _vm._v(" "),
+          _c("p", [
+            _c("strong", [_vm._v("Total :")]),
+            _vm._v(
+              " " +
+                _vm._s(_vm.globalMoneySpend) +
+                " € - " +
+                _vm._s(_vm.globalCO2PerEuroFormatted) +
+                " " +
+                _vm._s(_vm.globalCO2PerEuroUnit) +
+                "\n            "
+            )
           ])
-        }),
-        0
+        ],
+        2
       )
     ])
   ])

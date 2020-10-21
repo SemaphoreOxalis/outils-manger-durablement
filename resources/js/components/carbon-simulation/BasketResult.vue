@@ -20,8 +20,9 @@
                     {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }} -
                     {{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
                 </p>
+                <hr>
                 <p>
-                    <strong>Total</strong> :
+                    <strong>Total :</strong>
                     {{ globalProductImpact.impact }} {{ globalProductImpact.unit }} -
                     {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }} -
                     {{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
@@ -30,7 +31,15 @@
 
             <div class="tab-pane"
                  :id="basketId + '-money-results'">
-                <p v-for="product in products">{{ product.name }} - {{ product.price }} €</p>
+                <p>catégorie - montant - CO2 par €</p>
+                <p v-for="category in categories">
+                    {{ category.name }} :
+                    {{ category.moneySpent }} € -
+                    {{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }} -
+                </p>
+                <p>
+                    <strong>Total :</strong> {{ globalMoneySpend }} € - {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
+                </p>
             </div>
         </div>
     </div>
@@ -64,6 +73,11 @@
                 globalProductImpact: {},
                 globalTransportationImpact: {},
                 globalCarbonImpact: {},
+
+                globalMoneySpend: Number,
+                globalCO2PerEuro: Number,
+                globalCO2PerEuroFormatted: Number,
+                globalCO2PerEuroUnit: String,
             }
         },
         created() {
@@ -73,6 +87,10 @@
             updateResults() {
                 this.getCarbonImpactByCategory();
                 this.getGlobalCarbonImpact();
+
+                this.getMoneyImpactByCategory();
+                this.getGlobalMoneyImpact();
+
                 this.$forceUpdate();
             },
             getCarbonImpactByCategory() {
@@ -116,24 +134,64 @@
                 category.carbonImpactUnit = this.getUnit(categoryCarbonImpact);
             },
             getGlobalCarbonImpact() {
-                this.globalProductImpact.impact = 0;
-                this.globalTransportationImpact.impact = 0;
-                this.globalCarbonImpact.impact = 0;
-
                 this.categories.forEach(category => {
-                    this.globalProductImpact.impact += category.productImpact;
-                    this.globalTransportationImpact.impact += category.transportationImpact;
-                    this.globalCarbonImpact.impact += category.carbonImpact;
+                    this.globalProductImpact.impact = 0;
+                    this.globalTransportationImpact.impact = 0;
+                    this.globalCarbonImpact.impact = 0;
+
+                    this.categories.forEach(category => {
+                        this.globalProductImpact.impact += category.productImpact;
+                        this.globalTransportationImpact.impact += category.transportationImpact;
+                        this.globalCarbonImpact.impact += category.carbonImpact;
+                    });
+
+                    this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
+                    this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
+                    this.globalCarbonImpact.unit = this.getUnit(this.globalCarbonImpact.impact);
+
+                    this.globalProductImpact.impact = this.divideIfNecessary(this.globalProductImpact.impact);
+                    this.globalTransportationImpact.impact = this.divideIfNecessary(this.globalTransportationImpact.impact);
+                    this.globalCarbonImpact.impact = this.divideIfNecessary(this.globalCarbonImpact.impact);
+                });
+            },
+
+            getMoneyImpactByCategory() {
+                this.categories.forEach(category => {
+                    this.getMoneyImpactFor(category);
+                })
+            },
+            getMoneyImpactFor(category) {
+                let categoryMoneySpent = 0;
+
+                let categoryProducts = this.products.filter(product => {
+                    return product.category.id === category.id
                 });
 
-                this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
-                this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
-                this.globalCarbonImpact.unit = this.getUnit(this.globalCarbonImpact.impact);
+                categoryProducts.forEach(product => {
+                    let productPrice = parseFloat(product.price);
+                    categoryMoneySpent += productPrice;
+                });
 
-                this.globalProductImpact.impact = this.divideIfNecessary(this.globalProductImpact.impact);
-                this.globalTransportationImpact.impact = this.divideIfNecessary(this.globalTransportationImpact.impact);
-                this.globalCarbonImpact.impact = this.divideIfNecessary(this.globalCarbonImpact.impact);
+                category.moneySpent = categoryMoneySpent;
+                category.co2PerEuro = category.carbonImpact / categoryMoneySpent;
+                category.co2PerEuroFormatted = this.divideIfNecessary(category.co2PerEuro);
+                category.co2PerEuroUnit = this.getUnit(category.co2PerEuro) + '/€';
             },
+            getGlobalMoneyImpact() {
+                this.categories.forEach(category => {
+                    this.globalMoneySpend = 0;
+                    this.globalCO2PerEuro = 0;
+
+                    this.categories.forEach(category => {
+                        this.globalMoneySpend += category.moneySpent;
+                        this.globalCO2PerEuro += category.co2PerEuro;
+                    });
+
+                    this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
+                    this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
+                });
+            },
+
             divideIfNecessary(amount) {
                 if (amount >= 1000000) {
                     return this.roundToThreeDecimal(amount / 1000000);
