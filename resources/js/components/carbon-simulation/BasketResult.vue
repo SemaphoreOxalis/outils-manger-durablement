@@ -222,4 +222,7 @@
     width: available;
     border: 1px solid black;
 }
+a.nav-link.active {
+    background-color: var(--main-color);
+}
 </style>

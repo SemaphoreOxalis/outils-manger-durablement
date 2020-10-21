@@ -233,7 +233,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.basket-results {\n    width: available;\n    border: 1px solid black;\n}\n", ""]);
+exports.push([module.i, "\n.basket-results {\n    width: available;\n    border: 1px solid black;\n}\na.nav-link.active {\n    background-color: var(--main-color);\n}\n", ""]);
 
 // exports
 
