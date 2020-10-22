@@ -1,37 +1,95 @@
 <template>
-    <div class="d-flex">
-        <basket-item v-for="(basket, i) in this.baskets"
-                     v-bind:key="basket.id"
-                     v-bind:basket="basket"
-                     v-bind:index="i"
-                     v-bind:origins="origins"
-                     v-bind:product-to-add="productToAdd"
-                     @copy-basket="copyBasket"
-                     @delete-basket="deleteBasket">
-        </basket-item>
-        <div>
-            <button @click="addBasket()">+</button>
+    <div>
+        <div class="baskets-list">
+            <action-confirmation v-if="showConfirmationModal"
+                                 :action="this.action"
+                                 :affected-basket="this.affectedBasket"
+                                 :affected-basket-index="this.affectedBasketIndex"
+                                 @exit-without-action="showConfirmationModal = false"
+                                 @delete="deleteBasket"
+                                 @clear="clearBasket">
+            </action-confirmation>
+
+            <grouped-action-pop-up v-if="showGroupedActionModal"
+                                   :affected-basket-index="this.affectedBasketIndex"
+                                   @francify-basket="francifyBasket"
+                                   @exit-without-grouped-action="showGroupedActionModal = false">
+            </grouped-action-pop-up>
+
+            <basket-item v-for="(basket, i) in this.baskets"
+                         v-bind:key="basket.id"
+                         v-bind:basket="basket"
+                         v-bind:index="i"
+                         v-bind:origins="origins"
+                         v-bind:categories="categories"
+                         v-bind:product-to-add="productToAdd"
+                         @save-baskets="saveBasketsToLocalStorage"
+                         @do-stuff="showGroupedActionPopUp"
+                         @copy-basket="copyBasket"
+                         @clear-basket="showConfirmationPopUp"
+                         @delete-basket="showConfirmationPopUp">
+            </basket-item>
+
+            <div class="basket">
+                <a @click="addBasket()" class="add-basket flex-horizontal">
+                    <div class="btn-ico"></div>
+                    <div class="add-basket-text spacer-left">Nouveau panier vide</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="custom-control switch center">
+            <label>
+                Comparer avec le premier panier <input type="checkbox" class="custom-control-input"><span class="lever"></span> Comparer avec le panier précédent
+            </label>
         </div>
     </div>
 </template>
 
 <script>
+import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+import groupedActionFilters from "../../helpers/carbon-simulation/groupedActionFilters";
+import basketsListHelper from "../../helpers/carbon-simulation/component-specific/basketsListHelper";
+
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
     './BasketItem'
     );
+const ActionConfirmation = () => import(
+    /* webpackChunkName: "js/carbon-simulation/ActionConfirmation" */
+    './ActionConfirmation'
+    );
+const GroupedActionPopUp = () => import(
+    /* webpackChunkName: "js/carbon-simulation/GroupedActionPopUp" */
+    './GroupedActionPopUp'
+    );
 
 export default {
     components: {
-        BasketItem
+        BasketItem,
+        ActionConfirmation,
+        GroupedActionPopUp
     },
+    mixins: [
+        LocalStorageHelper,
+        groupedActionFilters,
+        basketsListHelper,
+    ],
     props: {
         origins: Array,
+        categories: Array,
         productToAdd: Object,
     },
     data() {
         return {
             baskets: [],
+
+            showConfirmationModal: false,
+            action: '',
+            affectedBasket: {},
+            affectedBasketIndex: -1,
+
+            showGroupedActionModal: false,
         }
     },
     computed: {
@@ -42,43 +100,40 @@ export default {
         },
         basketsCounter: function() {
             if (this.baskets.length > 0) {
-                return Math.max(...this.baskets.map(basket => basket.id));
+                return Math.max(...this.baskets.map(basket => {
+                    return basket.id.substring(7); // "basket_" id prefix is 7 characters long
+                }));
             } else {
                 return 0;
             }
         }
     },
     created() {
-        this.addBasket('votre panier');
+        if (localStorage.hasOwnProperty('baskets')) {
+            this.baskets = JSON.parse(localStorage.getItem('baskets'));
+        } else {
+            this.addBasket('votre panier');
+        }
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
+    },
+    mounted() {
+        events.$emit('get-internal-counters');
     },
     methods: {
         sendSelectedBaskets() {
             this.$emit('selected-baskets', this.selectedBaskets);
         },
 
-        addBasket(name = '') {
-            this.baskets.push(this.prepareBasketToAdd(name));
+        showConfirmationPopUp(basket, index, action) {
+            this.action = action;
+            this.affectedBasket = basket;
+            this.affectedBasketIndex = index;
+            this.showConfirmationModal = true;
         },
-        deleteBasket(basketIndex) {
-            this.baskets.splice(basketIndex, 1);
+        showGroupedActionPopUp(index) {
+            this.affectedBasketIndex = index;
+            this.showGroupedActionModal = true;
         },
-        copyBasket(basket, index) {
-            let tempBasket = JSON.parse(JSON.stringify(basket));
-            this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
-        },
-
-        prepareBasketToAdd(name = '', products = []) {
-            if(name === '') {
-                name = 'panier ' + (this.basketsCounter + 1);
-            }
-            return {
-                id: (this.basketsCounter + 1),
-                name: name,
-                products: products,
-                isSelected: true,
-            };
-        }
     }
 }
 </script>

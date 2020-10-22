@@ -1,28 +1,41 @@
 <template>
-    <transition name="modal">
+    <transition name="modal" class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-mask">
-            <div class="modal-wrapper">
-                <div class="modal-container text-center" ref="modal">
+            <div class="modal-wrapper modal-dialog modal-dialog-centered">
+                <div class="modal-container modal-content" ref="modal">
                     <div class="modal-header">
                         <small>{{ add_popup.help }}</small>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="exit">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
                     <div class="modal-body">
-                        {{ add_popup.you_are_adding }} <strong>{{ this.productToAdd.name }}</strong>
-                        <br>{{ add_popup.by_this_amount }} <input class="number-field custom-input browser-default" type="number" v-model="productToAdd.amount" min="0" required ref="qty">
-                        <small>{{ this.productToAdd.unit.unit }}</small>
-                        <br>{{ add_popup.for_that_much_$ }} <input class="number-field custom-input browser-default" type="number" v-model="productToAdd.price" min="0" required> €
-                        <br>{{ add_popup.from }} <select v-model="productToAdd.origin">
-                                              <option v-for="origin in origins"
-                                                      v-bind:value="origin">
-                                                  {{ origin.from }}
-                                              </option>
-                                          </select>
-                        <br>{{ add_popup.in_baskets }}
-                        <span v-for="(basket, i) in selectedBaskets">
-                            <span v-if="i == selectedBaskets.length - 1">"{{ basket.name }}"</span>
-                            <span v-else>"{{ basket.name }}", </span>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ add_popup.you_are_adding }} <strong>{{ this.productToAdd.name }}</strong></h5>
+                        <div class="results-row">{{ add_popup.by_this_amount }}
+                            <input v-model="productToAdd.amount" type="number" min="0" required="required" class="number-field custom-input browser-default input" ref="qty"> <small>{{ this.productToAdd.unit.unit }}</small>
+                        </div>
+                        <div class="results-row">
+                            {{ add_popup.for_that_much_$ }} <input v-model="productToAdd.price" type="number" min="0" required="required" class="number-field custom-input browser-default input"> €
+                        </div>
+                        <div class="results-row">
+                            {{ add_popup.from }}
+                            <select v-model="productToAdd.origin" id="origine-4" class="custom-select input" name="origine-4" data-name="Origine 4">
+                                <option value="">Choisir</option>
+                                <option v-for="origin in origins"
+                                        v-bind:value="origin">
+                                    {{ origin.from }}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="results-row">{{ add_popup.in_baskets }}
+                            <span v-for="(basket, i) in selectedBaskets">
+                                <span v-if="i == selectedBaskets.length - 1"><strong>{{ basket.name }}</strong></span>
+                                <span v-else><strong>{{ basket.name }}</strong>,
+                            </span>
                         </span>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -67,12 +80,15 @@ export default {
             if (this.productToAdd.price < 0.01) {
                 return true;
             }
+            if (this.productToAdd.origin === '') {
+                return true;
+            }
 
             return false
         }
     },
     created() {
-        this.productToAdd = {...this.product, amount: 1, price: 1, origin: this.origins[2]};
+        this.productToAdd = {...this.product, id: 'product_to_add_' + this.product.id, amount: 1, price: 1, origin: ''};
         let self = this;
         Vue.nextTick().then(function () {
             self.$refs.qty.focus();

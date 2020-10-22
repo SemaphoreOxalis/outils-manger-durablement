@@ -795,6 +795,7 @@ __webpack_require__.r(__webpack_exports__);
 // Intéractions avec le localStorage
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
+    // WASTE-SIMULATOR
     // HOME component
     // récupère la date de l'audit et la formatte
     getAuditDateFromLocalStorage: function getAuditDateFromLocalStorage() {
@@ -837,6 +838,21 @@ __webpack_require__.r(__webpack_exports__);
     // Enregistre les simulations en localStorage
     saveSimulationsToLocalStorage: function saveSimulationsToLocalStorage(sims) {
       localStorage.setItem('simulations', sims);
+    },
+    // CARBON-SIMULATOR
+    // HOME
+    deleteBasketsFromLocalStorage: function deleteBasketsFromLocalStorage() {
+      localStorage.removeItem('baskets');
+    },
+    getBasketsDateFromLocalStorage: function getBasketsDateFromLocalStorage() {
+      return this.formatToFrench(JSON.parse(localStorage.getItem('basketsDate')));
+    },
+    // BASKET LIST
+    saveBasketsToLocalStorage: function saveBasketsToLocalStorage() {
+      var basketsDate = Date.now();
+      var baskets = JSON.stringify(this.baskets);
+      localStorage.setItem('baskets', baskets);
+      localStorage.setItem('basketsDate', basketsDate);
     }
   }
 });

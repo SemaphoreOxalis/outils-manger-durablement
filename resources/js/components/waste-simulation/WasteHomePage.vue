@@ -13,7 +13,7 @@
                     </p>
                 </div>
 
-                <div class="info p-4 m-4" v-if="previousAuditDetectedInLocalStorage">
+                <div class="info p-4 m-4"c>
                     <p>{{ it_seems_you_have_sims_from }} <strong>{{ this.previousAuditDate }}</strong></p>
                     <div class="d-flex flex-column align-items-center">
                         <button class="button big-button d-flex p-4 justify-content-center mb-2" @click="goToPreviousAudit">

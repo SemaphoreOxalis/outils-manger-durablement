@@ -1,7 +1,10 @@
 <template>
     <div class="autocomplete">
-        <input type="text"
+        <input type="search" name="query" id="search"
+               class="input search custom-input browser-default"
                v-model="search"
+               maxlength="256"
+               placeholder="Taper le nom de votre produit"
                ref="searchBar"
                @input="onChange"
                @keydown.down="onArrowDown"
@@ -63,11 +66,11 @@
         methods: {
             onChange() {
                 this.isOpen = true;
-                this.results = this.searchWithSearchBar();
+                this.results = this.searchWithSearchBar(this.products);
                 this.$emit('search-complete', this.results);
             },
             setResult(result) {
-                this.chosen = result;
+                this.chosen = { ...result, id: 'chosen_product_' + result.id};
                 this.search = '';
                 this.isOpen = false;
 
@@ -92,6 +95,7 @@
             },
             handleClickOutside(evt) {
                 if (!this.$el.contains(evt.target)) {
+                    this.search = '';
                     this.isOpen = false;
                     this.arrowCounter = -1;
                     this.$emit('lose-focus', this.chosen);
@@ -132,5 +136,9 @@
 .autocomplete-result:hover {
     background-color: var(--main-color-darker);
     color: var(--light-grey);
+}
+
+.search-bar.main-search .autocomplete {
+    display: block;
 }
 </style>

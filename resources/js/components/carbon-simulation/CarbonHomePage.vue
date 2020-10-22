@@ -9,18 +9,18 @@
                     </p>
                 </div>
 
-                <div class="info p-4 m-4" v-if="true">
-                    <p>{{ it_seems_you_have_baskets_from }} <strong>66/66/6666</strong></p>
+                <div class="info p-4 m-4"  v-if="previousBasketsDetectedInLocalStorage">
+                    <p>{{ it_seems_you_have_baskets_from }} <strong>{{ this.previousBasketsDate }}</strong></p>
                     <div class="d-flex flex-column align-items-center">
-                        <button class="button big-button d-flex p-4 justify-content-center mb-2">
+                        <button class="button big-button d-flex p-4 justify-content-center mb-2" @click="goToPreviousBaskets">
                             <div class="icon align-self-center mr-4"></div>
                             <div class="text-left big-button-line-height">
-                                <strong>{{ prevBtn.goTo }}</strong><br><small>{{ prevBtn.basket }}<br>{{ prevBtn.from }} 66/66/6666</small>
+                                <strong>{{ prevBtn.goTo }}</strong><br><small>{{ prevBtn.basket }}<br>{{ prevBtn.from }} {{ this.previousBasketsDate }}</small>
                             </div>
                         </button>
 
                         <div class="text-center">
-                            <button class="button alter"><span class="icon mr-4"></span>{{ delete_all_data }}</button>
+                            <button @click="deleteBaskets" class="button alter"><span class="icon mr-4"></span>{{ delete_all_data }}</button>
                         </div>
                     </div>
                 </div>
@@ -51,10 +51,40 @@
 <script>
     import GeneralText from "../../../texts/GeneralText";
     import HomePageText from "../../../texts/carbonSimulator/HomePageText";
+    import DateFormatter from "../../helpers/DateFormatter";
+    import LocalStorageHelper from "../../helpers/LocalStorageHelper";
     export default {
         mixins: [
             GeneralText,
-            HomePageText
-        ]
+            HomePageText,
+            DateFormatter,
+            LocalStorageHelper,
+        ],
+        data() {
+            return {
+                previousBasketsDate: null,
+                previousBasketsDetectedInLocalStorage: false,
+            }
+        },
+        created() {
+            this.checkPreviousBasketsFromLocalStorage();
+        },
+        methods: {
+            checkPreviousBasketsFromLocalStorage() {
+                if (localStorage.hasOwnProperty('baskets')) {
+                    this.previousBasketsDetectedInLocalStorage = true;
+                    this.previousBasketsDate = this.getBasketsDateFromLocalStorage();
+                }
+            },
+            goToPreviousBaskets() {
+                this.$router.push({name: 'basket-simulator'})
+            },
+            deleteBaskets() {
+                this.deleteBasketsFromLocalStorage();
+                this.previousBasketsDetectedInLocalStorage = false;
+
+                flash("Vos paniers ont bien été supprimés");
+            },
+        },
     }
 </script>

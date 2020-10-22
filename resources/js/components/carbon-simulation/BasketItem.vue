@@ -1,99 +1,172 @@
 <template>
-    <div class="flex-grow-1">
-        <div>
-            <input type="checkbox" v-model="basket.isSelected"> Ajouter dans ce panier
-        </div>
-        <div class="flex">
-            <h5 class="text-center">{{ basket.name }}</h5>
-            <button @click="copyBasket">copy</button>
+    <div class="basket">
+        <div class="basket-header">
+            <div class="basket-select custom-control custom-checkbox">
+                <input type="checkbox"
+                       v-model="basket.isSelected"
+                       class="custom-control-input"> <label class="custom-control-label">Ajouter dans ce panier</label>
+            </div>
+            <div class="basket-name">
+                <input v-model="basket.name"
+                       @change="saveBasket"
+                       class="input custom-input browser-default"
+                       type="text"
+                       required>
+                <a @click="copyBasket" class="btn-ico"></a>
+            </div>
+            <div class="basket-toolbox">
+                <input type="search"
+                       v-model="search"
+                       @input="searchInBasket"
+                       class="input tool custom-input"
+                       maxlength="256"
+                       name="query"
+                       placeholder="chercher dans le panier"
+                       required="">
+                <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool"></a>
+                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool"></a>
+                <a @click="deleteBasket" class="btn-ico alt tool"></a>
+            </div>
         </div>
 
-        <div class="flex">
-            <button @click="deleteBasket">X</button>
-        </div>
-        <div class="right col-12">
-            <draggable v-model="basket.products"
-                       class="dragArea list-group h-100"
-                       :group="{ name: 'draggableProducts', pull: false }"
-                       :animation="150">
-
-                <basket-product v-for="(product, i) in basket.products"
+        <draggable v-model="basket.products"
+                   class="dragArea"
+                   :group="{ name: 'draggableProducts', pull: false }"
+                   @change="saveBasket"
+                   filter=".ignore-draggable"
+                   :preventOnFilter="false"
+                   :animation="150">
+            <div class="basket--products-container my-custom-scrollbar my-custom-scrollbar-primary">
+                <basket-product v-for="(product, i) in filteredProducts"
                                 v-bind:key="product.id"
                                 v-bind:product="product"
+                                v-bind:basket-id="basket.id"
                                 v-bind:index="i"
                                 v-bind:origins="origins"
+                                @save-changes="saveBasket"
                                 @remove-product="removeProduct">
                 </basket-product>
+            </div>
+        </draggable>
 
-            </draggable>
-        </div>
+        <basket-result v-if="containsProducts"
+                       :products="basket.products"
+                       :categories="categories"
+                       :basket-id="basket.id">
+        </basket-result>
+
     </div>
 
 </template>
 
 <script>
+import searchBar from "../../helpers/carbon-simulation/searchBar";
+
 const BasketProduct = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketProduct" */
     './BasketProduct'
+    );
+const BasketResult = () => import(
+    /* webpackChunkName: "js/carbon-simulation/BasketResult" */
+    './BasketResult'
     );
 const draggable = () => import(
     /* webpackChunkName: "js/draggable" */
     'vuedraggable'
     );
 
-    export default {
-        components: {
-            BasketProduct,
-            draggable
-        },
-        props: {
-            basket: Object,
-            index: Number,
-            origins: Array,
-            productToAdd: Object,
-        },
-        watch: {
-            productToAdd(newProduct) {
-                if(this.basket.isSelected) {
-                    this.addProduct(newProduct);
-                }
-            }
-        },
-        computed: {
-            productCounter: function() {
-                if (this.basket.products.length > 0) {
-                    return Math.max(...this.basket.products.map(product => product.id));
-                } else {
-                    return 0;
-                }
-            }
-        },
-        created() {
-            events.$on('get-internal-counters', this.sendInternalCounter);
-        },
-        methods: {
-            addProduct(product) {
-                let tempProd = { ...product};
-                tempProd.id = (this.productCounter + 1);
-                this.basket.products.push(tempProd);
-                this.sendInternalCounter();
-            },
-            removeProduct(productIndex) {
-                this.basket.products.splice(productIndex, 1);
-            },
-
-            deleteBasket() {
-                this.$emit('delete-basket', this.index);
-            },
-            copyBasket() {
-                this.$emit('copy-basket', this.basket, this.index);
-            },
-
-            sendInternalCounter() {
-                events.$emit('internal-counters', this.basket.id, this.productCounter);
-            },
+export default {
+    components: {
+        BasketProduct,
+        BasketResult,
+        draggable
+    },
+    mixins: [
+        searchBar
+    ],
+    props: {
+        basket: Object,
+        index: Number,
+        origins: Array,
+        categories: Array,
+        productToAdd: Object,
+    },
+    data() {
+        return {
+            search: '',
         }
+    },
+    watch: {
+        productToAdd(newProduct) {
+            if (this.basket.isSelected) {
+                this.addProduct(newProduct);
+            }
+        }
+    },
+    computed: {
+        filteredProducts: function () {
+            if (this.search) {
+                return this.searchWithSearchBar(this.basket.products);
+            }
+            return this.basket.products;
+        },
+        productCounter: function () {
+            if (this.basket.products.length > 0) {
+                return Math.max(...this.basket.products.map(product => {
+                    return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
+                }));
+            } else {
+                return 0;
+            }
+        },
+        containsProducts: function () {
+            return this.basket.products.length > 0;
+        },
+    },
+    created() {
+        events.$on('get-internal-counters', this.sendInternalCounter);
+    },
+    mounted() {
+        this.sendInternalCounter();
+    },
+    methods: {
+        addProduct(product) {
+            let tempProd = {...product};
+            tempProd.id = ('basket-product-' + (this.productCounter + 1));
+            this.basket.products.unshift(tempProd);
+            this.sendInternalCounter();
+            this.saveBasket();
+        },
+        removeProduct(productIndex) {
+            this.basket.products.splice(productIndex, 1);
+            this.saveBasket();
+        },
+
+        copyBasket() {
+            this.$emit('copy-basket', this.basket, this.index);
+        },
+        deleteBasket() {
+            this.$emit('delete-basket', this.basket, this.index, 'delete');
+        },
+        clearBasket() {
+            this.$emit('clear-basket', this.basket, this.index, 'clear');
+        },
+        saveBasket() {
+            this.$emit('save-baskets');
+        },
+        doStuff() {
+            this.$emit('do-stuff', this.index);
+        },
+
+        searchInBasket() {
+            this.$emit('search-in-basket', this.search, this.index);
+        },
+
+        sendInternalCounter() {
+            events.$emit('internal-counters', this.index, this.productCounter);
+        },
     }
+}
 </script>
 
 <style>

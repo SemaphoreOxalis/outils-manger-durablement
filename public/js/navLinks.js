@@ -103,7 +103,7 @@ var render = function() {
           attrs: { to: "/waste-simulator" }
         },
         [
-          _vm._v("\n        "),
+          _vm._v("\n        "),
           _c("span", [_vm._v(_vm._s(_vm.waste_simulator))])
         ]
       ),
@@ -138,7 +138,7 @@ var render = function() {
           attrs: { to: "/carbon-simulator" }
         },
         [
-          _vm._v("\n        "),
+          _vm._v("\n        "),
           _c("span", [_vm._v(_vm._s(_vm.carbon_simulator))])
         ]
       ),
@@ -149,7 +149,7 @@ var render = function() {
           staticClass: "menu-item button icon ml-4",
           attrs: { to: "/carbon-simulator/basket-simulator" }
         },
-        [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.resume_basket))])]
+        [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.resume_basket))])]
       )
     ],
     1

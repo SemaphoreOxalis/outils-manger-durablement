@@ -10,6 +10,15 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
 //
 //
 //
@@ -73,11 +82,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onChange: function onChange() {
       this.isOpen = true;
-      this.results = this.searchWithSearchBar();
+      this.results = this.searchWithSearchBar(this.products);
       this.$emit('search-complete', this.results);
     },
     setResult: function setResult(result) {
-      this.chosen = result;
+      this.chosen = _objectSpread(_objectSpread({}, result), {}, {
+        id: 'chosen_product_' + result.id
+      });
       this.search = '';
       this.isOpen = false;
       this.$emit('product-chosen', this.chosen);
@@ -102,6 +113,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleClickOutside: function handleClickOutside(evt) {
       if (!this.$el.contains(evt.target)) {
+        this.search = '';
         this.isOpen = false;
         this.arrowCounter = -1;
         this.$emit('lose-focus', this.chosen);
@@ -130,7 +142,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.autocomplete {\n    padding: 0;\n    margin: 0;\n    border: 1px solid #eeeeee;\n    /* height: 120px; */\n    overflow: auto;\n}\n.autocomplete-result {\n    list-style: none;\n    text-align: left;\n    padding: 4px 2px;\n    cursor: pointer;\n}\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n.autocomplete-result.is-active,\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n", ""]);
+exports.push([module.i, "\n.autocomplete {\n    padding: 0;\n    margin: 0;\n    border: 1px solid #eeeeee;\n    /* height: 120px; */\n    overflow: auto;\n}\n.autocomplete-result {\n    list-style: none;\n    text-align: left;\n    padding: 4px 2px;\n    cursor: pointer;\n}\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n.autocomplete-result.is-active,\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n.search-bar.main-search .autocomplete {\n    display: block;\n}\n", ""]);
 
 // exports
 
@@ -193,7 +205,14 @@ var render = function() {
         }
       ],
       ref: "searchBar",
-      attrs: { type: "text" },
+      staticClass: "input search custom-input browser-default",
+      attrs: {
+        type: "search",
+        name: "query",
+        id: "search",
+        maxlength: "256",
+        placeholder: "Taper le nom de votre produit"
+      },
       domProps: { value: _vm.search },
       on: {
         input: [

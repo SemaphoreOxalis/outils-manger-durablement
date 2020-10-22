@@ -85,7 +85,7 @@ export default {
     },
     computed: {
         filteredProducts() {
-            return this.searchWithSearchBar();
+            return this.searchWithSearchBar(this.products);
         }
     },
     created() {

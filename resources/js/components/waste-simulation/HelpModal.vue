@@ -18,7 +18,7 @@
                         </ul>
                     </div>
 
-                    <div class="modal-footer">
+                    <div class="help-modal modal-footer">
                         <button class="modal-default-button button alter" @click="close">
                             {{ okBtn }}
                         </button>

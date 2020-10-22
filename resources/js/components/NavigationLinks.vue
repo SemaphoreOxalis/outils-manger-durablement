@@ -9,7 +9,7 @@
         <router-link
             to="/waste-simulator"
             class="menu-item button icon">
-            <span>{{ waste_simulator }}</span>
+            <span>{{ waste_simulator }}</span>
         </router-link>
 
         <router-link
@@ -28,13 +28,13 @@
         <router-link
             to="/carbon-simulator"
             class="menu-item button icon">
-            <span>{{ carbon_simulator }}</span>
+            <span>{{ carbon_simulator }}</span>
         </router-link>
 
         <router-link
             to="/carbon-simulator/basket-simulator"
             class="menu-item button icon ml-4">
-            <span>{{ resume_basket }}</span>
+            <span>{{ resume_basket }}</span>
         </router-link>
     </div>
 </template>
