@@ -104,8 +104,17 @@ var draggable = function draggable() {
       return this.products;
     }
   },
-  created: function created() {
+  mounted: function mounted() {
+    console.log('mounted');
     events.$on('clear-search-bar', this.clearSearchBar);
+    var _self = document.body;
+    $('#dropDownList').on('click', '.category', function () {
+      _self.closable = false;
+    }).on('click', '.add-product', function () {
+      _self.closable = true;
+    }).on('hide.bs.dropdown', function () {
+      return _self.closable;
+    });
   },
   methods: {
     getClasses: function getClasses(categoryId) {
@@ -162,7 +171,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.left {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.middle {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.category {*/\n/*    cursor: pointer;*/\n/*}*/\n\n/*.selected,*/\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.left {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.middle {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.category {*/\n/*    cursor: pointer;*/\n/*}*/\n\n/*.selected,*/\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -217,8 +226,8 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "dropdown ",
-      attrs: { "data-hover": "", "data-delay": "0" }
+      staticClass: "dropdown",
+      attrs: { "data-hover": "", "data-delay": "0", id: "dropDownList" }
     },
     [
       _c(
@@ -235,96 +244,103 @@ var render = function() {
         [_vm._v("\n        Ajouter un produit\n    ")]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "dropdown-menu" }, [
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-3" },
-            _vm._l(_vm.categories, function(category) {
-              return _c(
-                "div",
-                {
-                  key: category.id,
-                  class: _vm.getClasses(category.id),
-                  on: {
-                    click: function($event) {
-                      return _vm.filterProdByCategory(category.id)
+      _c(
+        "div",
+        { staticClass: "dropdown-menu", attrs: { id: "productList" } },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-3" },
+              _vm._l(_vm.categories, function(category) {
+                return _c(
+                  "div",
+                  {
+                    key: category.id,
+                    class: _vm.getClasses(category.id),
+                    on: {
+                      click: function($event) {
+                        return _vm.filterProdByCategory(category.id)
+                      }
                     }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(category.name) +
-                      "\n                "
-                  )
-                ]
-              )
-            }),
-            0
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-9" },
-            [
-              _c(
-                "draggable",
-                {
-                  staticClass: "dragArea list-group grid-list",
-                  attrs: {
-                    group: {
-                      name: "draggableProducts",
-                      pull: "clone",
-                      put: false
-                    },
-                    sort: false,
-                    chosenClass: "moving",
-                    clone: _vm.addProductByDrag
                   },
-                  model: {
-                    value: _vm.filteredProducts,
-                    callback: function($$v) {
-                      _vm.filteredProducts = $$v
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(category.name) +
+                        "\n                "
+                    )
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-9" },
+              [
+                _c(
+                  "draggable",
+                  {
+                    staticClass: "dragArea list-group grid-list",
+                    attrs: {
+                      group: {
+                        name: "draggableProducts",
+                        pull: "clone",
+                        put: false
+                      },
+                      sort: false,
+                      chosenClass: "moving",
+                      clone: _vm.addProductByDrag
                     },
-                    expression: "filteredProducts"
-                  }
-                },
-                _vm._l(_vm.filteredProducts, function(product) {
-                  return _c(
-                    "div",
-                    { key: product.id, staticClass: "list-group-item product" },
-                    [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(product.name) +
-                          " "
-                      ),
-                      _c("small", [_vm._v(_vm._s(product.comment))]),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn-ico",
-                          attrs: { "data-toggle": "modal" },
-                          on: {
-                            click: function($event) {
-                              return _vm.addProdToBasket(product)
+                    model: {
+                      value: _vm.filteredProducts,
+                      callback: function($$v) {
+                        _vm.filteredProducts = $$v
+                      },
+                      expression: "filteredProducts"
+                    }
+                  },
+                  _vm._l(_vm.filteredProducts, function(product) {
+                    return _c(
+                      "div",
+                      {
+                        key: product.id,
+                        staticClass: "list-group-item product"
+                      },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(product.name) +
+                            " "
+                        ),
+                        _c("small", [_vm._v(_vm._s(product.comment))]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn-ico add-product",
+                            attrs: { "data-toggle": "modal" },
+                            on: {
+                              click: function($event) {
+                                return _vm.addProdToBasket(product)
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("")]
-                      )
-                    ]
-                  )
-                }),
-                0
-              )
-            ],
-            1
-          )
-        ])
-      ])
+                          },
+                          [_vm._v("")]
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ],
+              1
+            )
+          ])
+        ]
+      )
     ]
   )
 }

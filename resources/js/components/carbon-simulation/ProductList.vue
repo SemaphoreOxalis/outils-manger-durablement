@@ -1,10 +1,10 @@
 <template>
-    <div data-hover="" data-delay="0" class="dropdown ">
+    <div data-hover="" data-delay="0" class="dropdown" id="dropDownList">
         <button class="btn dropdown-toggle search-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Ajouter un produit
         </button>
 
-        <div class="dropdown-menu">
+        <div class="dropdown-menu" id="productList">
             <div class="row">
                 <div class="col-3">
                     <div v-for="category in categories"
@@ -27,7 +27,7 @@
                              class="list-group-item product"
                              :key="product.id">
                                 {{ product.name }} <small>{{ product.comment }}</small>
-                            <button @click="addProdToBasket(product)" class="btn-ico" data-toggle="modal"></button>
+                            <button @click="addProdToBasket(product)" class="btn-ico add-product" data-toggle="modal"></button>
                         </div>
 
                     </draggable>
@@ -79,8 +79,21 @@ export default {
             return this.products;
         }
     },
-    created() {
+    mounted() {
+        console.log('mounted');
         events.$on('clear-search-bar', this.clearSearchBar);
+
+        let _self = document.body;
+        $('#dropDownList')
+            .on('click', '.category', function() {
+                _self.closable = false
+            })
+            .on('click', '.add-product', function() {
+                _self.closable = true
+            })
+            .on('hide.bs.dropdown', function() {
+                return _self.closable
+            });
     },
     methods: {
         getClasses(categoryId) {

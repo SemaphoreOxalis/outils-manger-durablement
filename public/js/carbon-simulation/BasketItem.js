@@ -306,7 +306,7 @@ var render = function() {
                 expression: "search"
               }
             ],
-            staticClass: "input tool custom-input",
+            staticClass: "input tool custom-input browser-default",
             attrs: {
               type: "search",
               maxlength: "256",

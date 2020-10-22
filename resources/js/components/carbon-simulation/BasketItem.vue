@@ -18,7 +18,7 @@
                 <input type="search"
                        v-model="search"
                        @input="searchInBasket"
-                       class="input tool custom-input"
+                       class="input tool custom-input browser-default"
                        maxlength="256"
                        name="query"
                        placeholder="chercher dans le panier"
