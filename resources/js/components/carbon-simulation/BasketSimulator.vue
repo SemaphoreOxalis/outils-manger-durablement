@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div>
         <add-product-pop-up v-if="showAddingModal"
                             :product="this.productAdded"
                             :origins="this.origins"
@@ -29,14 +29,11 @@
             </search-bar>
         </div>
 
-        <div class="row">
-            <baskets-list class="col-8 flex"
-                          v-bind:origins="this.origins"
-                          v-bind:categories="this.categories"
-                          v-bind:product-to-add="this.productToAddWithDetails"
-                          @selected-baskets="setSelectedBaskets">
-            </baskets-list>
-        </div>
+        <baskets-list v-bind:origins="this.origins"
+                      v-bind:categories="this.categories"
+                      v-bind:product-to-add="this.productToAddWithDetails"
+                      @selected-baskets="setSelectedBaskets">
+        </baskets-list>
     </div>
 
 </template>

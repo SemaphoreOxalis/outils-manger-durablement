@@ -665,34 +665,6 @@ label {
     display: none;
 }
 
-/*************/
-/* MISC      */
-/*************/
-
-.info {
-    background-color: white;
-    border-radius: 1rem;
-}
-
-.back.button:hover {
-    text-decoration: none;
-}
-
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.login label {
-    margin: 0 0 0.5rem;
-}
-
-
-/**********************************/
-/* CARBON SIMULATOR               */
-/**********************************/
-
-
 /****************************APP CO2******************/
 
 /*********************/
@@ -1523,4 +1495,48 @@ ul.nav.nav-tabs {
     font-style: italic;
     font-weight: 400;
     text-align: center;
+}
+
+/*************/
+/* MISC      */
+/*************/
+
+.info {
+    background-color: white;
+    border-radius: 1rem;
+}
+
+.back.button:hover {
+    text-decoration: none;
+}
+
+#remember {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    opacity: 0;
+    pointer-events: auto;
+}
+
+[type="radio"]:not(:checked), [type="radio"]:checked {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.login label {
+    margin: 0 0 0.5rem;
+}
+
+.list-group-item.product:hover {
+    cursor: all-scroll;
+}
+
+i.icon-angle-down.reversed {
+    transform: rotate(180deg);
+}
+
+select {
+    display: inline-block;
 }

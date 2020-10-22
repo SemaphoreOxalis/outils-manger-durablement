@@ -1,61 +1,85 @@
 <template>
-    <div class="basket-results">
+    <div class="results-container">
 
-        <div class="nav justify-content-around">
-            <a class="nav-link active button alter"
-               :href="'#' + basketId + '-carbon-results'"
-               data-toggle="tab">Bilan CO2</a>
-            <a class="nav-link button alter"
-               :href="'#' + basketId + '-money-results'"
-               data-toggle="tab">Bilan €</a>
-        </div>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active button btn-2" id="basket1-carbon-tab" data-toggle="tab" :href="'#' + basketId + '-carbon'" role="tab" aria-controls="home"
+                   aria-selected="true">Bilan carbone</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link button btn-2" id="basket1-finance-tab" data-toggle="tab" :href="'#' + basketId + '-finance'" role="tab" aria-controls="profile"
+                   aria-selected="false">Bilan financier</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link button btn-2 nav-ico" id="#basket1-graph-tab" data-toggle="tab" :href="'#' + basketId + '-graph'" role="tab" aria-controls="contact"
+                   aria-selected="false"></a>
+            </li>
+        </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active"
-                 :id="basketId + '-carbon-results'">
-                <p>catégorie - impact global</p>
-                <p v-for="category in categories">
-                    {{ category.name }} :
 
-                    <a href="#" class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
-                        <span>
+            <div class="tab-pane fade show active" :id="basketId + '-carbon'" role="tabpanel">
+                <div v-for="category in categories" class="results-row flex-horizontal">
+                    <div class="results-categorie-name">{{ category.name }}</div>
+                    <div class="results-div">
+                        <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
+                            <span>
                             Impact produit : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
                             Impact transport : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}
                         </span>
-                    </a>
-                </p>
-                <hr>
-                <p>
-                    <strong>Total :</strong>
-                    <a href="#" class="info-bubble">{{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
-                        <span>
+                        </a>
+                    </div>
+                    <div class="results-div">+ 42 %</div>
+                </div>
+                <div class="results-row flex-horizontal final-results">
+                    <div class="results-categorie-name">Total</div>
+                    <div class="results-div">
+                        <a class="info-bubble">{{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
+                            <span>
                             Impact produit : {{ globalProductImpact.impact }} {{ globalProductImpact.unit }}<br>
                             Impact transport : {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }}
                         </span>
-                    </a>
-                </p>
+                        </a>
+                    </div>
+                    <div class="results-div">+ 42 %</div>
+                </div>
+                <div class="results-comment">
+                    <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
+                </div>
             </div>
 
-            <div class="tab-pane"
-                 :id="basketId + '-money-results'">
-                <p>catégorie - montant</p>
-                <p v-for="category in categories">
-                    {{ category.name }} :
-                    <a href="#" class="info-bubble">{{ category.moneySpent }} €
-                        <span>
+            <div class="tab-pane fade" :id="basketId + '-finance'" role="tabpanel">
+                <div v-for="category in categories" class="results-row flex-horizontal">
+                    <div class="results-categorie-name">{{ category.name }}</div>
+                    <div class="results-div">
+                        <a class="info-bubble">{{ category.moneySpent }} €
+                            <span>
                             {{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}
                         </span>
-                    </a>
-                </p>
-                <p>
-                    <strong>Total :</strong>
-                    <a href="#" class="info-bubble">{{ globalMoneySpend }} €
-                        <span>
+                        </a>
+                    </div>
+                    <div class="results-div">+ 42 %</div>
+                </div>
+                <div class="results-row flex-horizontal final-results">
+                    <div class="results-categorie-name">Total</div>
+                    <div class="results-div">
+                        <a class="info-bubble">{{ globalMoneySpend }} €
+                            <span>
                             {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
                         </span>
-                    </a>
-                </p>
+                        </a>
+                    </div>
+                    <div class="results-div">+ 42 %</div>
+                </div>
+                <div class="results-comment">
+                    <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
+                </div>
             </div>
+
+            <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
+                <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
+            </div>
+
         </div>
     </div>
 </template>
@@ -127,14 +151,6 @@
 </script>
 
 <style>
-.basket-results {
-    width: available;
-    border: 1px solid black;
-}
-a.nav-link.active {
-    background-color: var(--main-color);
-}
-
 .info-bubble:hover, .info-bubble:focus {
     background: rgba(0,0,0,.4);
     box-shadow: 0 1px 0 rgba(255,255,255,.4);

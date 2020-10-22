@@ -54,9 +54,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -175,7 +172,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.right {*/\n/*    border: 1px black solid;*/\n/*    min-height: 100px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.right {*/\n/*    border: 1px black solid;*/\n/*    min-height: 100px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -229,7 +226,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container" },
     [
       _vm.showAddingModal
         ? _c("add-product-pop-up", {
@@ -280,22 +276,14 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row" },
-        [
-          _c("baskets-list", {
-            staticClass: "col-8 flex",
-            attrs: {
-              origins: this.origins,
-              categories: this.categories,
-              "product-to-add": this.productToAddWithDetails
-            },
-            on: { "selected-baskets": _vm.setSelectedBaskets }
-          })
-        ],
-        1
-      )
+      _c("baskets-list", {
+        attrs: {
+          origins: this.origins,
+          categories: this.categories,
+          "product-to-add": this.productToAddWithDetails
+        },
+        on: { "selected-baskets": _vm.setSelectedBaskets }
+      })
     ],
     1
   )

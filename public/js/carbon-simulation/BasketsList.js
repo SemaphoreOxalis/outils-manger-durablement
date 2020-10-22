@@ -60,6 +60,18 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -160,77 +172,105 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "d-flex" },
-    [
-      _vm.showConfirmationModal
-        ? _c("action-confirmation", {
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "baskets-list" },
+      [
+        _vm.showConfirmationModal
+          ? _c("action-confirmation", {
+              attrs: {
+                action: this.action,
+                "affected-basket": this.affectedBasket,
+                "affected-basket-index": this.affectedBasketIndex
+              },
+              on: {
+                "exit-without-action": function($event) {
+                  _vm.showConfirmationModal = false
+                },
+                delete: _vm.deleteBasket,
+                clear: _vm.clearBasket
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showGroupedActionModal
+          ? _c("grouped-action-pop-up", {
+              attrs: { "affected-basket-index": this.affectedBasketIndex },
+              on: {
+                "francify-basket": _vm.francifyBasket,
+                "exit-without-grouped-action": function($event) {
+                  _vm.showGroupedActionModal = false
+                }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(this.baskets, function(basket, i) {
+          return _c("basket-item", {
+            key: basket.id,
             attrs: {
-              action: this.action,
-              "affected-basket": this.affectedBasket,
-              "affected-basket-index": this.affectedBasketIndex
+              basket: basket,
+              index: i,
+              origins: _vm.origins,
+              categories: _vm.categories,
+              "product-to-add": _vm.productToAdd
             },
             on: {
-              "exit-without-action": function($event) {
-                _vm.showConfirmationModal = false
-              },
-              delete: _vm.deleteBasket,
-              clear: _vm.clearBasket
+              "save-baskets": _vm.saveBasketsToLocalStorage,
+              "do-stuff": _vm.showGroupedActionPopUp,
+              "copy-basket": _vm.copyBasket,
+              "clear-basket": _vm.showConfirmationPopUp,
+              "delete-basket": _vm.showConfirmationPopUp
             }
           })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.showGroupedActionModal
-        ? _c("grouped-action-pop-up", {
-            attrs: { "affected-basket-index": this.affectedBasketIndex },
-            on: {
-              "francify-basket": _vm.francifyBasket,
-              "exit-without-grouped-action": function($event) {
-                _vm.showGroupedActionModal = false
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "basket" }, [
+          _c(
+            "a",
+            {
+              staticClass: "add-basket flex-horizontal",
+              on: {
+                click: function($event) {
+                  return _vm.addBasket()
+                }
               }
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(this.baskets, function(basket, i) {
-        return _c("basket-item", {
-          key: basket.id,
-          attrs: {
-            basket: basket,
-            index: i,
-            origins: _vm.origins,
-            categories: _vm.categories,
-            "product-to-add": _vm.productToAdd
-          },
-          on: {
-            "save-baskets": _vm.saveBasketsToLocalStorage,
-            "do-stuff": _vm.showGroupedActionPopUp,
-            "copy-basket": _vm.copyBasket,
-            "clear-basket": _vm.showConfirmationPopUp,
-            "delete-basket": _vm.showConfirmationPopUp
-          }
-        })
-      }),
-      _vm._v(" "),
-      _c("div", [
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                return _vm.addBasket()
-              }
-            }
-          },
-          [_vm._v("+")]
-        )
-      ])
-    ],
-    2
-  )
+            },
+            [
+              _c("div", { staticClass: "btn-ico" }, [_vm._v("")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "add-basket-text spacer-left" }, [
+                _vm._v("Nouveau panier vide")
+              ])
+            ]
+          )
+        ])
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control switch center" }, [
+      _c("label", [
+        _vm._v("\n            Comparer avec le premier panier "),
+        _c("input", {
+          staticClass: "custom-control-input",
+          attrs: { type: "checkbox" }
+        }),
+        _c("span", { staticClass: "lever" }),
+        _vm._v(" Comparer avec le panier précédent\n        ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

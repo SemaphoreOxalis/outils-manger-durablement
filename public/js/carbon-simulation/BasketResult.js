@@ -73,6 +73,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -148,7 +172,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.basket-results {\n    width: available;\n    border: 1px solid black;\n}\na.nav-link.active {\n    background-color: var(--main-color);\n}\n.info-bubble:hover, .info-bubble:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\n.info-bubble span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--dark-color);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n    z-index: 10;\n}\n.info-bubble:hover span, .info-bubble:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n", ""]);
+exports.push([module.i, "\n.info-bubble:hover, .info-bubble:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\n.info-bubble span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--dark-color);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n    z-index: 10;\n}\n.info-bubble:hover span, .info-bubble:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -200,107 +224,152 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "basket-results" }, [
-    _c("div", { staticClass: "nav justify-content-around" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link active button alter",
-          attrs: {
-            href: "#" + _vm.basketId + "-carbon-results",
-            "data-toggle": "tab"
-          }
-        },
-        [_vm._v("Bilan CO2")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "nav-link button alter",
-          attrs: {
-            href: "#" + _vm.basketId + "-money-results",
-            "data-toggle": "tab"
-          }
-        },
-        [_vm._v("Bilan €")]
-      )
-    ]),
+  return _c("div", { staticClass: "results-container" }, [
+    _c(
+      "ul",
+      { staticClass: "nav nav-tabs", attrs: { id: "myTab", role: "tablist" } },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active button btn-2",
+              attrs: {
+                id: "basket1-carbon-tab",
+                "data-toggle": "tab",
+                href: "#" + _vm.basketId + "-carbon",
+                role: "tab",
+                "aria-controls": "home",
+                "aria-selected": "true"
+              }
+            },
+            [_vm._v("Bilan carbone")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link button btn-2",
+              attrs: {
+                id: "basket1-finance-tab",
+                "data-toggle": "tab",
+                href: "#" + _vm.basketId + "-finance",
+                role: "tab",
+                "aria-controls": "profile",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("Bilan financier")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link button btn-2 nav-ico",
+              attrs: {
+                id: "#basket1-graph-tab",
+                "data-toggle": "tab",
+                href: "#" + _vm.basketId + "-graph",
+                role: "tab",
+                "aria-controls": "contact",
+                "aria-selected": "false"
+              }
+            },
+            [_vm._v("")]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "tab-content" }, [
       _c(
         "div",
         {
-          staticClass: "tab-pane active",
-          attrs: { id: _vm.basketId + "-carbon-results" }
+          staticClass: "tab-pane fade show active",
+          attrs: { id: _vm.basketId + "-carbon", role: "tabpanel" }
         },
         [
-          _c("p", [_vm._v("catégorie - impact global")]),
-          _vm._v(" "),
           _vm._l(_vm.categories, function(category) {
-            return _c("p", [
-              _vm._v(
-                "\n                " +
-                  _vm._s(category.name) +
-                  " :\n\n                "
-              ),
-              _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-                _vm._v(
-                  _vm._s(category.carbonFormattedImpact) +
-                    " " +
-                    _vm._s(category.carbonImpactUnit) +
-                    "\n                    "
-                ),
-                _c("span", [
+            return _c("div", { staticClass: "results-row flex-horizontal" }, [
+              _c("div", { staticClass: "results-categorie-name" }, [
+                _vm._v(_vm._s(category.name))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [
+                _c("a", { staticClass: "info-bubble" }, [
                   _vm._v(
-                    "\n                        Impact produit : " +
-                      _vm._s(category.productFormattedImpact) +
+                    _vm._s(category.carbonFormattedImpact) +
                       " " +
-                      _vm._s(category.productImpactUnit)
+                      _vm._s(category.carbonImpactUnit) +
+                      "\n                        "
                   ),
-                  _c("br"),
-                  _vm._v(
-                    "\n                        Impact transport : " +
-                      _vm._s(category.transportationFormattedImpact) +
-                      " " +
-                      _vm._s(category.transportationImpactUnit) +
-                      "\n                    "
-                  )
+                  _c("span", [
+                    _vm._v(
+                      "\n                        Impact produit : " +
+                        _vm._s(category.productFormattedImpact) +
+                        " " +
+                        _vm._s(category.productImpactUnit)
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      "\n                        Impact transport : " +
+                        _vm._s(category.transportationFormattedImpact) +
+                        " " +
+                        _vm._s(category.transportationImpactUnit) +
+                        "\n                    "
+                    )
+                  ])
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
             ])
           }),
           _vm._v(" "),
-          _c("hr"),
+          _c(
+            "div",
+            { staticClass: "results-row flex-horizontal final-results" },
+            [
+              _c("div", { staticClass: "results-categorie-name" }, [
+                _vm._v("Total")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [
+                _c("a", { staticClass: "info-bubble" }, [
+                  _vm._v(
+                    _vm._s(_vm.globalCarbonImpact.impact) +
+                      " " +
+                      _vm._s(_vm.globalCarbonImpact.unit) +
+                      "\n                        "
+                  ),
+                  _c("span", [
+                    _vm._v(
+                      "\n                        Impact produit : " +
+                        _vm._s(_vm.globalProductImpact.impact) +
+                        " " +
+                        _vm._s(_vm.globalProductImpact.unit)
+                    ),
+                    _c("br"),
+                    _vm._v(
+                      "\n                        Impact transport : " +
+                        _vm._s(_vm.globalTransportationImpact.impact) +
+                        " " +
+                        _vm._s(_vm.globalTransportationImpact.unit) +
+                        "\n                    "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+            ]
+          ),
           _vm._v(" "),
-          _c("p", [
-            _c("strong", [_vm._v("Total :")]),
-            _vm._v(" "),
-            _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-              _vm._v(
-                _vm._s(_vm.globalCarbonImpact.impact) +
-                  " " +
-                  _vm._s(_vm.globalCarbonImpact.unit) +
-                  "\n                    "
-              ),
-              _c("span", [
-                _vm._v(
-                  "\n                        Impact produit : " +
-                    _vm._s(_vm.globalProductImpact.impact) +
-                    " " +
-                    _vm._s(_vm.globalProductImpact.unit)
-                ),
-                _c("br"),
-                _vm._v(
-                  "\n                        Impact transport : " +
-                    _vm._s(_vm.globalTransportationImpact.impact) +
-                    " " +
-                    _vm._s(_vm.globalTransportationImpact.unit) +
-                    "\n                    "
-                )
-              ])
-            ])
-          ])
+          _vm._m(0)
         ],
         2
       ),
@@ -308,59 +377,121 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "tab-pane",
-          attrs: { id: _vm.basketId + "-money-results" }
+          staticClass: "tab-pane fade",
+          attrs: { id: _vm.basketId + "-finance", role: "tabpanel" }
         },
         [
-          _c("p", [_vm._v("catégorie - montant")]),
-          _vm._v(" "),
           _vm._l(_vm.categories, function(category) {
-            return _c("p", [
-              _vm._v(
-                "\n                " +
-                  _vm._s(category.name) +
-                  " :\n                "
-              ),
-              _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-                _vm._v(
-                  _vm._s(category.moneySpent) + " €\n                    "
-                ),
-                _c("span", [
+            return _c("div", { staticClass: "results-row flex-horizontal" }, [
+              _c("div", { staticClass: "results-categorie-name" }, [
+                _vm._v(_vm._s(category.name))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [
+                _c("a", { staticClass: "info-bubble" }, [
                   _vm._v(
-                    "\n                        " +
-                      _vm._s(category.co2PerEuroFormatted) +
-                      " " +
-                      _vm._s(category.co2PerEuroUnit) +
-                      "\n                    "
-                  )
+                    _vm._s(category.moneySpent) + " €\n                        "
+                  ),
+                  _c("span", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(category.co2PerEuroFormatted) +
+                        " " +
+                        _vm._s(category.co2PerEuroUnit) +
+                        "\n                    "
+                    )
+                  ])
                 ])
-              ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
             ])
           }),
           _vm._v(" "),
-          _c("p", [
-            _c("strong", [_vm._v("Total :")]),
-            _vm._v(" "),
-            _c("a", { staticClass: "info-bubble", attrs: { href: "#" } }, [
-              _vm._v(_vm._s(_vm.globalMoneySpend) + " €\n                    "),
-              _c("span", [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.globalCO2PerEuroFormatted) +
-                    " " +
-                    _vm._s(_vm.globalCO2PerEuroUnit) +
-                    "\n                    "
-                )
-              ])
-            ])
-          ])
+          _c(
+            "div",
+            { staticClass: "results-row flex-horizontal final-results" },
+            [
+              _c("div", { staticClass: "results-categorie-name" }, [
+                _vm._v("Total")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [
+                _c("a", { staticClass: "info-bubble" }, [
+                  _vm._v(
+                    _vm._s(_vm.globalMoneySpend) +
+                      " €\n                        "
+                  ),
+                  _c("span", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.globalCO2PerEuroFormatted) +
+                        " " +
+                        _vm._s(_vm.globalCO2PerEuroUnit) +
+                        "\n                    "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(1)
         ],
         2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "tab-pane fade",
+          attrs: {
+            id: _vm.basketId + "-graph",
+            role: "tabpanel",
+            "aria-labelledby": "contact-tab"
+          }
+        },
+        [
+          _c("canvas", {
+            attrs: {
+              id: _vm.basketId + "-chart",
+              width: "370px",
+              height: "400px"
+            }
+          })
+        ]
       )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "results-comment" }, [
+      _c("div", [
+        _vm._v(
+          "Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "results-comment" }, [
+      _c("div", [
+        _vm._v(
+          "Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion"
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -595,18 +726,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     getUnit: function getUnit(amount) {
       if (amount >= 2000000) {
-        return 'tonnes de CO²';
+        return 'tonnes de CO2';
       }
 
       if (amount >= 1000000) {
-        return 'tonne de CO²';
+        return 'tonne de CO2';
       }
 
       if (amount >= 1000) {
-        return 'kgCO²';
+        return 'kgCO2';
       }
 
-      return 'gCO²';
+      return 'gCO2';
     }
   }
 });

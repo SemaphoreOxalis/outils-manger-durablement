@@ -85,6 +85,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -206,169 +210,212 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex-grow-1" }, [
-    _c("div", [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.basket.isSelected,
-            expression: "basket.isSelected"
-          }
-        ],
-        attrs: { type: "checkbox" },
-        domProps: {
-          checked: Array.isArray(_vm.basket.isSelected)
-            ? _vm._i(_vm.basket.isSelected, null) > -1
-            : _vm.basket.isSelected
-        },
-        on: {
-          change: function($event) {
-            var $$a = _vm.basket.isSelected,
-              $$el = $event.target,
-              $$c = $$el.checked ? true : false
-            if (Array.isArray($$a)) {
-              var $$v = null,
-                $$i = _vm._i($$a, $$v)
-              if ($$el.checked) {
-                $$i < 0 && _vm.$set(_vm.basket, "isSelected", $$a.concat([$$v]))
-              } else {
-                $$i > -1 &&
-                  _vm.$set(
-                    _vm.basket,
-                    "isSelected",
-                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                  )
-              }
-            } else {
-              _vm.$set(_vm.basket, "isSelected", $$c)
-            }
-          }
-        }
-      }),
-      _vm._v(" Ajouter dans ce panier\n    ")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "flex" }, [
-      _c("h5", { staticClass: "text-center" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.basket.name,
-              expression: "basket.name"
-            }
-          ],
-          staticClass: "custom-input browser-default align-self-end",
-          attrs: { type: "text", required: "" },
-          domProps: { value: _vm.basket.name },
-          on: {
-            change: _vm.saveBasket,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.basket, "name", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.copyBasket } }, [_vm._v("copy")])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "flex" }, [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.search,
-            expression: "search"
-          }
-        ],
-        attrs: { type: "text", placeholder: "Chercher dans le panier" },
-        domProps: { value: _vm.search },
-        on: {
-          input: [
-            function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.search = $event.target.value
-            },
-            _vm.searchInBasket
-          ]
-        }
-      }),
-      _vm._v(" "),
-      _vm.containsProducts
-        ? _c("button", { on: { click: _vm.doStuff } }, [_vm._v("Do")])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.containsProducts
-        ? _c("button", { on: { click: _vm.clearBasket } }, [_vm._v("Empty")])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("button", { on: { click: _vm.deleteBasket } }, [_vm._v("X")])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "right col-12" },
-      [
+  return _c(
+    "div",
+    { staticClass: "basket" },
+    [
+      _c("div", { staticClass: "basket-header" }, [
         _c(
-          "draggable",
-          {
-            staticClass: "dragArea list-group h-100",
-            attrs: {
-              group: { name: "draggableProducts", pull: false },
-              filter: ".ignore-draggable",
-              preventOnFilter: false,
-              animation: 150
-            },
-            on: { change: _vm.saveBasket },
-            model: {
-              value: _vm.basket.products,
-              callback: function($$v) {
-                _vm.$set(_vm.basket, "products", $$v)
-              },
-              expression: "basket.products"
-            }
-          },
-          _vm._l(_vm.filteredProducts, function(product, i) {
-            return _c("basket-product", {
-              key: product.id,
-              attrs: {
-                product: product,
-                "basket-id": _vm.basket.id,
-                index: i,
-                origins: _vm.origins
+          "div",
+          { staticClass: "basket-select custom-control custom-checkbox" },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.basket.isSelected,
+                  expression: "basket.isSelected"
+                }
+              ],
+              staticClass: "custom-control-input",
+              attrs: { type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.basket.isSelected)
+                  ? _vm._i(_vm.basket.isSelected, null) > -1
+                  : _vm.basket.isSelected
               },
               on: {
-                "save-changes": _vm.saveBasket,
-                "remove-product": _vm.removeProduct
+                change: function($event) {
+                  var $$a = _vm.basket.isSelected,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(_vm.basket, "isSelected", $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.basket,
+                          "isSelected",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.basket, "isSelected", $$c)
+                  }
+                }
               }
-            })
-          }),
-          1
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "custom-control-label" }, [
+              _vm._v("Ajouter dans ce panier")
+            ])
+          ]
         ),
         _vm._v(" "),
-        _vm.containsProducts
-          ? _c("basket-result", {
-              attrs: {
-                products: _vm.basket.products,
-                categories: _vm.categories,
-                "basket-id": _vm.basket.id
+        _c("div", { staticClass: "basket-name" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.basket.name,
+                expression: "basket.name"
               }
-            })
-          : _vm._e()
-      ],
-      1
-    )
-  ])
+            ],
+            staticClass: "input custom-input browser-default",
+            attrs: { type: "text", required: "" },
+            domProps: { value: _vm.basket.name },
+            on: {
+              change: _vm.saveBasket,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.basket, "name", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("a", { staticClass: "btn-ico", on: { click: _vm.copyBasket } }, [
+            _vm._v("")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "basket-toolbox" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass: "input tool custom-input",
+            attrs: {
+              type: "search",
+              maxlength: "256",
+              name: "query",
+              placeholder: "chercher dans le panier",
+              required: ""
+            },
+            domProps: { value: _vm.search },
+            on: {
+              input: [
+                function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.search = $event.target.value
+                },
+                _vm.searchInBasket
+              ]
+            }
+          }),
+          _vm._v(" "),
+          _vm.containsProducts
+            ? _c(
+                "a",
+                { staticClass: "btn-ico alt tool", on: { click: _vm.doStuff } },
+                [_vm._v("")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.containsProducts
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn-ico alt tool",
+                  on: { click: _vm.clearBasket }
+                },
+                [_vm._v("")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn-ico alt tool",
+              on: { click: _vm.deleteBasket }
+            },
+            [_vm._v("")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "draggable",
+        {
+          staticClass: "dragArea",
+          attrs: {
+            group: { name: "draggableProducts", pull: false },
+            filter: ".ignore-draggable",
+            preventOnFilter: false,
+            animation: 150
+          },
+          on: { change: _vm.saveBasket },
+          model: {
+            value: _vm.basket.products,
+            callback: function($$v) {
+              _vm.$set(_vm.basket, "products", $$v)
+            },
+            expression: "basket.products"
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
+            },
+            _vm._l(_vm.filteredProducts, function(product, i) {
+              return _c("basket-product", {
+                key: product.id,
+                attrs: {
+                  product: product,
+                  "basket-id": _vm.basket.id,
+                  index: i,
+                  origins: _vm.origins
+                },
+                on: {
+                  "save-changes": _vm.saveBasket,
+                  "remove-product": _vm.removeProduct
+                }
+              })
+            }),
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _vm.containsProducts
+        ? _c("basket-result", {
+            attrs: {
+              products: _vm.basket.products,
+              categories: _vm.categories,
+              "basket-id": _vm.basket.id
+            }
+          })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

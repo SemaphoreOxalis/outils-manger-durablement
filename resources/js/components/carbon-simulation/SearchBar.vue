@@ -137,4 +137,8 @@
     background-color: var(--main-color-darker);
     color: var(--light-grey);
 }
+
+.search-bar.main-search .autocomplete {
+    display: block;
+}
 </style>

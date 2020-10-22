@@ -102,15 +102,15 @@ export default {
         },
         getUnit(amount) {
             if (amount >= 2000000) {
-                return 'tonnes de CO²';
+                return 'tonnes de CO2';
             }
             if (amount >= 1000000) {
-                return 'tonne de CO²';
+                return 'tonne de CO2';
             }
             if (amount >= 1000) {
-                return 'kgCO²';
+                return 'kgCO2';
             }
-            return 'gCO²';
+            return 'gCO2';
         },
     }
 }

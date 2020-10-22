@@ -142,7 +142,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.autocomplete {\n    padding: 0;\n    margin: 0;\n    border: 1px solid #eeeeee;\n    /* height: 120px; */\n    overflow: auto;\n}\n.autocomplete-result {\n    list-style: none;\n    text-align: left;\n    padding: 4px 2px;\n    cursor: pointer;\n}\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n.autocomplete-result.is-active,\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n", ""]);
+exports.push([module.i, "\n.autocomplete {\n    padding: 0;\n    margin: 0;\n    border: 1px solid #eeeeee;\n    /* height: 120px; */\n    overflow: auto;\n}\n.autocomplete-result {\n    list-style: none;\n    text-align: left;\n    padding: 4px 2px;\n    cursor: pointer;\n}\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n.autocomplete-result.is-active,\n.autocomplete-result:hover {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\n.search-bar.main-search .autocomplete {\n    display: block;\n}\n", ""]);
 
 // exports
 

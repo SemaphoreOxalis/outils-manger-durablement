@@ -1,35 +1,47 @@
 <template>
-    <div class="d-flex">
-        <action-confirmation v-if="showConfirmationModal"
-                            :action="this.action"
-                            :affected-basket="this.affectedBasket"
-                            :affected-basket-index="this.affectedBasketIndex"
-                            @exit-without-action="showConfirmationModal = false"
-                            @delete="deleteBasket"
-                            @clear="clearBasket">
-        </action-confirmation>
+    <div>
+        <div class="baskets-list">
+            <action-confirmation v-if="showConfirmationModal"
+                                 :action="this.action"
+                                 :affected-basket="this.affectedBasket"
+                                 :affected-basket-index="this.affectedBasketIndex"
+                                 @exit-without-action="showConfirmationModal = false"
+                                 @delete="deleteBasket"
+                                 @clear="clearBasket">
+            </action-confirmation>
 
-        <grouped-action-pop-up v-if="showGroupedActionModal"
-                               :affected-basket-index="this.affectedBasketIndex"
-                               @francify-basket="francifyBasket"
-                               @exit-without-grouped-action="showGroupedActionModal = false">
-        </grouped-action-pop-up>
+            <grouped-action-pop-up v-if="showGroupedActionModal"
+                                   :affected-basket-index="this.affectedBasketIndex"
+                                   @francify-basket="francifyBasket"
+                                   @exit-without-grouped-action="showGroupedActionModal = false">
+            </grouped-action-pop-up>
 
-        <basket-item v-for="(basket, i) in this.baskets"
-                     v-bind:key="basket.id"
-                     v-bind:basket="basket"
-                     v-bind:index="i"
-                     v-bind:origins="origins"
-                     v-bind:categories="categories"
-                     v-bind:product-to-add="productToAdd"
-                     @save-baskets="saveBasketsToLocalStorage"
-                     @do-stuff="showGroupedActionPopUp"
-                     @copy-basket="copyBasket"
-                     @clear-basket="showConfirmationPopUp"
-                     @delete-basket="showConfirmationPopUp">
-        </basket-item>
-        <div>
-            <button @click="addBasket()">+</button>
+            <basket-item v-for="(basket, i) in this.baskets"
+                         v-bind:key="basket.id"
+                         v-bind:basket="basket"
+                         v-bind:index="i"
+                         v-bind:origins="origins"
+                         v-bind:categories="categories"
+                         v-bind:product-to-add="productToAdd"
+                         @save-baskets="saveBasketsToLocalStorage"
+                         @do-stuff="showGroupedActionPopUp"
+                         @copy-basket="copyBasket"
+                         @clear-basket="showConfirmationPopUp"
+                         @delete-basket="showConfirmationPopUp">
+            </basket-item>
+
+            <div class="basket">
+                <a @click="addBasket()" class="add-basket flex-horizontal">
+                    <div class="btn-ico"></div>
+                    <div class="add-basket-text spacer-left">Nouveau panier vide</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="custom-control switch center">
+            <label>
+                Comparer avec le premier panier <input type="checkbox" class="custom-control-input"><span class="lever"></span> Comparer avec le panier précédent
+            </label>
         </div>
     </div>
 </template>

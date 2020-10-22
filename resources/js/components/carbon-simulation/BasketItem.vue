@@ -1,38 +1,42 @@
 <template>
-    <div class="flex-grow-1">
-        <div>
-            <input type="checkbox" v-model="basket.isSelected"> Ajouter dans ce panier
-        </div>
-        <div class="flex">
-            <h5 class="text-center">
+    <div class="basket">
+        <div class="basket-header">
+            <div class="basket-select custom-control custom-checkbox">
+                <input type="checkbox"
+                       v-model="basket.isSelected"
+                       class="custom-control-input"> <label class="custom-control-label">Ajouter dans ce panier</label>
+            </div>
+            <div class="basket-name">
                 <input v-model="basket.name"
                        @change="saveBasket"
-                       class="custom-input browser-default align-self-end"
+                       class="input custom-input browser-default"
                        type="text"
                        required>
-            </h5>
-            <button @click="copyBasket">copy</button>
+                <a @click="copyBasket" class="btn-ico"></a>
+            </div>
+            <div class="basket-toolbox">
+                <input type="search"
+                       v-model="search"
+                       @input="searchInBasket"
+                       class="input tool custom-input"
+                       maxlength="256"
+                       name="query"
+                       placeholder="chercher dans le panier"
+                       required="">
+                <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool"></a>
+                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool"></a>
+                <a @click="deleteBasket" class="btn-ico alt tool"></a>
+            </div>
         </div>
 
-        <div class="flex">
-            <input type="text"
-                   v-model="search"
-                   placeholder="Chercher dans le panier"
-                   @input="searchInBasket">
-            <button v-if="containsProducts" @click="doStuff">Do</button>
-            <button v-if="containsProducts" @click="clearBasket">Empty</button>
-            <button @click="deleteBasket">X</button>
-        </div>
-
-        <div class="right col-12">
-            <draggable v-model="basket.products"
-                       class="dragArea list-group h-100"
-                       :group="{ name: 'draggableProducts', pull: false }"
-                       @change="saveBasket"
-                       filter=".ignore-draggable"
-                       :preventOnFilter="false"
-                       :animation="150">
-
+        <draggable v-model="basket.products"
+                   class="dragArea"
+                   :group="{ name: 'draggableProducts', pull: false }"
+                   @change="saveBasket"
+                   filter=".ignore-draggable"
+                   :preventOnFilter="false"
+                   :animation="150">
+            <div class="basket--products-container my-custom-scrollbar my-custom-scrollbar-primary">
                 <basket-product v-for="(product, i) in filteredProducts"
                                 v-bind:key="product.id"
                                 v-bind:product="product"
@@ -42,15 +46,15 @@
                                 @save-changes="saveBasket"
                                 @remove-product="removeProduct">
                 </basket-product>
+            </div>
+        </draggable>
 
-            </draggable>
+        <basket-result v-if="containsProducts"
+                       :products="basket.products"
+                       :categories="categories"
+                       :basket-id="basket.id">
+        </basket-result>
 
-            <basket-result v-if="containsProducts"
-                           :products="basket.products"
-                           :categories="categories"
-                           :basket-id="basket.id">
-            </basket-result>
-        </div>
     </div>
 
 </template>
@@ -71,98 +75,98 @@ const draggable = () => import(
     'vuedraggable'
     );
 
-    export default {
-        components: {
-            BasketProduct,
-            BasketResult,
-            draggable
-        },
-        mixins: [
-            searchBar
-        ],
-        props: {
-            basket: Object,
-            index: Number,
-            origins: Array,
-            categories: Array,
-            productToAdd: Object,
-        },
-        data() {
-            return {
-                search: '',
-            }
-        },
-        watch: {
-            productToAdd(newProduct) {
-                if(this.basket.isSelected) {
-                    this.addProduct(newProduct);
-                }
-            }
-        },
-        computed: {
-            filteredProducts: function() {
-                if (this.search) {
-                    return this.searchWithSearchBar(this.basket.products);
-                }
-                return this.basket.products;
-            },
-            productCounter: function() {
-                if (this.basket.products.length > 0) {
-                    return Math.max(...this.basket.products.map(product => {
-                        return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
-                    }));
-                } else {
-                    return 0;
-                }
-            },
-            containsProducts: function() {
-                return this.basket.products.length > 0;
-            },
-        },
-        created() {
-            events.$on('get-internal-counters', this.sendInternalCounter);
-        },
-        mounted() {
-            this.sendInternalCounter();
-        },
-        methods: {
-            addProduct(product) {
-                let tempProd = { ...product};
-                tempProd.id = ('basket-product-' + (this.productCounter + 1));
-                this.basket.products.unshift(tempProd);
-                this.sendInternalCounter();
-                this.saveBasket();
-            },
-            removeProduct(productIndex) {
-                this.basket.products.splice(productIndex, 1);
-                this.saveBasket();
-            },
-
-            copyBasket() {
-                this.$emit('copy-basket', this.basket, this.index);
-            },
-            deleteBasket() {
-                this.$emit('delete-basket', this.basket, this.index, 'delete');
-            },
-            clearBasket() {
-                this.$emit('clear-basket', this.basket, this.index, 'clear');
-            },
-            saveBasket() {
-                this.$emit('save-baskets');
-            },
-            doStuff() {
-                this.$emit('do-stuff', this.index);
-            },
-
-            searchInBasket() {
-                this.$emit('search-in-basket', this.search, this.index);
-            },
-
-            sendInternalCounter() {
-                events.$emit('internal-counters', this.index, this.productCounter);
-            },
+export default {
+    components: {
+        BasketProduct,
+        BasketResult,
+        draggable
+    },
+    mixins: [
+        searchBar
+    ],
+    props: {
+        basket: Object,
+        index: Number,
+        origins: Array,
+        categories: Array,
+        productToAdd: Object,
+    },
+    data() {
+        return {
+            search: '',
         }
+    },
+    watch: {
+        productToAdd(newProduct) {
+            if (this.basket.isSelected) {
+                this.addProduct(newProduct);
+            }
+        }
+    },
+    computed: {
+        filteredProducts: function () {
+            if (this.search) {
+                return this.searchWithSearchBar(this.basket.products);
+            }
+            return this.basket.products;
+        },
+        productCounter: function () {
+            if (this.basket.products.length > 0) {
+                return Math.max(...this.basket.products.map(product => {
+                    return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
+                }));
+            } else {
+                return 0;
+            }
+        },
+        containsProducts: function () {
+            return this.basket.products.length > 0;
+        },
+    },
+    created() {
+        events.$on('get-internal-counters', this.sendInternalCounter);
+    },
+    mounted() {
+        this.sendInternalCounter();
+    },
+    methods: {
+        addProduct(product) {
+            let tempProd = {...product};
+            tempProd.id = ('basket-product-' + (this.productCounter + 1));
+            this.basket.products.unshift(tempProd);
+            this.sendInternalCounter();
+            this.saveBasket();
+        },
+        removeProduct(productIndex) {
+            this.basket.products.splice(productIndex, 1);
+            this.saveBasket();
+        },
+
+        copyBasket() {
+            this.$emit('copy-basket', this.basket, this.index);
+        },
+        deleteBasket() {
+            this.$emit('delete-basket', this.basket, this.index, 'delete');
+        },
+        clearBasket() {
+            this.$emit('clear-basket', this.basket, this.index, 'clear');
+        },
+        saveBasket() {
+            this.$emit('save-baskets');
+        },
+        doStuff() {
+            this.$emit('do-stuff', this.index);
+        },
+
+        searchInBasket() {
+            this.$emit('search-in-basket', this.search, this.index);
+        },
+
+        sendInternalCounter() {
+            events.$emit('internal-counters', this.index, this.productCounter);
+        },
     }
+}
 </script>
 
 <style>
