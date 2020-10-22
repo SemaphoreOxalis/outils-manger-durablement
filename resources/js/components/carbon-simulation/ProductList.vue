@@ -1,40 +1,37 @@
 <template>
-    <div>
-        <h3>Produits</h3>
-        <input type="text"
-               v-model="search"
-               placeholder="Chercher un produit">
-        <div class="row">
-            <div class="left col-4">
-                <div v-for="category in categories"
-                     :class="getClasses(category.id)"
-                     :key="category.id"
-                     @click="filterProdByCategory(category.id)">
+    <div data-hover="" data-delay="0" class="dropdown ">
+        <button class="btn dropdown-toggle search-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Ajouter un produit
+        </button>
 
-                    {{ category.name }}
-
-                </div>
-            </div>
-
-            <div class="middle col-8">
-                <draggable v-model="filteredProducts"
-                           class="dragArea list-group"
-                           :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
-                           :sort="false"
-                           chosenClass="moving"
-                           :clone="addProductByDrag">
-
-                    <div v-for="product in filteredProducts"
-                         class="list-group-item product d-flex justify-content-between"
-                         :key="product.id">
-                        <div>
-                            {{ product.name }}
-                            <small>{{ product.comment }}</small>
-                        </div>
-                        <button @click="addProdToBasket(product)" class="align-self-start">+</button>
+        <div class="dropdown-menu">
+            <div class="row">
+                <div class="col-3">
+                    <div v-for="category in categories"
+                         :class="getClasses(category.id)"
+                         :key="category.id"
+                         @click="filterProdByCategory(category.id)">
+                        {{ category.name }}
                     </div>
+                </div>
 
-                </draggable>
+                <div class="col-9">
+                    <draggable v-model="filteredProducts"
+                               class="dragArea list-group grid-list"
+                               :group="{ name: 'draggableProducts', pull: 'clone', put: false }"
+                               :sort="false"
+                               chosenClass="moving"
+                               :clone="addProductByDrag">
+
+                        <div v-for="product in filteredProducts"
+                             class="list-group-item product"
+                             :key="product.id">
+                                {{ product.name }} <small>{{ product.comment }}</small>
+                            <button @click="addProdToBasket(product)" class="btn-ico" data-toggle="modal"></button>
+                        </div>
+
+                    </draggable>
+                </div>
             </div>
         </div>
     </div>
@@ -88,9 +85,10 @@ export default {
     methods: {
         getClasses(categoryId) {
             return [
+                'dropdown-item',
                 'list-group-item',
                 'category',
-                categoryId === this.selectedCategoryId ? 'selected' : ''
+                categoryId === this.selectedCategoryId ? 'active' : ''
             ];
         },
         filterProdByCategory(categoryId) {
@@ -132,36 +130,36 @@ export default {
 </script>
 
 <style>
-.left {
-    border: 1px black solid;
-    padding: 2px;
-}
+/*.left {*/
+/*    border: 1px black solid;*/
+/*    padding: 2px;*/
+/*}*/
 
-.middle {
-    border: 1px black solid;
-    padding: 2px;
-}
+/*.middle {*/
+/*    border: 1px black solid;*/
+/*    padding: 2px;*/
+/*}*/
 
-.product {
-    cursor: grab;
-}
+/*.product {*/
+/*    cursor: grab;*/
+/*}*/
 
-.category {
-    cursor: pointer;
-}
+/*.category {*/
+/*    cursor: pointer;*/
+/*}*/
 
-.selected,
-.moving {
-    background-color: var(--main-color-darker);
-    color: var(--light-grey);
-}
+/*.selected,*/
+/*.moving {*/
+/*    background-color: var(--main-color-darker);*/
+/*    color: var(--light-grey);*/
+/*}*/
 
-input {
-    width: 50px;
-}
+/*input {*/
+/*    width: 50px;*/
+/*}*/
 
-select {
-    display: inline-block;
-    max-width: 200px;
-}
+/*select {*/
+/*    display: inline-block;*/
+/*    max-width: 200px;*/
+/*}*/
 </style>

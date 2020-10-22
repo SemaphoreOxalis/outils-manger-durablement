@@ -57,10 +57,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -179,7 +175,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.right {\n    border: 1px black solid;\n    min-height: 100px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.moving {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.right {*/\n/*    border: 1px black solid;*/\n/*    min-height: 100px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -254,8 +250,24 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "search mb-4" },
+        { staticClass: "search-bar main-search" },
         [
+          _c("product-list", {
+            attrs: {
+              categories: this.categories,
+              origins: this.origins,
+              products: this.products,
+              "selected-category-id": this.selectedCategoryId,
+              "selected-by-category": this.selectedByCategory,
+              counters: this.internalCounters
+            },
+            on: {
+              "filter-products-by-category": _vm.filterProductsByCategory,
+              "deselect-category": _vm.deselectCategories,
+              "add-product-to-basket": _vm.showAddingProductModal
+            }
+          }),
+          _vm._v(" "),
           _c("search-bar", {
             attrs: { products: this.products, focus: this.focusOnSearchBar },
             on: {
@@ -272,23 +284,6 @@ var render = function() {
         "div",
         { staticClass: "row" },
         [
-          _c("product-list", {
-            staticClass: "col-4",
-            attrs: {
-              categories: this.categories,
-              origins: this.origins,
-              products: this.products,
-              "selected-category-id": this.selectedCategoryId,
-              "selected-by-category": this.selectedByCategory,
-              counters: this.internalCounters
-            },
-            on: {
-              "filter-products-by-category": _vm.filterProductsByCategory,
-              "deselect-category": _vm.deselectCategories,
-              "add-product-to-basket": _vm.showAddingProductModal
-            }
-          }),
-          _vm._v(" "),
           _c("baskets-list", {
             staticClass: "col-8 flex",
             attrs: {

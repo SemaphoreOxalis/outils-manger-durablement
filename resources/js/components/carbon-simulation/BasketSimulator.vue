@@ -9,19 +9,8 @@
                             @exit-without-adding="showAddingModal = false">
         </add-product-pop-up>
 
-        <div class="search mb-4">
-            <search-bar :products="this.products"
-                        :focus="this.focusOnSearchBar"
-                        @search-complete="filterProductsBySearch"
-                        @product-chosen="showAddingProductModal"
-                        @lose-focus="loseFocusOnSearchBar">
-            </search-bar>
-        </div>
-
-        <div class="row">
-
-            <product-list class="col-4"
-                          v-bind:categories="this.categories"
+        <div class="search-bar main-search">
+            <product-list v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:products="this.products"
                           v-bind:selected-category-id="this.selectedCategoryId"
@@ -32,14 +21,21 @@
                           @add-product-to-basket="showAddingProductModal">
             </product-list>
 
+            <search-bar :products="this.products"
+                        :focus="this.focusOnSearchBar"
+                        @search-complete="filterProductsBySearch"
+                        @product-chosen="showAddingProductModal"
+                        @lose-focus="loseFocusOnSearchBar">
+            </search-bar>
+        </div>
 
+        <div class="row">
             <baskets-list class="col-8 flex"
                           v-bind:origins="this.origins"
                           v-bind:categories="this.categories"
                           v-bind:product-to-add="this.productToAddWithDetails"
                           @selected-baskets="setSelectedBaskets">
             </baskets-list>
-
         </div>
     </div>
 
@@ -169,26 +165,26 @@ export default {
 </script>
 
 <style>
-.right {
-    border: 1px black solid;
-    min-height: 100px;
-}
+/*.right {*/
+/*    border: 1px black solid;*/
+/*    min-height: 100px;*/
+/*}*/
 
-.product {
-    cursor: grab;
-}
+/*.product {*/
+/*    cursor: grab;*/
+/*}*/
 
-.moving {
-    background-color: var(--main-color-darker);
-    color: var(--light-grey);
-}
+/*.moving {*/
+/*    background-color: var(--main-color-darker);*/
+/*    color: var(--light-grey);*/
+/*}*/
 
-input {
-    width: 50px;
-}
+/*input {*/
+/*    width: 50px;*/
+/*}*/
 
-select {
-    display: inline-block;
-    max-width: 200px;
-}
+/*select {*/
+/*    display: inline-block;*/
+/*    max-width: 200px;*/
+/*}*/
 </style>

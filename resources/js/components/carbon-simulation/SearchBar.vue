@@ -1,7 +1,9 @@
 <template>
     <div class="autocomplete">
-        <input type="text"
+        <input type="search" name="query" id="search"
+               class="input search custom-input browser-default"
                v-model="search"
+               maxlength="256"
                placeholder="Taper le nom de votre produit"
                ref="searchBar"
                @input="onChange"

@@ -61,9 +61,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
 
 
 var draggable = function draggable() {
@@ -112,7 +109,7 @@ var draggable = function draggable() {
   },
   methods: {
     getClasses: function getClasses(categoryId) {
-      return ['list-group-item', 'category', categoryId === this.selectedCategoryId ? 'selected' : ''];
+      return ['dropdown-item', 'list-group-item', 'category', categoryId === this.selectedCategoryId ? 'active' : ''];
     },
     filterProdByCategory: function filterProdByCategory(categoryId) {
       this.$emit('filter-products-by-category', categoryId);
@@ -165,7 +162,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.left {\n    border: 1px black solid;\n    padding: 2px;\n}\n.middle {\n    border: 1px black solid;\n    padding: 2px;\n}\n.product {\n    cursor: -webkit-grab;\n    cursor: grab;\n}\n.category {\n    cursor: pointer;\n}\n.selected,\n.moving {\n    background-color: var(--main-color-darker);\n    color: var(--light-grey);\n}\ninput {\n    width: 50px;\n}\nselect {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.left {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.middle {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.category {*/\n/*    cursor: pointer;*/\n/*}*/\n\n/*.selected,*/\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -217,120 +214,119 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h3", [_vm._v("Produits")]),
-    _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.search,
-          expression: "search"
-        }
-      ],
-      attrs: { type: "text", placeholder: "Chercher un produit" },
-      domProps: { value: _vm.search },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.search = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
+  return _c(
+    "div",
+    {
+      staticClass: "dropdown ",
+      attrs: { "data-hover": "", "data-delay": "0" }
+    },
+    [
       _c(
-        "div",
-        { staticClass: "left col-4" },
-        _vm._l(_vm.categories, function(category) {
-          return _c(
-            "div",
-            {
-              key: category.id,
-              class: _vm.getClasses(category.id),
-              on: {
-                click: function($event) {
-                  return _vm.filterProdByCategory(category.id)
-                }
-              }
-            },
-            [
-              _vm._v(
-                "\n\n                " +
-                  _vm._s(category.name) +
-                  "\n\n            "
-              )
-            ]
-          )
-        }),
-        0
+        "button",
+        {
+          staticClass: "btn dropdown-toggle search-menu",
+          attrs: {
+            type: "button",
+            "data-toggle": "dropdown",
+            "aria-haspopup": "true",
+            "aria-expanded": "false"
+          }
+        },
+        [_vm._v("\n        Ajouter un produit\n    ")]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "middle col-8" },
-        [
+      _c("div", { staticClass: "dropdown-menu" }, [
+        _c("div", { staticClass: "row" }, [
           _c(
-            "draggable",
-            {
-              staticClass: "dragArea list-group",
-              attrs: {
-                group: { name: "draggableProducts", pull: "clone", put: false },
-                sort: false,
-                chosenClass: "moving",
-                clone: _vm.addProductByDrag
-              },
-              model: {
-                value: _vm.filteredProducts,
-                callback: function($$v) {
-                  _vm.filteredProducts = $$v
-                },
-                expression: "filteredProducts"
-              }
-            },
-            _vm._l(_vm.filteredProducts, function(product) {
+            "div",
+            { staticClass: "col-3" },
+            _vm._l(_vm.categories, function(category) {
               return _c(
                 "div",
                 {
-                  key: product.id,
-                  staticClass:
-                    "list-group-item product d-flex justify-content-between"
+                  key: category.id,
+                  class: _vm.getClasses(category.id),
+                  on: {
+                    click: function($event) {
+                      return _vm.filterProdByCategory(category.id)
+                    }
+                  }
                 },
                 [
-                  _c("div", [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(product.name) +
-                        "\n                        "
-                    ),
-                    _c("small", [_vm._v(_vm._s(product.comment))])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "align-self-start",
-                      on: {
-                        click: function($event) {
-                          return _vm.addProdToBasket(product)
-                        }
-                      }
-                    },
-                    [_vm._v("+")]
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(category.name) +
+                      "\n                "
                   )
                 ]
               )
             }),
             0
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-9" },
+            [
+              _c(
+                "draggable",
+                {
+                  staticClass: "dragArea list-group grid-list",
+                  attrs: {
+                    group: {
+                      name: "draggableProducts",
+                      pull: "clone",
+                      put: false
+                    },
+                    sort: false,
+                    chosenClass: "moving",
+                    clone: _vm.addProductByDrag
+                  },
+                  model: {
+                    value: _vm.filteredProducts,
+                    callback: function($$v) {
+                      _vm.filteredProducts = $$v
+                    },
+                    expression: "filteredProducts"
+                  }
+                },
+                _vm._l(_vm.filteredProducts, function(product) {
+                  return _c(
+                    "div",
+                    { key: product.id, staticClass: "list-group-item product" },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(product.name) +
+                          " "
+                      ),
+                      _c("small", [_vm._v(_vm._s(product.comment))]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn-ico",
+                          attrs: { "data-toggle": "modal" },
+                          on: {
+                            click: function($event) {
+                              return _vm.addProdToBasket(product)
+                            }
+                          }
+                        },
+                        [_vm._v("")]
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ],
+            1
           )
-        ],
-        1
-      )
-    ])
-  ])
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -80,12 +80,15 @@ export default {
             if (this.productToAdd.price < 0.01) {
                 return true;
             }
+            if (this.productToAdd.origin === '') {
+                return true;
+            }
 
             return false
         }
     },
     created() {
-        this.productToAdd = {...this.product, id: 'product_to_add_' + this.product.id, amount: 1, price: 1, origin: this.origins[2]};
+        this.productToAdd = {...this.product, id: 'product_to_add_' + this.product.id, amount: 1, price: 1, origin: ''};
         let self = this;
         Vue.nextTick().then(function () {
             self.$refs.qty.focus();

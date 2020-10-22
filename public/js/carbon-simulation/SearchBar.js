@@ -41,6 +41,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 // from https://www.digitalocean.com/community/tutorials/vuejs-vue-autocomplete-component
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -203,7 +205,14 @@ var render = function() {
         }
       ],
       ref: "searchBar",
-      attrs: { type: "text", placeholder: "Taper le nom de votre produit" },
+      staticClass: "input search custom-input browser-default",
+      attrs: {
+        type: "search",
+        name: "query",
+        id: "search",
+        maxlength: "256",
+        placeholder: "Taper le nom de votre produit"
+      },
       domProps: { value: _vm.search },
       on: {
         input: [

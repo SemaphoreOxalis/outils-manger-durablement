@@ -97,6 +97,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return true;
       }
 
+      if (this.productToAdd.origin === '') {
+        return true;
+      }
+
       return false;
     }
   },
@@ -105,7 +109,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       id: 'product_to_add_' + this.product.id,
       amount: 1,
       price: 1,
-      origin: this.origins[2]
+      origin: ''
     });
     var self = this;
     Vue.nextTick().then(function () {
