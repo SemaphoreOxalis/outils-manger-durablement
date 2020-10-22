@@ -6,7 +6,7 @@
 
                 <div class="flex justify-content-between">
                     <div>
-                        <span>{{ product.name }}</span>
+                        <span>{{ product.name }}</span> <small>{{ product.origin.from }}</small>
                         <a v-if="product.comment" href="#" class="info-bubble">?
                             <span>{{ product.comment }}</span>
                         </a>
@@ -121,9 +121,6 @@ export default {
 </script>
 
 <style>
-.info-bubble {
-    color: #ccc;
-}
 .info-bubble:hover, .info-bubble:focus {
     background: rgba(0,0,0,.4);
     box-shadow: 0 1px 0 rgba(255,255,255,.4);

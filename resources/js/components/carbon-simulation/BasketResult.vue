@@ -13,32 +13,47 @@
         <div class="tab-content">
             <div class="tab-pane active"
                  :id="basketId + '-carbon-results'">
-                <p>catégorie - impact produit - impact transport - impact global</p>
+                <p>catégorie - impact global</p>
                 <p v-for="category in categories">
                     {{ category.name }} :
-                    {{ category.productFormattedImpact }} {{ category.productImpactUnit }} -
-                    {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }} -
-                    {{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
+
+                    <a href="#" class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
+                        <span>
+                            Impact produit : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
+                            Impact transport : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}
+                        </span>
+                    </a>
                 </p>
                 <hr>
                 <p>
                     <strong>Total :</strong>
-                    {{ globalProductImpact.impact }} {{ globalProductImpact.unit }} -
-                    {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }} -
-                    {{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
+                    <a href="#" class="info-bubble">{{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
+                        <span>
+                            Impact produit : {{ globalProductImpact.impact }} {{ globalProductImpact.unit }}<br>
+                            Impact transport : {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }}
+                        </span>
+                    </a>
                 </p>
             </div>
 
             <div class="tab-pane"
                  :id="basketId + '-money-results'">
-                <p>catégorie - montant - CO2 par €</p>
+                <p>catégorie - montant</p>
                 <p v-for="category in categories">
                     {{ category.name }} :
-                    {{ category.moneySpent }} € -
-                    {{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }} -
+                    <a href="#" class="info-bubble">{{ category.moneySpent }} €
+                        <span>
+                            {{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}
+                        </span>
+                    </a>
                 </p>
                 <p>
-                    <strong>Total :</strong> {{ globalMoneySpend }} € - {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
+                    <strong>Total :</strong>
+                    <a href="#" class="info-bubble">{{ globalMoneySpend }} €
+                        <span>
+                            {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
+                        </span>
+                    </a>
                 </p>
             </div>
         </div>
@@ -47,10 +62,12 @@
 
 <script>
     import NumberFormatter from "../../helpers/NumberFormatter";
+    import basketLogic from "../../helpers/carbon-simulation/calculations/basketLogic";
 
     export default {
         mixins: [
-              NumberFormatter
+            basketLogic,
+            NumberFormatter
         ],
         props: {
             products: Array,
@@ -80,8 +97,10 @@
                 globalCO2PerEuroUnit: String,
             }
         },
-        created() {
-            this.updateResults();
+        mounted() {
+            setTimeout(() => {
+                this.updateResults();
+            }, 1500);
         },
         methods: {
             updateResults() {
@@ -98,121 +117,11 @@
                     this.getCarbonImpactFor(category);
                 })
             },
-            getCarbonImpactFor(category) {
-                let categoryProductImpact = 0;
-                let categoryTransportationImpact = 0;
-                let categoryCarbonImpact = 0;
-
-                let categoryProducts = this.products.filter(product => {
-                    return product.category.id === category.id
-                });
-
-                categoryProducts.forEach(product => {
-                    let productImpact = 0;
-                    let transportationImpact = 0;
-                    let carbonImpact = 0;
-
-                    productImpact = (product.amount * product.emissionFactor);
-                    transportationImpact = (product.amount * product.origin.carbonImpactPerKg);
-                    carbonImpact = productImpact + transportationImpact;
-
-                    categoryProductImpact += productImpact;
-                    categoryTransportationImpact += transportationImpact;
-                    categoryCarbonImpact += carbonImpact;
-                });
-
-                category.productImpact = this.roundToThreeDecimal(categoryProductImpact);
-                category.transportationImpact = this.roundToThreeDecimal(categoryTransportationImpact);
-                category.carbonImpact = this.roundToThreeDecimal(categoryCarbonImpact);
-
-                category.productFormattedImpact = this.divideIfNecessary(categoryProductImpact);
-                category.transportationFormattedImpact = this.divideIfNecessary(categoryTransportationImpact);
-                category.carbonFormattedImpact = this.divideIfNecessary(categoryCarbonImpact);
-
-                category.productImpactUnit = this.getUnit(categoryProductImpact);
-                category.transportationImpactUnit = this.getUnit(categoryTransportationImpact);
-                category.carbonImpactUnit = this.getUnit(categoryCarbonImpact);
-            },
-            getGlobalCarbonImpact() {
-                this.categories.forEach(category => {
-                    this.globalProductImpact.impact = 0;
-                    this.globalTransportationImpact.impact = 0;
-                    this.globalCarbonImpact.impact = 0;
-
-                    this.categories.forEach(category => {
-                        this.globalProductImpact.impact += category.productImpact;
-                        this.globalTransportationImpact.impact += category.transportationImpact;
-                        this.globalCarbonImpact.impact += category.carbonImpact;
-                    });
-
-                    this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
-                    this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
-                    this.globalCarbonImpact.unit = this.getUnit(this.globalCarbonImpact.impact);
-
-                    this.globalProductImpact.impact = this.divideIfNecessary(this.globalProductImpact.impact);
-                    this.globalTransportationImpact.impact = this.divideIfNecessary(this.globalTransportationImpact.impact);
-                    this.globalCarbonImpact.impact = this.divideIfNecessary(this.globalCarbonImpact.impact);
-                });
-            },
-
             getMoneyImpactByCategory() {
                 this.categories.forEach(category => {
                     this.getMoneyImpactFor(category);
                 })
             },
-            getMoneyImpactFor(category) {
-                let categoryMoneySpent = 0;
-
-                let categoryProducts = this.products.filter(product => {
-                    return product.category.id === category.id
-                });
-
-                categoryProducts.forEach(product => {
-                    let productPrice = parseFloat(product.price);
-                    categoryMoneySpent += productPrice;
-                });
-
-                category.moneySpent = categoryMoneySpent;
-                category.co2PerEuro = category.carbonImpact / categoryMoneySpent;
-                category.co2PerEuroFormatted = this.divideIfNecessary(category.co2PerEuro);
-                category.co2PerEuroUnit = this.getUnit(category.co2PerEuro) + '/€';
-            },
-            getGlobalMoneyImpact() {
-                this.categories.forEach(category => {
-                    this.globalMoneySpend = 0;
-                    this.globalCO2PerEuro = 0;
-
-                    this.categories.forEach(category => {
-                        this.globalMoneySpend += category.moneySpent;
-                        this.globalCO2PerEuro += category.co2PerEuro;
-                    });
-
-                    this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
-                    this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
-                });
-            },
-
-            divideIfNecessary(amount) {
-                if (amount >= 1000000) {
-                    return this.roundToThreeDecimal(amount / 1000000);
-                }
-                if (amount >= 1000) {
-                    return this.roundToThreeDecimal(amount / 1000);
-                }
-                return this.roundToOneDecimal(amount);
-            },
-            getUnit(amount) {
-                if (amount >= 2000000) {
-                    return 'tonnes de CO²';
-                }
-                if (amount >= 1000000) {
-                    return 'tonne de CO²';
-                }
-                if (amount >= 1000) {
-                    return 'kgCO²';
-                }
-                return 'gCO²';
-            }
         },
     }
 </script>
@@ -224,5 +133,29 @@
 }
 a.nav-link.active {
     background-color: var(--main-color);
+}
+
+.info-bubble:hover, .info-bubble:focus {
+    background: rgba(0,0,0,.4);
+    box-shadow: 0 1px 0 rgba(255,255,255,.4);
+}
+
+.info-bubble span {
+    position: absolute;
+    margin-top: 23px;
+    margin-left: -35px;
+    background-color: var(--main-color);
+    color: var(--dark-color);
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(0,0,0,.5);
+    transform: scale(0) rotate(-12deg);
+    transition: all .25s;
+    opacity: 0;
+    z-index: 10;
+}
+.info-bubble:hover span, .info-bubble:focus span {
+    transform: scale(1) rotate(0);
+    opacity: 1;
 }
 </style>

@@ -142,7 +142,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.info-bubble {\n    color: #ccc;\n}\n.info-bubble:hover, .info-bubble:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\n.info-bubble span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--dark-color);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n    z-index: 10;\n}\n.info-bubble:hover span, .info-bubble:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n.opened {\n    background-color: var(--second-color);\n}\n.radio-boxes {\n    opacity: 1 !important;\n}\n\n", ""]);
+exports.push([module.i, "\n.info-bubble:hover, .info-bubble:focus {\n    background: rgba(0,0,0,.4);\n    box-shadow: 0 1px 0 rgba(255,255,255,.4);\n}\n.info-bubble span {\n    position: absolute;\n    margin-top: 23px;\n    margin-left: -35px;\n    background-color: var(--main-color);\n    color: var(--dark-color);\n    padding: 15px;\n    border-radius: 3px;\n    box-shadow: 0 0 2px rgba(0,0,0,.5);\n    transform: scale(0) rotate(-12deg);\n    transition: all .25s;\n    opacity: 0;\n    z-index: 10;\n}\n.info-bubble:hover span, .info-bubble:focus span {\n    transform: scale(1) rotate(0);\n    opacity: 1;\n}\n.opened {\n    background-color: var(--second-color);\n}\n.radio-boxes {\n    opacity: 1 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -206,6 +206,8 @@ var render = function() {
           _c("div", { staticClass: "flex justify-content-between" }, [
             _c("div", [
               _c("span", [_vm._v(_vm._s(_vm.product.name))]),
+              _vm._v(" "),
+              _c("small", [_vm._v(_vm._s(_vm.product.origin.from))]),
               _vm._v(" "),
               _vm.product.comment
                 ? _c(
