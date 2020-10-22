@@ -97,7 +97,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
+          _c("div", { staticClass: "help-modal modal-footer" }, [
             _c(
               "button",
               {

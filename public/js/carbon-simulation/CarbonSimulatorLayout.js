@@ -40,12 +40,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "main",
+    { staticClass: "container" },
     [
-      _c("h1", { attrs: { id: "title" } }, [
-        _vm._v(_vm._s(_vm.waste_simulator)),
-        _c("br"),
-        _vm._v(_vm._s(_vm.for_collective_restauration))
+      _c("h1", { staticClass: "header" }, [
+        _vm._v("Simulateur d'émission carbone pour la restauration collective")
       ]),
       _vm._v(" "),
       _c("router-view")

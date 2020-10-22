@@ -61,6 +61,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -127,176 +140,261 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "modal" } }, [
-    _c("div", { staticClass: "modal-mask" }, [
-      _c("div", { staticClass: "modal-wrapper" }, [
+  return _c(
+    "transition",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        name: "modal",
+        id: "basicExampleModal",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-mask" }, [
         _c(
           "div",
-          { ref: "modal", staticClass: "modal-container text-center" },
+          { staticClass: "modal-wrapper modal-dialog modal-dialog-centered" },
           [
-            _c("div", { staticClass: "modal-header" }, [
-              _c("small", [_vm._v(_vm._s(_vm.add_popup.help))])
-            ]),
-            _vm._v(" "),
             _c(
               "div",
-              { staticClass: "modal-body" },
+              { ref: "modal", staticClass: "modal-container modal-content" },
               [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.add_popup.you_are_adding) +
-                    " "
-                ),
-                _c("strong", [_vm._v(_vm._s(this.productToAdd.name))]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(_vm._s(_vm.add_popup.by_this_amount) + " "),
-                _c("input", {
-                  directives: [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c("small", [_vm._v(_vm._s(_vm.add_popup.help))]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.productToAdd.amount,
-                      expression: "productToAdd.amount"
-                    }
-                  ],
-                  ref: "qty",
-                  staticClass: "number-field custom-input browser-default",
-                  attrs: { type: "number", min: "0", required: "" },
-                  domProps: { value: _vm.productToAdd.amount },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.productToAdd, "amount", $event.target.value)
-                    }
-                  }
-                }),
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      },
+                      on: { click: _vm.exit }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
                 _vm._v(" "),
-                _c("small", [_vm._v(_vm._s(this.productToAdd.unit.unit))]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(_vm._s(_vm.add_popup.for_that_much_$) + " "),
-                _c("input", {
-                  directives: [
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "h5",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.productToAdd.price,
-                      expression: "productToAdd.price"
-                    }
-                  ],
-                  staticClass: "number-field custom-input browser-default",
-                  attrs: { type: "number", min: "0", required: "" },
-                  domProps: { value: _vm.productToAdd.price },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                      staticClass: "modal-title",
+                      attrs: { id: "exampleModalLabel" }
+                    },
+                    [
+                      _vm._v(_vm._s(_vm.add_popup.you_are_adding) + " "),
+                      _c("strong", [_vm._v(_vm._s(this.productToAdd.name))])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "results-row" }, [
+                    _vm._v(
+                      _vm._s(_vm.add_popup.by_this_amount) +
+                        "\n                        "
+                    ),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.productToAdd.amount,
+                          expression: "productToAdd.amount"
+                        }
+                      ],
+                      ref: "qty",
+                      staticClass:
+                        "number-field custom-input browser-default input",
+                      attrs: { type: "number", min: "0", required: "required" },
+                      domProps: { value: _vm.productToAdd.amount },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.productToAdd,
+                            "amount",
+                            $event.target.value
+                          )
+                        }
                       }
-                      _vm.$set(_vm.productToAdd, "price", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" €\n                    "),
-                _c("br"),
-                _vm._v(_vm._s(_vm.add_popup.from) + " "),
-                _c(
-                  "select",
-                  {
-                    directives: [
+                    }),
+                    _vm._v(" "),
+                    _c("small", [_vm._v(_vm._s(this.productToAdd.unit.unit))])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "results-row" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.add_popup.for_that_much_$) +
+                        " "
+                    ),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.productToAdd.price,
+                          expression: "productToAdd.price"
+                        }
+                      ],
+                      staticClass:
+                        "number-field custom-input browser-default input",
+                      attrs: { type: "number", min: "0", required: "required" },
+                      domProps: { value: _vm.productToAdd.price },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.productToAdd,
+                            "price",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" €\n                    ")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "results-row" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.add_popup.from) +
+                        "\n                        "
+                    ),
+                    _c(
+                      "select",
                       {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.productToAdd.origin,
-                        expression: "productToAdd.origin"
-                      }
-                    ],
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.productToAdd,
-                          "origin",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.origins, function(origin) {
-                    return _c("option", { domProps: { value: origin } }, [
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.productToAdd.origin,
+                            expression: "productToAdd.origin"
+                          }
+                        ],
+                        staticClass: "custom-select input",
+                        attrs: {
+                          id: "origine-4",
+                          name: "origine-4",
+                          "data-name": "Origine 4"
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.productToAdd,
+                              "origin",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("Choisir")
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.origins, function(origin) {
+                          return _c("option", { domProps: { value: origin } }, [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(origin.from) +
+                                "\n                            "
+                            )
+                          ])
+                        })
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "results-row" },
+                    [
                       _vm._v(
-                        "\n                                              " +
-                          _vm._s(origin.from) +
-                          "\n                                          "
-                      )
-                    ])
-                  }),
-                  0
-                ),
+                        _vm._s(_vm.add_popup.in_baskets) +
+                          "\n                        "
+                      ),
+                      _vm._l(_vm.selectedBaskets, function(basket, i) {
+                        return _c("span", [
+                          i == _vm.selectedBaskets.length - 1
+                            ? _c("span", [
+                                _c("strong", [_vm._v(_vm._s(basket.name))])
+                              ])
+                            : _c("span", [
+                                _c("strong", [_vm._v(_vm._s(basket.name))]),
+                                _vm._v(",\n                        ")
+                              ])
+                        ])
+                      })
+                    ],
+                    2
+                  )
+                ]),
                 _vm._v(" "),
-                _c("br"),
-                _vm._v(
-                  _vm._s(_vm.add_popup.in_baskets) + "\n                    "
-                ),
-                _vm._l(_vm.selectedBaskets, function(basket, i) {
-                  return _c("span", [
-                    i == _vm.selectedBaskets.length - 1
-                      ? _c("span", [_vm._v('"' + _vm._s(basket.name) + '"')])
-                      : _c("span", [_vm._v('"' + _vm._s(basket.name) + '", ')])
-                  ])
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "modal-default-button button",
-                  attrs: { disabled: _vm.isInputInvalid },
-                  on: { click: _vm.add }
-                },
-                [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.add_popup.ok) +
-                      "\n                    "
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "modal-default-button button",
+                      attrs: { disabled: _vm.isInputInvalid },
+                      on: { click: _vm.add }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.add_popup.ok) +
+                          "\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "modal-default-button button alter",
+                      on: { click: _vm.exit }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.add_popup.cancel) +
+                          "\n                    "
+                      )
+                    ]
                   )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "modal-default-button button alter",
-                  on: { click: _vm.exit }
-                },
-                [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.add_popup.cancel) +
-                      "\n                    "
-                  )
-                ]
-              )
-            ])
+                ])
+              ]
+            )
           ]
         )
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
