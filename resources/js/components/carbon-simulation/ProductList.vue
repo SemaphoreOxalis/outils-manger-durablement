@@ -147,38 +147,3 @@ export default {
     }
 }
 </script>
-
-<style>
-/*.left {*/
-/*    border: 1px black solid;*/
-/*    padding: 2px;*/
-/*}*/
-
-/*.middle {*/
-/*    border: 1px black solid;*/
-/*    padding: 2px;*/
-/*}*/
-
-/*.product {*/
-/*    cursor: grab;*/
-/*}*/
-
-/*.category {*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*.selected,*/
-/*.moving {*/
-/*    background-color: var(--main-color-darker);*/
-/*    color: var(--light-grey);*/
-/*}*/
-
-/*input {*/
-/*    width: 50px;*/
-/*}*/
-
-/*select {*/
-/*    display: inline-block;*/
-/*    max-width: 200px;*/
-/*}*/
-</style>

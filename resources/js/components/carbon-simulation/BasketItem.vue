@@ -48,6 +48,8 @@
         </draggable>
 
         <basket-result v-if="containsProducts"
+                       :is-first="isFirst"
+                       :previous-basket="previousBasket"
                        :products="basket.products"
                        :categories="categories"
                        :basket-id="basket.id">
@@ -88,6 +90,7 @@ export default {
         origins: Array,
         categories: Array,
         productToAdd: Object,
+        previousBasket: Object,
     },
     data() {
         return {
@@ -119,6 +122,9 @@ export default {
         },
         containsProducts: function () {
             return this.basket.products.length > 0;
+        },
+        isFirst() {
+            return this.index === 0;
         },
     },
     created() {
@@ -166,7 +172,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>

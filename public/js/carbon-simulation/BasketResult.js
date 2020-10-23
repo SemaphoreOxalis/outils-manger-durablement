@@ -104,7 +104,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     products: Array,
     categories: Array,
-    basketId: String
+    basketId: String,
+    isFirst: Boolean
   },
   computed: {},
   watch: {
@@ -326,7 +327,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+              !_vm.isFirst
+                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                : _vm._e()
             ])
           }),
           _vm._v(" "),
@@ -365,7 +368,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+              !_vm.isFirst
+                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                : _vm._e()
             ]
           ),
           _vm._v(" "),
@@ -404,7 +409,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+              !_vm.isFirst
+                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                : _vm._e()
             ])
           }),
           _vm._v(" "),
@@ -434,7 +441,9 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+              !_vm.isFirst
+                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                : _vm._e()
             ]
           ),
           _vm._v(" "),
@@ -715,11 +724,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     divideIfNecessary: function divideIfNecessary(amount) {
       if (amount >= 1000000) {
-        return this.roundToThreeDecimal(amount / 1000000);
+        return this.roundToTwoDecimal(amount / 1000000);
       }
 
       if (amount >= 1000) {
-        return this.roundToThreeDecimal(amount / 1000);
+        return this.roundToTwoDecimal(amount / 1000);
       }
 
       return this.roundToOneDecimal(amount);

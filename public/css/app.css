@@ -11351,14 +11351,13 @@ ul.stepper .step.active::before {
   bottom: 0%;
   width: 4rem;
   height: 100vh;
-  max-width: 230px;
   background-color: var(--dark-color);
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
   -ms-transition: all 0.2s ease-in-out;
   -o-transition: all 0.2s ease-in-out;
-  z-index: 666;
+  z-index: 999;
 }
 
 .left-menu:hover {
@@ -11369,8 +11368,8 @@ ul.stepper .step.active::before {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: left;
-  text-align: left;
+  justify-content: center;
+  text-align: center;
   font-size: 2em;
   font-weight: 300;
   line-height: 1em;
@@ -11385,7 +11384,20 @@ ul.stepper .step.active::before {
   -ms-border-radius: 0;
   -o-border-radius: 0;
   margin-bottom: 1px;
+  margin-right: 0;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.menu-item.button.icon.sub-menu {
+  font-size: 1.25em;
+  border-left: 0.5rem solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.left-menu:hover .menu-item.button.icon {
+  justify-content: left;
+  width: 230px;
 }
 
 .menu-item.button.icon span {
@@ -11417,7 +11429,6 @@ ul.stepper .step.active::before {
 .menu-item.button.icon:hover {
   background: var(--main-color);
   color: var(--dark-color);
-  text-decoration: none;
 }
 
 .menu-container,
@@ -11677,6 +11688,7 @@ label {
 .list-group-item.product:hover {
   border: 1px solid var(--main-color);
   background: var(--second-color-lighter);
+  cursor: all-scroll;
 }
 
 .list-group-item.product button {
@@ -11745,54 +11757,6 @@ label {
 
 /*********************/
 
-/*     Scrollbars    */
-
-/*********************/
-
-/*
-.my-custom-scrollbar {
-  height: 600px;
-  overflow: auto;
-}*/
-
-/*
-.my-custom-scrollbar-primary{
-  scrollbar-color: var(--third-color) var(--second-color);
-  scrollbar-width: thin ;
-}*/
-
-/* width */
-
-.my-custom-scrollbar-primary::-webkit-scrollbar {
-  width: 0.5rem;
-  background: var(--second-color);
-}
-
-/* Track */
-
-.my-custom-scrollbar-primary::-webkit-scrollbar-track {
-  background: var(--second-color);
-  border-radius: 0.25rem;
-  -webkit-border-radius: 0.25rem;
-  -moz-border-radius: 0.25rem;
-  -ms-border-radius: 0.25rem;
-  -o-border-radius: 0.25rem;
-}
-
-/* Handle */
-
-.my-custom-scrollbar-primary::-webkit-scrollbar-thumb {
-  background: var(--third-color);
-}
-
-/* Handle on hover */
-
-.my-custom-scrollbar-primary::-webkit-scrollbar-thumb:hover {
-  background: var(--dark-color);
-}
-
-/*********************/
-
 /* Input Buttons etc */
 
 /*********************/
@@ -11806,6 +11770,10 @@ label {
   color: var(--dark-color);
   font-weight: 700;
   opacity: 1;
+  border: 1px solid var(--main-color);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  height: auto;
 }
 
 .basket-name .input::-moz-placeholder {
@@ -11840,20 +11808,28 @@ label {
   margin-bottom: 0px;
   flex: auto;
   border-color: var(--third-color);
+  border: 1px solid var(--third-color);
+  border-radius: 0.5rem;
+  height: 2rem;
+  padding: 0 0.5rem;
 }
 
 .input.search {
   display: block;
-  height: 3rem;
+  height: calc(3rem - 2px);
   max-width: none;
   margin-bottom: 0rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
   border-left-width: 0px;
-  border-radius: 0px 1em 1em 0em;
+  border-radius: 0px 1rem 1rem 0em;
   background-color: #fff;
   font-size: 16px;
   line-height: 1rem;
+  border: 1px solid var(--main-color);
+  padding-left: 1rem;
+  -webkit-border-radius: 0px 1rem 1rem 0em;
+  -moz-border-radius: 0px 1rem 1rem 0em;
+  -ms-border-radius: 0px 1rem 1rem 0em;
+  -o-border-radius: 0px 1rem 1rem 0em;
 }
 
 .filter-field {
@@ -11878,6 +11854,10 @@ label {
   margin-bottom: 5rem;
 }
 
+.search-bar.main-search .autocomplete {
+  width: 100%;
+}
+
 .search-2 {
   margin-bottom: 0px;
   flex: 1;
@@ -11896,6 +11876,7 @@ label {
   background-color: var(--main-color);
   font-family: "sema-font", sans-serif;
   color: var(--dark-color);
+  cursor: pointer;
 }
 
 .btn-ico.alt {
@@ -11959,8 +11940,8 @@ label {
   grid-row-gap: 0px;
   -ms-grid-columns: 1fr;
   grid-template-columns: 1fr;
-  -ms-grid-rows: auto minmax(auto, 600px) auto;
-  grid-template-rows: auto minmax(auto, 600px) auto;
+  -ms-grid-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
   -ms-grid-column: span 1;
   grid-column-start: span 1;
   -ms-grid-column-span: 1;
@@ -12009,15 +11990,9 @@ label {
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   background-color: #fff;
-  max-height: 600px;
-  overflow-y: scroll;
-}
-
-.basket--products-container.reverse-order {
-  position: relative;
   overflow: auto;
   max-height: 600px;
-  flex-direction: column-reverse;
+  margin-bottom: 2rem;
 }
 
 .basket-name {
@@ -12043,13 +12018,13 @@ label {
   grid-row-gap: 16px;
   grid-column-gap: 16px;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(calc(33.33% - 16px), 250px);
+  grid-auto-columns: 360px;
   grid-row-gap: 0px;
   grid-template-areas: ".";
-  /*-ms-grid-columns: minmax(33.33%, 250px);
-  grid-template-columns: minmax(33.33%, 250px);*/
-  -ms-grid-columns: 33.33%;
-  grid-template-columns: 33.33%;
+  /*-ms-grid-columns: 360px;
+  grid-template-columns: 360px;*/
+  -ms-grid-columns: 360px;
+  grid-template-columns: 360px;
   -ms-grid-rows: auto;
   grid-template-rows: auto;
   margin-bottom: 3rem;
@@ -12070,6 +12045,22 @@ label {
   grid-template-columns: 2fr 1fr 2fr 1fr;
   -ms-grid-rows: auto auto;
   grid-template-rows: auto auto;
+}
+
+.product-details-info .input {
+  width: 100%;
+  max-width: 230px;
+  margin-bottom: 8px;
+  padding: 0.5rem 0.25rem 0.5rem 0.5rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--main-color);
+  border-radius: 0.5rem;
+  color: var(--dark-color);
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  -ms-border-radius: 0.5rem;
+  -o-border-radius: 0.5rem;
 }
 
 .buttons-container {
@@ -12209,57 +12200,17 @@ input.custom-control-input {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark-color);
 }
 
-.switch input[type=checkbox] {
-  height: 0;
-  width: 0;
-  visibility: hidden;
+.switch label .lever::after {
+  background-color: var(--third-color);
 }
 
-.switch .lever {
-  cursor: pointer;
-  text-indent: -9999px;
-  width: calc(4rem + 4px);
-  margin: 0 1rem;
-  height: calc(2rem + 4px);
-  background: var(--second-color);
-  display: inline-block;
-  border-radius: 2rem;
-  position: relative;
-  -webkit-border-radius: 2rem;
-  -moz-border-radius: 2rem;
-  -ms-border-radius: 2rem;
-  -o-border-radius: 2rem;
-}
-
-.switch .lever:after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 2rem;
-  height: 2rem;
-  background: #fff;
-  border-radius: 50%;
-  transition: 0.3s;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -ms-border-radius: 50%;
-  -o-border-radius: 50%;
-}
-
-/*.switch input:checked + .lever {
-  background: #bada55;
-}*/
-
-.switch input:checked + .lever:after {
-  left: calc(100% - 2px);
-  transform: translateX(-100%);
-}
-
-.lever:active:after {
-  width: 3rem;
+.switch label input[type=checkbox] + .lever {
+  background-color: #84c7c1;
 }
 
 /**************/
@@ -12348,6 +12299,49 @@ ul.nav.nav-tabs {
 
 /*************/
 
+/* SearchBar */
+
+/*************/
+
+.autocomplete {
+  padding: 0;
+  margin: 0;
+  border: 1px solid #eeeeee;
+  /* height: 120px; */
+  overflow: auto;
+  width: 100%;
+}
+
+.autocomplete-results {
+  position: absolute;
+  z-index: 42;
+}
+
+.autocomplete-result {
+  background-color: var(--second-color-lighter);
+  list-style: none;
+  text-align: left;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+
+.autocomplete-result:hover {
+  background-color: var(--main-color-darker);
+  color: var(--light-grey);
+}
+
+.autocomplete-result.is-active,
+.autocomplete-result:hover {
+  background-color: var(--main-color-darker);
+  color: var(--light-grey);
+}
+
+.search-bar.main-search .autocomplete {
+  display: block;
+}
+
+/*************/
+
 /* MISC      */
 
 /*************/
@@ -12368,7 +12362,6 @@ ul.nav.nav-tabs {
 
 [type=checkbox]:not(:checked),
 [type=checkbox]:checked {
-  opacity: 0;
   pointer-events: auto;
 }
 

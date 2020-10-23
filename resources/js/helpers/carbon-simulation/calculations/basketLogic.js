@@ -93,10 +93,10 @@ export default {
 
         divideIfNecessary(amount) {
             if (amount >= 1000000) {
-                return this.roundToThreeDecimal(amount / 1000000);
+                return this.roundToTwoDecimal(amount / 1000000);
             }
             if (amount >= 1000) {
-                return this.roundToThreeDecimal(amount / 1000);
+                return this.roundToTwoDecimal(amount / 1000);
             }
             return this.roundToOneDecimal(amount);
         },

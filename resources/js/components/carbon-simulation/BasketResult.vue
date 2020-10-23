@@ -29,7 +29,7 @@
                         </span>
                         </a>
                     </div>
-                    <div class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
                 </div>
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">Total</div>
@@ -41,7 +41,7 @@
                         </span>
                         </a>
                     </div>
-                    <div class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
                 </div>
                 <div class="results-comment">
                     <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
@@ -58,7 +58,7 @@
                         </span>
                         </a>
                     </div>
-                    <div class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
                 </div>
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">Total</div>
@@ -69,7 +69,7 @@
                         </span>
                         </a>
                     </div>
-                    <div class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
                 </div>
                 <div class="results-comment">
                     <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
@@ -97,6 +97,7 @@
             products: Array,
             categories: Array,
             basketId: String,
+            isFirst: Boolean,
         },
         computed: {
 

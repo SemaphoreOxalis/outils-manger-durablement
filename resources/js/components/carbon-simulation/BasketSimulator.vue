@@ -160,28 +160,3 @@ export default {
     }
 }
 </script>
-
-<style>
-/*.right {*/
-/*    border: 1px black solid;*/
-/*    min-height: 100px;*/
-/*}*/
-
-/*.product {*/
-/*    cursor: grab;*/
-/*}*/
-
-/*.moving {*/
-/*    background-color: var(--main-color-darker);*/
-/*    color: var(--light-grey);*/
-/*}*/
-
-/*input {*/
-/*    width: 50px;*/
-/*}*/
-
-/*select {*/
-/*    display: inline-block;*/
-/*    max-width: 200px;*/
-/*}*/
-</style>
