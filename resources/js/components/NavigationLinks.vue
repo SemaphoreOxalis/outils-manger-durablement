@@ -14,14 +14,14 @@
 
         <router-link
             to="/waste-simulator/input"
-            class="menu-item button icon ml-4">
+            class="menu-item button icon sub-menu">
             <span>{{ new_audit }}</span>
         </router-link>
 
         <router-link
             v-if="dataInLocalStorage"
             to="/waste-simulator/results"
-            class="menu-item button icon ml-4">
+            class="menu-item button icon sub-menu">
             <span>{{ resume_sim }}</span>
         </router-link>
 
@@ -33,7 +33,7 @@
 
         <router-link
             to="/carbon-simulator/basket-simulator"
-            class="menu-item button icon ml-4">
+            class="menu-item button icon sub-menu">
             <span>{{ resume_basket }}</span>
         </router-link>
     </div>

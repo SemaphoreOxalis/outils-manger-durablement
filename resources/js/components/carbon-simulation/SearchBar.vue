@@ -112,33 +112,5 @@
 </script>
 
 <style>
-.autocomplete {
-    padding: 0;
-    margin: 0;
-    border: 1px solid #eeeeee;
-    /* height: 120px; */
-    overflow: auto;
-}
 
-.autocomplete-result {
-    list-style: none;
-    text-align: left;
-    padding: 4px 2px;
-    cursor: pointer;
-}
-
-.autocomplete-result:hover {
-    background-color: var(--main-color-darker);
-    color: var(--light-grey);
-}
-
-.autocomplete-result.is-active,
-.autocomplete-result:hover {
-    background-color: var(--main-color-darker);
-    color: var(--light-grey);
-}
-
-.search-bar.main-search .autocomplete {
-    display: block;
-}
 </style>

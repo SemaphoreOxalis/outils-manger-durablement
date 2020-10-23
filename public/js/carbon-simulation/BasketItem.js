@@ -92,11 +92,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 var BasketProduct = function BasketProduct() {
-  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketProduct */ "js/carbon-simulation/BasketProduct").then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
+  return Promise.all(/*! import() | js/carbon-simulation/BasketProduct */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~a9881291"), __webpack_require__.e("js/carbon-simulation/BasketProduct")]).then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
 };
 
 var BasketResult = function BasketResult() {
-  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketResult */ "js/carbon-simulation/BasketResult").then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
+  return Promise.all(/*! import() | js/carbon-simulation/BasketResult */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~a9881291"), __webpack_require__.e("js/carbon-simulation/BasketResult")]).then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
 };
 
 var draggable = function draggable() {
@@ -115,7 +115,8 @@ var draggable = function draggable() {
     index: Number,
     origins: Array,
     categories: Array,
-    productToAdd: Object
+    productToAdd: Object,
+    previousBasket: Object
   },
   data: function data() {
     return {
@@ -148,6 +149,9 @@ var draggable = function draggable() {
     },
     containsProducts: function containsProducts() {
       return this.basket.products.length > 0;
+    },
+    isFirst: function isFirst() {
+      return this.index === 0;
     }
   },
   created: function created() {
@@ -306,7 +310,7 @@ var render = function() {
                 expression: "search"
               }
             ],
-            staticClass: "input tool custom-input",
+            staticClass: "input tool custom-input browser-default",
             attrs: {
               type: "search",
               maxlength: "256",
@@ -361,7 +365,8 @@ var render = function() {
       _c(
         "draggable",
         {
-          staticClass: "dragArea",
+          staticClass:
+            "dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary",
           attrs: {
             group: { name: "draggableProducts", pull: false },
             filter: ".ignore-draggable",
@@ -377,36 +382,29 @@ var render = function() {
             expression: "basket.products"
           }
         },
-        [
-          _c(
-            "div",
-            {
-              staticClass:
-                "basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
+        _vm._l(_vm.filteredProducts, function(product, i) {
+          return _c("basket-product", {
+            key: product.id,
+            attrs: {
+              product: product,
+              "basket-id": _vm.basket.id,
+              index: i,
+              origins: _vm.origins
             },
-            _vm._l(_vm.filteredProducts, function(product, i) {
-              return _c("basket-product", {
-                key: product.id,
-                attrs: {
-                  product: product,
-                  "basket-id": _vm.basket.id,
-                  index: i,
-                  origins: _vm.origins
-                },
-                on: {
-                  "save-changes": _vm.saveBasket,
-                  "remove-product": _vm.removeProduct
-                }
-              })
-            }),
-            1
-          )
-        ]
+            on: {
+              "save-changes": _vm.saveBasket,
+              "remove-product": _vm.removeProduct
+            }
+          })
+        }),
+        1
       ),
       _vm._v(" "),
       _vm.containsProducts
         ? _c("basket-result", {
             attrs: {
+              "is-first": _vm.isFirst,
+              "previous-basket": _vm.previousBasket,
               products: _vm.basket.products,
               categories: _vm.categories,
               "basket-id": _vm.basket.id

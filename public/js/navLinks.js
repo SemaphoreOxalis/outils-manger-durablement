@@ -111,7 +111,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "menu-item button icon ml-4",
+          staticClass: "menu-item button icon sub-menu",
           attrs: { to: "/waste-simulator/input" }
         },
         [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.new_audit))])]
@@ -121,7 +121,7 @@ var render = function() {
         ? _c(
             "router-link",
             {
-              staticClass: "menu-item button icon ml-4",
+              staticClass: "menu-item button icon sub-menu",
               attrs: { to: "/waste-simulator/results" }
             },
             [
@@ -146,7 +146,7 @@ var render = function() {
       _c(
         "router-link",
         {
-          staticClass: "menu-item button icon ml-4",
+          staticClass: "menu-item button icon sub-menu",
           attrs: { to: "/carbon-simulator/basket-simulator" }
         },
         [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.resume_basket))])]

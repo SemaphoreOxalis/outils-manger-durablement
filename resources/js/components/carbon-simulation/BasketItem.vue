@@ -18,7 +18,7 @@
                 <input type="search"
                        v-model="search"
                        @input="searchInBasket"
-                       class="input tool custom-input"
+                       class="input tool custom-input browser-default"
                        maxlength="256"
                        name="query"
                        placeholder="chercher dans le panier"
@@ -30,26 +30,26 @@
         </div>
 
         <draggable v-model="basket.products"
-                   class="dragArea"
+                   class="dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
                    :group="{ name: 'draggableProducts', pull: false }"
                    @change="saveBasket"
                    filter=".ignore-draggable"
                    :preventOnFilter="false"
                    :animation="150">
-            <div class="basket--products-container my-custom-scrollbar my-custom-scrollbar-primary">
-                <basket-product v-for="(product, i) in filteredProducts"
-                                v-bind:key="product.id"
-                                v-bind:product="product"
-                                v-bind:basket-id="basket.id"
-                                v-bind:index="i"
-                                v-bind:origins="origins"
-                                @save-changes="saveBasket"
-                                @remove-product="removeProduct">
-                </basket-product>
-            </div>
+            <basket-product v-for="(product, i) in filteredProducts"
+                            v-bind:key="product.id"
+                            v-bind:product="product"
+                            v-bind:basket-id="basket.id"
+                            v-bind:index="i"
+                            v-bind:origins="origins"
+                            @save-changes="saveBasket"
+                            @remove-product="removeProduct">
+            </basket-product>
         </draggable>
 
         <basket-result v-if="containsProducts"
+                       :is-first="isFirst"
+                       :previous-basket="previousBasket"
                        :products="basket.products"
                        :categories="categories"
                        :basket-id="basket.id">
@@ -90,6 +90,7 @@ export default {
         origins: Array,
         categories: Array,
         productToAdd: Object,
+        previousBasket: Object,
     },
     data() {
         return {
@@ -121,6 +122,9 @@ export default {
         },
         containsProducts: function () {
             return this.basket.products.length > 0;
+        },
+        isFirst() {
+            return this.index === 0;
         },
     },
     created() {
@@ -168,7 +172,3 @@ export default {
     }
 }
 </script>
-
-<style>
-
-</style>

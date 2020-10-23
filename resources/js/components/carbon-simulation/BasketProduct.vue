@@ -118,18 +118,22 @@ export default {
 </script>
 
 <style>
+.info-bubble {
+    position: relative;
+}
+
 .info-bubble:hover, .info-bubble:focus {
     background: rgba(0, 0, 0, .4);
     box-shadow: 0 1px 0 rgba(255, 255, 255, .4);
 }
 
 .info-bubble span {
-    position: absolute;
-    margin-top: 23px;
+    position: relative;
+    margin-top: 20px;
     margin-left: -35px;
     background-color: var(--main-color);
     color: var(--dark-color);
-    padding: 15px;
+    padding: 10px;
     border-radius: 3px;
     box-shadow: 0 0 2px rgba(0, 0, 0, .5);
     transform: scale(0) rotate(-12deg);

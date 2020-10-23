@@ -23,6 +23,7 @@
                          v-bind:origins="origins"
                          v-bind:categories="categories"
                          v-bind:product-to-add="productToAdd"
+                         v-bind:previous-basket="previousBasket(i)"
                          @save-baskets="saveBasketsToLocalStorage"
                          @do-stuff="showGroupedActionPopUp"
                          @copy-basket="copyBasket"
@@ -40,7 +41,7 @@
 
         <div class="custom-control switch center">
             <label>
-                Comparer avec le premier panier <input type="checkbox" class="custom-control-input"><span class="lever"></span> Comparer avec le panier précédent
+                Comparer avec le premier panier <input v-model="compareToPreviousBasket" type="checkbox" class="custom-control-input"><span class="lever"></span> Comparer avec le panier précédent
             </label>
         </div>
     </div>
@@ -90,6 +91,7 @@ export default {
             affectedBasketIndex: -1,
 
             showGroupedActionModal: false,
+            compareToPreviousBasket: false,
         }
     },
     computed: {
@@ -134,10 +136,10 @@ export default {
             this.affectedBasketIndex = index;
             this.showGroupedActionModal = true;
         },
+
+        previousBasket(index) {
+            return index > 0 ? this.baskets[index - 1] : null
+        },
     }
 }
 </script>
-
-<style>
-
-</style>

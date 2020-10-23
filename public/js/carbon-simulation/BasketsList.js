@@ -72,6 +72,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -107,7 +108,8 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
       action: '',
       affectedBasket: {},
       affectedBasketIndex: -1,
-      showGroupedActionModal: false
+      showGroupedActionModal: false,
+      compareToPreviousBasket: false
     };
   },
   computed: {
@@ -151,6 +153,9 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     showGroupedActionPopUp: function showGroupedActionPopUp(index) {
       this.affectedBasketIndex = index;
       this.showGroupedActionModal = true;
+    },
+    previousBasket: function previousBasket(index) {
+      return index > 0 ? this.baskets[index - 1] : null;
     }
   }
 });
@@ -214,7 +219,8 @@ var render = function() {
               index: i,
               origins: _vm.origins,
               categories: _vm.categories,
-              "product-to-add": _vm.productToAdd
+              "product-to-add": _vm.productToAdd,
+              "previous-basket": _vm.previousBasket(i)
             },
             on: {
               "save-baskets": _vm.saveBasketsToLocalStorage,
@@ -250,27 +256,54 @@ var render = function() {
       2
     ),
     _vm._v(" "),
-    _vm._m(0)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "custom-control switch center" }, [
+    _c("div", { staticClass: "custom-control switch center" }, [
       _c("label", [
         _vm._v("\n            Comparer avec le premier panier "),
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.compareToPreviousBasket,
+              expression: "compareToPreviousBasket"
+            }
+          ],
           staticClass: "custom-control-input",
-          attrs: { type: "checkbox" }
+          attrs: { type: "checkbox" },
+          domProps: {
+            checked: Array.isArray(_vm.compareToPreviousBasket)
+              ? _vm._i(_vm.compareToPreviousBasket, null) > -1
+              : _vm.compareToPreviousBasket
+          },
+          on: {
+            change: function($event) {
+              var $$a = _vm.compareToPreviousBasket,
+                $$el = $event.target,
+                $$c = $$el.checked ? true : false
+              if (Array.isArray($$a)) {
+                var $$v = null,
+                  $$i = _vm._i($$a, $$v)
+                if ($$el.checked) {
+                  $$i < 0 && (_vm.compareToPreviousBasket = $$a.concat([$$v]))
+                } else {
+                  $$i > -1 &&
+                    (_vm.compareToPreviousBasket = $$a
+                      .slice(0, $$i)
+                      .concat($$a.slice($$i + 1)))
+                }
+              } else {
+                _vm.compareToPreviousBasket = $$c
+              }
+            }
+          }
         }),
         _c("span", { staticClass: "lever" }),
         _vm._v(" Comparer avec le panier précédent\n        ")
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
