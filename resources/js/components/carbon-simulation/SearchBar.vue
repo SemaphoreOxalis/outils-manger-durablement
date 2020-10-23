@@ -118,6 +118,7 @@
     border: 1px solid #eeeeee;
     /* height: 120px; */
     overflow: auto;
+    width: 100%;
 }
 
 .autocomplete-result {

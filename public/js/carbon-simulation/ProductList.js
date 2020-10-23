@@ -108,6 +108,12 @@ var draggable = function draggable() {
     console.log('mounted');
     events.$on('clear-search-bar', this.clearSearchBar);
     var _self = document.body;
+    $(document).on('click', function (e) {
+      if ($(e.target).closest('#dropDownList').length === 0) {
+        console.log('hey');
+        _self.closable = true;
+      }
+    });
     $('#dropDownList').on('click', '.category', function () {
       _self.closable = false;
     }).on('click', '.add-product', function () {
@@ -171,7 +177,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.left {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.middle {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.category {*/\n/*    cursor: pointer;*/\n/*}*/\n\n/*.selected,*/\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.left {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.middle {*/\n/*    border: 1px black solid;*/\n/*    padding: 2px;*/\n/*}*/\n\n/*.product {*/\n/*    cursor: grab;*/\n/*}*/\n\n/*.category {*/\n/*    cursor: pointer;*/\n/*}*/\n\n/*.selected,*/\n/*.moving {*/\n/*    background-color: var(--main-color-darker);*/\n/*    color: var(--light-grey);*/\n/*}*/\n\n/*input {*/\n/*    width: 50px;*/\n/*}*/\n\n/*select {*/\n/*    display: inline-block;*/\n/*    max-width: 200px;*/\n/*}*/\n", ""]);
 
 // exports
 

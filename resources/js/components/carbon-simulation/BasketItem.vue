@@ -30,23 +30,21 @@
         </div>
 
         <draggable v-model="basket.products"
-                   class="dragArea"
+                   class="dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
                    :group="{ name: 'draggableProducts', pull: false }"
                    @change="saveBasket"
                    filter=".ignore-draggable"
                    :preventOnFilter="false"
                    :animation="150">
-            <div class="basket--products-container my-custom-scrollbar my-custom-scrollbar-primary">
-                <basket-product v-for="(product, i) in filteredProducts"
-                                v-bind:key="product.id"
-                                v-bind:product="product"
-                                v-bind:basket-id="basket.id"
-                                v-bind:index="i"
-                                v-bind:origins="origins"
-                                @save-changes="saveBasket"
-                                @remove-product="removeProduct">
-                </basket-product>
-            </div>
+            <basket-product v-for="(product, i) in filteredProducts"
+                            v-bind:key="product.id"
+                            v-bind:product="product"
+                            v-bind:basket-id="basket.id"
+                            v-bind:index="i"
+                            v-bind:origins="origins"
+                            @save-changes="saveBasket"
+                            @remove-product="removeProduct">
+            </basket-product>
         </draggable>
 
         <basket-result v-if="containsProducts"

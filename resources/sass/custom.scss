@@ -741,7 +741,7 @@ label {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr auto;
     gap: 1px 1px;
-    height: 600px;
+    max-height: 600px;
     overflow-y: scroll;
 }
 
@@ -1122,6 +1122,8 @@ label {
     border-bottom-left-radius: 1rem;
     border-bottom-right-radius: 1rem;
     background-color: #fff;
+    max-height: 600px;
+    overflow-y: scroll;
 }
 
 .basket--products-container.reverse-order {

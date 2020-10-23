@@ -87,8 +87,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 
 
 var BasketProduct = function BasketProduct() {
@@ -361,7 +359,8 @@ var render = function() {
       _c(
         "draggable",
         {
-          staticClass: "dragArea",
+          staticClass:
+            "dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary",
           attrs: {
             group: { name: "draggableProducts", pull: false },
             filter: ".ignore-draggable",
@@ -377,31 +376,22 @@ var render = function() {
             expression: "basket.products"
           }
         },
-        [
-          _c(
-            "div",
-            {
-              staticClass:
-                "basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
+        _vm._l(_vm.filteredProducts, function(product, i) {
+          return _c("basket-product", {
+            key: product.id,
+            attrs: {
+              product: product,
+              "basket-id": _vm.basket.id,
+              index: i,
+              origins: _vm.origins
             },
-            _vm._l(_vm.filteredProducts, function(product, i) {
-              return _c("basket-product", {
-                key: product.id,
-                attrs: {
-                  product: product,
-                  "basket-id": _vm.basket.id,
-                  index: i,
-                  origins: _vm.origins
-                },
-                on: {
-                  "save-changes": _vm.saveBasket,
-                  "remove-product": _vm.removeProduct
-                }
-              })
-            }),
-            1
-          )
-        ]
+            on: {
+              "save-changes": _vm.saveBasket,
+              "remove-product": _vm.removeProduct
+            }
+          })
+        }),
+        1
       ),
       _vm._v(" "),
       _vm.containsProducts

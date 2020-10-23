@@ -84,6 +84,12 @@ export default {
         events.$on('clear-search-bar', this.clearSearchBar);
 
         let _self = document.body;
+        $(document).on('click', function(e) {
+            if ( $(e.target).closest('#dropDownList').length === 0) {
+                console.log('hey');
+                _self.closable = true
+            }
+        });
         $('#dropDownList')
             .on('click', '.category', function() {
                 _self.closable = false
