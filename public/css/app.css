@@ -11353,10 +11353,10 @@ ul.stepper .step.active::before {
   height: 100vh;
   background-color: var(--dark-color);
   transition: all 0.2s ease-in-out;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s e ase-in-out;
+  -moz-transition: all 0.2s e ase-in-out;
+  -ms-transition: all 0.2s e ase-in-out;
+  -o-transition: all 0.2s e ase-in-out;
   z-index: 999;
 }
 
@@ -11373,6 +11373,7 @@ ul.stepper .step.active::before {
   font-size: 2em;
   font-weight: 300;
   line-height: 1em;
+  text-decoration: none;
   width: 100%;
   height: 2em;
   color: var(--main-color);
@@ -11386,7 +11387,6 @@ ul.stepper .step.active::before {
   margin-bottom: 1px;
   margin-right: 0;
   cursor: pointer;
-  text-decoration: none;
 }
 
 .menu-item.button.icon.sub-menu {
@@ -11589,6 +11589,10 @@ label {
 
 /****************************APP CO2******************/
 
+h1.header {
+  margin: 2rem 0 3rem;
+}
+
 /*********************/
 
 /*  TOP SEARCH MENU  */
@@ -11755,6 +11759,22 @@ label {
   -o-border-radius: 0.5rem;
 }
 
+.modal li {
+  margin-bottom: 1rem;
+}
+
+.btn.info {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 1rem);
+  background: var(--third-color);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  border-color: var(--third-color);
+  color: #fff;
+}
+
 /*********************/
 
 /* Input Buttons etc */
@@ -11848,6 +11868,7 @@ label {
 .search-bar {
   display: flex;
   margin-bottom: 0px;
+  position: relative;
 }
 
 .search-bar.main-search {
@@ -11855,7 +11876,35 @@ label {
 }
 
 .search-bar.main-search .autocomplete {
+  padding: 0;
+  margin: 0;
+  overflow: auto;
   width: 100%;
+}
+
+.autocomplete-results {
+  position: absolute;
+  z-index: 42;
+  background-color: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+}
+
+.autocomplete-result {
+  background-color: #fff;
+  list-style: none;
+  text-align: left;
+  padding: 0.125rem 1rem;
+  cursor: pointer;
+}
+
+.autocomplete-result.is-active {
+  background-color: var(--main-color-darker);
+  color: #fff;
+}
+
+.autocomplete-result:hover {
+  background-color: var(--second-color);
+  color: var(--dark-color);
 }
 
 .search-2 {
@@ -11908,7 +11957,7 @@ label {
   padding: 1rem;
   justify-content: center;
   align-items: center;
-  color: #2a2d3b;
+  color: var(--dark-color);
   font-weight: 700;
   text-decoration: none;
 }
@@ -12306,8 +12355,6 @@ ul.nav.nav-tabs {
 .autocomplete {
   padding: 0;
   margin: 0;
-  border: 1px solid #eeeeee;
-  /* height: 120px; */
   overflow: auto;
   width: 100%;
 }
@@ -12315,29 +12362,63 @@ ul.nav.nav-tabs {
 .autocomplete-results {
   position: absolute;
   z-index: 42;
+  background-color: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
 }
 
 .autocomplete-result {
-  background-color: var(--second-color-lighter);
+  background-color: #fff;
   list-style: none;
   text-align: left;
-  padding: 4px 2px;
+  padding: 0.125rem 1rem;
   cursor: pointer;
-}
-
-.autocomplete-result:hover {
-  background-color: var(--main-color-darker);
-  color: var(--light-grey);
 }
 
 .autocomplete-result.is-active,
 .autocomplete-result:hover {
   background-color: var(--main-color-darker);
-  color: var(--light-grey);
+  color: #fff;
 }
 
 .search-bar.main-search .autocomplete {
   display: block;
+}
+
+.product-info-bubble {
+  position: relative;
+}
+
+/*************/
+
+/* Infobulles*/
+
+/*************/
+
+.info-bubble:hover,
+.info-bubble:focus {
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.info-bubble span {
+  position: absolute;
+  margin-top: 20px;
+  margin-left: -35px;
+  background-color: var(--main-color);
+  color: var(--dark-color);
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  transform: scale(0) rotate(-12deg);
+  transition: all 0.25s;
+  opacity: 0;
+  z-index: 10;
+}
+
+.info-bubble:hover span,
+.info-bubble:focus span {
+  transform: scale(1) rotate(0);
+  opacity: 1;
 }
 
 /*************/

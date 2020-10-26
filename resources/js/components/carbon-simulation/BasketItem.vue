@@ -21,8 +21,7 @@
                        class="input tool custom-input browser-default"
                        maxlength="256"
                        name="query"
-                       placeholder="chercher dans le panier"
-                       required="">
+                       placeholder="chercher dans le panier">
                 <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool"></a>
                 <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool"></a>
                 <a @click="deleteBasket" class="btn-ico alt tool"></a>

@@ -105,12 +105,10 @@ var draggable = function draggable() {
     }
   },
   mounted: function mounted() {
-    console.log('mounted');
     events.$on('clear-search-bar', this.clearSearchBar);
     var _self = document.body;
     $(document).on('click', function (e) {
       if ($(e.target).closest('#dropDownList').length === 0) {
-        console.log('hey');
         _self.closable = true;
       }
     });

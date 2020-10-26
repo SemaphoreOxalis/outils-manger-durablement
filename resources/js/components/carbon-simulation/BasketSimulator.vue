@@ -27,6 +27,28 @@
                         @product-chosen="showAddingProductModal"
                         @lose-focus="loseFocusOnSearchBar">
             </search-bar>
+
+            <button data-target="mode_emploi" class="btn info modal-trigger">?</button>
+            <div class="modal modal-fixed-footer" id="mode_emploi">
+                <div class="modal-content">
+                    <h4>Mode d'emploi</h4>
+                    <ul>
+                        <li><span class="icon"></span> Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche</li>
+                        <li>Vous êtes alors invités à en préciser le nombre et l’origine</li>
+                        <li>Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier</li>
+                        <li><span class="icon"></span> Vous avez alors la possiblité d’ajouter des paniers de “simulation” et de les renommer</li>
+                        <li><span class="icon"></span> Vous pouvez aussi dupliquer un panier existant</li>
+                        <li>N’hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l’impact de vos changements</li>
+                        <li><span class="icon"></span> Vous pouvez effacer les paniers un par un</li>
+                        <li><span class="icon"></span> ou le vider</li>
+                        <li><span class="icon"></span> permet d'effectuer des opérations sur l'ensemble du panier</li>
+                        <li><span class="icon"></span> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
+                </div>
+            </div>
         </div>
 
         <baskets-list v-bind:origins="this.origins"
@@ -107,6 +129,10 @@ export default {
         this.fetchOrigins();
 
         this.getInternalCounters();
+
+        $(document).ready(function(){
+            $('.modal').modal();
+        });
     },
 
     methods: {
