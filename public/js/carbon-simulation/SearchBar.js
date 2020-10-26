@@ -237,8 +237,10 @@ var render = function() {
             }
           },
           [
-            _vm._v("\n            " + _vm._s(result.name) + " - "),
-            _c("small", [_vm._v(_vm._s(result.comment))])
+            _vm._v("\n            " + _vm._s(result.name)),
+            result.comment
+              ? _c("small", [_vm._v(" - " + _vm._s(result.comment))])
+              : _vm._e()
           ]
         )
       }),

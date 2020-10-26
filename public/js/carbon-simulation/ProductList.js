@@ -111,6 +111,7 @@ var draggable = function draggable() {
     $(document).on('click', function (e) {
       if ($(e.target).closest('#dropDownList').length === 0) {
         _self.closable = true;
+        document.getElementById('search').click();
       }
     });
     $('#dropDownList').on('click', '.category', function () {

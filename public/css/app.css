@@ -12067,13 +12067,13 @@ h1.header {
   grid-row-gap: 16px;
   grid-column-gap: 16px;
   grid-auto-flow: column;
-  grid-auto-columns: 360px;
+  grid-auto-columns: 370px;
   grid-row-gap: 0px;
   grid-template-areas: ".";
   /*-ms-grid-columns: 360px;
   grid-template-columns: 360px;*/
-  -ms-grid-columns: 360px;
-  grid-template-columns: 360px;
+  -ms-grid-columns: 370px;
+  grid-template-columns: 370px;
   -ms-grid-rows: auto;
   grid-template-rows: auto;
   margin-bottom: 3rem;
