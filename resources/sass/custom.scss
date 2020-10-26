@@ -297,7 +297,7 @@ input:invalid {
     top: -2px;
     width: 2rem;
     height: calc(100% + 4px);
-    font-family: 'sema-font' ;
+    font-family: 'sema-font';
     /*font-size: 1.4em;*/
     text-align: center;
     border: 2px solid white;
@@ -430,10 +430,10 @@ ul.stepper .step.active::before {
     height: 100vh;
     background-color: var(--dark-color);
     transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s e ase-in-out;
-    -moz-transition: all 0.2s e ase-in-out;
-    -ms-transition: all 0.2s e ase-in-out;
-    -o-transition: all 0.2s e ase-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
     z-index:999;
     }
 

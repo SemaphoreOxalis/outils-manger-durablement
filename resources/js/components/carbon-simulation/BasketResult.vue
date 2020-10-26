@@ -19,7 +19,7 @@
         <div class="tab-content">
 
             <div class="tab-pane fade show active" :id="basketId + '-carbon'" role="tabpanel">
-                <div v-for="category in categories" class="results-row flex-horizontal">
+                <div v-for="category in cats" class="results-row flex-horizontal">
                     <div class="results-categorie-name">{{ category.name }}</div>
                     <div class="results-div">
                         <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
@@ -49,7 +49,7 @@
             </div>
 
             <div class="tab-pane fade" :id="basketId + '-finance'" role="tabpanel">
-                <div v-for="category in categories" class="results-row flex-horizontal">
+                <div v-for="category in cats" class="results-row flex-horizontal">
                     <div class="results-categorie-name">{{ category.name }}</div>
                     <div class="results-div">
                         <a class="info-bubble">{{ category.moneySpent }} €
@@ -87,6 +87,7 @@
 <script>
     import NumberFormatter from "../../helpers/NumberFormatter";
     import basketLogic from "../../helpers/carbon-simulation/calculations/basketLogic";
+    import Chart from 'chart.js';
 
     export default {
         mixins: [
@@ -112,6 +113,8 @@
         },
         data() {
             return {
+                cats: [],
+
                 globalProductImpact: {},
                 globalTransportationImpact: {},
                 globalCarbonImpact: {},
@@ -123,9 +126,13 @@
             }
         },
         mounted() {
+            this.cats = JSON.parse(JSON.stringify(this.categories));
+
             setTimeout(() => {
                 this.updateResults();
             }, 1500);
+
+            this.createChart(this.basketId + '-chart', );
         },
         methods: {
             updateResults() {
@@ -138,14 +145,46 @@
                 this.$forceUpdate();
             },
             getCarbonImpactByCategory() {
-                this.categories.forEach(category => {
-                    this.getCarbonImpactFor(category);
+                this.cats.forEach(cat => {
+                    this.getCarbonImpactFor(cat);
                 })
             },
             getMoneyImpactByCategory() {
-                this.categories.forEach(category => {
-                    this.getMoneyImpactFor(category);
+                this.cats.forEach(cat => {
+                    this.getMoneyImpactFor(cat);
                 })
+            },
+
+            createChart(chartId, chartData) {
+                let ctx = document.getElementById(chartId).getContext('2d');
+                let myChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {}
+                });
             },
         },
     }

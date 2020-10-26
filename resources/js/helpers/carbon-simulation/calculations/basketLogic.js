@@ -36,12 +36,12 @@ export default {
             category.carbonImpactUnit = this.getUnit(categoryCarbonImpact);
         },
         getGlobalCarbonImpact() {
-            this.categories.forEach(category => {
+            this.cats.forEach(() => {
                 this.globalProductImpact.impact = 0;
                 this.globalTransportationImpact.impact = 0;
                 this.globalCarbonImpact.impact = 0;
 
-                this.categories.forEach(category => {
+                this.cats.forEach(category => {
                     this.globalProductImpact.impact += category.productImpact;
                     this.globalTransportationImpact.impact += category.transportationImpact;
                     this.globalCarbonImpact.impact += category.carbonImpact;
@@ -75,12 +75,12 @@ export default {
             category.co2PerEuroUnit = this.getUnit(category.co2PerEuro) + '/€';
         },
         getGlobalMoneyImpact() {
-            this.categories.forEach(category => {
+            this.cats.forEach(() => {
                 this.globalMoneySpend = 0;
                 this.globalCO2PerEuro = 0;
                 let totalCo2 = 0
 
-                this.categories.forEach(category => {
+                this.cats.forEach(category => {
                     this.globalMoneySpend += category.moneySpent;
                     totalCo2 += category.carbonImpact;
                 });

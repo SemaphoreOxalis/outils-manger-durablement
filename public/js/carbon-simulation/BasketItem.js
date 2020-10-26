@@ -95,7 +95,7 @@ var BasketProduct = function BasketProduct() {
 };
 
 var BasketResult = function BasketResult() {
-  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketResult */ "js/carbon-simulation/BasketResult").then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
+  return Promise.all(/*! import() | js/carbon-simulation/BasketResult */[__webpack_require__.e("vendors~js/carbon-simulation/BasketResult"), __webpack_require__.e("js/carbon-simulation/BasketResult")]).then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
 };
 
 var draggable = function draggable() {
