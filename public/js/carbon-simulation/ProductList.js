@@ -61,6 +61,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 var draggable = function draggable() {
@@ -115,6 +116,8 @@ var draggable = function draggable() {
     $('#dropDownList').on('click', '.category', function () {
       _self.closable = false;
     }).on('click', '.add-product', function () {
+      _self.closable = true;
+    }).on('click', '.product', function () {
       _self.closable = true;
     }).on('hide.bs.dropdown', function () {
       return _self.closable;
@@ -262,7 +265,12 @@ var render = function() {
                       "div",
                       {
                         key: product.id,
-                        staticClass: "list-group-item product"
+                        staticClass: "list-group-item product",
+                        on: {
+                          click: function($event) {
+                            return _vm.addProdToBasket(product)
+                          }
+                        }
                       },
                       [
                         _vm._v(

@@ -25,7 +25,8 @@
 
                         <div v-for="product in filteredProducts"
                              class="list-group-item product"
-                             :key="product.id">
+                             :key="product.id"
+                             @click="addProdToBasket(product)">
                                 {{ product.name }} <small>{{ product.comment }}</small>
                             <button @click="addProdToBasket(product)" class="btn-ico add-product" data-toggle="modal"></button>
                         </div>
@@ -93,6 +94,9 @@ export default {
                 _self.closable = false
             })
             .on('click', '.add-product', function() {
+                _self.closable = true
+            })
+            .on('click', '.product', function() {
                 _self.closable = true
             })
             .on('hide.bs.dropdown', function() {
