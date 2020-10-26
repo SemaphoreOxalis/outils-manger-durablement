@@ -99,6 +99,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -128,24 +135,39 @@ __webpack_require__.r(__webpack_exports__);
       globalMoneySpend: Number,
       globalCO2PerEuro: Number,
       globalCO2PerEuroFormatted: Number,
-      globalCO2PerEuroUnit: String
+      globalCO2PerEuroUnit: String,
+      chart: Object,
+      chartData: {
+        labels: [],
+        values: [],
+        money: [],
+        backgroundColors: [],
+        colors: [],
+        hoverColors: []
+      },
+      chartColors: [[255, 99, 132], [54, 162, 235], [255, 206, 86], [75, 192, 192], [153, 102, 255], [114, 42, 89], [42, 12, 241], [200, 198, 202], [142, 58, 14], [10, 246, 158], [215, 102, 45], [123, 56, 126]]
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    this.cats = JSON.parse(JSON.stringify(this.categories));
     setTimeout(function () {
       _this.updateResults();
-    }, 1500);
-    this.createChart(this.basketId + '-chart');
+
+      _this.createChart(_this.basketId + '-chart');
+    }, 1500); // let chartId = '#' + this.basketId + '-graph-tab';
+    // $(chartId).on('click', function () {
+    //     console.log(chartId);
+    // });
   },
   methods: {
     updateResults: function updateResults() {
+      this.cats = JSON.parse(JSON.stringify(this.categories));
       this.getCarbonImpactByCategory();
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
       this.getGlobalMoneyImpact();
+      this.updateChart(this.chart);
       this.$forceUpdate();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
@@ -162,22 +184,72 @@ __webpack_require__.r(__webpack_exports__);
         _this3.getMoneyImpactFor(cat);
       });
     },
-    createChart: function createChart(chartId, chartData) {
+    createChart: function createChart(chartId) {
+      this.prepareChartLabels();
+      this.prepareChartValues();
+      this.getColors();
       var ctx = document.getElementById(chartId).getContext('2d');
-      var myChart = new chart_js__WEBPACK_IMPORTED_MODULE_2___default.a(ctx, {
+      this.chart = new chart_js__WEBPACK_IMPORTED_MODULE_2___default.a(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          labels: this.chartData.labels,
           datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
-            borderWidth: 1
+            label: 'gCO2',
+            data: this.chartData.values,
+            backgroundColor: this.chartData.backgroundColors,
+            borderColor: this.chartData.colors,
+            hoverBackgroundColor: this.chartData.hoverColors,
+            borderWidth: 1,
+            hoverBorderWidth: 2 //borderAlign: 'inner',
+
+          }, {
+            label: '€',
+            data: this.chartData.money,
+            backgroundColor: this.chartData.backgroundColors,
+            borderColor: this.chartData.colors,
+            hoverBackgroundColor: this.chartData.hoverColors,
+            borderWidth: 1,
+            hoverBorderWidth: 2 //borderAlign: 'inner',
+
           }]
         },
-        options: {}
+        options: {
+          animation: {
+            animateRotate: true
+          }
+        }
       });
+    },
+    prepareChartLabels: function prepareChartLabels() {
+      var _this4 = this;
+
+      this.cats.forEach(function (cat) {
+        _this4.chartData.labels.push(cat.name);
+      });
+    },
+    prepareChartValues: function prepareChartValues() {
+      var _this5 = this;
+
+      this.cats.forEach(function (cat) {
+        _this5.chartData.values.push(cat.carbonImpact);
+
+        _this5.chartData.money.push(cat.moneySpent);
+      });
+    },
+    getColors: function getColors() {
+      var _this6 = this;
+
+      this.chartColors.forEach(function (color) {
+        _this6.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.2)');
+
+        _this6.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.5)');
+
+        _this6.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
+      });
+    },
+    resetGraphData: function resetGraphData() {},
+    updateChart: function updateChart(chart) {
+      console.log(chart); //chart.update();
     }
   }
 });
@@ -504,7 +576,10 @@ var render = function() {
   return _c("div", { staticClass: "results-container" }, [
     _c(
       "ul",
-      { staticClass: "nav nav-tabs", attrs: { id: "myTab", role: "tablist" } },
+      {
+        staticClass: "nav nav-tabs",
+        attrs: { id: _vm.basketId + "-nav-tab", role: "tablist" }
+      },
       [
         _c("li", { staticClass: "nav-item" }, [
           _c(
@@ -512,7 +587,7 @@ var render = function() {
             {
               staticClass: "nav-link active button btn-2",
               attrs: {
-                id: "basket1-carbon-tab",
+                id: _vm.basketId + "-carbon-tab",
                 "data-toggle": "tab",
                 href: "#" + _vm.basketId + "-carbon",
                 role: "tab",
@@ -530,7 +605,7 @@ var render = function() {
             {
               staticClass: "nav-link button btn-2",
               attrs: {
-                id: "basket1-finance-tab",
+                id: _vm.basketId + "-finance-tab",
                 "data-toggle": "tab",
                 href: "#" + _vm.basketId + "-finance",
                 role: "tab",
@@ -548,13 +623,14 @@ var render = function() {
             {
               staticClass: "nav-link button btn-2 nav-ico",
               attrs: {
-                id: "#basket1-graph-tab",
+                id: _vm.basketId + "-graph-tab",
                 "data-toggle": "tab",
                 href: "#" + _vm.basketId + "-graph",
                 role: "tab",
                 "aria-controls": "contact",
                 "aria-selected": "false"
-              }
+              },
+              on: { click: _vm.resetGraphData }
             },
             [_vm._v("")]
           )
