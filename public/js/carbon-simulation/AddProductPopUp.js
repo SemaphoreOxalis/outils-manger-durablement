@@ -73,7 +73,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -97,10 +96,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return true;
       }
 
-      if (this.productToAdd.origin === '') {
-        return true;
-      }
-
       return false;
     }
   },
@@ -109,7 +104,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       id: 'product_to_add_' + this.product.id,
       amount: 1,
       price: 1,
-      origin: ''
+      origin: this.origins[2]
     });
     var self = this;
     Vue.nextTick().then(function () {
@@ -123,6 +118,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     exit: function exit() {
       this.productToAdd = {};
       this.$emit('exit-without-adding');
+    },
+    onEnter: function onEnter() {
+      this.add();
     }
   }
 });
@@ -165,7 +163,21 @@ var render = function() {
           [
             _c(
               "div",
-              { ref: "modal", staticClass: "modal-container modal-content" },
+              {
+                ref: "modal",
+                staticClass: "modal-container modal-content",
+                on: {
+                  keydown: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.onEnter($event)
+                  }
+                }
+              },
               [
                 _c("div", { staticClass: "modal-header" }, [
                   _c("small", [_vm._v(_vm._s(_vm.add_popup.help))]),
@@ -316,22 +328,16 @@ var render = function() {
                           }
                         }
                       },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("Choisir")
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.origins, function(origin) {
-                          return _c("option", { domProps: { value: origin } }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(origin.from) +
-                                "\n                            "
-                            )
-                          ])
-                        })
-                      ],
-                      2
+                      _vm._l(_vm.origins, function(origin) {
+                        return _c("option", { domProps: { value: origin } }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(origin.from) +
+                              "\n                            "
+                          )
+                        ])
+                      }),
+                      0
                     )
                   ]),
                   _vm._v(" "),
