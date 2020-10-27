@@ -88,6 +88,10 @@ export default {
             this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
             this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
         },
+        getDeltasFor(category, index) {
+            category.carbonDelta = this.getDelta(category.carbonImpact, this.comparedBasket.results.cats[index].carbonImpact);
+            category.moneyDelta = this.getDelta(category.moneySpent, this.comparedBasket.results.cats[index].moneySpent);
+        },
 
         divideIfNecessary(amount) {
             if (amount >= 1000000) {

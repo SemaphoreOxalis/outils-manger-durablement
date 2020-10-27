@@ -135,9 +135,9 @@ __webpack_require__.r(__webpack_exports__);
     compareToPreviousBasket: Boolean
   },
   computed: {
-    comparedBasket: function comparedBasket() {
-      return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
-    },
+    // comparedBasket: function () {
+    //     return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+    // },
     carbonDelta: function carbonDelta() {
       return this.getDelta(this.globalCarbonImpactVariable, this.comparedBasket.results.globalCarbonImpact);
     },
@@ -152,6 +152,9 @@ __webpack_require__.r(__webpack_exports__);
         this.updateChart();
       },
       deep: true
+    },
+    compareToPreviousBasket: function compareToPreviousBasket() {
+      this.updateResults();
     }
   },
   data: function data() {
@@ -167,21 +170,26 @@ __webpack_require__.r(__webpack_exports__);
       globalCO2PerEuroUnit: String,
       chart: chart_js__WEBPACK_IMPORTED_MODULE_0___default.a,
       chartViewMoney: false,
-      results: {}
+      results: {},
+      comparedBasket: {}
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     this.updateResults();
+  },
+  mounted: function mounted() {
     this.createChart(this.basketId + '-chart');
   },
   methods: {
     updateResults: function updateResults() {
+      this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
       this.cats = JSON.parse(JSON.stringify(this.categories));
       this.getCarbonImpactByCategory();
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
       this.getGlobalMoneyImpact();
-      this.sendResults(); //this.$forceUpdate();
+      this.getDeltas();
+      this.sendResults();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
       var _this = this;
@@ -197,6 +205,13 @@ __webpack_require__.r(__webpack_exports__);
         _this2.getMoneyImpactFor(cat);
       });
     },
+    getDeltas: function getDeltas() {
+      var _this3 = this;
+
+      this.cats.forEach(function (cat, index) {
+        _this3.getDeltasFor(cat, index);
+      });
+    },
     sendResults: function sendResults() {
       this.results.cats = this.cats;
       this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
@@ -205,7 +220,21 @@ __webpack_require__.r(__webpack_exports__);
     },
     getDelta: function getDelta(basketCarbon, previousBasketCarbon) {
       var result = this.roundToOneDecimal(basketCarbon * 100 / previousBasketCarbon - 100);
+
+      if (isNaN(result)) {
+        result = 0;
+      }
+
       return result > 0 ? "+" + result + "%" : result + "%";
+    },
+    getStyle: function getStyle(value) {
+      if (value.startsWith('+')) {
+        return '<span class="bad"><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
+      } else if (value.startsWith('-')) {
+        return '<span class="good"><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
+      }
+
+      return '<span>' + value + '</span>';
     }
   }
 });
@@ -635,7 +664,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(category.carbonDelta))
+                    }
+                  })
                 : _vm._e()
             ])
           }),
@@ -676,9 +710,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [
-                    _vm._v(_vm._s(_vm.carbonDelta))
-                  ])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(_vm.carbonDelta))
+                    }
+                  })
                 : _vm._e()
             ]
           ),
@@ -719,7 +756,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(category.moneyDelta))
+                    }
+                  })
                 : _vm._e()
             ])
           }),
@@ -751,9 +793,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [
-                    _vm._v(_vm._s(_vm.moneyDelta))
-                  ])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(_vm.moneyDelta))
+                    }
+                  })
                 : _vm._e()
             ]
           ),
@@ -1066,6 +1111,10 @@ __webpack_require__.r(__webpack_exports__);
       this.globalCO2PerEuro = totalCo2 / this.globalMoneySpend;
       this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
       this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
+    },
+    getDeltasFor: function getDeltasFor(category, index) {
+      category.carbonDelta = this.getDelta(category.carbonImpact, this.comparedBasket.results.cats[index].carbonImpact);
+      category.moneyDelta = this.getDelta(category.moneySpent, this.comparedBasket.results.cats[index].moneySpent);
     },
     divideIfNecessary: function divideIfNecessary(amount) {
       if (amount >= 1000000) {

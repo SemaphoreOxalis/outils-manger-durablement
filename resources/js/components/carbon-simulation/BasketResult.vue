@@ -34,7 +34,7 @@
                         </span>
                         </a>
                     </div>
-                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
                 </div>
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">Total</div>
@@ -48,7 +48,7 @@
                         </span>
                         </a>
                     </div>
-                    <div v-if="!isFirst" class="results-div">{{ carbonDelta }}</div>
+                    <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
                 </div>
                 <div class="results-comment">
                     <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
@@ -65,7 +65,7 @@
                         </span>
                         </a>
                     </div>
-                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
                 </div>
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">Total</div>
@@ -76,7 +76,7 @@
                         </span>
                         </a>
                     </div>
-                    <div v-if="!isFirst" class="results-div">{{ moneyDelta }}</div>
+                    <div v-if="!isFirst" class="results-div" v-html="getStyle(moneyDelta)"></div>
                 </div>
                 <div class="results-comment">
                     <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
@@ -125,9 +125,9 @@ export default {
         compareToPreviousBasket: Boolean,
     },
     computed: {
-        comparedBasket: function () {
-            return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
-        },
+        // comparedBasket: function () {
+        //     return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+        // },
         carbonDelta: function () {
             return this.getDelta(this.globalCarbonImpactVariable, this.comparedBasket.results.globalCarbonImpact);
         },
@@ -142,6 +142,9 @@ export default {
                 this.updateChart();
             },
             deep: true
+        },
+        compareToPreviousBasket: function() {
+            this.updateResults();
         },
     },
     data() {
@@ -162,14 +165,19 @@ export default {
             chartViewMoney: false,
 
             results: {},
+
+            comparedBasket: {},
         }
     },
-    mounted() {
+    created() {
         this.updateResults();
+    },
+    mounted() {
         this.createChart(this.basketId + '-chart');
     },
     methods: {
         updateResults() {
+            this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
             this.cats = JSON.parse(JSON.stringify(this.categories));
             this.getCarbonImpactByCategory();
             this.getGlobalCarbonImpact();
@@ -177,19 +185,24 @@ export default {
             this.getMoneyImpactByCategory();
             this.getGlobalMoneyImpact();
 
-            this.sendResults();
+            this.getDeltas();
 
-            //this.$forceUpdate();
+            this.sendResults();
         },
         getCarbonImpactByCategory() {
             this.cats.forEach(cat => {
                 this.getCarbonImpactFor(cat);
-            })
+            });
         },
         getMoneyImpactByCategory() {
             this.cats.forEach(cat => {
                 this.getMoneyImpactFor(cat);
-            })
+            });
+        },
+        getDeltas() {
+            this.cats.forEach((cat, index) => {
+                this.getDeltasFor(cat, index);
+            });
         },
 
         sendResults() {
@@ -203,9 +216,20 @@ export default {
             let result = this.roundToOneDecimal(
                 ((basketCarbon * 100) / previousBasketCarbon) - 100
             );
+            if (isNaN(result)) {
+                result = 0;
+            }
 
             return result > 0 ? "+" + result + "%" : result + "%";
         },
+        getStyle(value) {
+            if (value.startsWith('+')) {
+                return '<span class="bad"><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
+            } else if (value.startsWith('-')) {
+                return '<span class="good"><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
+            }
+            return '<span>' + value + '</span>';
+        }
     },
 }
 </script>
