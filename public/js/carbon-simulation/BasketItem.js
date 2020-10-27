@@ -88,15 +88,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
 
 
 var BasketProduct = function BasketProduct() {
-  return Promise.all(/*! import() | js/carbon-simulation/BasketProduct */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~a9881291"), __webpack_require__.e("js/carbon-simulation/BasketProduct")]).then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketProduct */ "js/carbon-simulation/BasketProduct").then(__webpack_require__.bind(null, /*! ./BasketProduct */ "./resources/js/components/carbon-simulation/BasketProduct.vue"));
 };
 
 var BasketResult = function BasketResult() {
-  return Promise.all(/*! import() | js/carbon-simulation/BasketResult */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~a9881291"), __webpack_require__.e("js/carbon-simulation/BasketResult")]).then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
+  return Promise.all(/*! import() | js/carbon-simulation/BasketResult */[__webpack_require__.e("vendors~js/carbon-simulation/BasketResult"), __webpack_require__.e("js/carbon-simulation/BasketResult")]).then(__webpack_require__.bind(null, /*! ./BasketResult */ "./resources/js/components/carbon-simulation/BasketResult.vue"));
 };
 
 var draggable = function draggable() {
@@ -315,8 +314,7 @@ var render = function() {
               type: "search",
               maxlength: "256",
               name: "query",
-              placeholder: "chercher dans le panier",
-              required: ""
+              placeholder: "chercher dans le panier"
             },
             domProps: { value: _vm.search },
             on: {

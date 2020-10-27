@@ -19,7 +19,7 @@
                 @click="setResult(result)"
                 class="autocomplete-result"
                 :class="{ 'is-active': index === arrowCounter }">
-                {{ result.name }} - <small>{{ result.comment }}</small>
+                {{ result.name }}<small v-if="result.comment"> - {{ result.comment }}</small>
             </li>
         </ul>
     </div>

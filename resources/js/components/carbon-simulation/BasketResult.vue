@@ -1,17 +1,20 @@
 <template>
     <div class="results-container">
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" :id="basketId + '-nav-tab'" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active button btn-2" id="basket1-carbon-tab" data-toggle="tab" :href="'#' + basketId + '-carbon'" role="tab" aria-controls="home"
+                <a class="nav-link active button btn-2" :id="basketId + '-carbon-tab'" data-toggle="tab"
+                   :href="'#' + basketId + '-carbon'" role="tab" aria-controls="home"
                    aria-selected="true">Bilan carbone</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link button btn-2" id="basket1-finance-tab" data-toggle="tab" :href="'#' + basketId + '-finance'" role="tab" aria-controls="profile"
+                <a class="nav-link button btn-2" :id="basketId + '-finance-tab'" data-toggle="tab"
+                   :href="'#' + basketId + '-finance'" role="tab" aria-controls="profile"
                    aria-selected="false">Bilan financier</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link button btn-2 nav-ico" id="#basket1-graph-tab" data-toggle="tab" :href="'#' + basketId + '-graph'" role="tab" aria-controls="contact"
+                <a class="nav-link button btn-2 nav-ico" :id="basketId + '-graph-tab'" data-toggle="tab"
+                   :href="'#' + basketId + '-graph'" role="tab" aria-controls="contact"
                    aria-selected="false"></a>
             </li>
         </ul>
@@ -19,13 +22,15 @@
         <div class="tab-content">
 
             <div class="tab-pane fade show active" :id="basketId + '-carbon'" role="tabpanel">
-                <div v-for="category in categories" class="results-row flex-horizontal">
+                <div v-for="category in cats" class="results-row flex-horizontal">
                     <div class="results-categorie-name">{{ category.name }}</div>
                     <div class="results-div">
                         <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
                             <span>
                             Impact produit : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
-                            Impact transport : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}
+                            Impact transport : {{
+                                    category.transportationFormattedImpact
+                                }} {{ category.transportationImpactUnit }}
                         </span>
                         </a>
                     </div>
@@ -37,7 +42,9 @@
                         <a class="info-bubble">{{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
                             <span>
                             Impact produit : {{ globalProductImpact.impact }} {{ globalProductImpact.unit }}<br>
-                            Impact transport : {{ globalTransportationImpact.impact }} {{ globalTransportationImpact.unit }}
+                            Impact transport : {{
+                                    globalTransportationImpact.impact
+                                }} {{ globalTransportationImpact.unit }}
                         </span>
                         </a>
                     </div>
@@ -49,7 +56,7 @@
             </div>
 
             <div class="tab-pane fade" :id="basketId + '-finance'" role="tabpanel">
-                <div v-for="category in categories" class="results-row flex-horizontal">
+                <div v-for="category in cats" class="results-row flex-horizontal">
                     <div class="results-categorie-name">{{ category.name }}</div>
                     <div class="results-div">
                         <a class="info-bubble">{{ category.moneySpent }} €
@@ -77,6 +84,17 @@
             </div>
 
             <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="custom-control switch center">
+                    <label>
+                        bilan carbone <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
+                        <span class="lever"></span>
+                        bilan financier
+                    </label>
+                </div>
+                <div>
+                    <span v-if="chartViewMoney">Ventilation des dépenses</span>
+                    <span v-else>Ventilation de l'empreinte carbone en grammes de CO2</span>
+                </div>
                 <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
             </div>
 
@@ -85,94 +103,168 @@
 </template>
 
 <script>
-    import NumberFormatter from "../../helpers/NumberFormatter";
-    import basketLogic from "../../helpers/carbon-simulation/calculations/basketLogic";
+import NumberFormatter from "../../helpers/NumberFormatter";
+import basketLogic from "../../helpers/carbon-simulation/calculations/basketLogic";
+import Chart from 'chart.js';
 
-    export default {
-        mixins: [
-            basketLogic,
-            NumberFormatter
-        ],
-        props: {
-            products: Array,
-            categories: Array,
-            basketId: String,
-            isFirst: Boolean,
-        },
-        computed: {
-
-        },
-        watch: {
-            products: {
-                handler: function() {
-                    this.updateResults();
-                },
-                deep: true
-            },
-        },
-        data() {
-            return {
-                globalProductImpact: {},
-                globalTransportationImpact: {},
-                globalCarbonImpact: {},
-
-                globalMoneySpend: Number,
-                globalCO2PerEuro: Number,
-                globalCO2PerEuroFormatted: Number,
-                globalCO2PerEuroUnit: String,
-            }
-        },
-        mounted() {
-            setTimeout(() => {
+export default {
+    mixins: [
+        basketLogic,
+        NumberFormatter
+    ],
+    props: {
+        products: Array,
+        categories: Array,
+        basketId: String,
+        isFirst: Boolean,
+    },
+    computed: {},
+    watch: {
+        products: {
+            handler: function () {
                 this.updateResults();
-            }, 1500);
+                this.updateChart();
+            },
+            deep: true
         },
-        methods: {
-            updateResults() {
-                this.getCarbonImpactByCategory();
-                this.getGlobalCarbonImpact();
+    },
+    data() {
+        return {
+            cats: [],
 
-                this.getMoneyImpactByCategory();
-                this.getGlobalMoneyImpact();
+            globalProductImpact: {},
+            globalTransportationImpact: {},
+            globalCarbonImpact: {},
 
-                this.$forceUpdate();
+            globalMoneySpend: Number,
+            globalCO2PerEuro: Number,
+            globalCO2PerEuroFormatted: Number,
+            globalCO2PerEuroUnit: String,
+
+            chart: Chart,
+            chartViewMoney: false,
+            chartData: {
+                labels: [],
+                values: [],
+                money: [],
+                backgroundColors: [],
+                colors: [],
+                hoverColors: [],
             },
-            getCarbonImpactByCategory() {
-                this.categories.forEach(category => {
-                    this.getCarbonImpactFor(category);
-                })
-            },
-            getMoneyImpactByCategory() {
-                this.categories.forEach(category => {
-                    this.getMoneyImpactFor(category);
-                })
-            },
+            chartColors: [
+                [255, 99, 132],
+                [54, 162, 235],
+                [255, 206, 86],
+                [75, 192, 192],
+                [153, 102, 255],
+                [114, 42, 89],
+                [42, 12, 241],
+                [200, 198, 202],
+                [142, 58, 14],
+                [10, 246, 158],
+                [215, 102, 45],
+                [123, 56, 126],
+            ]
+        }
+    },
+    mounted() {
+        setTimeout(() => {
+            this.updateResults();
+            this.createChart(this.basketId + '-chart');
+        }, 1500);
+
+        // let chartId = '#' + this.basketId + '-graph-tab';
+        // $(chartId).on('click', function () {
+        //     console.log(chartId);
+        // });
+    },
+    methods: {
+        updateResults() {
+            this.cats = JSON.parse(JSON.stringify(this.categories));
+            this.getCarbonImpactByCategory();
+            this.getGlobalCarbonImpact();
+
+            this.getMoneyImpactByCategory();
+            this.getGlobalMoneyImpact();
+
+            this.$forceUpdate();
         },
-    }
+        getCarbonImpactByCategory() {
+            this.cats.forEach(cat => {
+                this.getCarbonImpactFor(cat);
+            })
+        },
+        getMoneyImpactByCategory() {
+            this.cats.forEach(cat => {
+                this.getMoneyImpactFor(cat);
+            })
+        },
+
+        createChart(chartId) {
+            this.prepareChartLabels();
+            this.prepareChartValues();
+            this.getColors();
+
+            let ctx = document.getElementById(chartId).getContext('2d');
+            this.chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: this.chartData.labels,
+                    datasets: [
+                        {
+                            label: '',
+                            data: this.chartData.values,
+                            backgroundColor: this.chartData.backgroundColors,
+                            borderColor: this.chartData.colors,
+                            hoverBackgroundColor: this.chartData.hoverColors,
+                            borderWidth: 1,
+                            hoverBorderWidth: 2,
+                            borderAlign: 'inner',
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        animateRotate: true,
+                    },
+                },
+            });
+        },
+        prepareChartLabels() {
+            this.cats.forEach(cat => {
+                this.chartData.labels.push(cat.name);
+            });
+        },
+        prepareChartValues() {
+            this.clearChartValues();
+            this.cats.forEach(cat => {
+                this.chartData.values.push(cat.carbonImpact);
+                this.chartData.money.push(cat.moneySpent);
+            });
+        },
+        clearChartValues() {
+            this.chartData.values = [];
+            this.chartData.money = [];
+        },
+        getColors() {
+            this.chartColors.forEach(color => {
+                this.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.2)');
+                this.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.5)');
+                this.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
+            });
+        },
+        updateChart() {
+            this.prepareChartValues();
+            if(this.chartViewMoney) {
+                this.chart.data.datasets[0].data = this.chartData.money;
+            } else {
+                this.chart.data.datasets[0].data = this.chartData.values;
+            }
+            this.chart.update({
+                duration: 1000,
+                easing: 'easeOutBounce'
+            });
+        },
+    },
+}
 </script>
-
-<style>
-.info-bubble:hover, .info-bubble:focus {
-    background: rgba(0,0,0,.4);
-    box-shadow: 0 1px 0 rgba(255,255,255,.4);
-}
-
-.info-bubble span {
-    position: absolute;
-    margin-top: 23px;
-    margin-left: -35px;
-    background-color: var(--main-color);
-    color: var(--dark-color);
-    padding: 15px;
-    border-radius: 3px;
-    box-shadow: 0 0 2px rgba(0,0,0,.5);
-    transform: scale(0) rotate(-12deg);
-    transition: all .25s;
-    opacity: 0;
-    z-index: 10;
-}
-.info-bubble:hover span, .info-bubble:focus span {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-}
-</style>

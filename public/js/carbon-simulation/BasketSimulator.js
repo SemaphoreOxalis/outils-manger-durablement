@@ -54,6 +54,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -110,6 +132,9 @@ var BasketsList = function BasketsList() {
     this.fetchUnits();
     this.fetchOrigins();
     this.getInternalCounters();
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
   },
   methods: {
     filterProductsByCategory: function filterProductsByCategory(categoryId) {
@@ -222,7 +247,18 @@ var render = function() {
               "product-chosen": _vm.showAddingProductModal,
               "lose-focus": _vm.loseFocusOnSearchBar
             }
-          })
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn info modal-trigger",
+              attrs: { "data-target": "mode_emploi" }
+            },
+            [_vm._v("?")]
+          ),
+          _vm._v(" "),
+          _vm._m(0)
         ],
         1
       ),
@@ -239,7 +275,96 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "modal modal-fixed-footer", attrs: { id: "mode_emploi" } },
+      [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("h4", [_vm._v("Mode d'emploi")]),
+          _vm._v(" "),
+          _c("ul", [
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(
+                " Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche"
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _vm._v(
+                "Vous êtes alors invités à en préciser le nombre et l’origine"
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _vm._v(
+                "Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier"
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(
+                " Vous avez alors la possiblité d’ajouter des paniers de “simulation” et de les renommer"
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(" Vous pouvez aussi dupliquer un panier existant")
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _vm._v(
+                "N’hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l’impact de vos changements"
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(" Vous pouvez effacer les paniers un par un")
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(" ou le vider")
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(
+                " permet d'effectuer des opérations sur l'ensemble du panier"
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", [
+              _c("span", { staticClass: "icon" }, [_vm._v("")]),
+              _vm._v(
+                ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "modal-footer" }, [
+          _c(
+            "a",
+            {
+              staticClass: "modal-close waves-effect waves-green btn-flat",
+              attrs: { href: "#!" }
+            },
+            [_vm._v("Fermer")]
+          )
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

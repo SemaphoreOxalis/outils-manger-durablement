@@ -25,7 +25,8 @@
 
                         <div v-for="product in filteredProducts"
                              class="list-group-item product"
-                             :key="product.id">
+                             :key="product.id"
+                             @click="addProdToBasket(product)">
                                 {{ product.name }} <small>{{ product.comment }}</small>
                             <button @click="addProdToBasket(product)" class="btn-ico add-product" data-toggle="modal"></button>
                         </div>
@@ -80,14 +81,13 @@ export default {
         }
     },
     mounted() {
-        console.log('mounted');
         events.$on('clear-search-bar', this.clearSearchBar);
 
         let _self = document.body;
         $(document).on('click', function(e) {
             if ( $(e.target).closest('#dropDownList').length === 0) {
-                console.log('hey');
-                _self.closable = true
+                _self.closable = true;
+                document.getElementById('search').click();
             }
         });
         $('#dropDownList')
@@ -95,6 +95,9 @@ export default {
                 _self.closable = false
             })
             .on('click', '.add-product', function() {
+                _self.closable = true
+            })
+            .on('click', '.product', function() {
                 _self.closable = true
             })
             .on('hide.bs.dropdown', function() {

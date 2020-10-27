@@ -2,7 +2,7 @@
     <transition name="modal" class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-mask">
             <div class="modal-wrapper modal-dialog modal-dialog-centered">
-                <div class="modal-container modal-content" ref="modal">
+                <div class="modal-container modal-content" ref="modal" @keydown.enter="onEnter">
                     <div class="modal-header">
                         <small>{{ add_popup.help }}</small>
 
@@ -22,7 +22,6 @@
                         <div class="results-row">
                             {{ add_popup.from }}
                             <select v-model="productToAdd.origin" id="origine-4" class="custom-select input" name="origine-4" data-name="Origine 4">
-                                <option value="">Choisir</option>
                                 <option v-for="origin in origins"
                                         v-bind:value="origin">
                                     {{ origin.from }}
@@ -80,15 +79,12 @@ export default {
             if (this.productToAdd.price < 0.01) {
                 return true;
             }
-            if (this.productToAdd.origin === '') {
-                return true;
-            }
 
             return false
         }
     },
     created() {
-        this.productToAdd = {...this.product, id: 'product_to_add_' + this.product.id, amount: 1, price: 1, origin: ''};
+        this.productToAdd = {...this.product, id: 'product_to_add_' + this.product.id, amount: 1, price: 1, origin: this.origins[2]};
         let self = this;
         Vue.nextTick().then(function () {
             self.$refs.qty.focus();
@@ -101,6 +97,9 @@ export default {
         exit() {
             this.productToAdd = {};
             this.$emit('exit-without-adding');
+        },
+        onEnter() {
+            this.add();
         },
     }
 }

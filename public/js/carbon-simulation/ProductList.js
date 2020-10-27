@@ -61,6 +61,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 var draggable = function draggable() {
@@ -105,18 +106,19 @@ var draggable = function draggable() {
     }
   },
   mounted: function mounted() {
-    console.log('mounted');
     events.$on('clear-search-bar', this.clearSearchBar);
     var _self = document.body;
     $(document).on('click', function (e) {
       if ($(e.target).closest('#dropDownList').length === 0) {
-        console.log('hey');
         _self.closable = true;
+        document.getElementById('search').click();
       }
     });
     $('#dropDownList').on('click', '.category', function () {
       _self.closable = false;
     }).on('click', '.add-product', function () {
+      _self.closable = true;
+    }).on('click', '.product', function () {
       _self.closable = true;
     }).on('hide.bs.dropdown', function () {
       return _self.closable;
@@ -264,7 +266,12 @@ var render = function() {
                       "div",
                       {
                         key: product.id,
-                        staticClass: "list-group-item product"
+                        staticClass: "list-group-item product",
+                        on: {
+                          click: function($event) {
+                            return _vm.addProdToBasket(product)
+                          }
+                        }
                       },
                       [
                         _vm._v(
