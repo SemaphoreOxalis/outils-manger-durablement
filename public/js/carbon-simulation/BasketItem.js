@@ -88,6 +88,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -115,7 +118,9 @@ var draggable = function draggable() {
     origins: Array,
     categories: Array,
     productToAdd: Object,
-    previousBasket: Object
+    previousBasket: Object,
+    firstBasket: Object,
+    compareToPreviousBasket: Boolean
   },
   data: function data() {
     return {
@@ -401,8 +406,11 @@ var render = function() {
       _vm.containsProducts
         ? _c("basket-result", {
             attrs: {
+              index: _vm.index,
               "is-first": _vm.isFirst,
               "previous-basket": _vm.previousBasket,
+              "first-basket": _vm.firstBasket,
+              "compare-to-previous-basket": _vm.compareToPreviousBasket,
               products: _vm.basket.products,
               categories: _vm.categories,
               "basket-id": _vm.basket.id

@@ -9,10 +9,11 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
-/* harmony import */ var _helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/carbon-simulation/calculations/basketLogic */ "./resources/js/helpers/carbon-simulation/calculations/basketLogic.js");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
-/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
+/* harmony import */ var _helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/calculations/basketLogic */ "./resources/js/helpers/carbon-simulation/calculations/basketLogic.js");
+/* harmony import */ var _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/resultsCharts */ "./resources/js/helpers/carbon-simulation/resultsCharts.js");
 //
 //
 //
@@ -117,18 +118,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__["default"]],
   props: {
+    index: Number,
     products: Array,
     categories: Array,
     basketId: String,
-    isFirst: Boolean
+    isFirst: Boolean,
+    previousBasket: Object,
+    firstBasket: Object,
+    compareToPreviousBasket: Boolean
   },
-  computed: {},
+  computed: {
+    // comparedBasket: function () {
+    //     return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+    // },
+    carbonDelta: function carbonDelta() {
+      return this.getDelta(this.globalCarbonImpactVariable, this.comparedBasket.results.globalCarbonImpact);
+    },
+    moneyDelta: function moneyDelta() {
+      return this.getDelta(this.globalMoneySpend, this.comparedBasket.results.globalMoneySpend);
+    }
+  },
   watch: {
     products: {
       handler: function handler() {
@@ -136,6 +152,9 @@ __webpack_require__.r(__webpack_exports__);
         this.updateChart();
       },
       deep: true
+    },
+    compareToPreviousBasket: function compareToPreviousBasket() {
+      this.updateResults();
     }
   },
   data: function data() {
@@ -144,130 +163,78 @@ __webpack_require__.r(__webpack_exports__);
       globalProductImpact: {},
       globalTransportationImpact: {},
       globalCarbonImpact: {},
+      globalCarbonImpactVariable: Number,
       globalMoneySpend: Number,
       globalCO2PerEuro: Number,
       globalCO2PerEuroFormatted: Number,
       globalCO2PerEuroUnit: String,
-      chart: chart_js__WEBPACK_IMPORTED_MODULE_2___default.a,
+      chart: chart_js__WEBPACK_IMPORTED_MODULE_0___default.a,
       chartViewMoney: false,
-      chartData: {
-        labels: [],
-        values: [],
-        money: [],
-        backgroundColors: [],
-        colors: [],
-        hoverColors: []
-      },
-      chartColors: [[255, 99, 132], [54, 162, 235], [255, 206, 86], [75, 192, 192], [153, 102, 255], [114, 42, 89], [42, 12, 241], [200, 198, 202], [142, 58, 14], [10, 246, 158], [215, 102, 45], [123, 56, 126]]
+      results: {},
+      comparedBasket: {}
     };
   },
+  created: function created() {
+    this.updateResults();
+  },
   mounted: function mounted() {
-    var _this = this;
-
-    setTimeout(function () {
-      _this.updateResults();
-
-      _this.createChart(_this.basketId + '-chart');
-    }, 1500); // let chartId = '#' + this.basketId + '-graph-tab';
-    // $(chartId).on('click', function () {
-    //     console.log(chartId);
-    // });
+    this.createChart(this.basketId + '-chart');
   },
   methods: {
     updateResults: function updateResults() {
+      this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
       this.cats = JSON.parse(JSON.stringify(this.categories));
       this.getCarbonImpactByCategory();
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
       this.getGlobalMoneyImpact();
-      this.$forceUpdate();
+      this.getDeltas();
+      this.sendResults();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
-      var _this2 = this;
+      var _this = this;
 
       this.cats.forEach(function (cat) {
-        _this2.getCarbonImpactFor(cat);
+        _this.getCarbonImpactFor(cat);
       });
     },
     getMoneyImpactByCategory: function getMoneyImpactByCategory() {
+      var _this2 = this;
+
+      this.cats.forEach(function (cat) {
+        _this2.getMoneyImpactFor(cat);
+      });
+    },
+    getDeltas: function getDeltas() {
       var _this3 = this;
 
-      this.cats.forEach(function (cat) {
-        _this3.getMoneyImpactFor(cat);
+      this.cats.forEach(function (cat, index) {
+        _this3.getDeltasFor(cat, index);
       });
     },
-    createChart: function createChart(chartId) {
-      this.prepareChartLabels();
-      this.prepareChartValues();
-      this.getColors();
-      var ctx = document.getElementById(chartId).getContext('2d');
-      this.chart = new chart_js__WEBPACK_IMPORTED_MODULE_2___default.a(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: this.chartData.labels,
-          datasets: [{
-            label: '',
-            data: this.chartData.values,
-            backgroundColor: this.chartData.backgroundColors,
-            borderColor: this.chartData.colors,
-            hoverBackgroundColor: this.chartData.hoverColors,
-            borderWidth: 1,
-            hoverBorderWidth: 2,
-            borderAlign: 'inner'
-          }]
-        },
-        options: {
-          animation: {
-            animateRotate: true
-          }
-        }
-      });
+    sendResults: function sendResults() {
+      this.results.cats = this.cats;
+      this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
+      this.results.globalMoneySpend = this.globalMoneySpend;
+      events.$emit('save-baskets-results', this.index, this.results);
     },
-    prepareChartLabels: function prepareChartLabels() {
-      var _this4 = this;
+    getDelta: function getDelta(basketCarbon, previousBasketCarbon) {
+      var result = this.roundToOneDecimal(basketCarbon * 100 / previousBasketCarbon - 100);
 
-      this.cats.forEach(function (cat) {
-        _this4.chartData.labels.push(cat.name);
-      });
-    },
-    prepareChartValues: function prepareChartValues() {
-      var _this5 = this;
-
-      this.clearChartValues();
-      this.cats.forEach(function (cat) {
-        _this5.chartData.values.push(cat.carbonImpact);
-
-        _this5.chartData.money.push(cat.moneySpent);
-      });
-    },
-    clearChartValues: function clearChartValues() {
-      this.chartData.values = [];
-      this.chartData.money = [];
-    },
-    getColors: function getColors() {
-      var _this6 = this;
-
-      this.chartColors.forEach(function (color) {
-        _this6.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.2)');
-
-        _this6.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.5)');
-
-        _this6.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
-      });
-    },
-    updateChart: function updateChart() {
-      this.prepareChartValues();
-
-      if (this.chartViewMoney) {
-        this.chart.data.datasets[0].data = this.chartData.money;
-      } else {
-        this.chart.data.datasets[0].data = this.chartData.values;
+      if (isNaN(result)) {
+        result = 0;
       }
 
-      this.chart.update({
-        duration: 1000,
-        easing: 'easeOutBounce'
-      });
+      return result > 0 ? "+" + result + "%" : result + "%";
+    },
+    getStyle: function getStyle(value) {
+      if (value.startsWith('+')) {
+        return '<span class="bad"><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
+      } else if (value.startsWith('-')) {
+        return '<span class="good"><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
+      }
+
+      return '<span>' + value + '</span>';
     }
   }
 });
@@ -697,7 +664,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(category.carbonDelta))
+                    }
+                  })
                 : _vm._e()
             ])
           }),
@@ -713,7 +685,7 @@ var render = function() {
               _c("div", { staticClass: "results-div" }, [
                 _c("a", { staticClass: "info-bubble" }, [
                   _vm._v(
-                    _vm._s(_vm.globalCarbonImpact.impact) +
+                    _vm._s(_vm.globalCarbonImpact.formatted) +
                       " " +
                       _vm._s(_vm.globalCarbonImpact.unit) +
                       "\n                        "
@@ -721,14 +693,14 @@ var render = function() {
                   _c("span", [
                     _vm._v(
                       "\n                        Impact produit : " +
-                        _vm._s(_vm.globalProductImpact.impact) +
+                        _vm._s(_vm.globalProductImpact.formatted) +
                         " " +
                         _vm._s(_vm.globalProductImpact.unit)
                     ),
                     _c("br"),
                     _vm._v(
                       "\n                        Impact transport : " +
-                        _vm._s(_vm.globalTransportationImpact.impact) +
+                        _vm._s(_vm.globalTransportationImpact.formatted) +
                         " " +
                         _vm._s(_vm.globalTransportationImpact.unit) +
                         "\n                    "
@@ -738,7 +710,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(_vm.carbonDelta))
+                    }
+                  })
                 : _vm._e()
             ]
           ),
@@ -779,7 +756,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(category.moneyDelta))
+                    }
+                  })
                 : _vm._e()
             ])
           }),
@@ -811,7 +793,12 @@ var render = function() {
               ]),
               _vm._v(" "),
               !_vm.isFirst
-                ? _c("div", { staticClass: "results-div" }, [_vm._v("+ 42 %")])
+                ? _c("div", {
+                    staticClass: "results-div",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.getStyle(_vm.moneyDelta))
+                    }
+                  })
                 : _vm._e()
             ]
           ),
@@ -1080,24 +1067,22 @@ __webpack_require__.r(__webpack_exports__);
     getGlobalCarbonImpact: function getGlobalCarbonImpact() {
       var _this = this;
 
-      this.cats.forEach(function () {
-        _this.globalProductImpact.impact = 0;
-        _this.globalTransportationImpact.impact = 0;
-        _this.globalCarbonImpact.impact = 0;
-
-        _this.cats.forEach(function (category) {
-          _this.globalProductImpact.impact += category.productImpact;
-          _this.globalTransportationImpact.impact += category.transportationImpact;
-          _this.globalCarbonImpact.impact += category.carbonImpact;
-        });
-
-        _this.globalProductImpact.unit = _this.getUnit(_this.globalProductImpact.impact);
-        _this.globalTransportationImpact.unit = _this.getUnit(_this.globalTransportationImpact.impact);
-        _this.globalCarbonImpact.unit = _this.getUnit(_this.globalCarbonImpact.impact);
-        _this.globalProductImpact.impact = _this.divideIfNecessary(_this.globalProductImpact.impact);
-        _this.globalTransportationImpact.impact = _this.divideIfNecessary(_this.globalTransportationImpact.impact);
-        _this.globalCarbonImpact.impact = _this.divideIfNecessary(_this.globalCarbonImpact.impact);
+      this.globalProductImpact.impact = 0;
+      this.globalTransportationImpact.impact = 0;
+      this.globalCarbonImpact.impact = 0;
+      this.globalCarbonImpactVariable = 0;
+      this.cats.forEach(function (category) {
+        _this.globalProductImpact.impact += category.productImpact;
+        _this.globalTransportationImpact.impact += category.transportationImpact;
+        _this.globalCarbonImpact.impact += category.carbonImpact;
+        _this.globalCarbonImpactVariable += category.carbonImpact;
       });
+      this.globalProductImpact.unit = this.getUnit(this.globalProductImpact.impact);
+      this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
+      this.globalCarbonImpact.unit = this.getUnit(this.globalCarbonImpact.impact);
+      this.globalProductImpact.formatted = this.divideIfNecessary(this.globalProductImpact.impact);
+      this.globalTransportationImpact.formatted = this.divideIfNecessary(this.globalTransportationImpact.impact);
+      this.globalCarbonImpact.formatted = this.divideIfNecessary(this.globalCarbonImpact.impact);
     },
     getMoneyImpactFor: function getMoneyImpactFor(category) {
       var categoryMoneySpent = 0;
@@ -1116,20 +1101,20 @@ __webpack_require__.r(__webpack_exports__);
     getGlobalMoneyImpact: function getGlobalMoneyImpact() {
       var _this2 = this;
 
-      this.cats.forEach(function () {
-        _this2.globalMoneySpend = 0;
-        _this2.globalCO2PerEuro = 0;
-        var totalCo2 = 0;
-
-        _this2.cats.forEach(function (category) {
-          _this2.globalMoneySpend += category.moneySpent;
-          totalCo2 += category.carbonImpact;
-        });
-
-        _this2.globalCO2PerEuro = totalCo2 / _this2.globalMoneySpend;
-        _this2.globalCO2PerEuroFormatted = _this2.divideIfNecessary(_this2.globalCO2PerEuro);
-        _this2.globalCO2PerEuroUnit = _this2.getUnit(_this2.globalCO2PerEuro) + '/€';
+      this.globalMoneySpend = 0;
+      this.globalCO2PerEuro = 0;
+      var totalCo2 = 0;
+      this.cats.forEach(function (category) {
+        _this2.globalMoneySpend += category.moneySpent;
+        totalCo2 += category.carbonImpact;
       });
+      this.globalCO2PerEuro = totalCo2 / this.globalMoneySpend;
+      this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
+      this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
+    },
+    getDeltasFor: function getDeltasFor(category, index) {
+      category.carbonDelta = this.getDelta(category.carbonImpact, this.comparedBasket.results.cats[index].carbonImpact);
+      category.moneyDelta = this.getDelta(category.moneySpent, this.comparedBasket.results.cats[index].moneySpent);
     },
     divideIfNecessary: function divideIfNecessary(amount) {
       if (amount >= 1000000) {
@@ -1156,6 +1141,111 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return 'gCO2';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/resultsCharts.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/resultsCharts.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      chartData: {
+        labels: [],
+        values: [],
+        money: [],
+        backgroundColors: [],
+        colors: [],
+        hoverColors: []
+      },
+      chartColors: [[255, 99, 132], [54, 162, 235], [255, 206, 86], [75, 192, 192], [153, 102, 255], [114, 42, 89], [42, 12, 241], [200, 198, 202], [142, 58, 14], [10, 246, 158], [215, 102, 45], [123, 56, 126]]
+    };
+  },
+  methods: {
+    createChart: function createChart(chartId) {
+      this.prepareChartLabels();
+      this.prepareChartValues();
+      this.getColors();
+      var ctx = document.getElementById(chartId).getContext('2d');
+      this.chart = new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: this.chartData.labels,
+          datasets: [{
+            label: '',
+            data: this.chartData.values,
+            backgroundColor: this.chartData.backgroundColors,
+            borderColor: this.chartData.colors,
+            hoverBackgroundColor: this.chartData.hoverColors,
+            borderWidth: 1,
+            hoverBorderWidth: 2,
+            borderAlign: 'inner'
+          }]
+        },
+        options: {
+          animation: {
+            animateRotate: true
+          }
+        }
+      });
+    },
+    prepareChartLabels: function prepareChartLabels() {
+      var _this = this;
+
+      this.cats.forEach(function (cat) {
+        _this.chartData.labels.push(cat.name);
+      });
+    },
+    prepareChartValues: function prepareChartValues() {
+      var _this2 = this;
+
+      this.clearChartValues();
+      this.cats.forEach(function (cat) {
+        _this2.chartData.values.push(cat.carbonImpact);
+
+        _this2.chartData.money.push(cat.moneySpent);
+      });
+    },
+    clearChartValues: function clearChartValues() {
+      this.chartData.values = [];
+      this.chartData.money = [];
+    },
+    getColors: function getColors() {
+      var _this3 = this;
+
+      this.chartColors.forEach(function (color) {
+        _this3.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.2)');
+
+        _this3.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.5)');
+
+        _this3.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
+      });
+    },
+    updateChart: function updateChart() {
+      this.prepareChartValues();
+
+      if (this.chartViewMoney) {
+        this.chart.data.datasets[0].data = this.chartData.money;
+      } else {
+        this.chart.data.datasets[0].data = this.chartData.values;
+      }
+
+      this.chart.update({
+        duration: 1000,
+        easing: 'easeOutBounce'
+      });
     }
   }
 });

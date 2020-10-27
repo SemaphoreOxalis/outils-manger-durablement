@@ -63,41 +63,45 @@ var render = function() {
         _c("div", { staticClass: "py-4" }, [_c("router-view")], 1)
       ]),
       _vm._v(" "),
-      _c("footer", { staticClass: "mt-auto w-100" }, [
-        _c("div", { staticClass: "pt-2" }, [
-          _c("p", { staticClass: "text-center" }, [
-            _vm._v("\n                " + _vm._s(_vm.this_is_from_Niort_CH)),
-            _c("br"),
-            _vm._v(_vm._s(_vm.financed_by) + "\n            ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "d-flex justify-content-around pb-3" }, [
-            _c("img", {
-              staticClass: "footer-logo",
-              attrs: {
-                src: "/images/logo-carasso.svg",
-                alt: _vm.images_alt_text.carasso
-              }
-            }),
+      _c(
+        "footer",
+        { staticClass: "mt-auto w-100", attrs: { id: "general-footer" } },
+        [
+          _c("div", { staticClass: "pt-2" }, [
+            _c("p", { staticClass: "text-center" }, [
+              _vm._v("\n                " + _vm._s(_vm.this_is_from_Niort_CH)),
+              _c("br"),
+              _vm._v(_vm._s(_vm.financed_by) + "\n            ")
+            ]),
             _vm._v(" "),
-            _c("img", {
-              staticClass: "footer-logo",
-              attrs: {
-                src: "/images/logo-region-NA.svg",
-                alt: _vm.images_alt_text.region_na
-              }
-            }),
-            _vm._v(" "),
-            _c("img", {
-              staticClass: "footer-logo",
-              attrs: {
-                src: "/images/logo-UE.svg",
-                alt: _vm.images_alt_text.europe
-              }
-            })
+            _c("div", { staticClass: "d-flex justify-content-around pb-3" }, [
+              _c("img", {
+                staticClass: "footer-logo",
+                attrs: {
+                  src: "/images/logo-carasso.svg",
+                  alt: _vm.images_alt_text.carasso
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "footer-logo",
+                attrs: {
+                  src: "/images/logo-region-NA.svg",
+                  alt: _vm.images_alt_text.region_na
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "footer-logo",
+                attrs: {
+                  src: "/images/logo-UE.svg",
+                  alt: _vm.images_alt_text.europe
+                }
+              })
+            ])
           ])
-        ])
-      ])
+        ]
+      )
     ]
   )
 }

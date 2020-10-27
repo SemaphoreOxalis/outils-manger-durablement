@@ -73,6 +73,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 
 
@@ -126,6 +128,9 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
       } else {
         return 0;
       }
+    },
+    firstBasket: function firstBasket() {
+      return this.baskets[0];
     }
   },
   created: function created() {
@@ -136,6 +141,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     }
 
     events.$on('send-selected-baskets', this.sendSelectedBaskets);
+    events.$on('save-baskets-results', this.saveBasketsResults);
   },
   mounted: function mounted() {
     events.$emit('get-internal-counters');
@@ -155,7 +161,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
       this.showGroupedActionModal = true;
     },
     previousBasket: function previousBasket(index) {
-      return index > 0 ? this.baskets[index - 1] : null;
+      return index > 0 ? this.baskets[index - 1] : this.baskets[0];
     }
   }
 });
@@ -220,7 +226,9 @@ var render = function() {
               origins: _vm.origins,
               categories: _vm.categories,
               "product-to-add": _vm.productToAdd,
-              "previous-basket": _vm.previousBasket(i)
+              "previous-basket": _vm.previousBasket(i),
+              "first-basket": _vm.firstBasket,
+              "compare-to-previous-basket": _vm.compareToPreviousBasket
             },
             on: {
               "save-baskets": _vm.saveBasketsToLocalStorage,
@@ -508,6 +516,9 @@ __webpack_require__.r(__webpack_exports__);
         products: products,
         isSelected: true
       };
+    },
+    saveBasketsResults: function saveBasketsResults(basketIndex, results) {
+      this.baskets[basketIndex].results = results;
     }
   }
 });

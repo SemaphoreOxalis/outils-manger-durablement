@@ -37,5 +37,8 @@ export default {
                 isSelected: true,
             };
         },
+        saveBasketsResults(basketIndex, results) {
+            this.baskets[basketIndex].results = results;
+        },
     }
 }

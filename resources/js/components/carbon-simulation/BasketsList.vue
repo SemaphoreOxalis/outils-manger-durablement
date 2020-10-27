@@ -24,6 +24,8 @@
                          v-bind:categories="categories"
                          v-bind:product-to-add="productToAdd"
                          v-bind:previous-basket="previousBasket(i)"
+                         v-bind:first-basket="firstBasket"
+                         v-bind:compare-to-previous-basket="compareToPreviousBasket"
                          @save-baskets="saveBasketsToLocalStorage"
                          @do-stuff="showGroupedActionPopUp"
                          @copy-basket="copyBasket"
@@ -108,6 +110,9 @@ export default {
             } else {
                 return 0;
             }
+        },
+        firstBasket: function () {
+            return this.baskets[0];
         }
     },
     created() {
@@ -117,6 +122,7 @@ export default {
             this.addBasket('votre panier');
         }
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
+        events.$on('save-baskets-results', this.saveBasketsResults);
     },
     mounted() {
         events.$emit('get-internal-counters');
@@ -138,7 +144,7 @@ export default {
         },
 
         previousBasket(index) {
-            return index > 0 ? this.baskets[index - 1] : null
+            return index > 0 ? this.baskets[index - 1] : this.baskets[0];
         },
     }
 }
