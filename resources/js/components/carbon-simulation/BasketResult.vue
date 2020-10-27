@@ -174,6 +174,9 @@ export default {
     },
     mounted() {
         this.createChart(this.basketId + '-chart');
+        Vue.nextTick().then(function () {
+            this.$forceUpdate();
+        });
     },
     methods: {
         updateResults() {
