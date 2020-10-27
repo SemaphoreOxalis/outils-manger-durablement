@@ -24,6 +24,8 @@
                          v-bind:categories="categories"
                          v-bind:product-to-add="productToAdd"
                          v-bind:previous-basket="previousBasket(i)"
+                         v-bind:first-basket="firstBasket"
+                         v-bind:compare-to-previous-basket="compareToPreviousBasket"
                          @save-baskets="saveBasketsToLocalStorage"
                          @do-stuff="showGroupedActionPopUp"
                          @copy-basket="copyBasket"
@@ -108,6 +110,9 @@ export default {
             } else {
                 return 0;
             }
+        },
+        firstBasket: function () {
+            return this.baskets[0];
         }
     },
     created() {

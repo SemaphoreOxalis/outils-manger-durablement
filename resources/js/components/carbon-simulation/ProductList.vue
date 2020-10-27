@@ -87,7 +87,7 @@ export default {
         $(document).on('click', function(e) {
             if ( $(e.target).closest('#dropDownList').length === 0) {
                 _self.closable = true;
-                document.getElementById('search').click();
+                document.getElementById('general-footer').click();
             }
         });
         $('#dropDownList')

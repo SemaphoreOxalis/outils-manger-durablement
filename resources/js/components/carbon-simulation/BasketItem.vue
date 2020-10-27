@@ -49,6 +49,8 @@
         <basket-result v-if="containsProducts"
                        :is-first="isFirst"
                        :previous-basket="previousBasket"
+                       :first-basket="firstBasket"
+                       :compare-to-previous-basket="compareToPreviousBasket"
                        :products="basket.products"
                        :categories="categories"
                        :basket-id="basket.id">
@@ -90,6 +92,8 @@ export default {
         categories: Array,
         productToAdd: Object,
         previousBasket: Object,
+        firstBasket: Object,
+        compareToPreviousBasket: Boolean,
     },
     data() {
         return {

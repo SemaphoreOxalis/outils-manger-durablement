@@ -73,6 +73,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 
 
@@ -126,6 +128,9 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
       } else {
         return 0;
       }
+    },
+    firstBasket: function firstBasket() {
+      return this.baskets[0];
     }
   },
   created: function created() {
@@ -220,7 +225,9 @@ var render = function() {
               origins: _vm.origins,
               categories: _vm.categories,
               "product-to-add": _vm.productToAdd,
-              "previous-basket": _vm.previousBasket(i)
+              "previous-basket": _vm.previousBasket(i),
+              "first-basket": _vm.firstBasket,
+              "compare-to-previous-basket": _vm.compareToPreviousBasket
             },
             on: {
               "save-baskets": _vm.saveBasketsToLocalStorage,

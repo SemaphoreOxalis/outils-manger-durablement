@@ -11763,6 +11763,10 @@ h1.header {
   margin-bottom: 1rem;
 }
 
+.modal.modal-fixed-footer {
+  width: 50%;
+}
+
 .btn.info {
   position: absolute;
   top: 0;

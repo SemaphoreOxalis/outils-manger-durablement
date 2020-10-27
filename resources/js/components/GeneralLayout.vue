@@ -6,7 +6,7 @@
             </div>
         </main>
 
-        <footer class="mt-auto w-100">
+        <footer class="mt-auto w-100" id="general-footer">
             <div class="pt-2">
                 <p class="text-center">
                     {{ this_is_from_Niort_CH }}<br>{{ financed_by }}
