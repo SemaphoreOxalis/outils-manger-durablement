@@ -48,7 +48,7 @@
                         </span>
                         </a>
                     </div>
-                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div">{{ carbonDelta }}</div>
                 </div>
                 <div class="results-comment">
                     <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
@@ -76,7 +76,7 @@
                         </span>
                         </a>
                     </div>
-                    <div v-if="!isFirst" class="results-div">+ 42 %</div>
+                    <div v-if="!isFirst" class="results-div">{{ moneyDelta }}</div>
                 </div>
                 <div class="results-comment">
                     <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
@@ -124,7 +124,17 @@ export default {
         firstBasket: Object,
         compareToPreviousBasket: Boolean,
     },
-    computed: {},
+    computed: {
+        comparedBasket: function () {
+            return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+        },
+        carbonDelta: function () {
+            return this.getDelta(this.globalCarbonImpactVariable, this.comparedBasket.results.globalCarbonImpact);
+        },
+        moneyDelta: function () {
+            return this.getDelta(this.globalMoneySpend, this.comparedBasket.results.globalMoneySpend);
+        },
+    },
     watch: {
         products: {
             handler: function () {
@@ -141,6 +151,7 @@ export default {
             globalProductImpact: {},
             globalTransportationImpact: {},
             globalCarbonImpact: {},
+            globalCarbonImpactVariable: Number,
 
             globalMoneySpend: Number,
             globalCO2PerEuro: Number,
@@ -154,10 +165,8 @@ export default {
         }
     },
     mounted() {
-        setTimeout(() => {
-            this.updateResults();
-            this.createChart(this.basketId + '-chart');
-        }, 1500);
+        this.updateResults();
+        this.createChart(this.basketId + '-chart');
     },
     methods: {
         updateResults() {
@@ -170,7 +179,7 @@ export default {
 
             this.sendResults();
 
-            this.$forceUpdate();
+            //this.$forceUpdate();
         },
         getCarbonImpactByCategory() {
             this.cats.forEach(cat => {
@@ -188,6 +197,14 @@ export default {
             this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
             this.results.globalMoneySpend = this.globalMoneySpend;
             events.$emit('save-baskets-results', this.index, this.results);
+        },
+
+        getDelta(basketCarbon, previousBasketCarbon) {
+            let result = this.roundToOneDecimal(
+                ((basketCarbon * 100) / previousBasketCarbon) - 100
+            );
+
+            return result > 0 ? "+" + result + "%" : result + "%";
         },
     },
 }
