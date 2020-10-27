@@ -179,8 +179,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.createChart(this.basketId + '-chart');
+
+    var _self = this;
+
     Vue.nextTick().then(function () {
-      this.$forceUpdate();
+      _self.$forceUpdate();
     });
   },
   methods: {
