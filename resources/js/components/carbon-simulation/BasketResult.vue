@@ -15,7 +15,7 @@
             <li class="nav-item">
                 <a class="nav-link button btn-2 nav-ico" :id="basketId + '-graph-tab'" data-toggle="tab"
                    :href="'#' + basketId + '-graph'" role="tab" aria-controls="contact"
-                   aria-selected="false" @click="resetGraphData"></a>
+                   aria-selected="false"></a>
             </li>
         </ul>
 
@@ -112,6 +112,7 @@ export default {
         products: {
             handler: function () {
                 this.updateResults();
+                this.updateChart(this.chart);
             },
             deep: true
         },
@@ -129,7 +130,7 @@ export default {
             globalCO2PerEuroFormatted: Number,
             globalCO2PerEuroUnit: String,
 
-            chart: Object,
+            chart: Chart,
             chartData: {
                 labels: [],
                 values: [],
@@ -174,8 +175,6 @@ export default {
             this.getMoneyImpactByCategory();
             this.getGlobalMoneyImpact();
 
-            this.updateChart(this.chart);
-
             this.$forceUpdate();
         },
         getCarbonImpactByCategory() {
@@ -208,7 +207,7 @@ export default {
                             hoverBackgroundColor: this.chartData.hoverColors,
                             borderWidth: 1,
                             hoverBorderWidth: 2,
-                            //borderAlign: 'inner',
+                            borderAlign: 'inner',
                         },
                         {
                             label: '€',
@@ -218,7 +217,7 @@ export default {
                             hoverBackgroundColor: this.chartData.hoverColors,
                             borderWidth: 1,
                             hoverBorderWidth: 2,
-                            //borderAlign: 'inner',
+                            borderAlign: 'inner',
                         },
                     ]
                 },
@@ -235,10 +234,15 @@ export default {
             });
         },
         prepareChartValues() {
+            this.clearChartValues();
             this.cats.forEach(cat => {
                 this.chartData.values.push(cat.carbonImpact);
                 this.chartData.money.push(cat.moneySpent);
             });
+        },
+        clearChartValues() {
+            this.chartData.values = [];
+            this.chartData.money = [];
         },
         getColors() {
             this.chartColors.forEach(color => {
@@ -247,12 +251,14 @@ export default {
                 this.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
             });
         },
-        resetGraphData() {
-
-        },
         updateChart(chart) {
-            console.log(chart);
-            //chart.update();
+            this.prepareChartValues();
+            chart.data.datasets[0].data = this.chartData.values;
+            chart.data.datasets[1].data = this.chartData.money;
+            chart.update({
+                duration: 1000,
+                easing: 'easeOutBounce'
+            });
         },
     },
 }

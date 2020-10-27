@@ -122,6 +122,7 @@ __webpack_require__.r(__webpack_exports__);
     products: {
       handler: function handler() {
         this.updateResults();
+        this.updateChart(this.chart);
       },
       deep: true
     }
@@ -136,7 +137,7 @@ __webpack_require__.r(__webpack_exports__);
       globalCO2PerEuro: Number,
       globalCO2PerEuroFormatted: Number,
       globalCO2PerEuroUnit: String,
-      chart: Object,
+      chart: chart_js__WEBPACK_IMPORTED_MODULE_2___default.a,
       chartData: {
         labels: [],
         values: [],
@@ -167,7 +168,6 @@ __webpack_require__.r(__webpack_exports__);
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
       this.getGlobalMoneyImpact();
-      this.updateChart(this.chart);
       this.$forceUpdate();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
@@ -200,8 +200,8 @@ __webpack_require__.r(__webpack_exports__);
             borderColor: this.chartData.colors,
             hoverBackgroundColor: this.chartData.hoverColors,
             borderWidth: 1,
-            hoverBorderWidth: 2 //borderAlign: 'inner',
-
+            hoverBorderWidth: 2,
+            borderAlign: 'inner'
           }, {
             label: '€',
             data: this.chartData.money,
@@ -209,8 +209,8 @@ __webpack_require__.r(__webpack_exports__);
             borderColor: this.chartData.colors,
             hoverBackgroundColor: this.chartData.hoverColors,
             borderWidth: 1,
-            hoverBorderWidth: 2 //borderAlign: 'inner',
-
+            hoverBorderWidth: 2,
+            borderAlign: 'inner'
           }]
         },
         options: {
@@ -230,11 +230,16 @@ __webpack_require__.r(__webpack_exports__);
     prepareChartValues: function prepareChartValues() {
       var _this5 = this;
 
+      this.clearChartValues();
       this.cats.forEach(function (cat) {
         _this5.chartData.values.push(cat.carbonImpact);
 
         _this5.chartData.money.push(cat.moneySpent);
       });
+    },
+    clearChartValues: function clearChartValues() {
+      this.chartData.values = [];
+      this.chartData.money = [];
     },
     getColors: function getColors() {
       var _this6 = this;
@@ -247,9 +252,14 @@ __webpack_require__.r(__webpack_exports__);
         _this6.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
       });
     },
-    resetGraphData: function resetGraphData() {},
     updateChart: function updateChart(chart) {
-      console.log(chart); //chart.update();
+      this.prepareChartValues();
+      chart.data.datasets[0].data = this.chartData.values;
+      chart.data.datasets[1].data = this.chartData.money;
+      chart.update({
+        duration: 1000,
+        easing: 'easeOutBounce'
+      });
     }
   }
 });
@@ -629,8 +639,7 @@ var render = function() {
                 role: "tab",
                 "aria-controls": "contact",
                 "aria-selected": "false"
-              },
-              on: { click: _vm.resetGraphData }
+              }
             },
             [_vm._v("")]
           )
