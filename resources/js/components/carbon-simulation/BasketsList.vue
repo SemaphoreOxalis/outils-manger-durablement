@@ -144,7 +144,7 @@ export default {
         },
 
         previousBasket(index) {
-            return index > 0 ? this.baskets[index - 1] : this.baskets[0];
+            return index > 0 ? this.baskets[index - 1] : null;
         },
     }
 }

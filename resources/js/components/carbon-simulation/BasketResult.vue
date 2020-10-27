@@ -177,7 +177,10 @@ export default {
     },
     methods: {
         updateResults() {
-            this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+            if(!this.isFirst) {
+                this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+            }
+
             this.cats = JSON.parse(JSON.stringify(this.categories));
             this.getCarbonImpactByCategory();
             this.getGlobalCarbonImpact();
@@ -185,7 +188,9 @@ export default {
             this.getMoneyImpactByCategory();
             this.getGlobalMoneyImpact();
 
-            this.getDeltas();
+            if(!this.isFirst) {
+                this.getDeltas();
+            }
 
             this.sendResults();
         },
