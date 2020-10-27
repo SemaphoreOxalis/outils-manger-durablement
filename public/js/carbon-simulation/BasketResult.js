@@ -182,13 +182,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateResults: function updateResults() {
-      this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+      if (!this.isFirst) {
+        this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
+      }
+
       this.cats = JSON.parse(JSON.stringify(this.categories));
       this.getCarbonImpactByCategory();
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
       this.getGlobalMoneyImpact();
-      this.getDeltas();
+
+      if (!this.isFirst) {
+        this.getDeltas();
+      }
+
       this.sendResults();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
