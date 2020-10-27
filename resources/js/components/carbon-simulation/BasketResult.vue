@@ -39,11 +39,11 @@
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">Total</div>
                     <div class="results-div">
-                        <a class="info-bubble">{{ globalCarbonImpact.impact }} {{ globalCarbonImpact.unit }}
+                        <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
                             <span>
-                            Impact produit : {{ globalProductImpact.impact }} {{ globalProductImpact.unit }}<br>
+                            Impact produit : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
                             Impact transport : {{
-                                    globalTransportationImpact.impact
+                                    globalTransportationImpact.formatted
                                 }} {{ globalTransportationImpact.unit }}
                         </span>
                         </a>
@@ -115,6 +115,7 @@ export default {
         resultsCharts,
     ],
     props: {
+        index: Number,
         products: Array,
         categories: Array,
         basketId: String,
@@ -167,6 +168,8 @@ export default {
             this.getMoneyImpactByCategory();
             this.getGlobalMoneyImpact();
 
+            this.sendResults();
+
             this.$forceUpdate();
         },
         getCarbonImpactByCategory() {
@@ -181,7 +184,10 @@ export default {
         },
 
         sendResults() {
-
+            this.results.cats = this.cats;
+            this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
+            this.results.globalMoneySpend = this.globalMoneySpend;
+            events.$emit('save-baskets-results', this.index, this.results);
         },
     },
 }

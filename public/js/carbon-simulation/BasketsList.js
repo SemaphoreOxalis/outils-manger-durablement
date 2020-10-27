@@ -141,6 +141,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     }
 
     events.$on('send-selected-baskets', this.sendSelectedBaskets);
+    events.$on('save-baskets-results', this.saveBasketsResults);
   },
   mounted: function mounted() {
     events.$emit('get-internal-counters');
@@ -515,6 +516,9 @@ __webpack_require__.r(__webpack_exports__);
         products: products,
         isSelected: true
       };
+    },
+    saveBasketsResults: function saveBasketsResults(basketIndex, results) {
+      this.baskets[basketIndex].results = results;
     }
   }
 });

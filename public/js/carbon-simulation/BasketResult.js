@@ -125,6 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__["default"]],
   props: {
+    index: Number,
     products: Array,
     categories: Array,
     basketId: String,
@@ -174,6 +175,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
       this.getGlobalMoneyImpact();
+      this.sendResults();
       this.$forceUpdate();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
@@ -190,7 +192,12 @@ __webpack_require__.r(__webpack_exports__);
         _this3.getMoneyImpactFor(cat);
       });
     },
-    sendResults: function sendResults() {}
+    sendResults: function sendResults() {
+      this.results.cats = this.cats;
+      this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
+      this.results.globalMoneySpend = this.globalMoneySpend;
+      events.$emit('save-baskets-results', this.index, this.results);
+    }
   }
 });
 
@@ -635,7 +642,7 @@ var render = function() {
               _c("div", { staticClass: "results-div" }, [
                 _c("a", { staticClass: "info-bubble" }, [
                   _vm._v(
-                    _vm._s(_vm.globalCarbonImpact.impact) +
+                    _vm._s(_vm.globalCarbonImpact.formatted) +
                       " " +
                       _vm._s(_vm.globalCarbonImpact.unit) +
                       "\n                        "
@@ -643,14 +650,14 @@ var render = function() {
                   _c("span", [
                     _vm._v(
                       "\n                        Impact produit : " +
-                        _vm._s(_vm.globalProductImpact.impact) +
+                        _vm._s(_vm.globalProductImpact.formatted) +
                         " " +
                         _vm._s(_vm.globalProductImpact.unit)
                     ),
                     _c("br"),
                     _vm._v(
                       "\n                        Impact transport : " +
-                        _vm._s(_vm.globalTransportationImpact.impact) +
+                        _vm._s(_vm.globalTransportationImpact.formatted) +
                         " " +
                         _vm._s(_vm.globalTransportationImpact.unit) +
                         "\n                    "
@@ -1016,9 +1023,9 @@ __webpack_require__.r(__webpack_exports__);
         _this.globalProductImpact.unit = _this.getUnit(_this.globalProductImpact.impact);
         _this.globalTransportationImpact.unit = _this.getUnit(_this.globalTransportationImpact.impact);
         _this.globalCarbonImpact.unit = _this.getUnit(_this.globalCarbonImpact.impact);
-        _this.globalProductImpact.impact = _this.divideIfNecessary(_this.globalProductImpact.impact);
-        _this.globalTransportationImpact.impact = _this.divideIfNecessary(_this.globalTransportationImpact.impact);
-        _this.globalCarbonImpact.impact = _this.divideIfNecessary(_this.globalCarbonImpact.impact);
+        _this.globalProductImpact.formatted = _this.divideIfNecessary(_this.globalProductImpact.impact);
+        _this.globalTransportationImpact.formatted = _this.divideIfNecessary(_this.globalTransportationImpact.impact);
+        _this.globalCarbonImpact.formatted = _this.divideIfNecessary(_this.globalCarbonImpact.impact);
       });
     },
     getMoneyImpactFor: function getMoneyImpactFor(category) {

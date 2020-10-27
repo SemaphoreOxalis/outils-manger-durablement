@@ -47,6 +47,7 @@
         </draggable>
 
         <basket-result v-if="containsProducts"
+                       :index="index"
                        :is-first="isFirst"
                        :previous-basket="previousBasket"
                        :first-basket="firstBasket"

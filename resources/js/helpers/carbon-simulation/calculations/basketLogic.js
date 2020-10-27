@@ -51,9 +51,9 @@ export default {
                 this.globalTransportationImpact.unit = this.getUnit(this.globalTransportationImpact.impact);
                 this.globalCarbonImpact.unit = this.getUnit(this.globalCarbonImpact.impact);
 
-                this.globalProductImpact.impact = this.divideIfNecessary(this.globalProductImpact.impact);
-                this.globalTransportationImpact.impact = this.divideIfNecessary(this.globalTransportationImpact.impact);
-                this.globalCarbonImpact.impact = this.divideIfNecessary(this.globalCarbonImpact.impact);
+                this.globalProductImpact.formatted = this.divideIfNecessary(this.globalProductImpact.impact);
+                this.globalTransportationImpact.formatted = this.divideIfNecessary(this.globalTransportationImpact.impact);
+                this.globalCarbonImpact.formatted = this.divideIfNecessary(this.globalCarbonImpact.impact);
             });
         },
 

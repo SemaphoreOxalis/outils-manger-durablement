@@ -122,6 +122,7 @@ export default {
             this.addBasket('votre panier');
         }
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
+        events.$on('save-baskets-results', this.saveBasketsResults);
     },
     mounted() {
         events.$emit('get-internal-counters');

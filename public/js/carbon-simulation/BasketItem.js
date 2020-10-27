@@ -90,6 +90,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 var BasketProduct = function BasketProduct() {
@@ -405,6 +406,7 @@ var render = function() {
       _vm.containsProducts
         ? _c("basket-result", {
             attrs: {
+              index: _vm.index,
               "is-first": _vm.isFirst,
               "previous-basket": _vm.previousBasket,
               "first-basket": _vm.firstBasket,
