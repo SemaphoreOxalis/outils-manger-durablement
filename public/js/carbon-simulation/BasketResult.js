@@ -106,6 +106,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -122,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
     products: {
       handler: function handler() {
         this.updateResults();
-        this.updateChart(this.chart);
+        this.updateChart();
       },
       deep: true
     }
@@ -138,6 +149,7 @@ __webpack_require__.r(__webpack_exports__);
       globalCO2PerEuroFormatted: Number,
       globalCO2PerEuroUnit: String,
       chart: chart_js__WEBPACK_IMPORTED_MODULE_2___default.a,
+      chartViewMoney: false,
       chartData: {
         labels: [],
         values: [],
@@ -194,17 +206,8 @@ __webpack_require__.r(__webpack_exports__);
         data: {
           labels: this.chartData.labels,
           datasets: [{
-            label: 'gCO2',
+            label: '',
             data: this.chartData.values,
-            backgroundColor: this.chartData.backgroundColors,
-            borderColor: this.chartData.colors,
-            hoverBackgroundColor: this.chartData.hoverColors,
-            borderWidth: 1,
-            hoverBorderWidth: 2,
-            borderAlign: 'inner'
-          }, {
-            label: '€',
-            data: this.chartData.money,
             backgroundColor: this.chartData.backgroundColors,
             borderColor: this.chartData.colors,
             hoverBackgroundColor: this.chartData.hoverColors,
@@ -252,11 +255,16 @@ __webpack_require__.r(__webpack_exports__);
         _this6.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
       });
     },
-    updateChart: function updateChart(chart) {
+    updateChart: function updateChart() {
       this.prepareChartValues();
-      chart.data.datasets[0].data = this.chartData.values;
-      chart.data.datasets[1].data = this.chartData.money;
-      chart.update({
+
+      if (this.chartViewMoney) {
+        this.chart.data.datasets[0].data = this.chartData.money;
+      } else {
+        this.chart.data.datasets[0].data = this.chartData.values;
+      }
+
+      this.chart.update({
         duration: 1000,
         easing: 'easeOutBounce'
       });
@@ -824,6 +832,64 @@ var render = function() {
           }
         },
         [
+          _c("div", { staticClass: "custom-control switch center" }, [
+            _c("label", [
+              _vm._v("\n                    bilan carbone "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.chartViewMoney,
+                    expression: "chartViewMoney"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.chartViewMoney)
+                    ? _vm._i(_vm.chartViewMoney, null) > -1
+                    : _vm.chartViewMoney
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.chartViewMoney,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.chartViewMoney = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.chartViewMoney = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.chartViewMoney = $$c
+                      }
+                    },
+                    _vm.updateChart
+                  ]
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "lever" }),
+              _vm._v("\n                    bilan financier\n                ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _vm.chartViewMoney
+              ? _c("span", [_vm._v("Ventilation des dépenses")])
+              : _c("span", [
+                  _vm._v("Ventilation de l'empreinte carbone en grammes de CO2")
+                ])
+          ]),
+          _vm._v(" "),
           _c("canvas", {
             attrs: {
               id: _vm.basketId + "-chart",

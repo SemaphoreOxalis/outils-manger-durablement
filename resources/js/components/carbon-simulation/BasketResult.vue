@@ -84,6 +84,17 @@
             </div>
 
             <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
+                <div class="custom-control switch center">
+                    <label>
+                        bilan carbone <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
+                        <span class="lever"></span>
+                        bilan financier
+                    </label>
+                </div>
+                <div>
+                    <span v-if="chartViewMoney">Ventilation des dépenses</span>
+                    <span v-else>Ventilation de l'empreinte carbone en grammes de CO2</span>
+                </div>
                 <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
             </div>
 
@@ -112,7 +123,7 @@ export default {
         products: {
             handler: function () {
                 this.updateResults();
-                this.updateChart(this.chart);
+                this.updateChart();
             },
             deep: true
         },
@@ -131,6 +142,7 @@ export default {
             globalCO2PerEuroUnit: String,
 
             chart: Chart,
+            chartViewMoney: false,
             chartData: {
                 labels: [],
                 values: [],
@@ -200,7 +212,7 @@ export default {
                     labels: this.chartData.labels,
                     datasets: [
                         {
-                            label: 'gCO2',
+                            label: '',
                             data: this.chartData.values,
                             backgroundColor: this.chartData.backgroundColors,
                             borderColor: this.chartData.colors,
@@ -208,17 +220,7 @@ export default {
                             borderWidth: 1,
                             hoverBorderWidth: 2,
                             borderAlign: 'inner',
-                        },
-                        {
-                            label: '€',
-                            data: this.chartData.money,
-                            backgroundColor: this.chartData.backgroundColors,
-                            borderColor: this.chartData.colors,
-                            hoverBackgroundColor: this.chartData.hoverColors,
-                            borderWidth: 1,
-                            hoverBorderWidth: 2,
-                            borderAlign: 'inner',
-                        },
+                        }
                     ]
                 },
                 options: {
@@ -251,11 +253,14 @@ export default {
                 this.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
             });
         },
-        updateChart(chart) {
+        updateChart() {
             this.prepareChartValues();
-            chart.data.datasets[0].data = this.chartData.values;
-            chart.data.datasets[1].data = this.chartData.money;
-            chart.update({
+            if(this.chartViewMoney) {
+                this.chart.data.datasets[0].data = this.chartData.money;
+            } else {
+                this.chart.data.datasets[0].data = this.chartData.values;
+            }
+            this.chart.update({
                 duration: 1000,
                 easing: 'easeOutBounce'
             });
