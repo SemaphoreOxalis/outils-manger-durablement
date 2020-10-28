@@ -44,7 +44,9 @@ var render = function() {
     { staticClass: "container" },
     [
       _c("h1", { staticClass: "header" }, [
-        _vm._v("Simulateur d'émission carbone pour la restauration collective")
+        _vm._v(_vm._s(_vm.waste_simulator) + " "),
+        _c("br"),
+        _vm._v(" " + _vm._s(_vm.for_collective_restauration))
       ]),
       _vm._v(" "),
       _c("router-view")

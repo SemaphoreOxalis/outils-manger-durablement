@@ -12,18 +12,18 @@ export default {
                 hoverColors: [],
             },
             chartColors: [
-                [255, 99, 132],
-                [54, 162, 235],
-                [255, 206, 86],
-                [75, 192, 192],
-                [153, 102, 255],
-                [114, 42, 89],
-                [42, 12, 241],
-                [200, 198, 202],
-                [142, 58, 14],
-                [10, 246, 158],
-                [215, 102, 45],
-                [123, 56, 126],
+                [38, 41, 74],
+                [1, 84, 90],
+                [1, 115, 81],
+                [3, 195, 131],
+                [170, 217, 98],
+                [251, 191, 69],
+                [239, 106, 50],
+                [237, 3, 69],
+                [161, 42, 94],
+                [113, 1, 98],
+                [70, 10, 75],
+                [26, 19, 52],
             ],
         }
     },
@@ -47,7 +47,7 @@ export default {
                             hoverBackgroundColor: this.chartData.hoverColors,
                             borderWidth: 1,
                             hoverBorderWidth: 2,
-                            borderAlign: 'inner',
+                            // borderAlign: 'inner',
                         }
                     ]
                 },
@@ -76,8 +76,8 @@ export default {
         },
         getColors() {
             this.chartColors.forEach(color => {
-                this.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.2)');
-                this.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.5)');
+                this.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
+                this.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.3)');
                 this.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
             });
         },
