@@ -173,7 +173,7 @@ export default {
         setTimeout(() => {
             this.updateResults();
             this.createChart(this.basketId + '-chart');
-        });
+        }, 1500);
     },
     methods: {
         updateResults() {
