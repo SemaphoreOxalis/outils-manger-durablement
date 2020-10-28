@@ -135,9 +135,6 @@ __webpack_require__.r(__webpack_exports__);
     compareToPreviousBasket: Boolean
   },
   computed: {
-    // comparedBasket: function () {
-    //     return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
-    // },
     carbonDelta: function carbonDelta() {
       return this.getDelta(this.globalCarbonImpactVariable, this.comparedBasket.results.globalCarbonImpact);
     },
@@ -178,12 +175,12 @@ __webpack_require__.r(__webpack_exports__);
     this.updateResults();
   },
   mounted: function mounted() {
-    this.createChart(this.basketId + '-chart');
+    var _this = this;
 
-    var _self = this;
+    setTimeout(function () {
+      _this.updateResults();
 
-    Vue.nextTick().then(function () {
-      _self.$forceUpdate();
+      _this.createChart(_this.basketId + '-chart');
     });
   },
   methods: {
@@ -203,26 +200,27 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.sendResults();
+      this.$forceUpdate();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
-      var _this = this;
-
-      this.cats.forEach(function (cat) {
-        _this.getCarbonImpactFor(cat);
-      });
-    },
-    getMoneyImpactByCategory: function getMoneyImpactByCategory() {
       var _this2 = this;
 
       this.cats.forEach(function (cat) {
-        _this2.getMoneyImpactFor(cat);
+        _this2.getCarbonImpactFor(cat);
+      });
+    },
+    getMoneyImpactByCategory: function getMoneyImpactByCategory() {
+      var _this3 = this;
+
+      this.cats.forEach(function (cat) {
+        _this3.getMoneyImpactFor(cat);
       });
     },
     getDeltas: function getDeltas() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.cats.forEach(function (cat, index) {
-        _this3.getDeltasFor(cat, index);
+        _this4.getDeltasFor(cat, index);
       });
     },
     sendResults: function sendResults() {
@@ -816,7 +814,16 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "results-comment" }, [
+            _c("div", [
+              _vm._v(
+                "Bilan carbone par €uro dépensé : " +
+                  _vm._s(_vm.globalCO2PerEuroFormatted) +
+                  " " +
+                  _vm._s(_vm.globalCO2PerEuroUnit)
+              )
+            ])
+          ])
         ],
         2
       ),
@@ -882,10 +889,12 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", [
+          _c("div", { staticClass: "my-4" }, [
             _vm.chartViewMoney
-              ? _c("span", [_vm._v("Ventilation des dépenses")])
-              : _c("span", [
+              ? _c("span", { staticClass: "text-center" }, [
+                  _vm._v("Ventilation des dépenses")
+                ])
+              : _c("span", { staticClass: "text-center" }, [
                   _vm._v("Ventilation de l'empreinte carbone en grammes de CO2")
                 ])
           ]),
@@ -903,18 +912,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "results-comment" }, [
-      _c("div", [
-        _vm._v(
-          "Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion"
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
