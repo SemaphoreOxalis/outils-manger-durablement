@@ -79,7 +79,7 @@
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(moneyDelta)"></div>
                 </div>
                 <div class="results-comment">
-                    <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
+                    <div>Bilan carbone par €uro dépensé : {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}</div>
                 </div>
             </div>
 
@@ -91,9 +91,9 @@
                         bilan financier
                     </label>
                 </div>
-                <div>
-                    <span v-if="chartViewMoney">Ventilation des dépenses</span>
-                    <span v-else>Ventilation de l'empreinte carbone en grammes de CO2</span>
+                <div class="my-4">
+                    <span v-if="chartViewMoney" class="text-center">Ventilation des dépenses</span>
+                    <span v-else class="text-center">Ventilation de l'empreinte carbone en grammes de CO2</span>
                 </div>
                 <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
             </div>
@@ -125,9 +125,6 @@ export default {
         compareToPreviousBasket: Boolean,
     },
     computed: {
-        // comparedBasket: function () {
-        //     return this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
-        // },
         carbonDelta: function () {
             return this.getDelta(this.globalCarbonImpactVariable, this.comparedBasket.results.globalCarbonImpact);
         },
@@ -173,10 +170,9 @@ export default {
         this.updateResults();
     },
     mounted() {
-        this.createChart(this.basketId + '-chart');
-        let _self = this;
-        Vue.nextTick().then(function () {
-            _self.$forceUpdate();
+        setTimeout(() => {
+            this.updateResults();
+            this.createChart(this.basketId + '-chart');
         });
     },
     methods: {
@@ -197,6 +193,7 @@ export default {
             }
 
             this.sendResults();
+            this.$forceUpdate();
         },
         getCarbonImpactByCategory() {
             this.cats.forEach(cat => {
