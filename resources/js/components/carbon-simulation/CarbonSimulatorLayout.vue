@@ -1,6 +1,6 @@
 <template>
     <main class="container">
-        <h1 class="header">Simulateur d&#x27;émission carbone pour la restauration collective</h1>
+        <h1 class="header">{{ waste_simulator }} <br> {{ for_collective_restauration }}</h1>
         <router-view></router-view>
     </main>
 </template>

@@ -680,6 +680,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // BASKET LIST
     saveBasketsToLocalStorage: function saveBasketsToLocalStorage() {
+      events.$emit('update-results');
       var basketsDate = Date.now();
       var baskets = JSON.stringify(this.baskets);
       localStorage.setItem('baskets', baskets);

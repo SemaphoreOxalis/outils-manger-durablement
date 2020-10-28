@@ -71,6 +71,7 @@ export default {
             // BASKET LIST
 
             saveBasketsToLocalStorage() {
+                events.$emit('update-results');
                 const basketsDate = Date.now();
                 const baskets = JSON.stringify(this.baskets);
 

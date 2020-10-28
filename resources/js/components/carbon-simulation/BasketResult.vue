@@ -174,6 +174,7 @@ export default {
             this.updateResults();
             this.createChart(this.basketId + '-chart');
         }, 1500);
+        events.$on('update-results', this.updateResults);
     },
     methods: {
         updateResults() {

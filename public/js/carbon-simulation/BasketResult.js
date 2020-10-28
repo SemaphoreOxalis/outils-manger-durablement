@@ -182,6 +182,7 @@ __webpack_require__.r(__webpack_exports__);
 
       _this.createChart(_this.basketId + '-chart');
     }, 1500);
+    events.$on('update-results', this.updateResults);
   },
   methods: {
     updateResults: function updateResults() {
@@ -1180,7 +1181,7 @@ __webpack_require__.r(__webpack_exports__);
         colors: [],
         hoverColors: []
       },
-      chartColors: [[255, 99, 132], [54, 162, 235], [255, 206, 86], [75, 192, 192], [153, 102, 255], [114, 42, 89], [42, 12, 241], [200, 198, 202], [142, 58, 14], [10, 246, 158], [215, 102, 45], [123, 56, 126]]
+      chartColors: [[38, 41, 74], [1, 84, 90], [1, 115, 81], [3, 195, 131], [170, 217, 98], [251, 191, 69], [239, 106, 50], [237, 3, 69], [161, 42, 94], [113, 1, 98], [70, 10, 75], [26, 19, 52]]
     };
   },
   methods: {
@@ -1200,8 +1201,8 @@ __webpack_require__.r(__webpack_exports__);
             borderColor: this.chartData.colors,
             hoverBackgroundColor: this.chartData.hoverColors,
             borderWidth: 1,
-            hoverBorderWidth: 2,
-            borderAlign: 'inner'
+            hoverBorderWidth: 2 // borderAlign: 'inner',
+
           }]
         },
         options: {
@@ -1236,9 +1237,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.chartColors.forEach(function (color) {
-        _this3.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.2)');
+        _this3.chartData.backgroundColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
 
-        _this3.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.5)');
+        _this3.chartData.hoverColors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 0.3)');
 
         _this3.chartData.colors.push('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', 1)');
       });
