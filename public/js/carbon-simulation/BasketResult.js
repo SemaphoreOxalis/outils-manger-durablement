@@ -181,7 +181,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.updateResults();
 
       _this.createChart(_this.basketId + '-chart');
-    });
+    }, 1500);
   },
   methods: {
     updateResults: function updateResults() {
