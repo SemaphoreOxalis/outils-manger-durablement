@@ -92,7 +92,7 @@ export default {
         },
         collapseIconId: function () {
             return '#collapse-icon-' + this.basketId + '-' + this.product.id;
-        }
+        },
     },
     methods: {
         removeProduct(index) {

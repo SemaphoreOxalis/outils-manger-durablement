@@ -60,6 +60,7 @@ import groupedActionFilters from "../../helpers/carbon-simulation/groupedActionF
 import basketsListHelper from "../../helpers/carbon-simulation/component-specific/basketsListHelper";
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 import DateFormatter from "../../helpers/DateFormatter";
+import ExportHelper from "../../helpers/ExportHelper";
 
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
@@ -86,6 +87,7 @@ export default {
         basketsListHelper,
         BasketSimulatorText,
         DateFormatter,
+        ExportHelper,
     ],
     props: {
         origins: Array,
@@ -157,28 +159,6 @@ export default {
         previousBasket(index) {
             return index > 0 ? this.baskets[index - 1] : null;
         },
-        exportBaskets() {
-            // Demande aux composants concernés de lui envoyer leurs données complètes
-            events.$emit('get-full-simulations-info-for-export');
-
-            // Création de l'objet à envoyer au back-end
-            this.export.mode = this.compareToPreviousBasket ? 'Chaque panier est comparé au précédent' : 'Les paniers sont comparés au premier panier';
-            this.export.baskets = this.baskets;
-            this.export.date = this.getBasketsDateFromLocalStorage()
-            //
-            // // appel AJAX vers le côté Laravel (ExportController.php)
-            // makeExportAjaxCall(this.export).then(response => {
-            //
-            //     let headers = response.headers;
-            //     let blob = new Blob([response.data], {type: headers['Content-type']});
-            //     let link = document.createElement('a');
-            //     link.href = window.URL.createObjectURL(blob);
-            //     link.download = "Rapport" + Date.now() + ".xlsx"
-            //     link.click();
-            // }).catch(e => {
-            //     console.log(e);
-            // });
-        }
     }
 }
 </script>

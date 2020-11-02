@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExportController extends Controller {
@@ -129,6 +132,139 @@ class ExportController extends Controller {
             $line++;
         }
 
+        $this->sendFile($spreadsheet);
+    }
+
+    public function exportBaskets(Request $request) {
+        //Validation des données
+        $request->validate([
+            'baskets' => 'array|required',
+            'mode' => 'string',
+        ]);
+
+        // création de la spreadsheet
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getProperties()
+            ->setCreator('Semaphore Communication')
+            ->setLastModifiedBy('Semaphore Communication')
+            ->setTitle('Export des paniers du ' . $request->input('date'))
+            ->setDescription('Export des paniers du ' . $request->input('date'))
+            ->setKeywords('impact carbone paniers simulations');
+
+        $firstSheet = $spreadsheet->getActiveSheet();
+        $firstSheet->setTitle('Accueil');
+
+        $borderStyle = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => Border::BORDER_THICK,
+                    'color' => ['rgb' => '00ff80'],
+                ],
+            ],
+        ];
+
+        // taille des colonnes
+        $firstSheet->getDefaultColumnDimension()->setWidth(25);
+        $firstSheet->getColumnDimension('A')->setWidth(65);
+
+        // Récapitulatif des valeurs de référence
+        $firstSheet->setCellValue('A1', 'Export des paniers du ' . $request->input('date'));
+        $firstSheet->setCellValue('A2', 'Mode de comparaison :  ' . $request->input('mode'));
+
+        $firstSheet->getCell('A1')->getStyle()->getFont()->setBold(true);
+        $firstSheet->getCell('A1')->getStyle()->getFont()->setSize(15);
+
+        foreach($request->input('baskets') as $basket) {
+            $sheet = new Worksheet($spreadsheet, $basket['name']);
+            $spreadsheet->addSheet($sheet);
+            $spreadsheet->setActiveSheetIndexByName($basket['name']);
+            $sheet->getDefaultColumnDimension()->setWidth(20);
+            $sheet->getColumnDimension('A')->setWidth(25);
+
+            $sheet->setCellValue('A1', $basket['name']);
+            $sheet->getStyle('A1')->getFont()->setBold(true);
+            $sheet->getStyle('A1')->getFont()->setSize(15);
+
+            $sheet->setCellValue('A3', 'produit');
+            $sheet->setCellValue('B3', 'commentaire');
+            $sheet->setCellValue('C3', 'quantité');
+            $sheet->setCellValue('D3', 'unité');
+            $sheet->setCellValue('E3', 'origine');
+            $sheet->setCellValue('F3', 'prix');
+            $sheet->mergeCells('G2:I2');
+            $sheet->getStyle('A2:I3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A2:I3')->applyFromArray($borderStyle);
+            $sheet->setCellValue('G2', 'impact carbone');
+            $sheet->setCellValue('G3', 'produit');
+            $sheet->setCellValue('H3', 'transport');
+            $sheet->setCellValue('I3', 'total');
+            $sheet->getStyle('A2:I3')->getFont()->setBold(true);
+
+            $line = 5;
+
+            foreach($basket['products'] as $product) {
+                $sheet->setCellValue('A' . $line, $product['name']);
+                $sheet->setCellValue('B' . $line, $product['comment']);
+                $sheet->setCellValue('C' . $line, $product['amount']);
+                $sheet->setCellValue('D' . $line, $product['unit']['unit']);
+                $sheet->setCellValue('E' . $line, $product['origin']['from']);
+                $sheet->setCellValue('F' . $line, $product['price'] . ' €');
+                $sheet->setCellValue('G' . $line, $product['productImpact'] . ' gCO2');
+                $sheet->setCellValue('H' . $line, $product['transportationImpact'] . ' gCO2');
+                $sheet->setCellValue('I' . $line, $product['carbonImpact'] . ' gCO2');
+                $line++;
+            }
+            $sheet->getStyle('E5:I' . $line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+            $line = $line + 2;
+
+            $sheet->mergeCells('A' . $line . ':E' . $line);
+            $sheet->mergeCells('G' . $line . ':I' . $line);
+            $sheet->setCellValue('A' . $line, 'bilan carbone');
+            $sheet->setCellValue('G' . $line, 'bilan financier');
+            $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getFont()->setBold(true);
+            $sheet->getStyle('A' . $line . ':I' . $line)->getFont()->setSize(12);
+            $sheet->getStyle('A' . $line . ':E' . $line)->applyFromArray($borderStyle);
+            $sheet->getStyle('G' . $line . ':I' . $line)->applyFromArray($borderStyle);
+            $line++;
+            $sheet->setCellValue('B' . $line, 'produit');
+            $sheet->setCellValue('C' . $line, 'transport');
+            $sheet->setCellValue('D' . $line, 'total');
+            $line++;
+
+            $lineBeforeResults = $line;
+            foreach($basket['results']['cats'] as $category) {
+                $sheet->setCellValue('A' . $line, $category['name']);
+                $sheet->setCellValue('B' . $line, $category['productImpact'] . ' gCO2');
+                $sheet->setCellValue('C' . $line, $category['transportationImpact'] . ' gCO2');
+                $sheet->setCellValue('D' . $line, $category['carbonImpact'] . ' gCO2');
+                $sheet->setCellValue('E' . $line, $category['carbonDelta']);
+
+                $sheet->setCellValue('G' . $line, $category['name']);
+                $sheet->setCellValue('H' . $line, $category['moneySpent'] . ' €');
+                $sheet->setCellValue('I' . $line, $category['moneyDelta']);
+                $line++;
+            }
+            $line++;
+            $sheet->setCellValue('A' . $line, 'Total');
+            $sheet->setCellValue('B' . $line, $basket['results']['globalProductImpact'] . ' gCO2');
+            $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' gCO2');
+            $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' gCO2');
+            $sheet->setCellValue('E' . $line, $basket['globalCarbonDelta']);
+
+            $sheet->setCellValue('G' . $line, 'Total');
+            $sheet->setCellValue('H' . $line, $basket['results']['globalMoneySpend'] . ' €');
+            $sheet->setCellValue('I' . $line, $basket['globalMoneyDelta']);
+
+            $sheet->getStyle('B' . $lineBeforeResults . ':E' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('H' . $lineBeforeResults . ':I' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+        }
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $this->sendFile($spreadsheet);
+    }
+
+    private function sendFile(Spreadsheet $spreadsheet) {
         // Envoi du fichier au navigateur pour téléchargement
         $response = response()->streamDownload(function() use ($spreadsheet) {
             $writer = new Xlsx($spreadsheet);
@@ -141,9 +277,5 @@ class ExportController extends Controller {
         $response->headers->set('Cache-Control', 'max-age="0"');
 
         $response->send();
-    }
-
-    public function exportBaskets(Request $request) {
-
     }
 }

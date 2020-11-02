@@ -114,6 +114,7 @@ export default {
     ],
     props: {
         index: Number,
+        basket: Object,
         products: Array,
         categories: Array,
         basketId: String,
@@ -189,6 +190,21 @@ export default {
 
             if(!this.isFirst) {
                 this.getDeltas();
+            }
+            else {
+                this.cats.forEach((cat) => {
+                    cat.carbonDelta = null;
+                    cat.moneyDelta = null;
+                });
+            }
+
+            if(this.isFirst) {
+                this.basket.globalCarbonDelta = null;
+                this.basket.globalMoneyDelta = null;
+            }
+            else {
+                this.basket.globalCarbonDelta = this.carbonDelta;
+                this.basket.globalMoneyDelta = this.moneyDelta;
             }
 
             this.sendResults();

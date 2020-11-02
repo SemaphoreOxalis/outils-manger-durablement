@@ -124,6 +124,7 @@ __webpack_require__.r(__webpack_exports__);
   mixins: [_helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_4__["default"]],
   props: {
     index: Number,
+    basket: Object,
     products: Array,
     categories: Array,
     basketId: String,
@@ -196,6 +197,19 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.isFirst) {
         this.getDeltas();
+      } else {
+        this.cats.forEach(function (cat) {
+          cat.carbonDelta = null;
+          cat.moneyDelta = null;
+        });
+      }
+
+      if (this.isFirst) {
+        this.basket.globalCarbonDelta = null;
+        this.basket.globalMoneyDelta = null;
+      } else {
+        this.basket.globalCarbonDelta = this.carbonDelta;
+        this.basket.globalMoneyDelta = this.moneyDelta;
       }
 
       this.sendResults();
@@ -1062,15 +1076,15 @@ __webpack_require__.r(__webpack_exports__);
         return product.category.id === category.id;
       });
       categoryProducts.forEach(function (product) {
-        var productImpact = 0;
-        var transportationImpact = 0;
-        var carbonImpact = 0;
-        productImpact = product.amount * product.emissionFactor;
-        transportationImpact = product.amount * product.origin.carbonImpactPerKg;
-        carbonImpact = productImpact + transportationImpact;
-        categoryProductImpact += productImpact;
-        categoryTransportationImpact += transportationImpact;
-        categoryCarbonImpact += carbonImpact;
+        // let productImpact = 0;
+        // let transportationImpact = 0;
+        // let carbonImpact = 0;
+        product.productImpact = product.amount * product.emissionFactor;
+        product.transportationImpact = product.amount * product.origin.carbonImpactPerKg;
+        product.carbonImpact = product.productImpact + product.transportationImpact;
+        categoryProductImpact += product.productImpact;
+        categoryTransportationImpact += product.transportationImpact;
+        categoryCarbonImpact += product.carbonImpact;
       });
       category.productImpact = this.roundToThreeDecimal(categoryProductImpact);
       category.transportationImpact = this.roundToThreeDecimal(categoryTransportationImpact);

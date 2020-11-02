@@ -352,7 +352,7 @@ __webpack_require__.r(__webpack_exports__);
       this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
       this["export"].simulations = this.simulations; // appel AJAX vers le côté Laravel (ExportController.php)
 
-      makeExportAjaxCall(this["export"]).then(function (response) {
+      makeSimsExportAjaxCall(this["export"]).then(function (response) {
         //TODO: make it compatible with IE11
         var headers = response.headers;
         var blob = new Blob([response.data], {
@@ -360,7 +360,28 @@ __webpack_require__.r(__webpack_exports__);
         });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = "Rapport" + Date.now() + ".xlsx";
+        link.download = "Rapport-gaspillage_" + Date.now() + ".xlsx";
+        link.click();
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    exportBaskets: function exportBaskets() {
+      // Demande aux composants concernés de lui envoyer leurs données complètes
+      events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
+
+      this["export"].mode = this.compareToPreviousBasket ? 'Chaque panier est comparé au précédent' : 'Les paniers sont comparés au premier panier';
+      this["export"].baskets = this.baskets;
+      this["export"].date = this.getBasketsDateFromLocalStorage(); // appel AJAX vers le côté Laravel (ExportController.php)
+
+      makeBasketsExportAjaxCall(this["export"]).then(function (response) {
+        var headers = response.headers;
+        var blob = new Blob([response.data], {
+          type: headers['Content-type']
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "Rapport-carbone_" + Date.now() + ".xlsx";
         link.click();
       })["catch"](function (e) {
         console.log(e);
@@ -369,8 +390,14 @@ __webpack_require__.r(__webpack_exports__);
   }
 });
 
-function makeExportAjaxCall(exportData) {
+function makeSimsExportAjaxCall(exportData) {
   return axios.post('/export-sims', exportData, {
+    responseType: 'arraybuffer'
+  });
+}
+
+function makeBasketsExportAjaxCall(exportData) {
+  return axios.post('/export-baskets', exportData, {
     responseType: 'arraybuffer'
   });
 }

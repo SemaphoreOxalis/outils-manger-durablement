@@ -48,6 +48,7 @@
 
         <basket-result v-if="containsProducts"
                        :index="index"
+                       :basket="basket"
                        :is-first="isFirst"
                        :previous-basket="previousBasket"
                        :first-basket="firstBasket"

@@ -92,6 +92,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -409,6 +410,7 @@ var render = function() {
         ? _c("basket-result", {
             attrs: {
               index: _vm.index,
+              basket: _vm.basket,
               "is-first": _vm.isFirst,
               "previous-basket": _vm.previousBasket,
               "first-basket": _vm.firstBasket,

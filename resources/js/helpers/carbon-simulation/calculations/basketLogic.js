@@ -10,17 +10,17 @@ export default {
             });
 
             categoryProducts.forEach(product => {
-                let productImpact = 0;
-                let transportationImpact = 0;
-                let carbonImpact = 0;
+                // let productImpact = 0;
+                // let transportationImpact = 0;
+                // let carbonImpact = 0;
 
-                productImpact = (product.amount * product.emissionFactor);
-                transportationImpact = (product.amount * product.origin.carbonImpactPerKg);
-                carbonImpact = productImpact + transportationImpact;
+                product.productImpact = (product.amount * product.emissionFactor);
+                product.transportationImpact = (product.amount * product.origin.carbonImpactPerKg);
+                product.carbonImpact = product.productImpact + product.transportationImpact;
 
-                categoryProductImpact += productImpact;
-                categoryTransportationImpact += transportationImpact;
-                categoryCarbonImpact += carbonImpact;
+                categoryProductImpact += product.productImpact;
+                categoryTransportationImpact += product.transportationImpact;
+                categoryCarbonImpact += product.carbonImpact;
             });
 
             category.productImpact = this.roundToThreeDecimal(categoryProductImpact);
