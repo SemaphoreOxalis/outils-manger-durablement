@@ -370,7 +370,7 @@ __webpack_require__.r(__webpack_exports__);
 });
 
 function makeExportAjaxCall(exportData) {
-  return axios.post('/export', exportData, {
+  return axios.post('/export-sims', exportData, {
     responseType: 'arraybuffer'
   });
 }

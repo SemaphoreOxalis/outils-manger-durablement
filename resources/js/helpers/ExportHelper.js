@@ -31,7 +31,7 @@ export default {
 };
 
 function makeExportAjaxCall(exportData) {
-    return axios.post('/export', exportData, {
+    return axios.post('/export-sims', exportData, {
         responseType: 'arraybuffer'
     });
 }

@@ -46,6 +46,11 @@
                 {{ switch_labels.compare_to_first }} <input v-model="compareToPreviousBasket" type="checkbox" class="custom-control-input"><span class="lever"></span> {{ switch_labels.compare_to_previous }}
             </label>
         </div>
+
+        <button class="button ml-auto"
+                @click="exportBaskets">
+            <i class="icon mr-2"></i>{{ btn.export_btn }}
+        </button>
     </div>
 </template>
 
@@ -54,6 +59,7 @@ import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 import groupedActionFilters from "../../helpers/carbon-simulation/groupedActionFilters";
 import basketsListHelper from "../../helpers/carbon-simulation/component-specific/basketsListHelper";
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
+import DateFormatter from "../../helpers/DateFormatter";
 
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
@@ -79,6 +85,7 @@ export default {
         groupedActionFilters,
         basketsListHelper,
         BasketSimulatorText,
+        DateFormatter,
     ],
     props: {
         origins: Array,
@@ -96,6 +103,8 @@ export default {
 
             showGroupedActionModal: false,
             compareToPreviousBasket: false,
+
+            export: {},
         }
     },
     computed: {
@@ -148,6 +157,28 @@ export default {
         previousBasket(index) {
             return index > 0 ? this.baskets[index - 1] : null;
         },
+        exportBaskets() {
+            // Demande aux composants concernés de lui envoyer leurs données complètes
+            events.$emit('get-full-simulations-info-for-export');
+
+            // Création de l'objet à envoyer au back-end
+            this.export.mode = this.compareToPreviousBasket ? 'Chaque panier est comparé au précédent' : 'Les paniers sont comparés au premier panier';
+            this.export.baskets = this.baskets;
+            this.export.date = this.getBasketsDateFromLocalStorage()
+            //
+            // // appel AJAX vers le côté Laravel (ExportController.php)
+            // makeExportAjaxCall(this.export).then(response => {
+            //
+            //     let headers = response.headers;
+            //     let blob = new Blob([response.data], {type: headers['Content-type']});
+            //     let link = document.createElement('a');
+            //     link.href = window.URL.createObjectURL(blob);
+            //     link.download = "Rapport" + Date.now() + ".xlsx"
+            //     link.click();
+            // }).catch(e => {
+            //     console.log(e);
+            // });
+        }
     }
 }
 </script>

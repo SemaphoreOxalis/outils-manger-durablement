@@ -212,6 +212,8 @@ export default {
 
         sendResults() {
             this.results.cats = this.cats;
+            this.results.globalProductImpact = this.globalProductImpact.impact;
+            this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
             this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
             this.results.globalMoneySpend = this.globalMoneySpend;
             events.$emit('save-baskets-results', this.index, this.results);

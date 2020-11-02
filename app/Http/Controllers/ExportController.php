@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExportController extends Controller {
 
-    public function export(Request $request)
+    public function exportSims(Request $request)
     {
         //Validation des données
         $request->validate([
@@ -143,4 +143,7 @@ class ExportController extends Controller {
         $response->send();
     }
 
+    public function exportBaskets(Request $request) {
+
+    }
 }
