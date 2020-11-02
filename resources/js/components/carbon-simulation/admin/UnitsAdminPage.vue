@@ -1,9 +1,9 @@
 <template>
     <div class="mt-4">
-        <h4>Unités</h4>
+        <h4>{{ tabs.units }}</h4>
 
-        <p>ici, vous pouvez renommer, ajouter ou supprimer des unités</p>
-        <p><strong>ATTENTION :</strong> supprimer une unité supprimera tous les produits associés</p>
+        <p>{{ howTo.youCanDoStuffWith }} {{ howTo.units }}</p>
+        <p><strong>{{ howTo.warning.warning }}</strong> {{ howTo.warning.deletingUnit }}</p>
 
         <div v-for="unit in units"
              :key="unit.id">
@@ -24,7 +24,7 @@
                    class="custom-input browser-default number-field">
             <input v-model="newUnit.shortUnit" type="text" required placeholder="ajouter une unité"
                    class="custom-input browser-default number-field">
-            <button class="button alter" @click="addUnit">OK</button>
+            <button class="button alter" @click="addUnit">{{ okBtn }}</button>
         </div>
 
     </div>
@@ -32,9 +32,11 @@
 
 <script>
 import UnitsDataBase from "../../../helpers/carbon-simulation/database/UnitsDataBase";
+import AdminPageText from "../../../../texts/AdminPageText";
 export default {
     mixins: [
-        UnitsDataBase
+        UnitsDataBase,
+        AdminPageText,
     ],
     data() {
         return {

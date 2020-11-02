@@ -10,6 +10,7 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
+/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
 //
 //
 //
@@ -50,8 +51,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       origins: [],
@@ -143,11 +145,15 @@ var render = function() {
     "div",
     { staticClass: "mt-4" },
     [
-      _c("h4", [_vm._v("Origines")]),
+      _c("h4", [_vm._v(_vm._s(_vm.tabs.origins))]),
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "ici, vous pouvez renommer, modifier, ajouter ou supprimer des origines (les champs ne peuvent être égaux à 0)"
+          _vm._s(_vm.howTo.youCanDoStuffWith) +
+            " " +
+            _vm._s(_vm.howTo.origins) +
+            " " +
+            _vm._s(_vm.howTo.fieldsCantBeNull)
         )
       ]),
       _vm._v(" "),
@@ -376,7 +382,7 @@ var render = function() {
         _c(
           "button",
           { staticClass: "button alter", on: { click: _vm.addOrigin } },
-          [_vm._v("OK")]
+          [_vm._v(_vm._s(_vm.okBtn))]
         )
       ])
     ],
@@ -552,6 +558,34 @@ function postOrigin(newOrigin) {
 function destroyOrigin(originId) {
   return axios["delete"]('/api/origins/' + originId);
 }
+
+/***/ }),
+
+/***/ "./resources/texts/AdminPageText.js":
+/*!******************************************!*\
+  !*** ./resources/texts/AdminPageText.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      admin_title: 'Panneau d\'administration',
+      here_you_can_edit_values: 'Ici, vous pouvez modifier simplement les valeurs de référence utilisées par l\'application',
+      waste_ref_values: {
+        title: 'Valeurs de référence'
+      },
+      cnters: {
+        title: 'Compteurs',
+        waste: 'Compteurs du simulateur de gaspillage alimentaire'
+      },
+      go_away: 'Vous n\'avez pas l\'autorisation d\'être ici'
+    };
+  }
+});
 
 /***/ })
 

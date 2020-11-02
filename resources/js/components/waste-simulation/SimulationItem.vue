@@ -124,7 +124,8 @@ export default {
         simulation: Object,
         index: Number,
         auditData: Object,
-        previousSimulation: Object
+        previousSimulation: Object,
+        compareToPreviousSim: Boolean,
     },
 
     data() {
@@ -138,6 +139,9 @@ export default {
 
         // récupère les données de la simulation précédente (qui se trouve être l'audit si elle est en première position)
         previousSim() {
+            if(!this.compareToPreviousSim) {
+                return this.auditData;
+            }
             return this.isFirst ? this.auditData : this.previousSimulation;
         },
 

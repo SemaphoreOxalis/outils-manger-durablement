@@ -16,7 +16,8 @@ class ExportController extends Controller {
         //Validation des données
         $request->validate([
             'audit' => 'array|required',
-            'simulations' => 'array'
+            'simulations' => 'array',
+            'mode' => 'string',
         ]);
 
         // création de la spreadsheet
@@ -44,37 +45,38 @@ class ExportController extends Controller {
         $sheet->getCell('A1')->getStyle()->getFont()->setBold(true);
         $sheet->getCell('A1')->getStyle()->getFont()->setSize(15);
 
+        $sheet->setCellValue('A4', 'Mode de comparaison : ' . $request->input('mode'));
 
         // Labels
-        $sheet->setCellValue('B5', 'Nombre de repas produits');
-        $sheet->setCellValue('C5', 'Coût de revient d\'un repas');
-        $sheet->setCellValue('D5', 'Poids moyen d\'un repas');
-        $sheet->setCellValue('E5', 'Coût de traitement par tonne de déchets (en €)');
-        $sheet->setCellValue('F5', 'Volume de gaspillage alimentaire (en T)');
-        $sheet->setCellValue('G5', 'Estimation du gaspillage alimentaire (en g par repas)');
-        $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (en €)');
-        $sheet->setCellValue('I5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
+        $sheet->setCellValue('B6', 'Nombre de repas produits');
+        $sheet->setCellValue('C6', 'Coût de revient d\'un repas');
+        $sheet->setCellValue('D6', 'Poids moyen d\'un repas');
+        $sheet->setCellValue('E6', 'Coût de traitement par tonne de déchets (en €)');
+        $sheet->setCellValue('F6', 'Volume de gaspillage alimentaire (en T)');
+        $sheet->setCellValue('G6', 'Estimation du gaspillage alimentaire (en g par repas)');
+        $sheet->setCellValue('H6', 'Estimation du gaspillage alimentaire (en €)');
+        $sheet->setCellValue('I6', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
 
-        $sheet->getStyle('B5:I5')->getFont()->setBold(true);
+        $sheet->getStyle('B6:I6')->getFont()->setBold(true);
 
         // Audit
-        $sheet->setCellValue('A6', $request->input('audit.name'));
-        $sheet->setCellValueExplicit('B6', $request->input('audit.dishesNumber'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('C6', $request->input('audit.dishCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('D6', $request->input('audit.dishWeight'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('E6', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('F6', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('G6', $request->input('audit.ratio'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('H6', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('I6', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
+        $sheet->setCellValue('A7', $request->input('audit.name'));
+        $sheet->setCellValueExplicit('B7', $request->input('audit.dishesNumber'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('C7', $request->input('audit.dishCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('D7', $request->input('audit.dishWeight'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('E7', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('F7', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('G7', $request->input('audit.ratio'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('H7', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('I7', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
 
-        $sheet->getStyle('A6')->getFont()->setBold(true);
-        $sheet->getStyle('A6:I6')->getFont()->setSize(15);
-        $sheet->getStyle('A6:I6')->getFill()->setFillType(Fill::FILL_SOLID);
-        $sheet->getStyle('A6:I6')->getFill()->getStartColor()->setRGB('00bfff');
+        $sheet->getStyle('A7')->getFont()->setBold(true);
+        $sheet->getStyle('A7:I7')->getFont()->setSize(15);
+        $sheet->getStyle('A7:I7')->getFill()->setFillType(Fill::FILL_SOLID);
+        $sheet->getStyle('A7:I7')->getFill()->getStartColor()->setRGB('00bfff');
 
         // variables utiles pour les simulations
-        $line = 8;
+        $line = 9;
         $previous = 'l\'audit';
 
         // Simulations

@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 /* harmony import */ var _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/ExportHelper */ "./resources/js/helpers/ExportHelper.js");
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../texts/wasteSimulator/ResultsPageText */ "./resources/texts/wasteSimulator/ResultsPageText.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -55,6 +56,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 // import des dépendances
 // bibliothèque de fonctions chargée de traiter la liste des simulations
  // intéraction avec le localStorage
@@ -62,6 +70,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
  // responsable de l'export Excel
 
  // pratique pour formatter les dates
+
 
  // composant enfant
 
@@ -81,7 +90,7 @@ var draggable = function draggable() {
     draggable: draggable
   },
   // déclaration de dépendance à ces fichiers
-  mixins: [_helpers_waste_simulation_component_specific_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_helpers_waste_simulation_component_specific_SimulationsHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"], _texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // Données reçues du composant parent (AuditItem.vue)
   props: {
     auditData: Object
@@ -92,7 +101,8 @@ var draggable = function draggable() {
       simulations: [],
       counter: 0,
       dataSource: null,
-      "export": {}
+      "export": {},
+      compareToPreviousSim: false
     };
   },
   // A l'initialisation du composant
@@ -181,6 +191,7 @@ var render = function() {
               simulation: simulation,
               index: index,
               "audit-data": _vm.auditData,
+              "compare-to-previous-sim": _vm.compareToPreviousSim,
               "previous-simulation": _vm.previousSimulation(index)
             },
             on: {
@@ -193,7 +204,53 @@ var render = function() {
           })
         }),
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "custom-control switch center" }, [
+        _c("label", [
+          _vm._v("\n            " + _vm._s(_vm.compare_to.audit) + " "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.compareToPreviousSim,
+                expression: "compareToPreviousSim"
+              }
+            ],
+            staticClass: "custom-control-input",
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.compareToPreviousSim)
+                ? _vm._i(_vm.compareToPreviousSim, null) > -1
+                : _vm.compareToPreviousSim
+            },
+            on: {
+              change: function($event) {
+                var $$a = _vm.compareToPreviousSim,
+                  $$el = $event.target,
+                  $$c = $$el.checked ? true : false
+                if (Array.isArray($$a)) {
+                  var $$v = null,
+                    $$i = _vm._i($$a, $$v)
+                  if ($$el.checked) {
+                    $$i < 0 && (_vm.compareToPreviousSim = $$a.concat([$$v]))
+                  } else {
+                    $$i > -1 &&
+                      (_vm.compareToPreviousSim = $$a
+                        .slice(0, $$i)
+                        .concat($$a.slice($$i + 1)))
+                  }
+                } else {
+                  _vm.compareToPreviousSim = $$c
+                }
+              }
+            }
+          }),
+          _c("span", { staticClass: "lever" }),
+          _vm._v(_vm._s(_vm.compare_to.previous_sim) + "\n        ")
+        ])
+      ])
     ],
     1
   )
@@ -290,6 +347,7 @@ __webpack_require__.r(__webpack_exports__);
       // Demande aux composants concernés de lui envoyer leurs données complètes
       events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
 
+      this["export"].mode = this.compareToPreviousSim ? 'simulations comparées entre elles' : 'simulations comparées à l\'audit';
       this["export"].audit = this.auditData;
       this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
       this["export"].simulations = this.simulations; // appel AJAX vers le côté Laravel (ExportController.php)

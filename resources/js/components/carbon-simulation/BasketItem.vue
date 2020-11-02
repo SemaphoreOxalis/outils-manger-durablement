@@ -4,7 +4,7 @@
             <div class="basket-select custom-control custom-checkbox">
                 <input type="checkbox"
                        v-model="basket.isSelected"
-                       class="custom-control-input"> <label class="custom-control-label">Ajouter dans ce panier</label>
+                       class="custom-control-input"> <label class="custom-control-label">{{ add_to_this_basket }}</label>
             </div>
             <div class="basket-name">
                 <input v-model="basket.name"
@@ -63,6 +63,7 @@
 
 <script>
 import searchBar from "../../helpers/carbon-simulation/searchBar";
+import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 
 const BasketProduct = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketProduct" */
@@ -84,7 +85,8 @@ export default {
         draggable
     },
     mixins: [
-        searchBar
+        searchBar,
+        BasketSimulatorText,
     ],
     props: {
         basket: Object,

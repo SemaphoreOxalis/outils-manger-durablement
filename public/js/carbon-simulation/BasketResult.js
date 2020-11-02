@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/NumberFormatter */ "./resources/js/helpers/NumberFormatter.js");
 /* harmony import */ var _helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/calculations/basketLogic */ "./resources/js/helpers/carbon-simulation/calculations/basketLogic.js");
 /* harmony import */ var _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/resultsCharts */ "./resources/js/helpers/carbon-simulation/resultsCharts.js");
+/* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 //
 //
 //
@@ -114,16 +115,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_helpers_carbon_simulation_calculations_basketLogic__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_NumberFormatter__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_resultsCharts__WEBPACK_IMPORTED_MODULE_3__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_4__["default"]],
   props: {
     index: Number,
     products: Array,
@@ -241,9 +239,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getStyle: function getStyle(value) {
       if (value.startsWith('+')) {
-        return '<span class="bad"><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
+        return '<span><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
       } else if (value.startsWith('-')) {
-        return '<span class="good"><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
+        return '<span><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
       }
 
       return '<span>' + value + '</span>';
@@ -592,7 +590,7 @@ var render = function() {
                 "aria-selected": "true"
               }
             },
-            [_vm._v("Bilan carbone")]
+            [_vm._v(_vm._s(_vm.impact.title.carbon))]
           )
         ]),
         _vm._v(" "),
@@ -610,7 +608,7 @@ var render = function() {
                 "aria-selected": "false"
               }
             },
-            [_vm._v("Bilan financier")]
+            [_vm._v(_vm._s(_vm.impact.title.money))]
           )
         ]),
         _vm._v(" "),
@@ -658,14 +656,18 @@ var render = function() {
                   ),
                   _c("span", [
                     _vm._v(
-                      "\n                        Impact produit : " +
+                      "\n                        " +
+                        _vm._s(_vm.impact.product_impact) +
+                        " : " +
                         _vm._s(category.productFormattedImpact) +
                         " " +
                         _vm._s(category.productImpactUnit)
                     ),
                     _c("br"),
                     _vm._v(
-                      "\n                        Impact transport : " +
+                      "\n                        " +
+                        _vm._s(_vm.impact.transportation_impact) +
+                        " : " +
                         _vm._s(category.transportationFormattedImpact) +
                         " " +
                         _vm._s(category.transportationImpactUnit) +
@@ -691,7 +693,7 @@ var render = function() {
             { staticClass: "results-row flex-horizontal final-results" },
             [
               _c("div", { staticClass: "results-categorie-name" }, [
-                _vm._v("Total")
+                _vm._v(_vm._s(_vm.sum))
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "results-div" }, [
@@ -704,14 +706,18 @@ var render = function() {
                   ),
                   _c("span", [
                     _vm._v(
-                      "\n                        Impact produit : " +
+                      "\n                        " +
+                        _vm._s(_vm.impact.product_impact) +
+                        " : " +
                         _vm._s(_vm.globalProductImpact.formatted) +
                         " " +
                         _vm._s(_vm.globalProductImpact.unit)
                     ),
                     _c("br"),
                     _vm._v(
-                      "\n                        Impact transport : " +
+                      "\n                        " +
+                        _vm._s(_vm.impact.transportation_impact) +
+                        " : " +
                         _vm._s(_vm.globalTransportationImpact.formatted) +
                         " " +
                         _vm._s(_vm.globalTransportationImpact.unit) +
@@ -732,7 +738,16 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "results-comment" }, [
+            _c("div", [
+              _vm._v(
+                _vm._s(_vm.impact.carbon) +
+                  " " +
+                  _vm._s(_vm.impact.equals_to) +
+                  " un aller-retour Paris/New-York en avion"
+              )
+            ])
+          ])
         ],
         2
       ),
@@ -761,7 +776,7 @@ var render = function() {
                         _vm._s(category.co2PerEuroFormatted) +
                         " " +
                         _vm._s(category.co2PerEuroUnit) +
-                        "\n                    "
+                        "\n                        "
                     )
                   ])
                 ])
@@ -783,7 +798,7 @@ var render = function() {
             { staticClass: "results-row flex-horizontal final-results" },
             [
               _c("div", { staticClass: "results-categorie-name" }, [
-                _vm._v("Total")
+                _vm._v(_vm._s(_vm.sum))
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "results-div" }, [
@@ -798,7 +813,7 @@ var render = function() {
                         _vm._s(_vm.globalCO2PerEuroFormatted) +
                         " " +
                         _vm._s(_vm.globalCO2PerEuroUnit) +
-                        "\n                    "
+                        "\n                        "
                     )
                   ])
                 ])
@@ -818,7 +833,8 @@ var render = function() {
           _c("div", { staticClass: "results-comment" }, [
             _c("div", [
               _vm._v(
-                "Bilan carbone par €uro dépensé : " +
+                _vm._s(_vm.impact.co2_per_euro) +
+                  " : " +
                   _vm._s(_vm.globalCO2PerEuroFormatted) +
                   " " +
                   _vm._s(_vm.globalCO2PerEuroUnit)
@@ -842,7 +858,9 @@ var render = function() {
         [
           _c("div", { staticClass: "custom-control switch center" }, [
             _c("label", [
-              _vm._v("\n                    bilan carbone "),
+              _vm._v(
+                "\n                    " + _vm._s(_vm.impact.title.carbon) + " "
+              ),
               _c("input", {
                 directives: [
                   {
@@ -886,18 +904,18 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("span", { staticClass: "lever" }),
-              _vm._v("\n                    bilan financier\n                ")
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.impact.title.money) +
+                  "\n                "
+              )
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "my-4" }, [
+          _c("div", { staticClass: "my-4 text-center" }, [
             _vm.chartViewMoney
-              ? _c("span", { staticClass: "text-center" }, [
-                  _vm._v("Ventilation des dépenses")
-                ])
-              : _c("span", { staticClass: "text-center" }, [
-                  _vm._v("Ventilation de l'empreinte carbone en grammes de CO2")
-                ])
+              ? _c("span", [_vm._v(_vm._s(_vm.ventilation.money))])
+              : _c("span", [_vm._v(_vm._s(_vm.ventilation.carbon))])
           ]),
           _vm._v(" "),
           _c("canvas", {
@@ -912,20 +930,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "results-comment" }, [
-      _c("div", [
-        _vm._v(
-          "Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion"
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

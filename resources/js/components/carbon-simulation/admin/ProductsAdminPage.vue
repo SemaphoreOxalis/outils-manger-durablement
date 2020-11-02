@@ -1,8 +1,8 @@
 <template>
     <div class="mt-4">
-        <h4>Produits</h4>
+        <h4>{{ tabs.products }}</h4>
 
-        <p>ici, vous pouvez renommer, modifier, ajouter ou supprimer des produits</p>
+        <p>{{ howTo.youCanDoStuffWith }} {{ howTo.products }}</p>
 
         <input type="text" v-model="search" placeholder="Rechercher un produit.." style="max-width: 350px;">
         <button @click="search=''" style="display: inline-block;">X</button>
@@ -50,7 +50,7 @@
             </select>
             <input v-model="newProduct.emissionFactor" type="number" required min="0" step="0.01"
                    class="custom-input browser-default number-field">
-            <button class="button alter" @click="addProduct">OK</button>
+            <button class="button alter" @click="addProduct">{{ okBtn }}</button>
         </div>
 
     </div>
@@ -61,12 +61,14 @@ import ProductsDataBase from "../../../helpers/carbon-simulation/database/Produc
 import CategoriesDataBase from "../../../helpers/carbon-simulation/database/CategoriesDataBase";
 import UnitsDataBase from "../../../helpers/carbon-simulation/database/UnitsDataBase";
 import searchBar from "../../../helpers/carbon-simulation/searchBar";
+import AdminPageText from "../../../../texts/AdminPageText";
 export default {
     mixins: [
         ProductsDataBase,
         CategoriesDataBase,
         UnitsDataBase,
-        searchBar
+        searchBar,
+        AdminPageText,
     ],
     data() {
         return {

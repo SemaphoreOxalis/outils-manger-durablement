@@ -130,7 +130,8 @@ __webpack_require__.r(__webpack_exports__);
     simulation: Object,
     index: Number,
     auditData: Object,
-    previousSimulation: Object
+    previousSimulation: Object,
+    compareToPreviousSim: Boolean
   },
   data: function data() {
     return {
@@ -141,6 +142,10 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     // récupère les données de la simulation précédente (qui se trouve être l'audit si elle est en première position)
     previousSim: function previousSim() {
+      if (!this.compareToPreviousSim) {
+        return this.auditData;
+      }
+
       return this.isFirst ? this.auditData : this.previousSimulation;
     },
     // Booléen qui permet à une simulation de savoir si elle est placée juste en dessous de l'audit

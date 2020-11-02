@@ -14,6 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
+/* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 //
 //
 //
@@ -76,6 +77,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -105,7 +107,7 @@ var BasketsList = function BasketsList() {
     AddProductPopUp: AddProductPopUp,
     BasketsList: BasketsList
   },
-  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_5__["default"]],
   data: function data() {
     return {
       products: [],
@@ -116,7 +118,6 @@ var BasketsList = function BasketsList() {
       selectedByCategory: false,
       selectedBySearchBar: false,
       search: '',
-      //searchResults: [],
       selectedBaskets: [],
       internalCounters: [],
       showAddingModal: false,
@@ -258,7 +259,79 @@ var render = function() {
             [_vm._v("?")]
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "div",
+            {
+              staticClass: "modal modal-fixed-footer",
+              attrs: { id: "mode_emploi" }
+            },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("h4", [_vm._v(_vm._s(_vm.how_to.use))]),
+                _vm._v(" "),
+                _c("ul", [
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.add_prod_to_basket))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(_vm._s(_vm.how_to.how_many_and_from_where))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(_vm._s(_vm.how_to.behold_your_carbon_impact))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.add_mock_baskets))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.copy_basket))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _vm._v(_vm._s(_vm.how_to.go_wild_and_edit_things))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.delete_a_basket))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.clear_a_basket))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.do_stuff))
+                  ]),
+                  _vm._v(" "),
+                  _c("li", [
+                    _c("span", { staticClass: "icon" }, [_vm._v("")]),
+                    _vm._v(" " + _vm._s(_vm.how_to.export_baskets))
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "modal-close waves-effect waves-green btn-flat",
+                    attrs: { href: "#!" }
+                  },
+                  [_vm._v(_vm._s(_vm.how_to.close_btn))]
+                )
+              ])
+            ]
+          )
         ],
         1
       ),
@@ -275,96 +348,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "modal modal-fixed-footer", attrs: { id: "mode_emploi" } },
-      [
-        _c("div", { staticClass: "modal-content" }, [
-          _c("h4", [_vm._v("Mode d'emploi")]),
-          _vm._v(" "),
-          _c("ul", [
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(
-                " Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche"
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _vm._v(
-                "Vous êtes alors invités à en préciser le nombre et l’origine"
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _vm._v(
-                "Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier"
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(
-                " Vous avez alors la possiblité d’ajouter des paniers de “simulation” et de les renommer"
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(" Vous pouvez aussi dupliquer un panier existant")
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _vm._v(
-                "N’hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l’impact de vos changements"
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(" Vous pouvez effacer les paniers un par un")
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(" ou le vider")
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(
-                " permet d'effectuer des opérations sur l'ensemble du panier"
-              )
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("span", { staticClass: "icon" }, [_vm._v("")]),
-              _vm._v(
-                ' Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur'
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "modal-footer" }, [
-          _c(
-            "a",
-            {
-              staticClass: "modal-close waves-effect waves-green btn-flat",
-              attrs: { href: "#!" }
-            },
-            [_vm._v("Fermer")]
-          )
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -902,6 +886,107 @@ __webpack_require__.r(__webpack_exports__);
       // remplace œ par oe
       return string.toLowerCase().replace(/[\u0153]/, "oe");
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/carbonSimulator/BasketSimulatorText.js":
+/*!****************************************************************!*\
+  !*** ./resources/texts/carbonSimulator/BasketSimulatorText.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      how_to: {
+        title: 'Comment utiliser ce simulateur de panier de commande',
+        use: 'Mode d\'emploi',
+        add_prod_to_basket: 'Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche',
+        how_many_and_from_where: 'Vous êtes alors invités à en préciser le nombre et l\'origine',
+        behold_your_carbon_impact: 'Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier',
+        copy_basket: 'Vous pouvez aussi dupliquer un panier existant',
+        add_mock_baskets: 'Vous avez alors la possibilité d\'ajouter des paniers de "simulation" et de les renommer',
+        go_wild_and_edit_things: 'N\'hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l\'impact de vos changements',
+        delete_a_basket: 'Vous pouvez effacer les paniers un par un',
+        clear_a_basket: 'ou les vider',
+        destroy_them_all: 'ou tous les supprimer d\'un seul clic',
+        do_stuff: 'permet d\'effectuer des opérations sur l\'ensemble du panier',
+        export_baskets: 'Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur',
+        close_btn: 'Fermer'
+      },
+      hover: {
+        // sur les + à côté des produits sur la liste de gauche
+        add_product_to_marked_baskets: 'Ajouter ce produit aux paniers sélectionnés',
+        // Sur les checkboxes au dessus des paniers
+        mark_as_fillable: 'marquer ce panier afin que les produits saisis y soient déposés',
+        // Icônes du panier
+        delete_basket: 'supprimer ce panier',
+        edit_basket: 'modifier ce panier',
+        add_basket: 'dupliquer le panier',
+        clear_basket: 'vider le panier'
+      },
+      baskets: 'Paniers',
+      add_new_basket: 'Nouveau panier vide',
+      add_to_this_basket: 'Ajouter dans ce panier',
+      placeholders: {
+        type_in_your_product: 'Tapez le nom de votre produit puis sélectionnez-le avec la souris ou les touches de votre clavier',
+        search_prod: 'Rechercher un produit'
+      },
+      impact: {
+        title: {
+          carbon: 'Bilan Carbone',
+          money: 'Bilan Financier'
+        },
+        product_impact: 'Impact Produit',
+        transportation_impact: 'Impact Transport',
+        carbon: 'Votre bilan carbone',
+        equals_to: 'équivaut à',
+        money: 'Votre bilan financier',
+        co2_per_euro: 'Bilan carbone par euro dépensé'
+      },
+      part: {
+        prod: 'Part produit',
+        trans: 'Part transport'
+      },
+      ventilation: {
+        carbon: 'Ventilation de l\'empreinte carbone en grammes de CO2',
+        money: 'Ventilation des dépenses (en €)'
+      },
+      origin: {
+        label: 'Origine',
+        dep: 'Département',
+        reg: 'Région',
+        fr: 'France',
+        world: 'Reste du Monde'
+      },
+      sum: 'Total',
+      btn: {
+        export_btn: 'Exporter les paniers au format tableur'
+      },
+      add_popup: {
+        help: 'Utilisez les touches tabulation et entrée pour passer d\'un champ à l\'autre et valider votre produit',
+        you_are_adding: 'Vous ajoutez le produit',
+        by_this_amount: 'en quantité de',
+        for_that_much_$: 'pour un montant de',
+        from: 'originaire de',
+        in_baskets: 'dans les paniers nommés',
+        cancel: 'annuler',
+        ok: 'OK'
+      },
+      edit: {
+        i_am_editing_to: 'Je modifie ce panier',
+        set_origin_to_france: 'afin que tous ses produits soient d\'origine France (si possible)'
+      },
+      switch_labels: {
+        compare_to_first: 'Comparer avec le premier panier',
+        compare_to_previous: 'Comparer avec le panier précédent'
+      }
+    };
   }
 });
 

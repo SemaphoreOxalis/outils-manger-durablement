@@ -12,6 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 /* harmony import */ var _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/carbon-simulation/groupedActionFilters */ "./resources/js/helpers/carbon-simulation/groupedActionFilters.js");
 /* harmony import */ var _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/component-specific/basketsListHelper */ "./resources/js/helpers/carbon-simulation/component-specific/basketsListHelper.js");
+/* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -79,6 +80,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
+
 var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
@@ -97,7 +99,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     ActionConfirmation: ActionConfirmation,
     GroupedActionPopUp: GroupedActionPopUp
   },
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"]],
   props: {
     origins: Array,
     categories: Array,
@@ -255,7 +257,7 @@ var render = function() {
               _c("div", { staticClass: "btn-ico" }, [_vm._v("")]),
               _vm._v(" "),
               _c("div", { staticClass: "add-basket-text spacer-left" }, [
-                _vm._v("Nouveau panier vide")
+                _vm._v(_vm._s(_vm.add_new_basket))
               ])
             ]
           )
@@ -266,7 +268,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "custom-control switch center" }, [
       _c("label", [
-        _vm._v("\n            Comparer avec le premier panier "),
+        _vm._v(
+          "\n            " + _vm._s(_vm.switch_labels.compare_to_first) + " "
+        ),
         _c("input", {
           directives: [
             {
@@ -306,7 +310,9 @@ var render = function() {
           }
         }),
         _c("span", { staticClass: "lever" }),
-        _vm._v(" Comparer avec le panier précédent\n        ")
+        _vm._v(
+          " " + _vm._s(_vm.switch_labels.compare_to_previous) + "\n        "
+        )
       ])
     ])
   ])

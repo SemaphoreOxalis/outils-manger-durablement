@@ -1,8 +1,8 @@
 <template>
     <div class="mt-4">
-        <h4>Origines</h4>
+        <h4>{{ tabs.origins }}</h4>
 
-        <p>ici, vous pouvez renommer, modifier, ajouter ou supprimer des origines (les champs ne peuvent être égaux à 0)</p>
+        <p>{{ howTo.youCanDoStuffWith }} {{ howTo.origins }} {{ howTo.fieldsCantBeNull }}</p>
 
         <div v-for="origin in origins"
              :key="origin.id">
@@ -31,7 +31,7 @@
                    class="custom-input browser-default number-field">
             <input v-model="newOrigin.carbonImpactPerKg" type="number" required min="0" step="0.00001"
                    class="custom-input browser-default number-field">
-            <button class="button alter" @click="addOrigin">OK</button>
+            <button class="button alter" @click="addOrigin">{{ okBtn }}</button>
         </div>
 
     </div>
@@ -39,9 +39,11 @@
 
 <script>
 import OriginsDataBase from "../../../helpers/carbon-simulation/database/OriginsDataBase";
+import AdminPageText from "../../../../texts/AdminPageText";
 export default {
     mixins: [
-        OriginsDataBase
+        OriginsDataBase,
+        AdminPageText,
     ],
     data() {
         return {

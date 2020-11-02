@@ -10,6 +10,7 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
+/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
 //
 //
 //
@@ -39,8 +40,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       categories: [],
@@ -127,13 +129,20 @@ var render = function() {
     "div",
     { staticClass: "mt-4" },
     [
-      _c("h4", [_vm._v("Catégories")]),
+      _c("h4", [_vm._v(_vm._s(_vm.tabs.categories))]),
       _vm._v(" "),
       _c("p", [
-        _vm._v("ici, vous pouvez renommer, ajouter ou supprimer des catégories")
+        _vm._v(
+          _vm._s(_vm.howTo.youCanDoStuffWith) +
+            " " +
+            _vm._s(_vm.howTo.categories)
+        )
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("p", [
+        _c("strong", [_vm._v(_vm._s(_vm.howTo.warning.warning))]),
+        _vm._v(" " + _vm._s(_vm.howTo.warning.deletingCategory))
+      ]),
       _vm._v(" "),
       _vm._l(_vm.categories, function(category) {
         return _c("div", { key: category.id }, [
@@ -209,24 +218,14 @@ var render = function() {
         _c(
           "button",
           { staticClass: "button alter", on: { click: _vm.addCategory } },
-          [_vm._v("OK")]
+          [_vm._v(_vm._s(_vm.okBtn))]
         )
       ])
     ],
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("strong", [_vm._v("ATTENTION :")]),
-      _vm._v(" supprimer une catégorie supprimera tous les produits associés")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -389,6 +388,34 @@ function postCategory(newCatName) {
 function destroyCategory(catId) {
   return axios["delete"]('/api/categories/' + catId);
 }
+
+/***/ }),
+
+/***/ "./resources/texts/AdminPageText.js":
+/*!******************************************!*\
+  !*** ./resources/texts/AdminPageText.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      admin_title: 'Panneau d\'administration',
+      here_you_can_edit_values: 'Ici, vous pouvez modifier simplement les valeurs de référence utilisées par l\'application',
+      waste_ref_values: {
+        title: 'Valeurs de référence'
+      },
+      cnters: {
+        title: 'Compteurs',
+        waste: 'Compteurs du simulateur de gaspillage alimentaire'
+      },
+      go_away: 'Vous n\'avez pas l\'autorisation d\'être ici'
+    };
+  }
+});
 
 /***/ })
 

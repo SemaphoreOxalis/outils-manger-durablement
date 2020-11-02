@@ -8,6 +8,7 @@ export default {
             events.$emit('get-full-simulations-info-for-export');
 
             // Création de l'objet à envoyer au back-end
+            this.export.mode = this.compareToPreviousSim ? 'simulations comparées entre elles' : 'simulations comparées à l\'audit';
             this.export.audit = this.auditData;
             this.export.audit.auditDate = this.getAuditDateFromLocalStorage()
             this.export.simulations = this.simulations;

@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/CategoriesDataBase */ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/database/UnitsDataBase */ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../helpers/carbon-simulation/searchBar */ "./resources/js/helpers/carbon-simulation/searchBar.js");
+/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
 //
 //
 //
@@ -71,12 +72,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_3__["default"], _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
       products: [],
@@ -179,11 +181,11 @@ var render = function() {
     "div",
     { staticClass: "mt-4" },
     [
-      _c("h4", [_vm._v("Produits")]),
+      _c("h4", [_vm._v(_vm._s(_vm.tabs.products))]),
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "ici, vous pouvez renommer, modifier, ajouter ou supprimer des produits"
+          _vm._s(_vm.howTo.youCanDoStuffWith) + " " + _vm._s(_vm.howTo.products)
         )
       ]),
       _vm._v(" "),
@@ -567,7 +569,7 @@ var render = function() {
         _c(
           "button",
           { staticClass: "button alter", on: { click: _vm.addProduct } },
-          [_vm._v("OK")]
+          [_vm._v(_vm._s(_vm.okBtn))]
         )
       ])
     ],
@@ -940,6 +942,34 @@ __webpack_require__.r(__webpack_exports__);
       // remplace œ par oe
       return string.toLowerCase().replace(/[\u0153]/, "oe");
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/texts/AdminPageText.js":
+/*!******************************************!*\
+  !*** ./resources/texts/AdminPageText.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      admin_title: 'Panneau d\'administration',
+      here_you_can_edit_values: 'Ici, vous pouvez modifier simplement les valeurs de référence utilisées par l\'application',
+      waste_ref_values: {
+        title: 'Valeurs de référence'
+      },
+      cnters: {
+        title: 'Compteurs',
+        waste: 'Compteurs du simulateur de gaspillage alimentaire'
+      },
+      go_away: 'Vous n\'avez pas l\'autorisation d\'être ici'
+    };
   }
 });
 
