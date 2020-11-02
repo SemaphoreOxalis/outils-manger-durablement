@@ -3,14 +3,19 @@ export default {
         return {
             how_to: {
                 title: 'Comment utiliser ce simulateur de panier de commande',
-                add_prod_to_basket: 'Commencez par ajouter des produits à votre panier en les faisant glisser/cherchant dans la barre de recherche',
-                how_many_and_from_where: 'Vous êtes invités à en préciser le nombre et l\'origine',
+                use: 'Mode d\'emploi',
+                add_prod_to_basket: 'Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche',
+                how_many_and_from_where: 'Vous êtes alors invités à en préciser le nombre et l\'origine',
                 behold_your_carbon_impact: 'Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier',
+                copy_basket: 'Vous pouvez aussi dupliquer un panier existant',
                 add_mock_baskets: 'Vous avez alors la possibilité d\'ajouter des paniers de "simulation" et de les renommer',
                 go_wild_and_edit_things: 'N\'hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l\'impact de vos changements',
                 delete_a_basket: 'Vous pouvez effacer les paniers un par un',
+                clear_a_basket: 'ou les vider',
                 destroy_them_all: 'ou tous les supprimer d\'un seul clic',
+                do_stuff: 'permet d\'effectuer des opérations sur l\'ensemble du panier',
                 export_baskets: 'Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur',
+                close_btn: 'Fermer',
             },
             hover: {
                 // sur les + à côté des produits sur la liste de gauche
@@ -20,9 +25,12 @@ export default {
                 // Icônes du panier
                 delete_basket: 'supprimer ce panier',
                 edit_basket: 'modifier ce panier',
-                add_basket: 'dupliquer le panier'
+                add_basket: 'dupliquer le panier',
+                clear_basket: 'vider le panier',
             },
             baskets: 'Paniers',
+            add_new_basket: 'Nouveau panier vide',
+            add_to_this_basket: 'Ajouter dans ce panier',
             placeholders: {
                 type_in_your_product: 'Tapez le nom de votre produit puis sélectionnez-le avec la souris ou les touches de votre clavier',
                 search_prod: 'Rechercher un produit',
@@ -32,14 +40,20 @@ export default {
                     carbon: 'Bilan Carbone',
                     money: 'Bilan Financier',
                 },
+                product_impact: 'Impact Produit',
+                transportation_impact: 'Impact Transport',
                 carbon: 'Votre bilan carbone',
                 equals_to: 'équivaut à',
                 money: 'Votre bilan financier',
-                co2_per_euro: 'CO2 par euro dépensé',
+                co2_per_euro: 'Bilan carbone par euro dépensé',
             },
             part: {
                 prod: 'Part produit',
                 trans: 'Part transport',
+            },
+            ventilation: {
+                carbon: 'Ventilation de l\'empreinte carbone en grammes de CO2',
+                money: 'Ventilation des dépenses (en €)',
             },
             origin: {
                 label: 'Origine',
@@ -48,7 +62,7 @@ export default {
                 fr: 'France',
                 world: 'Reste du Monde',
             },
-            sum: 'total',
+            sum: 'Total',
             btn: {
                 export_btn: 'Exporter les paniers au format tableur'
             },
@@ -63,9 +77,13 @@ export default {
                 ok: 'OK',
             },
             edit: {
-              i_am_editing_to: 'Je modifie ce panier',
-              set_origin_to_france: 'afin que tous ses produits soient d\'origine France (si possible)',
-            }
+                i_am_editing_to: 'Je modifie ce panier',
+                set_origin_to_france: 'afin que tous ses produits soient d\'origine France (si possible)',
+            },
+            switch_labels: {
+                compare_to_first: 'Comparer avec le premier panier',
+                compare_to_previous: 'Comparer avec le panier précédent',
+            },
         }
     }
 }

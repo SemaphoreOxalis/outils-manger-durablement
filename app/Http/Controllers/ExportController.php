@@ -6,17 +6,21 @@ use Illuminate\Http\Request;
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExportController extends Controller {
 
-    public function export(Request $request)
+    public function exportSims(Request $request)
     {
         //Validation des données
         $request->validate([
             'audit' => 'array|required',
-            'simulations' => 'array'
+            'simulations' => 'array',
+            'mode' => 'string',
         ]);
 
         // création de la spreadsheet
@@ -44,37 +48,38 @@ class ExportController extends Controller {
         $sheet->getCell('A1')->getStyle()->getFont()->setBold(true);
         $sheet->getCell('A1')->getStyle()->getFont()->setSize(15);
 
+        $sheet->setCellValue('A4', 'Mode de comparaison : ' . $request->input('mode'));
 
         // Labels
-        $sheet->setCellValue('B5', 'Nombre de repas produits');
-        $sheet->setCellValue('C5', 'Coût de revient d\'un repas');
-        $sheet->setCellValue('D5', 'Poids moyen d\'un repas');
-        $sheet->setCellValue('E5', 'Coût de traitement par tonne de déchets (en €)');
-        $sheet->setCellValue('F5', 'Volume de gaspillage alimentaire (en T)');
-        $sheet->setCellValue('G5', 'Estimation du gaspillage alimentaire (en g par repas)');
-        $sheet->setCellValue('H5', 'Estimation du gaspillage alimentaire (en €)');
-        $sheet->setCellValue('I5', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
+        $sheet->setCellValue('B6', 'Nombre de repas produits');
+        $sheet->setCellValue('C6', 'Coût de revient d\'un repas');
+        $sheet->setCellValue('D6', 'Poids moyen d\'un repas');
+        $sheet->setCellValue('E6', 'Coût de traitement par tonne de déchets (en €)');
+        $sheet->setCellValue('F6', 'Volume de gaspillage alimentaire (en T)');
+        $sheet->setCellValue('G6', 'Estimation du gaspillage alimentaire (en g par repas)');
+        $sheet->setCellValue('H6', 'Estimation du gaspillage alimentaire (en €)');
+        $sheet->setCellValue('I6', 'Estimation du gaspillage alimentaire (équivalence en nombre de repas)');
 
-        $sheet->getStyle('B5:I5')->getFont()->setBold(true);
+        $sheet->getStyle('B6:I6')->getFont()->setBold(true);
 
         // Audit
-        $sheet->setCellValue('A6', $request->input('audit.name'));
-        $sheet->setCellValueExplicit('B6', $request->input('audit.dishesNumber'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('C6', $request->input('audit.dishCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('D6', $request->input('audit.dishWeight'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('E6', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('F6', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('G6', $request->input('audit.ratio'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('H6', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
-        $sheet->setCellValueExplicit('I6', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
+        $sheet->setCellValue('A7', $request->input('audit.name'));
+        $sheet->setCellValueExplicit('B7', $request->input('audit.dishesNumber'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('C7', $request->input('audit.dishCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('D7', $request->input('audit.dishWeight'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('E7', $request->input('audit.wasteTreatmentCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('F7', $request->input('audit.foodWasteVolume'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('G7', $request->input('audit.ratio'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('H7', $request->input('audit.foodWasteCost'), DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('I7', $request->input('audit.amountOfDishesWasted'), DataType::TYPE_STRING);
 
-        $sheet->getStyle('A6')->getFont()->setBold(true);
-        $sheet->getStyle('A6:I6')->getFont()->setSize(15);
-        $sheet->getStyle('A6:I6')->getFill()->setFillType(Fill::FILL_SOLID);
-        $sheet->getStyle('A6:I6')->getFill()->getStartColor()->setRGB('00bfff');
+        $sheet->getStyle('A7')->getFont()->setBold(true);
+        $sheet->getStyle('A7:I7')->getFont()->setSize(15);
+        $sheet->getStyle('A7:I7')->getFill()->setFillType(Fill::FILL_SOLID);
+        $sheet->getStyle('A7:I7')->getFill()->getStartColor()->setRGB('00bfff');
 
         // variables utiles pour les simulations
-        $line = 8;
+        $line = 9;
         $previous = 'l\'audit';
 
         // Simulations
@@ -127,6 +132,139 @@ class ExportController extends Controller {
             $line++;
         }
 
+        $this->sendFile($spreadsheet);
+    }
+
+    public function exportBaskets(Request $request) {
+        //Validation des données
+        $request->validate([
+            'baskets' => 'array|required',
+            'mode' => 'string',
+        ]);
+
+        // création de la spreadsheet
+        $spreadsheet = new Spreadsheet();
+        $spreadsheet->getProperties()
+            ->setCreator('Semaphore Communication')
+            ->setLastModifiedBy('Semaphore Communication')
+            ->setTitle('Export des paniers du ' . $request->input('date'))
+            ->setDescription('Export des paniers du ' . $request->input('date'))
+            ->setKeywords('impact carbone paniers simulations');
+
+        $firstSheet = $spreadsheet->getActiveSheet();
+        $firstSheet->setTitle('Accueil');
+
+        $borderStyle = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => Border::BORDER_THICK,
+                    'color' => ['rgb' => '00ff80'],
+                ],
+            ],
+        ];
+
+        // taille des colonnes
+        $firstSheet->getDefaultColumnDimension()->setWidth(25);
+        $firstSheet->getColumnDimension('A')->setWidth(65);
+
+        // Récapitulatif des valeurs de référence
+        $firstSheet->setCellValue('A1', 'Export des paniers du ' . $request->input('date'));
+        $firstSheet->setCellValue('A2', 'Mode de comparaison :  ' . $request->input('mode'));
+
+        $firstSheet->getCell('A1')->getStyle()->getFont()->setBold(true);
+        $firstSheet->getCell('A1')->getStyle()->getFont()->setSize(15);
+
+        foreach($request->input('baskets') as $basket) {
+            $sheet = new Worksheet($spreadsheet, $basket['name']);
+            $spreadsheet->addSheet($sheet);
+            $spreadsheet->setActiveSheetIndexByName($basket['name']);
+            $sheet->getDefaultColumnDimension()->setWidth(20);
+            $sheet->getColumnDimension('A')->setWidth(25);
+
+            $sheet->setCellValue('A1', $basket['name']);
+            $sheet->getStyle('A1')->getFont()->setBold(true);
+            $sheet->getStyle('A1')->getFont()->setSize(15);
+
+            $sheet->setCellValue('A3', 'produit');
+            $sheet->setCellValue('B3', 'commentaire');
+            $sheet->setCellValue('C3', 'quantité');
+            $sheet->setCellValue('D3', 'unité');
+            $sheet->setCellValue('E3', 'origine');
+            $sheet->setCellValue('F3', 'prix');
+            $sheet->mergeCells('G2:I2');
+            $sheet->getStyle('A2:I3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A2:I3')->applyFromArray($borderStyle);
+            $sheet->setCellValue('G2', 'impact carbone');
+            $sheet->setCellValue('G3', 'produit');
+            $sheet->setCellValue('H3', 'transport');
+            $sheet->setCellValue('I3', 'total');
+            $sheet->getStyle('A2:I3')->getFont()->setBold(true);
+
+            $line = 5;
+
+            foreach($basket['products'] as $product) {
+                $sheet->setCellValue('A' . $line, $product['name']);
+                $sheet->setCellValue('B' . $line, $product['comment']);
+                $sheet->setCellValue('C' . $line, $product['amount']);
+                $sheet->setCellValue('D' . $line, $product['unit']['unit']);
+                $sheet->setCellValue('E' . $line, $product['origin']['from']);
+                $sheet->setCellValue('F' . $line, $product['price'] . ' €');
+                $sheet->setCellValue('G' . $line, $product['productImpact'] . ' gCO2');
+                $sheet->setCellValue('H' . $line, $product['transportationImpact'] . ' gCO2');
+                $sheet->setCellValue('I' . $line, $product['carbonImpact'] . ' gCO2');
+                $line++;
+            }
+            $sheet->getStyle('E5:I' . $line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+            $line = $line + 2;
+
+            $sheet->mergeCells('A' . $line . ':E' . $line);
+            $sheet->mergeCells('G' . $line . ':I' . $line);
+            $sheet->setCellValue('A' . $line, 'bilan carbone');
+            $sheet->setCellValue('G' . $line, 'bilan financier');
+            $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getFont()->setBold(true);
+            $sheet->getStyle('A' . $line . ':I' . $line)->getFont()->setSize(12);
+            $sheet->getStyle('A' . $line . ':E' . $line)->applyFromArray($borderStyle);
+            $sheet->getStyle('G' . $line . ':I' . $line)->applyFromArray($borderStyle);
+            $line++;
+            $sheet->setCellValue('B' . $line, 'produit');
+            $sheet->setCellValue('C' . $line, 'transport');
+            $sheet->setCellValue('D' . $line, 'total');
+            $line++;
+
+            $lineBeforeResults = $line;
+            foreach($basket['results']['cats'] as $category) {
+                $sheet->setCellValue('A' . $line, $category['name']);
+                $sheet->setCellValue('B' . $line, $category['productImpact'] . ' gCO2');
+                $sheet->setCellValue('C' . $line, $category['transportationImpact'] . ' gCO2');
+                $sheet->setCellValue('D' . $line, $category['carbonImpact'] . ' gCO2');
+                $sheet->setCellValue('E' . $line, $category['carbonDelta']);
+
+                $sheet->setCellValue('G' . $line, $category['name']);
+                $sheet->setCellValue('H' . $line, $category['moneySpent'] . ' €');
+                $sheet->setCellValue('I' . $line, $category['moneyDelta']);
+                $line++;
+            }
+            $line++;
+            $sheet->setCellValue('A' . $line, 'Total');
+            $sheet->setCellValue('B' . $line, $basket['results']['globalProductImpact'] . ' gCO2');
+            $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' gCO2');
+            $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' gCO2');
+            $sheet->setCellValue('E' . $line, $basket['globalCarbonDelta']);
+
+            $sheet->setCellValue('G' . $line, 'Total');
+            $sheet->setCellValue('H' . $line, $basket['results']['globalMoneySpend'] . ' €');
+            $sheet->setCellValue('I' . $line, $basket['globalMoneyDelta']);
+
+            $sheet->getStyle('B' . $lineBeforeResults . ':E' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('H' . $lineBeforeResults . ':I' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+        }
+
+        $spreadsheet->setActiveSheetIndex(0);
+        $this->sendFile($spreadsheet);
+    }
+
+    private function sendFile(Spreadsheet $spreadsheet) {
         // Envoi du fichier au navigateur pour téléchargement
         $response = response()->streamDownload(function() use ($spreadsheet) {
             $writer = new Xlsx($spreadsheet);
@@ -140,5 +278,4 @@ class ExportController extends Controller {
 
         $response->send();
     }
-
 }

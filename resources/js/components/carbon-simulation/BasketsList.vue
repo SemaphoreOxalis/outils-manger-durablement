@@ -36,16 +36,21 @@
             <div class="basket">
                 <a @click="addBasket()" class="add-basket flex-horizontal">
                     <div class="btn-ico"></div>
-                    <div class="add-basket-text spacer-left">Nouveau panier vide</div>
+                    <div class="add-basket-text spacer-left">{{ add_new_basket }}</div>
                 </a>
             </div>
         </div>
 
         <div class="custom-control switch center">
             <label>
-                Comparer avec le premier panier <input v-model="compareToPreviousBasket" type="checkbox" class="custom-control-input"><span class="lever"></span> Comparer avec le panier précédent
+                {{ switch_labels.compare_to_first }} <input v-model="compareToPreviousBasket" type="checkbox" class="custom-control-input"><span class="lever"></span> {{ switch_labels.compare_to_previous }}
             </label>
         </div>
+
+        <button class="button ml-auto"
+                @click="exportBaskets">
+            <i class="icon mr-2"></i>{{ btn.export_btn }}
+        </button>
     </div>
 </template>
 
@@ -53,6 +58,9 @@
 import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 import groupedActionFilters from "../../helpers/carbon-simulation/groupedActionFilters";
 import basketsListHelper from "../../helpers/carbon-simulation/component-specific/basketsListHelper";
+import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
+import DateFormatter from "../../helpers/DateFormatter";
+import ExportHelper from "../../helpers/ExportHelper";
 
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
@@ -77,6 +85,9 @@ export default {
         LocalStorageHelper,
         groupedActionFilters,
         basketsListHelper,
+        BasketSimulatorText,
+        DateFormatter,
+        ExportHelper,
     ],
     props: {
         origins: Array,
@@ -94,6 +105,8 @@ export default {
 
             showGroupedActionModal: false,
             compareToPreviousBasket: false,
+
+            export: {},
         }
     },
     computed: {

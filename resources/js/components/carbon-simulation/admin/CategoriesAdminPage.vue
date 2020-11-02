@@ -1,9 +1,9 @@
 <template>
     <div class="mt-4">
-        <h4>Catégories</h4>
+        <h4>{{ tabs.categories }}</h4>
 
-        <p>ici, vous pouvez renommer, ajouter ou supprimer des catégories</p>
-        <p><strong>ATTENTION :</strong> supprimer une catégorie supprimera tous les produits associés</p>
+        <p>{{ howTo.youCanDoStuffWith }} {{ howTo.categories }}</p>
+        <p><strong>{{ howTo.warning.warning }}</strong> {{ howTo.warning.deletingCategory }}</p>
 
         <div v-for="category in categories"
              :key="category.id">
@@ -20,7 +20,7 @@
         <div class="form-group admin">
             <input v-model="newCategory" type="text" required placeholder="ajouter une catégorie"
                    class="custom-input browser-default number-field">
-            <button class="button alter" @click="addCategory">OK</button>
+            <button class="button alter" @click="addCategory">{{ okBtn }}</button>
         </div>
 
     </div>
@@ -28,9 +28,11 @@
 
 <script>
     import CategoriesDataBase from "../../../helpers/carbon-simulation/database/CategoriesDataBase";
+    import AdminPageText from "../../../../texts/AdminPageText";
     export default {
         mixins: [
-            CategoriesDataBase
+            CategoriesDataBase,
+            AdminPageText,
         ],
         data() {
             return {

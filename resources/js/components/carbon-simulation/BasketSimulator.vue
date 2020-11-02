@@ -31,22 +31,22 @@
             <button data-target="mode_emploi" class="btn info modal-trigger">?</button>
             <div class="modal modal-fixed-footer" id="mode_emploi">
                 <div class="modal-content">
-                    <h4>Mode d'emploi</h4>
+                    <h4>{{ how_to.use }}</h4>
                     <ul>
-                        <li><span class="icon"></span> Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche</li>
-                        <li>Vous êtes alors invités à en préciser le nombre et l’origine</li>
-                        <li>Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier</li>
-                        <li><span class="icon"></span> Vous avez alors la possiblité d’ajouter des paniers de “simulation” et de les renommer</li>
-                        <li><span class="icon"></span> Vous pouvez aussi dupliquer un panier existant</li>
-                        <li>N’hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l’impact de vos changements</li>
-                        <li><span class="icon"></span> Vous pouvez effacer les paniers un par un</li>
-                        <li><span class="icon"></span> ou le vider</li>
-                        <li><span class="icon"></span> permet d'effectuer des opérations sur l'ensemble du panier</li>
-                        <li><span class="icon"></span> Le bouton "exporter" vous permet de récupérer l'ensemble des données sur votre logiciel de tableur</li>
+                        <li><span class="icon"></span> {{ how_to.add_prod_to_basket }}</li>
+                        <li>{{ how_to.how_many_and_from_where }}</li>
+                        <li>{{ how_to.behold_your_carbon_impact }}</li>
+                        <li><span class="icon"></span> {{ how_to.add_mock_baskets }}</li>
+                        <li><span class="icon"></span> {{ how_to.copy_basket }}</li>
+                        <li>{{ how_to.go_wild_and_edit_things }}</li>
+                        <li><span class="icon"></span> {{ how_to.delete_a_basket }}</li>
+                        <li><span class="icon"></span> {{ how_to.clear_a_basket }}</li>
+                        <li><span class="icon"></span> {{ how_to.do_stuff }}</li>
+                        <li><span class="icon"></span> {{ how_to.export_baskets }}</li>
                     </ul>
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Fermer</a>
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">{{ how_to.close_btn }}</a>
                 </div>
             </div>
         </div>
@@ -66,6 +66,7 @@ import ProductsDataBase from "../../helpers/carbon-simulation/database/ProductsD
 import CategoriesDataBase from "../../helpers/carbon-simulation/database/CategoriesDataBase";
 import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBase";
 import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
+import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 const SearchBar = () => import(
     /* webpackChunkName: "js/carbon-simulation/SearchBar" */
     './SearchBar'
@@ -96,6 +97,7 @@ export default {
         CategoriesDataBase,
         UnitsDataBase,
         OriginsDataBase,
+        BasketSimulatorText,
     ],
     data() {
         return {
@@ -109,7 +111,6 @@ export default {
             selectedBySearchBar: false,
 
             search: '',
-            //searchResults: [],
 
             selectedBaskets: [],
             internalCounters: [],

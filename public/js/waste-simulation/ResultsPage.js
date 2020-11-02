@@ -949,6 +949,11 @@ __webpack_require__.r(__webpack_exports__);
           in_euros: 'en €',
           in_dishes_number: 'en nombre de repas'
         }
+      },
+      // SIMULATIONS LIST component
+      compare_to: {
+        audit: 'Comparer les simulations à l\'audit',
+        previous_sim: 'Comparer les simulations entre elles'
       }
     };
   }

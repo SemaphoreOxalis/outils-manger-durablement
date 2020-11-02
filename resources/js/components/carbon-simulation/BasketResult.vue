@@ -5,12 +5,12 @@
             <li class="nav-item">
                 <a class="nav-link active button btn-2" :id="basketId + '-carbon-tab'" data-toggle="tab"
                    :href="'#' + basketId + '-carbon'" role="tab" aria-controls="home"
-                   aria-selected="true">Bilan carbone</a>
+                   aria-selected="true">{{ impact.title.carbon }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link button btn-2" :id="basketId + '-finance-tab'" data-toggle="tab"
                    :href="'#' + basketId + '-finance'" role="tab" aria-controls="profile"
-                   aria-selected="false">Bilan financier</a>
+                   aria-selected="false">{{ impact.title.money }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link button btn-2 nav-ico" :id="basketId + '-graph-tab'" data-toggle="tab"
@@ -27,31 +27,27 @@
                     <div class="results-div">
                         <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
                             <span>
-                            Impact produit : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
-                            Impact transport : {{
-                                    category.transportationFormattedImpact
-                                }} {{ category.transportationImpactUnit }}
+                            {{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
+                            {{ impact.transportation_impact }} : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}
                         </span>
                         </a>
                     </div>
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
                 </div>
                 <div class="results-row flex-horizontal final-results">
-                    <div class="results-categorie-name">Total</div>
+                    <div class="results-categorie-name">{{ sum }}</div>
                     <div class="results-div">
                         <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
                             <span>
-                            Impact produit : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
-                            Impact transport : {{
-                                    globalTransportationImpact.formatted
-                                }} {{ globalTransportationImpact.unit }}
+                            {{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
+                            {{ impact.transportation_impact }} : {{ globalTransportationImpact.formatted }} {{ globalTransportationImpact.unit }}
                         </span>
                         </a>
                     </div>
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
                 </div>
                 <div class="results-comment">
-                    <div>Votre bilan carbone équivaut à un aller-retour Paris/New-York en avion</div>
+                    <div>{{ impact.carbon }} {{ impact.equals_to }} un aller-retour Paris/New-York en avion</div>
                 </div>
             </div>
 
@@ -62,38 +58,38 @@
                         <a class="info-bubble">{{ category.moneySpent }} €
                             <span>
                             {{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}
-                        </span>
+                            </span>
                         </a>
                     </div>
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
                 </div>
                 <div class="results-row flex-horizontal final-results">
-                    <div class="results-categorie-name">Total</div>
+                    <div class="results-categorie-name">{{ sum }}</div>
                     <div class="results-div">
                         <a class="info-bubble">{{ globalMoneySpend }} €
                             <span>
                             {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
-                        </span>
+                            </span>
                         </a>
                     </div>
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(moneyDelta)"></div>
                 </div>
                 <div class="results-comment">
-                    <div>Bilan carbone par €uro dépensé : {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}</div>
+                    <div>{{ impact.co2_per_euro }} : {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}</div>
                 </div>
             </div>
 
             <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="custom-control switch center">
                     <label>
-                        bilan carbone <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
+                        {{ impact.title.carbon }} <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
                         <span class="lever"></span>
-                        bilan financier
+                        {{ impact.title.money }}
                     </label>
                 </div>
-                <div class="my-4">
-                    <span v-if="chartViewMoney" class="text-center">Ventilation des dépenses</span>
-                    <span v-else class="text-center">Ventilation de l'empreinte carbone en grammes de CO2</span>
+                <div class="my-4 text-center">
+                    <span v-if="chartViewMoney">{{ ventilation.money }}</span>
+                    <span v-else>{{ ventilation.carbon }}</span>
                 </div>
                 <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
             </div>
@@ -107,15 +103,18 @@ import Chart from 'chart.js';
 import NumberFormatter from "../../helpers/NumberFormatter";
 import basketLogic from "../../helpers/carbon-simulation/calculations/basketLogic";
 import resultsCharts from "../../helpers/carbon-simulation/resultsCharts";
+import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 
 export default {
     mixins: [
         basketLogic,
         NumberFormatter,
         resultsCharts,
+        BasketSimulatorText,
     ],
     props: {
         index: Number,
+        basket: Object,
         products: Array,
         categories: Array,
         basketId: String,
@@ -192,6 +191,21 @@ export default {
             if(!this.isFirst) {
                 this.getDeltas();
             }
+            else {
+                this.cats.forEach((cat) => {
+                    cat.carbonDelta = null;
+                    cat.moneyDelta = null;
+                });
+            }
+
+            if(this.isFirst) {
+                this.basket.globalCarbonDelta = null;
+                this.basket.globalMoneyDelta = null;
+            }
+            else {
+                this.basket.globalCarbonDelta = this.carbonDelta;
+                this.basket.globalMoneyDelta = this.moneyDelta;
+            }
 
             this.sendResults();
             this.$forceUpdate();
@@ -214,6 +228,8 @@ export default {
 
         sendResults() {
             this.results.cats = this.cats;
+            this.results.globalProductImpact = this.globalProductImpact.impact;
+            this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
             this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
             this.results.globalMoneySpend = this.globalMoneySpend;
             events.$emit('save-baskets-results', this.index, this.results);
@@ -231,9 +247,9 @@ export default {
         },
         getStyle(value) {
             if (value.startsWith('+')) {
-                return '<span class="bad"><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
+                return '<span><i class="icon icon-long-arrow-right up"></i> ' + value + ' </span>';
             } else if (value.startsWith('-')) {
-                return '<span class="good"><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
+                return '<span><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
             }
             return '<span>' + value + '</span>';
         }

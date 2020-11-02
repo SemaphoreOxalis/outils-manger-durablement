@@ -6,7 +6,7 @@ export default {
         },
         copyBasket(basket, index) {
             let tempBasket = JSON.parse(JSON.stringify(basket));
-            this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+            this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products, tempBasket.results));
             this.saveBasketsToLocalStorage();
         },
         deleteBasket(basketIndex) {
@@ -26,7 +26,7 @@ export default {
             events.$emit('get-internal-counters');
         },
 
-        prepareBasketToAdd(name = '', products = []) {
+        prepareBasketToAdd(name = '', products = [], results = []) {
             if(name === '') {
                 name = 'panier ' + (this.basketsCounter + 1);
             }
@@ -35,6 +35,7 @@ export default {
                 name: name,
                 products: products,
                 isSelected: true,
+                results: results,
             };
         },
         saveBasketsResults(basketIndex, results) {

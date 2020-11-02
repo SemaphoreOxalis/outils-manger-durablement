@@ -16,6 +16,7 @@
                 v-bind:simulation="simulation"
                 v-bind:index="index"
                 v-bind:audit-data="auditData"
+                v-bind:compare-to-previous-sim="compareToPreviousSim"
                 v-bind:previous-simulation="previousSimulation(index)"
                 @delete-simulation="deleteSimulation"
                 @save-changes="saveChangesToLocalStorage"
@@ -25,6 +26,12 @@
             </simulation-item>
 
         </draggable>
+
+        <div class="custom-control switch center">
+            <label>
+                {{ compare_to.audit }} <input type="checkbox" v-model="compareToPreviousSim" class="custom-control-input"><span class="lever"></span>{{ compare_to.previous_sim }}
+            </label>
+        </div>
     </div>
 </template>
 
@@ -39,6 +46,7 @@ import LocalStorageHelper from "../../helpers/LocalStorageHelper";
 import ExportHelper from "../../helpers/ExportHelper";
 // pratique pour formatter les dates
 import DateFormatter from "../../helpers/DateFormatter";
+import ResultsPageText from "../../../texts/wasteSimulator/ResultsPageText";
 // composant enfant
 const SimulationItem = () => import(
     /* webpackChunkName: "js/waste-simulation/SimulationItem" */
@@ -63,7 +71,8 @@ export default {
         SimulationsHelper,
         LocalStorageHelper,
         ExportHelper,
-        DateFormatter
+        DateFormatter,
+        ResultsPageText,
     ],
 
     // Données reçues du composant parent (AuditItem.vue)
@@ -77,7 +86,8 @@ export default {
             simulations: [],
             counter: 0,
             dataSource: null,
-            export: {}
+            export: {},
+            compareToPreviousSim: false,
         }
     },
 

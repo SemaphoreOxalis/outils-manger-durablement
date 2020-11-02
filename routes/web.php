@@ -48,7 +48,8 @@ Route::patch('/api/counters/{counter}', 'CountersController@update');
 Route::patch('/api/counters/{counter}/increment', 'CountersController@increment');
 
 // Controller d'export
-Route::post('/export', 'ExportController@export');
+Route::post('/export-sims', 'ExportController@exportSims');
+Route::post('/export-baskets', 'ExportController@exportBaskets');
 
 
 // Commentez la première ligne et décommentez la 2e pour qu'il ne soit plus possible de s'enregistrer

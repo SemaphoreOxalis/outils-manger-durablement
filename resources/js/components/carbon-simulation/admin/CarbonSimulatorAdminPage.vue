@@ -2,19 +2,19 @@
     <div>
         <div class="mb-4 admin-subnav">
             <router-link to="/admin/carbon-simulator/products" tag="span">
-                <button class="button alter">Produits</button>
+                <button class="button alter">{{ tabs.products }}</button>
             </router-link>
 
             <router-link to="/admin/carbon-simulator/categories" tag="span">
-                <button class="button alter">Catégories</button>
+                <button class="button alter">{{ tabs.categories }}</button>
             </router-link>
 
             <router-link to="/admin/carbon-simulator/units" tag="span">
-                <button class="button alter">Unités</button>
+                <button class="button alter">{{ tabs.units }}</button>
             </router-link>
 
             <router-link to="/admin/carbon-simulator/origins" tag="span">
-                <button class="button alter">Origines</button>
+                <button class="button alter">{{ tabs.origins }}</button>
             </router-link>
         </div>
         <router-view></router-view>
@@ -22,8 +22,12 @@
 </template>
 
 <script>
-    export default {
+    import AdminPageText from "../../../../texts/AdminPageText";
 
+    export default {
+        mixins: [
+            AdminPageText,
+        ],
     }
 </script>
 

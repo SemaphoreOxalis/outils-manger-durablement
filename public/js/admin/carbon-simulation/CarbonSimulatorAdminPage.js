@@ -9,6 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
 //
 //
 //
@@ -32,7 +33,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_texts_AdminPageText__WEBPACK_IMPORTED_MODULE_0__["default"]]
+});
 
 /***/ }),
 
@@ -112,7 +116,7 @@ var render = function() {
             { attrs: { to: "/admin/carbon-simulator/products", tag: "span" } },
             [
               _c("button", { staticClass: "button alter" }, [
-                _vm._v("Produits")
+                _vm._v(_vm._s(_vm.tabs.products))
               ])
             ]
           ),
@@ -124,7 +128,7 @@ var render = function() {
             },
             [
               _c("button", { staticClass: "button alter" }, [
-                _vm._v("Catégories")
+                _vm._v(_vm._s(_vm.tabs.categories))
               ])
             ]
           ),
@@ -132,7 +136,11 @@ var render = function() {
           _c(
             "router-link",
             { attrs: { to: "/admin/carbon-simulator/units", tag: "span" } },
-            [_c("button", { staticClass: "button alter" }, [_vm._v("Unités")])]
+            [
+              _c("button", { staticClass: "button alter" }, [
+                _vm._v(_vm._s(_vm.tabs.units))
+              ])
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -140,7 +148,7 @@ var render = function() {
             { attrs: { to: "/admin/carbon-simulator/origins", tag: "span" } },
             [
               _c("button", { staticClass: "button alter" }, [
-                _vm._v("Origines")
+                _vm._v(_vm._s(_vm.tabs.origins))
               ])
             ]
           )
@@ -244,6 +252,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CarbonSimulatorAdminPage_vue_vue_type_template_id_cf4e4d0c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/texts/AdminPageText.js":
+/*!******************************************!*\
+  !*** ./resources/texts/AdminPageText.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      admin_title: 'Panneau d\'administration',
+      here_you_can_edit_values: 'Ici, vous pouvez modifier simplement les valeurs de référence utilisées par l\'application',
+      waste_ref_values: {
+        title: 'Valeurs de référence'
+      },
+      cnters: {
+        title: 'Compteurs',
+        waste: 'Compteurs du simulateur de gaspillage alimentaire'
+      },
+      go_away: 'Vous n\'avez pas l\'autorisation d\'être ici'
+    };
+  }
+});
 
 /***/ })
 

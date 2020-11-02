@@ -12,6 +12,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
 /* harmony import */ var _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/carbon-simulation/groupedActionFilters */ "./resources/js/helpers/carbon-simulation/groupedActionFilters.js");
 /* harmony import */ var _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/carbon-simulation/component-specific/basketsListHelper */ "./resources/js/helpers/carbon-simulation/component-specific/basketsListHelper.js");
+/* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/ExportHelper */ "./resources/js/helpers/ExportHelper.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -75,6 +78,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+
+
+
 
 
 
@@ -97,7 +108,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     ActionConfirmation: ActionConfirmation,
     GroupedActionPopUp: GroupedActionPopUp
   },
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__["default"]],
   props: {
     origins: Array,
     categories: Array,
@@ -111,7 +122,8 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
       affectedBasket: {},
       affectedBasketIndex: -1,
       showGroupedActionModal: false,
-      compareToPreviousBasket: false
+      compareToPreviousBasket: false,
+      "export": {}
     };
   },
   computed: {
@@ -255,7 +267,7 @@ var render = function() {
               _c("div", { staticClass: "btn-ico" }, [_vm._v("")]),
               _vm._v(" "),
               _c("div", { staticClass: "add-basket-text spacer-left" }, [
-                _vm._v("Nouveau panier vide")
+                _vm._v(_vm._s(_vm.add_new_basket))
               ])
             ]
           )
@@ -266,7 +278,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "custom-control switch center" }, [
       _c("label", [
-        _vm._v("\n            Comparer avec le premier panier "),
+        _vm._v(
+          "\n            " + _vm._s(_vm.switch_labels.compare_to_first) + " "
+        ),
         _c("input", {
           directives: [
             {
@@ -306,9 +320,20 @@ var render = function() {
           }
         }),
         _c("span", { staticClass: "lever" }),
-        _vm._v(" Comparer avec le panier précédent\n        ")
+        _vm._v(
+          " " + _vm._s(_vm.switch_labels.compare_to_previous) + "\n        "
+        )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "button ml-auto", on: { click: _vm.exportBaskets } },
+      [
+        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+        _vm._v(_vm._s(_vm.btn.export_btn) + "\n    ")
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -384,6 +409,100 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BasketsList_vue_vue_type_template_id_703443b0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/DateFormatter.js":
+/*!***********************************************!*\
+  !*** ./resources/js/helpers/DateFormatter.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Petit helper pour formatter les dates en français
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    formatToFrench: function formatToFrench(date) {
+      var formattedDate = new Date(date);
+      return formattedDate.toLocaleDateString();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/ExportHelper.js":
+/*!**********************************************!*\
+  !*** ./resources/js/helpers/ExportHelper.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Helper pour l'export Excel
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    exportSimulations: function exportSimulations() {
+      // Demande aux composants concernés de lui envoyer leurs données complètes
+      events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
+
+      this["export"].mode = this.compareToPreviousSim ? 'simulations comparées entre elles' : 'simulations comparées à l\'audit';
+      this["export"].audit = this.auditData;
+      this["export"].audit.auditDate = this.getAuditDateFromLocalStorage();
+      this["export"].simulations = this.simulations; // appel AJAX vers le côté Laravel (ExportController.php)
+
+      makeSimsExportAjaxCall(this["export"]).then(function (response) {
+        //TODO: make it compatible with IE11
+        var headers = response.headers;
+        var blob = new Blob([response.data], {
+          type: headers['Content-type']
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "Rapport-gaspillage_" + Date.now() + ".xlsx";
+        link.click();
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    },
+    exportBaskets: function exportBaskets() {
+      // Demande aux composants concernés de lui envoyer leurs données complètes
+      events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
+
+      this["export"].mode = this.compareToPreviousBasket ? 'Chaque panier est comparé au précédent' : 'Les paniers sont comparés au premier panier';
+      this["export"].baskets = this.baskets;
+      this["export"].date = this.getBasketsDateFromLocalStorage(); // appel AJAX vers le côté Laravel (ExportController.php)
+
+      makeBasketsExportAjaxCall(this["export"]).then(function (response) {
+        var headers = response.headers;
+        var blob = new Blob([response.data], {
+          type: headers['Content-type']
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "Rapport-carbone_" + Date.now() + ".xlsx";
+        link.click();
+      })["catch"](function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
+
+function makeSimsExportAjaxCall(exportData) {
+  return axios.post('/export-sims', exportData, {
+    responseType: 'arraybuffer'
+  });
+}
+
+function makeBasketsExportAjaxCall(exportData) {
+  return axios.post('/export-baskets', exportData, {
+    responseType: 'arraybuffer'
+  });
+}
 
 /***/ }),
 
@@ -482,7 +601,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     copyBasket: function copyBasket(basket, index) {
       var tempBasket = JSON.parse(JSON.stringify(basket));
-      this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products));
+      this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products, tempBasket.results));
       this.saveBasketsToLocalStorage();
     },
     deleteBasket: function deleteBasket(basketIndex) {
@@ -506,6 +625,7 @@ __webpack_require__.r(__webpack_exports__);
     prepareBasketToAdd: function prepareBasketToAdd() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var products = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var results = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
 
       if (name === '') {
         name = 'panier ' + (this.basketsCounter + 1);
@@ -515,7 +635,8 @@ __webpack_require__.r(__webpack_exports__);
         id: 'basket-' + (this.basketsCounter + 1),
         name: name,
         products: products,
-        isSelected: true
+        isSelected: true,
+        results: results
       };
     },
     saveBasketsResults: function saveBasketsResults(basketIndex, results) {
