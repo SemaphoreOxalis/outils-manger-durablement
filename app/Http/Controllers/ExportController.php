@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
+use PhpOffice\PhpSpreadsheet\Chart\Legend;
+use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
+use PhpOffice\PhpSpreadsheet\Chart\Title;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
@@ -179,7 +186,6 @@ class ExportController extends Controller {
             $spreadsheet->addSheet($sheet);
             $spreadsheet->setActiveSheetIndexByName($basket['name']);
             $sheet->getDefaultColumnDimension()->setWidth(20);
-            $sheet->getColumnDimension('A')->setWidth(25);
 
             $sheet->setCellValue('A1', $basket['name']);
             $sheet->getStyle('A1')->getFont()->setBold(true);
@@ -219,8 +225,8 @@ class ExportController extends Controller {
 
             $sheet->mergeCells('A' . $line . ':E' . $line);
             $sheet->mergeCells('G' . $line . ':I' . $line);
-            $sheet->setCellValue('A' . $line, 'bilan carbone');
-            $sheet->setCellValue('G' . $line, 'bilan financier');
+            $sheet->setCellValue('A' . $line, 'bilan carbone (en g de CO2)');
+            $sheet->setCellValue('G' . $line, 'bilan financier (en €)');
             $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getFont()->setBold(true);
             $sheet->getStyle('A' . $line . ':I' . $line)->getFont()->setSize(12);
@@ -232,19 +238,20 @@ class ExportController extends Controller {
             $sheet->setCellValue('D' . $line, 'total');
             $line++;
 
-            $lineBeforeResults = $line;
+            $startLine = $line;
             foreach($basket['results']['cats'] as $category) {
                 $sheet->setCellValue('A' . $line, $category['name']);
-                $sheet->setCellValue('B' . $line, $category['productImpact'] . ' gCO2');
-                $sheet->setCellValue('C' . $line, $category['transportationImpact'] . ' gCO2');
-                $sheet->setCellValue('D' . $line, $category['carbonImpact'] . ' gCO2');
+                $sheet->setCellValue('B' . $line, $category['productImpact']);
+                $sheet->setCellValue('C' . $line, $category['transportationImpact']);
+                $sheet->setCellValue('D' . $line, $category['carbonImpact']);
                 $sheet->setCellValue('E' . $line, $category['carbonDelta']);
 
                 $sheet->setCellValue('G' . $line, $category['name']);
-                $sheet->setCellValue('H' . $line, $category['moneySpent'] . ' €');
+                $sheet->setCellValue('H' . $line, $category['moneySpent']);
                 $sheet->setCellValue('I' . $line, $category['moneyDelta']);
                 $line++;
             }
+            $endLine = $line - 1;
             $line++;
             $sheet->setCellValue('A' . $line, 'Total');
             $sheet->setCellValue('B' . $line, $basket['results']['globalProductImpact'] . ' gCO2');
@@ -256,8 +263,91 @@ class ExportController extends Controller {
             $sheet->setCellValue('H' . $line, $basket['results']['globalMoneySpend'] . ' €');
             $sheet->setCellValue('I' . $line, $basket['globalMoneyDelta']);
 
-            $sheet->getStyle('B' . $lineBeforeResults . ':E' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-            $sheet->getStyle('H' . $lineBeforeResults . ':I' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('B' . $startLine . ':E' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('H' . $startLine . ':I' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+
+            $line = $line + 2;
+            $categoriesNumber = count($basket['results']['cats']);
+
+            // CARBON CHART
+            $dataSeriesLabels = [
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$B$" . ($startLine - 1), null, 1),
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$C$" . ($startLine - 1), null, 1),
+            ];
+            $xAxisTickValues = [
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$A$" . $startLine . ":\$A$" . $endLine, null, $categoriesNumber),
+            ];
+            $dataSeriesValues = [
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$B$" . $startLine . ":\$B$" . $endLine, null, $categoriesNumber),
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$C$" . $startLine . ":\$C$" . $endLine, null, $categoriesNumber),
+            ];
+            $series = new DataSeries(
+                DataSeries::TYPE_BARCHART_3D,
+                DataSeries::GROUPING_STACKED,
+                range(0, count($dataSeriesValues) - 1),
+                $dataSeriesLabels,
+                $xAxisTickValues,
+                $dataSeriesValues
+            );
+            $series->setPlotDirection(DataSeries::DIRECTION_BAR);
+            $plotArea = new PlotArea(null, [$series]);
+            $legend = new Legend(Legend::POSITION_TOP, null, false);
+            $title = new Title('Ventilation de l\'empreinte carbone');
+            $xAxisLabel = new Title('g de CO2');
+
+            $chart = new Chart(
+                'carbonImpact',
+                $title,
+                $legend,
+                $plotArea,
+                true,
+                DataSeries::EMPTY_AS_GAP,
+                null,
+                $xAxisLabel
+            );
+
+            $chart->setTopLeftPosition('A' . $line);
+            $chart->setBottomRightPosition('F' . ($line + 25));
+
+            $sheet->addChart($chart);
+
+            // MONEY CHART
+            $dataSeriesLabels2 = [];
+            $xAxisTickValues2 = [
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$A$" . $startLine . ":\$A$" . $endLine, null, $categoriesNumber),
+            ];
+            $dataSeriesValues2 = [
+                new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$H$" . $startLine . ":\$H$" . $endLine, null, $categoriesNumber),
+            ];
+            $series2 = new DataSeries(
+                DataSeries::TYPE_BARCHART_3D,
+                DataSeries::GROUPING_STACKED,
+                range(0, count($dataSeriesValues2) - 1),
+                $dataSeriesLabels2,
+                $xAxisTickValues2,
+                $dataSeriesValues2
+            );
+            $series2->setPlotDirection(DataSeries::DIRECTION_BAR);
+            $plotArea2 = new PlotArea(null, [$series2]);
+            $legend2 = new Legend(Legend::POSITION_TOP, null, false);
+            $title2 = new Title('Ventilation des dépenses');
+            $xAxisLabel2 = new Title('euros');
+
+            $chart2 = new Chart(
+                'moneyImpact',
+                $title2,
+                null,
+                $plotArea2,
+                true,
+                DataSeries::EMPTY_AS_GAP,
+                null,
+                $xAxisLabel2
+            );
+
+            $chart2->setTopLeftPosition('F' . $line);
+            $chart2->setBottomRightPosition('K' . ($line + 25));
+
+            $sheet->addChart($chart2);
         }
 
         $spreadsheet->setActiveSheetIndex(0);
@@ -267,7 +357,9 @@ class ExportController extends Controller {
     private function sendFile(Spreadsheet $spreadsheet) {
         // Envoi du fichier au navigateur pour téléchargement
         $response = response()->streamDownload(function() use ($spreadsheet) {
-            $writer = new Xlsx($spreadsheet);
+            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $writer->setIncludeCharts(true);
+            //ob_end_clean();
             $writer->save('php://output');
         });
 
