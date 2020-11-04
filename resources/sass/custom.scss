@@ -1489,10 +1489,13 @@ h1.header {
 
   .results-div {
     -webkit-box-flex: 0;
-    -webkit-flex: 0 25%;
-    -ms-flex: 0 25%;
-    flex: 0 25%;
     text-align: right;
+  }
+
+  .results-div:not(.first-basket) {
+      -webkit-flex: 0 25%;
+      -ms-flex: 0 25%;
+      flex: 0 25%;
   }
 
   .results-comment {

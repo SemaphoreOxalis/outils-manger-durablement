@@ -12338,8 +12338,12 @@ ul.nav.nav-tabs {
 }
 
 .results-div {
-  flex: 0 25%;
+  -webkit-box-flex: 0;
   text-align: right;
+}
+
+.results-div:not(.first-basket) {
+  flex: 0 25%;
 }
 
 .results-comment {

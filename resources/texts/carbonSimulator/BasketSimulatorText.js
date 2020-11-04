@@ -42,7 +42,7 @@ export default {
                 },
                 product_impact: 'Impact Produit',
                 transportation_impact: 'Impact Transport',
-                carbon: 'Votre bilan carbone',
+                carbon: 'Equivalent carbone',
                 equals_to: 'équivaut à',
                 money: 'Votre bilan financier',
                 co2_per_euro: 'Bilan carbone par euro dépensé',
