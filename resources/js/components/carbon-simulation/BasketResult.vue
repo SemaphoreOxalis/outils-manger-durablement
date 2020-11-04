@@ -24,7 +24,7 @@
             <div class="tab-pane fade show active" :id="basketId + '-carbon'" role="tabpanel">
                 <div v-for="category in cats" class="results-row flex-horizontal">
                     <div class="results-categorie-name">{{ category.name }}</div>
-                    <div class="results-div">
+                    <div :class="getClasses()">
                         <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
                             <span>
                             {{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">{{ sum }}</div>
-                    <div class="results-div">
+                    <div :class="getClasses()">
                         <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
                             <span>
                             {{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
@@ -82,8 +82,8 @@
             <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="custom-control switch center">
                     <label>
-                        {{ impact.title.carbon }} <input v-model="chartViewMoney" type="checkbox"
-                                                         class="custom-control-input" @change="updateChart">
+                        {{ impact.title.carbon }}
+                        <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
                         <span class="lever"></span>
                         {{ impact.title.money }}
                     </label>
@@ -131,13 +131,6 @@ export default {
         moneyDelta: function () {
             return this.getDelta(this.globalMoneySpend, this.comparedBasket.results.globalMoneySpend);
         },
-        // equivalent: function () {
-        //     if (this.globalCarbonImpact.impact < 140) { // 140 = 1000 / 7.5
-        //         return 'négligeable';
-        //     }
-        //     let impactInKg = this.globalCarbonImpact.impact / 1000;
-        //     return this.roundToTwoDecimal(impactInKg * 7.5);
-        // },
         equivalentUnit: function () {
             if (this.equivalent === 'négligeable') {
                 return;
@@ -245,12 +238,12 @@ export default {
             });
         },
         updateEquivalence() {
-            if (this.globalCarbonImpact.impact < 260) { // en dessous ça ne fais pas un km (260 = environ 1000 / 3.953)
+            if (this.globalCarbonImpact.impact < 255) { // en dessous ça ne fais pas un km (255 = environ 1000 / 3.95257)
                 this.equivalent = 'négligeable';
             } else {
                 let impactInKg = this.globalCarbonImpact.impact / 1000;
-                this.equivalent = this.roundToTwoDecimal(impactInKg * 3.953);
-                // faire 10 000 km en voiture c’est émettre 2,53 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
+                this.equivalent = this.roundToTwoDecimal(impactInKg * 3.95257);
+                // faire 10 000 km en voiture c’est émettre 3.95257 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
                 // 3.953 = 1 / 2.253
                 // Source: ADEME
             }
@@ -282,7 +275,13 @@ export default {
                 return '<span><i class="icon icon-long-arrow-right down"></i> ' + value + ' </span>';
             }
             return '<span>' + value + '</span>';
-        }
+        },
+        getClasses() {
+            return [
+                'results-div',
+                this.isFirst ? 'first-basket' : ''
+            ];
+        },
     },
 }
 </script>

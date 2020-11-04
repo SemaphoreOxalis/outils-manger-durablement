@@ -141,13 +141,6 @@ __webpack_require__.r(__webpack_exports__);
     moneyDelta: function moneyDelta() {
       return this.getDelta(this.globalMoneySpend, this.comparedBasket.results.globalMoneySpend);
     },
-    // equivalent: function () {
-    //     if (this.globalCarbonImpact.impact < 140) { // 140 = 1000 / 7.5
-    //         return 'négligeable';
-    //     }
-    //     let impactInKg = this.globalCarbonImpact.impact / 1000;
-    //     return this.roundToTwoDecimal(impactInKg * 7.5);
-    // },
     equivalentUnit: function equivalentUnit() {
       if (this.equivalent === 'négligeable') {
         return;
@@ -258,12 +251,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateEquivalence: function updateEquivalence() {
-      if (this.globalCarbonImpact.impact < 260) {
-        // en dessous ça ne fais pas un km (260 = environ 1000 / 3.953)
+      if (this.globalCarbonImpact.impact < 255) {
+        // en dessous ça ne fais pas un km (255 = environ 1000 / 3.95257)
         this.equivalent = 'négligeable';
       } else {
         var impactInKg = this.globalCarbonImpact.impact / 1000;
-        this.equivalent = this.roundToTwoDecimal(impactInKg * 3.953); // faire 10 000 km en voiture c’est émettre 2,53 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
+        this.equivalent = this.roundToTwoDecimal(impactInKg * 3.95257); // faire 10 000 km en voiture c’est émettre 3.95257 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
         // 3.953 = 1 / 2.253
         // Source: ADEME
       }
@@ -293,6 +286,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '<span>' + value + '</span>';
+    },
+    getClasses: function getClasses() {
+      return ['results-div', this.isFirst ? 'first-basket' : ''];
     }
   }
 });
@@ -694,7 +690,7 @@ var render = function() {
                 _vm._v(_vm._s(category.name))
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [
+              _c("div", { class: _vm.getClasses() }, [
                 _c("a", { staticClass: "info-bubble" }, [
                   _vm._v(
                     _vm._s(category.carbonFormattedImpact) +
@@ -744,7 +740,7 @@ var render = function() {
                 _vm._v(_vm._s(_vm.sum))
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [
+              _c("div", { class: _vm.getClasses() }, [
                 _c("a", { staticClass: "info-bubble" }, [
                   _vm._v(
                     _vm._s(_vm.globalCarbonImpact.formatted) +
@@ -908,7 +904,9 @@ var render = function() {
           _c("div", { staticClass: "custom-control switch center" }, [
             _c("label", [
               _vm._v(
-                "\n                    " + _vm._s(_vm.impact.title.carbon) + " "
+                "\n                    " +
+                  _vm._s(_vm.impact.title.carbon) +
+                  "\n                    "
               ),
               _c("input", {
                 directives: [
