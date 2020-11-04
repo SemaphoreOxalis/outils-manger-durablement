@@ -62,6 +62,7 @@ import CategoriesDataBase from "../../../helpers/carbon-simulation/database/Cate
 import UnitsDataBase from "../../../helpers/carbon-simulation/database/UnitsDataBase";
 import searchBar from "../../../helpers/carbon-simulation/searchBar";
 import AdminPageText from "../../../../texts/AdminPageText";
+import AdminPagesText from "../../../../texts/carbonSimulator/AdminPagesText";
 export default {
     mixins: [
         ProductsDataBase,
@@ -69,6 +70,7 @@ export default {
         UnitsDataBase,
         searchBar,
         AdminPageText,
+        AdminPagesText
     ],
     data() {
         return {

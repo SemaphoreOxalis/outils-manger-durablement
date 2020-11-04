@@ -29,10 +29,12 @@
 <script>
     import CategoriesDataBase from "../../../helpers/carbon-simulation/database/CategoriesDataBase";
     import AdminPageText from "../../../../texts/AdminPageText";
+    import AdminPagesText from "../../../../texts/carbonSimulator/AdminPagesText";
     export default {
         mixins: [
             CategoriesDataBase,
             AdminPageText,
+            AdminPagesText
         ],
         data() {
             return {
