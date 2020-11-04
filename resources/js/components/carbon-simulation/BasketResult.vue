@@ -47,7 +47,7 @@
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
                 </div>
                 <div class="results-comment">
-                    <div>{{ impact.carbon }} {{ impact.equals_to }} un aller-retour Paris/New-York en avion</div>
+                    <div>{{ impact.carbon }} : {{ equivalent }} {{ equivalentUnit }}</div>
                 </div>
             </div>
 
@@ -82,7 +82,8 @@
             <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="custom-control switch center">
                     <label>
-                        {{ impact.title.carbon }} <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
+                        {{ impact.title.carbon }} <input v-model="chartViewMoney" type="checkbox"
+                                                         class="custom-control-input" @change="updateChart">
                         <span class="lever"></span>
                         {{ impact.title.money }}
                     </label>
@@ -130,6 +131,22 @@ export default {
         moneyDelta: function () {
             return this.getDelta(this.globalMoneySpend, this.comparedBasket.results.globalMoneySpend);
         },
+        // equivalent: function () {
+        //     if (this.globalCarbonImpact.impact < 140) { // 140 = 1000 / 7.5
+        //         return 'négligeable';
+        //     }
+        //     let impactInKg = this.globalCarbonImpact.impact / 1000;
+        //     return this.roundToTwoDecimal(impactInKg * 7.5);
+        // },
+        equivalentUnit: function () {
+            if (this.equivalent === 'négligeable') {
+                return;
+            }
+            if (this.equivalent < 2) {
+                return "km en voiture";
+            }
+            return "kms en voiture";
+        }
     },
     watch: {
         products: {
@@ -139,7 +156,7 @@ export default {
             },
             deep: true
         },
-        compareToPreviousBasket: function() {
+        compareToPreviousBasket: function () {
             this.updateResults();
         },
     },
@@ -163,6 +180,8 @@ export default {
             results: {},
 
             comparedBasket: {},
+
+            equivalent: null,
         }
     },
     created() {
@@ -177,7 +196,7 @@ export default {
     },
     methods: {
         updateResults() {
-            if(!this.isFirst) {
+            if (!this.isFirst) {
                 this.comparedBasket = this.compareToPreviousBasket ? this.previousBasket : this.firstBasket;
             }
 
@@ -188,24 +207,24 @@ export default {
             this.getMoneyImpactByCategory();
             this.getGlobalMoneyImpact();
 
-            if(!this.isFirst) {
+            if (!this.isFirst) {
                 this.getDeltas();
-            }
-            else {
+            } else {
                 this.cats.forEach((cat) => {
                     cat.carbonDelta = null;
                     cat.moneyDelta = null;
                 });
             }
 
-            if(this.isFirst) {
+            if (this.isFirst) {
                 this.basket.globalCarbonDelta = null;
                 this.basket.globalMoneyDelta = null;
-            }
-            else {
+            } else {
                 this.basket.globalCarbonDelta = this.carbonDelta;
                 this.basket.globalMoneyDelta = this.moneyDelta;
             }
+
+            this.updateEquivalence();
 
             this.sendResults();
             this.$forceUpdate();
@@ -224,6 +243,17 @@ export default {
             this.cats.forEach((cat, index) => {
                 this.getDeltasFor(cat, index);
             });
+        },
+        updateEquivalence() {
+            if (this.globalCarbonImpact.impact < 260) { // en dessous ça ne fais pas un km (260 = environ 1000 / 3.953)
+                this.equivalent = 'négligeable';
+            } else {
+                let impactInKg = this.globalCarbonImpact.impact / 1000;
+                this.equivalent = this.roundToTwoDecimal(impactInKg * 3.953);
+                // faire 10 000 km en voiture c’est émettre 2,53 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
+                // 3.953 = 1 / 2.253
+                // Source: ADEME
+            }
         },
 
         sendResults() {

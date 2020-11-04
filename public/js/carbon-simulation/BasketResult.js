@@ -115,6 +115,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -139,6 +140,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     moneyDelta: function moneyDelta() {
       return this.getDelta(this.globalMoneySpend, this.comparedBasket.results.globalMoneySpend);
+    },
+    // equivalent: function () {
+    //     if (this.globalCarbonImpact.impact < 140) { // 140 = 1000 / 7.5
+    //         return 'négligeable';
+    //     }
+    //     let impactInKg = this.globalCarbonImpact.impact / 1000;
+    //     return this.roundToTwoDecimal(impactInKg * 7.5);
+    // },
+    equivalentUnit: function equivalentUnit() {
+      if (this.equivalent === 'négligeable') {
+        return;
+      }
+
+      if (this.equivalent < 2) {
+        return "km en voiture";
+      }
+
+      return "kms en voiture";
     }
   },
   watch: {
@@ -167,7 +186,8 @@ __webpack_require__.r(__webpack_exports__);
       chart: chart_js__WEBPACK_IMPORTED_MODULE_0___default.a,
       chartViewMoney: false,
       results: {},
-      comparedBasket: {}
+      comparedBasket: {},
+      equivalent: null
     };
   },
   created: function created() {
@@ -212,6 +232,7 @@ __webpack_require__.r(__webpack_exports__);
         this.basket.globalMoneyDelta = this.moneyDelta;
       }
 
+      this.updateEquivalence();
       this.sendResults();
       this.$forceUpdate();
     },
@@ -235,6 +256,17 @@ __webpack_require__.r(__webpack_exports__);
       this.cats.forEach(function (cat, index) {
         _this4.getDeltasFor(cat, index);
       });
+    },
+    updateEquivalence: function updateEquivalence() {
+      if (this.globalCarbonImpact.impact < 260) {
+        // en dessous ça ne fais pas un km (260 = environ 1000 / 3.953)
+        this.equivalent = 'négligeable';
+      } else {
+        var impactInKg = this.globalCarbonImpact.impact / 1000;
+        this.equivalent = this.roundToTwoDecimal(impactInKg * 3.953); // faire 10 000 km en voiture c’est émettre 2,53 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
+        // 3.953 = 1 / 2.253
+        // Source: ADEME
+      }
     },
     sendResults: function sendResults() {
       this.results.cats = this.cats;
@@ -758,9 +790,10 @@ var render = function() {
             _c("div", [
               _vm._v(
                 _vm._s(_vm.impact.carbon) +
+                  " : " +
+                  _vm._s(_vm.equivalent) +
                   " " +
-                  _vm._s(_vm.impact.equals_to) +
-                  " un aller-retour Paris/New-York en avion"
+                  _vm._s(_vm.equivalentUnit)
               )
             ])
           ])
