@@ -9,7 +9,7 @@
                     </p>
                 </div>
 
-                <div class="info p-4 m-4"  v-if="previousBasketsDetectedInLocalStorage">
+                <div class="info p-4 m-4" v-if="previousBasketsDetectedInLocalStorage">
                     <p>{{ it_seems_you_have_baskets_from }} <strong>{{ this.previousBasketsDate }}</strong></p>
                     <div class="d-flex flex-column align-items-center">
                         <button class="button big-button d-flex p-4 justify-content-center mb-2" @click="goToPreviousBaskets">
@@ -35,7 +35,7 @@
                     <strong>{{ you_ll_get_results_in_15m }}</strong>
                 </p>
 
-                <router-link to="basket-simulator" tag="span">
+                <router-link to="basket-simulator" tag="span" v-if="!previousBasketsDetectedInLocalStorage">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
                         <div class="icon align-self-center mr-4"></div>
                         <div class="text-left big-button-line-height">

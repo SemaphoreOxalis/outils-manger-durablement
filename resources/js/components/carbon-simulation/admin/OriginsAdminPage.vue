@@ -40,10 +40,12 @@
 <script>
 import OriginsDataBase from "../../../helpers/carbon-simulation/database/OriginsDataBase";
 import AdminPageText from "../../../../texts/AdminPageText";
+import AdminPagesText from "../../../../texts/carbonSimulator/AdminPagesText";
 export default {
     mixins: [
         OriginsDataBase,
         AdminPageText,
+        AdminPagesText
     ],
     data() {
         return {

@@ -206,40 +206,44 @@ var render = function() {
             _c("strong", [_vm._v(_vm._s(_vm.you_ll_get_results_in_15m))])
           ]),
           _vm._v(" "),
-          _c(
-            "router-link",
-            { attrs: { to: "basket-simulator", tag: "span" } },
-            [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "button big-button d-flex p-4 m-2 justify-content-center"
-                },
+          !_vm.previousBasketsDetectedInLocalStorage
+            ? _c(
+                "router-link",
+                { attrs: { to: "basket-simulator", tag: "span" } },
                 [
-                  _c("div", { staticClass: "icon align-self-center mr-4" }, [
-                    _vm._v("")
-                  ]),
-                  _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "text-left big-button-line-height" },
+                    "button",
+                    {
+                      staticClass:
+                        "button big-button d-flex p-4 m-2 justify-content-center"
+                    },
                     [
-                      _c("small", [_vm._v(_vm._s(_vm.lnchBtn.im_ready))]),
+                      _c(
+                        "div",
+                        { staticClass: "icon align-self-center mr-4" },
+                        [_vm._v("")]
+                      ),
                       _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("strong", [_vm._v(_vm._s(_vm.lnchBtn.start))]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("small", [_vm._v(_vm._s(_vm.lnchBtn.new_sim))])
+                      _c(
+                        "div",
+                        { staticClass: "text-left big-button-line-height" },
+                        [
+                          _c("small", [_vm._v(_vm._s(_vm.lnchBtn.im_ready))]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("strong", [_vm._v(_vm._s(_vm.lnchBtn.start))]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [_vm._v(_vm._s(_vm.lnchBtn.new_sim))])
+                        ]
+                      )
                     ]
                   )
                 ]
               )
-            ]
-          )
+            : _vm._e()
         ],
         1
       )

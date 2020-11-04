@@ -33,10 +33,12 @@
 <script>
 import UnitsDataBase from "../../../helpers/carbon-simulation/database/UnitsDataBase";
 import AdminPageText from "../../../../texts/AdminPageText";
+import AdminPagesText from "../../../../texts/carbonSimulator/AdminPagesText";
 export default {
     mixins: [
         UnitsDataBase,
         AdminPageText,
+        AdminPagesText
     ],
     data() {
         return {
