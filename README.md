@@ -118,14 +118,11 @@ Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jo
     * `git reset --hard origin/master`
     * `git pull origin master`
 
-* :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`
+* :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`, sans la commande `npm run prod` (l'appli est déjà en production)
   
 ### :speech_balloon: Mise à jour des textes uniquement 
 
 * :pencil2: éditez à votre guise les textes contenus dans les fichiers situés dans `resources/texts` (la plupart des textes de l'application sont stockés ici, seuls quelques rares textes sont du côté serveur, en PHP (login....))
-
-* :computer: Dans le terminal du serveur, tapez :
-    * `npm run prod`
   
   
 ## Architecture :building_construction:
@@ -148,7 +145,7 @@ La majorité de la logique de l'application est gérée par Vue.js en front-end,
 * La base de données de l'application se trouve dans `/database/database.sqlite`
 * dans le dossier `/database`, vous trouverez 2 autres dossiers utiles à l'application :
     * `/migrations` contient les fichiers responsables de *créer* les tables de la base de données
-    * `/seeds` contient les fichiers responsable de *remplir* les tables de la base de données. (C'est ici que se trouvent les valeurs de référence qui sont initialisées à "25%" et "75%" lors de l'installation)
+    * `/seeds` contient les fichiers responsable de *remplir* les tables de la base de données. (C'est ici que se trouvent les valeurs de référence qui sont initialisées à "25%" et "75%" lors de l'installation, ainsi que les produits, etc...)
 
 ### :vertical_traffic_light: Routes
 
@@ -175,10 +172,11 @@ Ce ne sont pas à proprement parler des "vues" mais des composants Vue. Cependan
 Elles sont situées dans `resources/js/components` et sont constitués de `Composants.vue`, qui constituent les pages de notre application (chaque composant dispose de son propre template HTML et de sa propre logique sous forme de balise `script`)
 Par souci de lisibilité et de factorisation, du code a été extrait de ces composants dans le fichier `resources/js/helpers`, dont voici la structure: (vous pouvez retrouver quel composant utilise quel "helper" en regardant ce qu'il importe)
 * `helpers` contient de la logique générale à l'application, utilisée par pratiquement tous les composants (formatage des dates, des nombres, etc...)
-    * `waste-simulation` sont des fichiers spécifiques à cet outil de simulation de gaspillage (en prévision du prochain outil)
+    * `waste-simulation` sont des fichiers spécifiques à l'outil de simulation de gaspillage
         * `calculations` regroupe les fichiers s'occupant des calculs effectuées pour les simulations
         * `component-specific` regroupe du code spécifique à certains composants, qui en alourdissaient la lecture
         * `validation` contient la logique responsable de valider ou non les saisies des utilisateurs
+    * `carbon-simulation` a la même structure
 
 #### Initialisation de Vue.js
 En plus de ces fichiers, dans `resources/js/`, vous pouvez trouver
@@ -206,6 +204,7 @@ Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Lar
 * :warning: `database` : contient la base de données et la logique ce celle-ci
     * :warning: `migrations` : code pour construire a base de données lors de la commande `php artisan migrate:fresh`
     * :warning: `seeds` : code pour remplir les tables de la base de données lors de la commande `php artisan db:seed`
+    * :no_entry: `database.sqlite` : La base de données à proprement parler (n'hésitez pas à faire des sauvegardes régulières de ce fichier)
 * `doc` : contient uniquement l'image présente en haut de ce README
 * :no_entry: `node_modules` : Contient les dépendances Javascript
 * :warning: `public` : Le point d'entrée de notre application. Derrière ce point tout est accessible au navigateur. Une modification ici n'aurait aucun effet, le contenu de ce dossier étant généré à l'installation (sauf `/images`).
