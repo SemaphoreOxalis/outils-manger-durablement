@@ -5,7 +5,7 @@
                 <div class="modal-container text-center" ref="modal">
 
                     <div class="modal-header">
-                        <span>Je modifie ce panier pour :</span>
+                        <span>{{ edit.i_am_editing_to }} :</span>
                     </div>
 
                     <div class="modal-body">
@@ -15,7 +15,7 @@
                                id="francify"
                                value="francify"
                                checked="checked">
-                        <label for="francify">Je modifie tous les produits qui le peuvent en origine France</label>
+                        <label for="francify">{{ edit.set_origin_to_france }}</label>
                     </div>
 
                     <div class="modal-footer">
@@ -36,7 +36,12 @@
 </template>
 
 <script>
+    import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
+
     export default {
+        mixins: [
+            BasketSimulatorText
+        ],
         props: {
             affectedBasketIndex: Number,
         },

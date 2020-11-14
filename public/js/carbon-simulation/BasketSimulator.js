@@ -979,8 +979,8 @@ __webpack_require__.r(__webpack_exports__);
         ok: 'OK'
       },
       edit: {
-        i_am_editing_to: 'Je modifie ce panier',
-        set_origin_to_france: 'afin que tous ses produits soient d\'origine France (si possible)'
+        i_am_editing_to: 'Je modifie ce panier pour',
+        set_origin_to_france: 'Je modifie tous les produits qui le peuvent en origine France'
       },
       switch_labels: {
         compare_to_first: 'Comparer avec le premier panier',

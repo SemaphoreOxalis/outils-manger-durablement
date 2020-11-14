@@ -217,7 +217,7 @@ export default {
                 dishesNumber: 100000,       // précis à 1
                 dishCost: 3,                // précis à 0.01 €
                 dishWeight: 400,            // précis à 1 g
-                globalWasteVolume: 15,      // précis à 0.001 T
+                globalWasteVolume: 100,      // précis à 0.001 T
                 wasteTreatmentCost: 100,    // précis à 0.01 €
                 startDate: null,
                 endDate: null

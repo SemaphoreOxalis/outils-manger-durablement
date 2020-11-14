@@ -224,7 +224,7 @@ __webpack_require__.r(__webpack_exports__);
         // précis à 0.01 €
         dishWeight: 400,
         // précis à 1 g
-        globalWasteVolume: 15,
+        globalWasteVolume: 100,
         // précis à 0.001 T
         wasteTreatmentCost: 100,
         // précis à 0.01 €

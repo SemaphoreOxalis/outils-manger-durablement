@@ -9,6 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 //
 //
 //
@@ -46,7 +47,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     affectedBasketIndex: Number
   },
@@ -92,7 +95,7 @@ var render = function() {
           { ref: "modal", staticClass: "modal-container text-center" },
           [
             _c("div", { staticClass: "modal-header" }, [
-              _c("span", [_vm._v("Je modifie ce panier pour :")])
+              _c("span", [_vm._v(_vm._s(_vm.edit.i_am_editing_to) + " :")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "modal-body" }, [
@@ -121,9 +124,7 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("label", { attrs: { for: "francify" } }, [
-                _vm._v(
-                  "Je modifie tous les produits qui le peuvent en origine France"
-                )
+                _vm._v(_vm._s(_vm.edit.set_origin_to_france))
               ])
             ]),
             _vm._v(" "),
