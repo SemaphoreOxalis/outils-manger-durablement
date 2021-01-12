@@ -11436,6 +11436,10 @@ ul.stepper .step.active::before {
   width: 100%;
 }
 
+.credits-container {
+  margin-bottom: 20px;
+}
+
 /**********************************/
 
 /* Components Specific styles     */

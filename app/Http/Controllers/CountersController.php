@@ -10,7 +10,7 @@ class CountersController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except(['index', 'increment']);
     }
 
     public function index()
