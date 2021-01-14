@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../texts/carbonSimulator/HomePageText */ "./resources/texts/carbonSimulator/HomePageText.js");
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 /* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 //
 //
 //
@@ -63,20 +64,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
+      counters: {
+        basketCounter: 0,
+        productsCounter: 0
+      },
       previousBasketsDate: null,
       previousBasketsDetectedInLocalStorage: false
     };
   },
   created: function created() {
     this.checkPreviousBasketsFromLocalStorage();
+    this.fetchCountersFromDB();
   },
   methods: {
     checkPreviousBasketsFromLocalStorage: function checkPreviousBasketsFromLocalStorage() {
@@ -185,7 +195,21 @@ var render = function() {
                 ]
               )
             ])
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            _vm._s(_vm.on_this_tool) +
+              " " +
+              _vm._s(this.counters.productsCounter) +
+              " " +
+              _vm._s(_vm.products_have_been_added_to) +
+              " " +
+              _vm._s(this.counters.basketCounter) +
+              " " +
+              _vm._s(_vm.bskets)
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -438,6 +462,106 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/helpers/DataBase.js":
+/*!******************************************!*\
+  !*** ./resources/js/helpers/DataBase.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Intéractions avec la base de donnée
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // WASTE HOME-PAGE component
+    fetchCountersFromDB: function fetchCountersFromDB() {
+      var _this = this;
+
+      getCountersFromDB().then(function (response) {
+        _this.counters.auditsCounter = response.data[0].value;
+        _this.counters.simulationsCounter = response.data[1].value;
+        _this.counters.basketCounter = response.data[2].value;
+        _this.counters.productsCounter = response.data[3].value;
+      });
+    },
+    // ADMIN component
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+      var _this2 = this;
+
+      getCountersFromDB().then(function (response) {
+        _this2.counters = response.data;
+      });
+    },
+    updateCounter: function updateCounter(counter) {
+      // Appel AJAX
+      patchCounter(counter).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    //INPUT component
+    // RESULTS component
+    incrementAuditCounter: function incrementAuditCounter() {
+      incrementAC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementSimulationCounter: function incrementSimulationCounter() {
+      incrementSC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementBasketCounter: function incrementBasketCounter() {
+      incrementBC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementProductCounter: function incrementProductCounter() {
+      incrementPC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+}); // Situées ici, ces fonctions sont "privées"
+
+function getCountersFromDB() {
+  return axios.get('/api/counters');
+}
+
+function patchCounter(counter) {
+  return axios.patch('/api/counters/' + counter.id, {
+    value: counter.value
+  });
+}
+
+function incrementAC() {
+  return axios.patch('/api/counters/1/increment');
+}
+
+function incrementSC() {
+  return axios.patch('/api/counters/2/increment');
+}
+
+function incrementBC() {
+  return axios.patch('/api/counters/3/increment');
+}
+
+function incrementPC() {
+  return axios.patch('/api/counters/4/increment');
+}
+
+/***/ }),
+
 /***/ "./resources/js/helpers/DateFormatter.js":
 /*!***********************************************!*\
   !*** ./resources/js/helpers/DateFormatter.js ***!
@@ -582,7 +706,10 @@ __webpack_require__.r(__webpack_exports__);
         from: 'du'
       },
       shopping_list: 'des achats alimentaires de votre cuisine (aliments ainsi que leur quantité et leur provenance',
-      you_ll_get_results_in_15m: 'Grâce à ces données, vous obtiendrez une estimation économique et quantitative de l\'impact carbone de votre établissement en 15 minutes'
+      you_ll_get_results_in_15m: 'Grâce à ces données, vous obtiendrez une estimation économique et quantitative de l\'impact carbone de votre établissement en 15 minutes',
+      on_this_tool: 'Sur cet outil,',
+      products_have_been_added_to: 'produits ont été ajoutés à',
+      bskets: 'paniers'
     };
   }
 });

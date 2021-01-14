@@ -2,11 +2,13 @@ export default {
     methods: {
         addBasket(name = '') {
             this.baskets.push(this.prepareBasketToAdd(name));
+            this.incrementBasketCounter();
             this.saveBasketsToLocalStorage();
         },
         copyBasket(basket, index) {
             let tempBasket = JSON.parse(JSON.stringify(basket));
             this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products, tempBasket.results));
+            this.incrementBasketCounter();
             this.saveBasketsToLocalStorage();
         },
         deleteBasket(basketIndex) {

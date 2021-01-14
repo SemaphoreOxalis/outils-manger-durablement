@@ -24,6 +24,9 @@
                         </div>
                     </div>
                 </div>
+
+                <p>{{ on_this_tool }} {{ this.counters.productsCounter }} {{ products_have_been_added_to }} {{ this.counters.basketCounter }} {{ bskets }}</p>
+
             </div>
 
             <div class="col p-4 m-4">
@@ -53,21 +56,28 @@
     import HomePageText from "../../../texts/carbonSimulator/HomePageText";
     import DateFormatter from "../../helpers/DateFormatter";
     import LocalStorageHelper from "../../helpers/LocalStorageHelper";
+    import DataBase from "../../helpers/DataBase";
     export default {
         mixins: [
             GeneralText,
             HomePageText,
             DateFormatter,
             LocalStorageHelper,
+            DataBase
         ],
         data() {
             return {
+                counters: {
+                    basketCounter: 0,
+                    productsCounter: 0
+                },
                 previousBasketsDate: null,
                 previousBasketsDetectedInLocalStorage: false,
             }
         },
         created() {
             this.checkPreviousBasketsFromLocalStorage();
+            this.fetchCountersFromDB();
         },
         methods: {
             checkPreviousBasketsFromLocalStorage() {

@@ -61,6 +61,7 @@ import basketsListHelper from "../../helpers/carbon-simulation/component-specifi
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 import DateFormatter from "../../helpers/DateFormatter";
 import ExportHelper from "../../helpers/ExportHelper";
+import DataBase from "../../helpers/DataBase";
 
 const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
@@ -88,6 +89,7 @@ export default {
         BasketSimulatorText,
         DateFormatter,
         ExportHelper,
+        DataBase
     ],
     props: {
         origins: Array,

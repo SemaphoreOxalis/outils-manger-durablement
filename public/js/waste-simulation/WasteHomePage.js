@@ -542,6 +542,8 @@ __webpack_require__.r(__webpack_exports__);
       getCountersFromDB().then(function (response) {
         _this.counters.auditsCounter = response.data[0].value;
         _this.counters.simulationsCounter = response.data[1].value;
+        _this.counters.basketCounter = response.data[2].value;
+        _this.counters.productsCounter = response.data[3].value;
       });
     },
     // ADMIN component
@@ -575,6 +577,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
+    },
+    incrementBasketCounter: function incrementBasketCounter() {
+      incrementBC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementProductCounter: function incrementProductCounter() {
+      incrementPC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
@@ -595,6 +611,14 @@ function incrementAC() {
 
 function incrementSC() {
   return axios.patch('/api/counters/2/increment');
+}
+
+function incrementBC() {
+  return axios.patch('/api/counters/3/increment');
+}
+
+function incrementPC() {
+  return axios.patch('/api/counters/4/increment');
 }
 
 /***/ }),

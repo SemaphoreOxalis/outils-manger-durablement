@@ -15,6 +15,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 /* harmony import */ var _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/ExportHelper */ "./resources/js/helpers/ExportHelper.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -90,6 +91,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
+
 var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
@@ -108,7 +110,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     ActionConfirmation: ActionConfirmation,
     GroupedActionPopUp: GroupedActionPopUp
   },
-  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: {
     origins: Array,
     categories: Array,
@@ -412,6 +414,106 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/helpers/DataBase.js":
+/*!******************************************!*\
+  !*** ./resources/js/helpers/DataBase.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// Intéractions avec la base de donnée
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    // WASTE HOME-PAGE component
+    fetchCountersFromDB: function fetchCountersFromDB() {
+      var _this = this;
+
+      getCountersFromDB().then(function (response) {
+        _this.counters.auditsCounter = response.data[0].value;
+        _this.counters.simulationsCounter = response.data[1].value;
+        _this.counters.basketCounter = response.data[2].value;
+        _this.counters.productsCounter = response.data[3].value;
+      });
+    },
+    // ADMIN component
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+      var _this2 = this;
+
+      getCountersFromDB().then(function (response) {
+        _this2.counters = response.data;
+      });
+    },
+    updateCounter: function updateCounter(counter) {
+      // Appel AJAX
+      patchCounter(counter).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    //INPUT component
+    // RESULTS component
+    incrementAuditCounter: function incrementAuditCounter() {
+      incrementAC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementSimulationCounter: function incrementSimulationCounter() {
+      incrementSC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementBasketCounter: function incrementBasketCounter() {
+      incrementBC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementProductCounter: function incrementProductCounter() {
+      incrementPC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+}); // Situées ici, ces fonctions sont "privées"
+
+function getCountersFromDB() {
+  return axios.get('/api/counters');
+}
+
+function patchCounter(counter) {
+  return axios.patch('/api/counters/' + counter.id, {
+    value: counter.value
+  });
+}
+
+function incrementAC() {
+  return axios.patch('/api/counters/1/increment');
+}
+
+function incrementSC() {
+  return axios.patch('/api/counters/2/increment');
+}
+
+function incrementBC() {
+  return axios.patch('/api/counters/3/increment');
+}
+
+function incrementPC() {
+  return axios.patch('/api/counters/4/increment');
+}
+
+/***/ }),
+
 /***/ "./resources/js/helpers/DateFormatter.js":
 /*!***********************************************!*\
   !*** ./resources/js/helpers/DateFormatter.js ***!
@@ -597,11 +699,13 @@ __webpack_require__.r(__webpack_exports__);
     addBasket: function addBasket() {
       var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       this.baskets.push(this.prepareBasketToAdd(name));
+      this.incrementBasketCounter();
       this.saveBasketsToLocalStorage();
     },
     copyBasket: function copyBasket(basket, index) {
       var tempBasket = JSON.parse(JSON.stringify(basket));
       this.baskets.splice(index + 1, 0, this.prepareBasketToAdd('Copie de ' + tempBasket.name, tempBasket.products, tempBasket.results));
+      this.incrementBasketCounter();
       this.saveBasketsToLocalStorage();
     },
     deleteBasket: function deleteBasket(basketIndex) {

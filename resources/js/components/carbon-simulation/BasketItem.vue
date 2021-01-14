@@ -65,6 +65,7 @@
 <script>
 import searchBar from "../../helpers/carbon-simulation/searchBar";
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
+import DataBase from "../../helpers/DataBase";
 
 const BasketProduct = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketProduct" */
@@ -88,6 +89,7 @@ export default {
     mixins: [
         searchBar,
         BasketSimulatorText,
+        DataBase
     ],
     props: {
         basket: Object,
@@ -146,6 +148,7 @@ export default {
             tempProd.id = ('basket-product-' + (this.productCounter + 1));
             this.basket.products.unshift(tempProd);
             this.sendInternalCounter();
+            this.incrementProductCounter();
             this.saveBasket();
         },
         removeProduct(productIndex) {

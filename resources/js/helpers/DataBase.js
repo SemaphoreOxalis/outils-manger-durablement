@@ -8,6 +8,8 @@ export default {
             getCountersFromDB().then((response) => {
                 this.counters.auditsCounter = response.data[0].value;
                 this.counters.simulationsCounter = response.data[1].value;
+                this.counters.basketCounter = response.data[2].value;
+                this.counters.productsCounter = response.data[3].value;
             });
         },
 
@@ -45,7 +47,23 @@ export default {
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
-        }
+        },
+
+        incrementBasketCounter() {
+            incrementBC().then(response => {
+                console.log(response.data);
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
+
+        incrementProductCounter() {
+            incrementPC().then(response => {
+                console.log(response.data);
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
     }
 }
 
@@ -67,4 +85,12 @@ function incrementAC() {
 
 function incrementSC() {
     return axios.patch('/api/counters/2/increment');
+}
+
+function incrementBC() {
+    return axios.patch('/api/counters/3/increment');
+}
+
+function incrementPC() {
+    return axios.patch('/api/counters/4/increment');
 }
