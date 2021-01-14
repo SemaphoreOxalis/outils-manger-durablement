@@ -12480,6 +12480,10 @@ select {
   display: inline-block;
 }
 
+a.button:hover {
+  text-decoration: none;
+}
+
 /*--------------------------------
 
 sema-font Web Font

@@ -8,6 +8,7 @@ export default {
                 region_na: 'logo région Nouvelle-Aquitaine',
                 europe: 'logo Europe',
             },
+            feedback_text: 'J\'ai une question ou un retour à faire',
         }
     }
 }

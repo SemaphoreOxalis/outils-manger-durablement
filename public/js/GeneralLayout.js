@@ -33,6 +33,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_GeneralLayoutText__WEBPACK_IMPORTED_MODULE_0__["default"]]
@@ -60,7 +67,24 @@ var render = function() {
     { staticClass: "d-flex flex-column align-items-end vh-100" },
     [
       _c("main", { staticClass: "container" }, [
-        _c("div", { staticClass: "py-4" }, [_c("router-view")], 1)
+        _c("div", { staticClass: "py-4" }, [_c("router-view")], 1),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-center my-2 mb-4" }, [
+          _c(
+            "a",
+            {
+              staticClass: "button",
+              attrs: {
+                href: "https://airtable.com/shrFZqKu6MuVIK5DZ",
+                target: "_blank"
+              }
+            },
+            [
+              _c("i", { staticClass: "icon mr-2" }),
+              _vm._v(_vm._s(_vm.feedback_text) + "\n            ")
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -311,7 +335,8 @@ __webpack_require__.r(__webpack_exports__);
         carasso: 'logo fondation Carasso',
         region_na: 'logo région Nouvelle-Aquitaine',
         europe: 'logo Europe'
-      }
+      },
+      feedback_text: 'J\'ai une question ou un retour à faire'
     };
   }
 });

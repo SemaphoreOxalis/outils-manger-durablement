@@ -4,6 +4,13 @@
             <div class="py-4">
                 <router-view></router-view>
             </div>
+
+            <div class="text-center my-2 mb-4">
+                <a class="button"
+                   href="https://airtable.com/shrFZqKu6MuVIK5DZ" target="_blank">
+                    <i class="icon mr-2"></i>{{ feedback_text }}
+                </a>
+            </div>
         </main>
 
         <footer class="mt-auto w-100" id="general-footer">
