@@ -251,13 +251,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateEquivalence: function updateEquivalence() {
-      if (this.globalCarbonImpact.impact < 255) {
-        // en dessous ça ne fais pas un km (255 = environ 1000 / 3.95257)
+      if (this.globalCarbonImpact.impact < 0.395) {
+        // en dessous ça ne fais pas un km
         this.equivalent = 'négligeable';
       } else {
-        var impactInKg = this.globalCarbonImpact.impact / 1000;
-        this.equivalent = this.roundToTwoDecimal(impactInKg * 3.95257); // faire 10 000 km en voiture c’est émettre 3.95257 tonnes de CO2 (la voiture moyenne émettant 0,253 kg CO2e/km)
-        // 3.953 = 1 / 2.253
+        this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact * 0.395257); // faire 10 000 km en voiture c’est émettre 3.95257 tonnes de CO2 = 3952.57 kg
+        // 3952.57 / 10000 = 0.395 kgCO2/km
         // Source: ADEME
       }
     },
@@ -1180,10 +1179,6 @@ __webpack_require__.r(__webpack_exports__);
       category.moneyDelta = this.getDelta(category.moneySpent, this.comparedBasket.results.cats[index].moneySpent);
     },
     divideIfNecessary: function divideIfNecessary(amount) {
-      if (amount >= 1000000) {
-        return this.roundToTwoDecimal(amount / 1000000);
-      }
-
       if (amount >= 1000) {
         return this.roundToTwoDecimal(amount / 1000);
       }
@@ -1191,19 +1186,15 @@ __webpack_require__.r(__webpack_exports__);
       return this.roundToOneDecimal(amount);
     },
     getUnit: function getUnit(amount) {
-      if (amount >= 2000000) {
+      if (amount >= 2000) {
         return 'tonnes de CO2';
       }
 
-      if (amount >= 1000000) {
+      if (amount >= 1000) {
         return 'tonne de CO2';
       }
 
-      if (amount >= 1000) {
-        return 'kgCO2';
-      }
-
-      return 'gCO2';
+      return 'kgCO2';
     }
   }
 });

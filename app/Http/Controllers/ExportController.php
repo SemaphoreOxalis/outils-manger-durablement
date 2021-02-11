@@ -216,9 +216,9 @@ class ExportController extends Controller {
                     $sheet->setCellValue('D' . $line, $product['unit']['unit']);
                     $sheet->setCellValue('E' . $line, $product['origin']['from']);
                     $sheet->setCellValue('F' . $line, $product['price'] . ' €');
-                    $sheet->setCellValue('G' . $line, $product['productImpact'] . ' gCO2');
-                    $sheet->setCellValue('H' . $line, $product['transportationImpact'] . ' gCO2');
-                    $sheet->setCellValue('I' . $line, $product['carbonImpact'] . ' gCO2');
+                    $sheet->setCellValue('G' . $line, $product['productImpact'] . ' kgCO2');
+                    $sheet->setCellValue('H' . $line, $product['transportationImpact'] . ' kgCO2');
+                    $sheet->setCellValue('I' . $line, $product['carbonImpact'] . ' kgCO2');
                     $line++;
                 }
                 $sheet->getStyle('E5:I' . $line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
@@ -226,7 +226,7 @@ class ExportController extends Controller {
 
                 $sheet->mergeCells('A' . $line . ':E' . $line);
                 $sheet->mergeCells('G' . $line . ':I' . $line);
-                $sheet->setCellValue('A' . $line, 'bilan carbone (en g de CO2)');
+                $sheet->setCellValue('A' . $line, 'bilan carbone (en kg de CO2)');
                 $sheet->setCellValue('G' . $line, 'bilan financier (en €)');
                 $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getFont()->setBold(true);
@@ -255,9 +255,9 @@ class ExportController extends Controller {
                 $endLine = $line - 1;
                 $line++;
                 $sheet->setCellValue('A' . $line, 'Total');
-                $sheet->setCellValue('B' . $line, $basket['results']['globalProductImpact'] . ' gCO2');
-                $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' gCO2');
-                $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' gCO2');
+                $sheet->setCellValue('B' . $line, $basket['results']['globalProductImpact'] . ' kgCO2');
+                $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' kgCO2');
+                $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' kgCO2');
                 $sheet->setCellValue('E' . $line, $basket['globalCarbonDelta']);
 
                 $sheet->setCellValue('G' . $line, 'Total');
@@ -294,7 +294,7 @@ class ExportController extends Controller {
                 $plotArea = new PlotArea(null, [$series]);
                 $legend = new Legend(Legend::POSITION_TOP, null, false);
                 $title = new Title('Ventilation de l\'empreinte carbone');
-                $xAxisLabel = new Title('g de CO2');
+                $xAxisLabel = new Title('kg de CO2');
 
                 $chart = new Chart(
                     'carbonImpact',
