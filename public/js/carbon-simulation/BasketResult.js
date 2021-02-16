@@ -251,13 +251,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateEquivalence: function updateEquivalence() {
-      if (this.globalCarbonImpact.impact < 0.395) {
+      if (this.globalCarbonImpact.impact < 0.253) {
         // en dessous ça ne fais pas un km
         this.equivalent = 'négligeable';
       } else {
-        this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact * 0.395257); // faire 10 000 km en voiture c’est émettre 3.95257 tonnes de CO2 = 3952.57 kg
-        // 3952.57 / 10000 = 0.395 kgCO2/km
-        // Source: ADEME
+        this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact / 0.253); // faire 10 000 km en voiture c’est émettre 2.53 tonnes de CO2
+        // "la voiture moyenne émettant 0,253 kg CO2e/km"
+        // Source: ADEME https://datagir.ademe.fr/blog/transport/impact-carbone-mobilite-eco-deplacement.md
       }
     },
     sendResults: function sendResults() {

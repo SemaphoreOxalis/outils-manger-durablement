@@ -117,6 +117,8 @@ Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jo
     * `git fetch --all`
     * `git reset --hard origin/master`
     * `git pull origin master`
+    * `composer install --optimize-autoloader --no-dev`
+    * `npm install`
 
 * :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`, sans la commande `npm run prod` (l'appli est déjà en production)
   
