@@ -88,6 +88,7 @@ DEBUGBAR_ENABLED=false
 
 * :computer: Dans le terminal du serveur, tapez :
     * `php artisan key:generate` (crée une clé de chiffrage unique à l'application pour générer les tokens CSRF et les cookies de session)
+    * `composer update` (si l'instruction précédente renvoie une erreur)
     * `php artisan migrate:fresh` (crée les tables de la base de données - tapez 'yes' si on vous le demande)
 
 * :pencil2: Editez le fichier `routes/web.php` :

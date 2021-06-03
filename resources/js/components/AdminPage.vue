@@ -14,6 +14,10 @@
                 <router-link to="/admin/counters" tag="span">
                     <button class="button alter">Compteurs</button>
                 </router-link>
+
+                <router-link to="/admin/wysiwyg" tag="span">
+                    <button class="button alter">Wysiwyg</button>
+                </router-link>
             </div>
             <router-view></router-view>
         </div>

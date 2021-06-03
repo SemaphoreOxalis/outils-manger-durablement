@@ -44,6 +44,11 @@ const CountersAdminPage = () => import(
     './components/CountersAdminPage.vue'
     );
 
+const WysiwygAdminPage = () => import(
+    /* webpackChunkName: "js/admin/WysiwygAdminPage" */
+    './components/admin/WysiwygAdminPage.vue'
+    );
+
 const NotFound = () => import(
     /* webpackChunkName: "js/NotFound" */
     './components/NotFound.vue'
@@ -214,6 +219,11 @@ export default {
                             path: 'counters',
                             component: CountersAdminPage,
                             name: 'counters',
+                        },
+                        {
+                            path: 'wysiwyg',
+                            component: WysiwygAdminPage,
+                            name: 'wysiwyg',
                         },
                         {
                             path: '',
