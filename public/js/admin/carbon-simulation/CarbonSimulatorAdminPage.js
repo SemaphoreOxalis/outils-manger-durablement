@@ -54,7 +54,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.admin-subnav {\n    text-align: center;\n    padding: 10px;\n}\n.admin-subnav span.router-link-active button.alter {\n    background-color: var(--main-color);\n}\n", ""]);
+exports.push([module.i, "\n.admin-subnav {\r\n    text-align: center;\r\n    padding: 10px;\n}\n.admin-subnav span.router-link-active button.alter {\r\n    background-color: var(--main-color);\n}\r\n", ""]);
 
 // exports
 

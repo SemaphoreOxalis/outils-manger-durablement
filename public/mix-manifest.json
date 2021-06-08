@@ -7,6 +7,7 @@
     "/js/NotFound.js": "/js/NotFound.js",
     "/js/admin/AdminPage.js": "/js/admin/AdminPage.js",
     "/js/admin/CountersAdminPage.js": "/js/admin/CountersAdminPage.js",
+    "/js/admin/WysiwygAdminPage.js": "/js/admin/WysiwygAdminPage.js",
     "/js/admin/carbon-simulation/CarbonSimulatorAdminPage.js": "/js/admin/carbon-simulation/CarbonSimulatorAdminPage.js",
     "/js/admin/carbon-simulation/CategoriesAdminPage.js": "/js/admin/carbon-simulation/CategoriesAdminPage.js",
     "/js/admin/carbon-simulation/OriginsAdminPage.js": "/js/admin/carbon-simulation/OriginsAdminPage.js",
@@ -37,6 +38,6 @@
     "/js/waste-simulation/wasteSimulator.js": "/js/waste-simulation/wasteSimulator.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2.js",
-    "/js/admin/WysiwygAdminPage.js": "/js/admin/WysiwygAdminPage.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js",
+    "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2.js": "/vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2.js"
 }

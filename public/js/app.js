@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"js/AboutUs":"js/AboutUs","js/GeneralLayout":"js/GeneralLayout","js/HomePage":"js/HomePage","js/NotFound":"js/NotFound","js/admin/CountersAdminPage":"js/admin/CountersAdminPage","js/admin/waste-simulation/WasteSimulatorAdminPage":"js/admin/waste-simulation/WasteSimulatorAdminPage","js/carbon-simulation/BasketSimulator":"js/carbon-simulation/BasketSimulator","js/carbon-simulation/CarbonHomePage":"js/carbon-simulation/CarbonHomePage","js/carbon-simulation/CarbonSimulatorLayout":"js/carbon-simulation/CarbonSimulatorLayout","js/flashMsg":"js/flashMsg","js/navLinks":"js/navLinks","js/waste-simulation/InputPage":"js/waste-simulation/InputPage","js/waste-simulation/ResultsPage":"js/waste-simulation/ResultsPage","js/waste-simulation/WasteHomePage":"js/waste-simulation/WasteHomePage","js/waste-simulation/wasteSimulator":"js/waste-simulation/wasteSimulator","vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2":"vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2","js/admin/AdminPage":"js/admin/AdminPage","js/admin/carbon-simulation/CarbonSimulatorAdminPage":"js/admin/carbon-simulation/CarbonSimulatorAdminPage","js/admin/carbon-simulation/CategoriesAdminPage":"js/admin/carbon-simulation/CategoriesAdminPage","js/admin/carbon-simulation/OriginsAdminPage":"js/admin/carbon-simulation/OriginsAdminPage","js/admin/carbon-simulation/ProductsAdminPage":"js/admin/carbon-simulation/ProductsAdminPage","js/admin/carbon-simulation/UnitsAdminPage":"js/admin/carbon-simulation/UnitsAdminPage","js/carbon-simulation/AddProductPopUp":"js/carbon-simulation/AddProductPopUp","js/carbon-simulation/BasketsList":"js/carbon-simulation/BasketsList","js/carbon-simulation/ProductList":"js/carbon-simulation/ProductList","js/carbon-simulation/SearchBar":"js/carbon-simulation/SearchBar","js/waste-simulation/AuditItem":"js/waste-simulation/AuditItem","js/waste-simulation/HelpModal":"js/waste-simulation/HelpModal","js/carbon-simulation/ActionConfirmation":"js/carbon-simulation/ActionConfirmation","js/carbon-simulation/BasketItem":"js/carbon-simulation/BasketItem","js/carbon-simulation/GroupedActionPopUp":"js/carbon-simulation/GroupedActionPopUp","vendors~js/draggable":"vendors~js/draggable","js/waste-simulation/AuditSimulationList":"js/waste-simulation/AuditSimulationList","js/carbon-simulation/BasketProduct":"js/carbon-simulation/BasketProduct","vendors~js/carbon-simulation/BasketResult":"vendors~js/carbon-simulation/BasketResult","js/carbon-simulation/BasketResult":"js/carbon-simulation/BasketResult","js/waste-simulation/SimulationItem":"js/waste-simulation/SimulationItem"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"js/AboutUs":"js/AboutUs","js/GeneralLayout":"js/GeneralLayout","js/HomePage":"js/HomePage","js/NotFound":"js/NotFound","js/admin/CountersAdminPage":"js/admin/CountersAdminPage","js/admin/WysiwygAdminPage":"js/admin/WysiwygAdminPage","js/admin/waste-simulation/WasteSimulatorAdminPage":"js/admin/waste-simulation/WasteSimulatorAdminPage","js/carbon-simulation/BasketSimulator":"js/carbon-simulation/BasketSimulator","js/carbon-simulation/CarbonHomePage":"js/carbon-simulation/CarbonHomePage","js/carbon-simulation/CarbonSimulatorLayout":"js/carbon-simulation/CarbonSimulatorLayout","js/flashMsg":"js/flashMsg","js/navLinks":"js/navLinks","js/waste-simulation/InputPage":"js/waste-simulation/InputPage","js/waste-simulation/ResultsPage":"js/waste-simulation/ResultsPage","js/waste-simulation/WasteHomePage":"js/waste-simulation/WasteHomePage","js/waste-simulation/wasteSimulator":"js/waste-simulation/wasteSimulator","vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2":"vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2","js/admin/AdminPage":"js/admin/AdminPage","js/admin/carbon-simulation/CarbonSimulatorAdminPage":"js/admin/carbon-simulation/CarbonSimulatorAdminPage","js/admin/carbon-simulation/CategoriesAdminPage":"js/admin/carbon-simulation/CategoriesAdminPage","js/admin/carbon-simulation/OriginsAdminPage":"js/admin/carbon-simulation/OriginsAdminPage","js/admin/carbon-simulation/ProductsAdminPage":"js/admin/carbon-simulation/ProductsAdminPage","js/admin/carbon-simulation/UnitsAdminPage":"js/admin/carbon-simulation/UnitsAdminPage","vendors~tinymce":"vendors~tinymce","js/carbon-simulation/AddProductPopUp":"js/carbon-simulation/AddProductPopUp","js/carbon-simulation/BasketsList":"js/carbon-simulation/BasketsList","js/carbon-simulation/ProductList":"js/carbon-simulation/ProductList","js/carbon-simulation/SearchBar":"js/carbon-simulation/SearchBar","js/waste-simulation/AuditItem":"js/waste-simulation/AuditItem","js/waste-simulation/HelpModal":"js/waste-simulation/HelpModal","js/carbon-simulation/ActionConfirmation":"js/carbon-simulation/ActionConfirmation","js/carbon-simulation/BasketItem":"js/carbon-simulation/BasketItem","js/carbon-simulation/GroupedActionPopUp":"js/carbon-simulation/GroupedActionPopUp","vendors~js/draggable":"vendors~js/draggable","js/waste-simulation/AuditSimulationList":"js/waste-simulation/AuditSimulationList","js/carbon-simulation/BasketProduct":"js/carbon-simulation/BasketProduct","vendors~js/carbon-simulation/BasketResult":"vendors~js/carbon-simulation/BasketResult","js/carbon-simulation/BasketResult":"js/carbon-simulation/BasketResult","js/waste-simulation/SimulationItem":"js/waste-simulation/SimulationItem"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -35644,6 +35644,10 @@ var CountersAdminPage = function CountersAdminPage() {
   return __webpack_require__.e(/*! import() | js/admin/CountersAdminPage */ "js/admin/CountersAdminPage").then(__webpack_require__.bind(null, /*! ./components/CountersAdminPage.vue */ "./resources/js/components/CountersAdminPage.vue"));
 };
 
+var WysiwygAdminPage = function WysiwygAdminPage() {
+  return __webpack_require__.e(/*! import() | js/admin/WysiwygAdminPage */ "js/admin/WysiwygAdminPage").then(__webpack_require__.bind(null, /*! ./components/admin/WysiwygAdminPage.vue */ "./resources/js/components/admin/WysiwygAdminPage.vue"));
+};
+
 var NotFound = function NotFound() {
   return __webpack_require__.e(/*! import() | js/NotFound */ "js/NotFound").then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
 };
@@ -35784,6 +35788,10 @@ var BasketSimulator = function BasketSimulator() {
         component: CountersAdminPage,
         name: 'counters'
       }, {
+        path: 'wysiwyg',
+        component: WysiwygAdminPage,
+        name: 'wysiwyg'
+      }, {
         path: '',
         redirect: 'waste-simulator'
       }]
@@ -35818,8 +35826,8 @@ var BasketSimulator = function BasketSimulator() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Tests\outil-co2-gaspi\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Tests\outil-co2-gaspi\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! G:\Taf\outil-gaspi-yep\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! G:\Taf\outil-gaspi-yep\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

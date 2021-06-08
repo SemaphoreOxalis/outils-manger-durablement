@@ -5,13 +5,18 @@
 @import 'variables';
 
 // Bootstrap
+.bootstrapStyleStart { display: none}
 @import '~bootstrap/scss/bootstrap';
+.bootstrapStyleEnd { display: none}
 
 // Stepper
 @import '~materialize-css/dist/css/materialize.min.css';
 
 // Custom
+.semaStyleStart { display: none}
 @import 'custom';
 @import 'icons';
+.semaStyleEnd { display: none}
+
 
 

@@ -75,7 +75,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.trash-icon {\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.trash-icon {\r\n    cursor: pointer;\n}\r\n", ""]);
 
 // exports
 

@@ -127,7 +127,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.trash-icon {\n    cursor: pointer;\n}\n.form-group.admin select {\n    display: inline-block;\n    max-width: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.trash-icon {\r\n    cursor: pointer;\n}\n.form-group.admin select {\r\n    display: inline-block;\r\n    max-width: 200px;\n}\r\n", ""]);
 
 // exports
 

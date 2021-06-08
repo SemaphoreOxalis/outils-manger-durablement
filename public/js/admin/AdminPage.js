@@ -35,6 +35,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de dépendance à ces bibliothèques de fonctions
@@ -61,7 +65,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.admin-nav {\n    text-align: center;\n    padding: 10px;\n}\n.admin-nav span.router-link-active button.alter {\n    background-color: var(--main-color);\n}\n", ""]);
+exports.push([module.i, "\n.admin-nav {\r\n    text-align: center;\r\n    padding: 10px;\n}\n.admin-nav span.router-link-active button.alter {\r\n    background-color: var(--main-color);\n}\r\n", ""]);
 
 // exports
 
@@ -152,6 +156,16 @@ var render = function() {
                   [
                     _c("button", { staticClass: "button alter" }, [
                       _vm._v("Compteurs")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: "/admin/wysiwyg", tag: "span" } },
+                  [
+                    _c("button", { staticClass: "button alter" }, [
+                      _vm._v("Wysiwyg")
                     ])
                   ]
                 )
