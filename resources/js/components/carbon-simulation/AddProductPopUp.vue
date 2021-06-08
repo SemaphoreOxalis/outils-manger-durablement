@@ -31,9 +31,8 @@
                         <div class="results-row">{{ add_popup.in_baskets }}
                             <span v-for="(basket, i) in selectedBaskets">
                                 <span v-if="i == selectedBaskets.length - 1"><strong>{{ basket.name }}</strong></span>
-                                <span v-else><strong>{{ basket.name }}</strong>,
+                                <span v-else><strong>{{ basket.name }}</strong>,</span>
                             </span>
-                        </span>
                         </div>
                     </div>
 

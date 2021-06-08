@@ -47,6 +47,10 @@ Route::get('/api/counters', 'CountersController@index');
 Route::patch('/api/counters/{counter}', 'CountersController@update');
 Route::patch('/api/counters/{counter}/increment', 'CountersController@increment');
 
+// Wysiwyg
+Route::get('/api/contents', 'ContentController@index');
+Route::patch('/api/contents/{content}', 'ContentController@update');
+
 // Controller d'export
 Route::post('/export-sims', 'ExportController@exportSims');
 Route::post('/export-baskets', 'ExportController@exportBaskets');

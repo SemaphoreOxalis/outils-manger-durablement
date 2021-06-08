@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import AdminPageText from "../../texts/AdminPageText";
+import AdminPageText from "../../../texts/AdminPageText";
 
 export default {
 

@@ -14,6 +14,21 @@ export default {
         },
 
         // ADMIN component
+        fetchContent() {
+            getContent().then((response) => {
+                this.contents = response.data;
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
+
+        updateContent(content) {
+            patchContent(content).then(response => {
+                flash(response.data);
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
 
         fetchCountersValueFromDB() {
             getCountersFromDB().then((response) => {
@@ -22,8 +37,6 @@ export default {
         },
 
         updateCounter(counter) {
-
-            // Appel AJAX
             patchCounter(counter).then(response => {
                 flash(response.data);
             }).catch(error => {
@@ -68,6 +81,17 @@ export default {
 }
 
 // Situées ici, ces fonctions sont "privées"
+
+function getContent() {
+    return axios.get('/api/contents');
+}
+
+function patchContent(content) {
+    return axios.patch('/api/contents/' + content.id, {
+        html_content: content.html_content,
+        original: content.original,
+    });
+}
 
 function getCountersFromDB() {
     return axios.get('/api/counters');

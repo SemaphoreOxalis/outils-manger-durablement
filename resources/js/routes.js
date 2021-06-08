@@ -5,7 +5,7 @@ const GeneralLayout = () => import(
 
 const AdminPage = () => import(
     /* webpackChunkName: "js/admin/AdminPage" */
-    './components/AdminPage.vue'
+    './components/admin/AdminPage.vue'
     );
 //import AdminPage from "./components/AdminPage";
 
@@ -41,7 +41,7 @@ const OriginsAdminPage = () => import(
 
 const CountersAdminPage = () => import(
     /* webpackChunkName: "js/admin/CountersAdminPage" */
-    './components/CountersAdminPage.vue'
+    './components/admin/CountersAdminPage.vue'
     );
 
 const WysiwygAdminPage = () => import(

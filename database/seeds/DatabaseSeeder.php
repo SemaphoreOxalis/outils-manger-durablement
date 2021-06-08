@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WasteReferenceValueSeeder::class);
         $this->call(CounterSeeder::class);
         $this->call(CounterSeeder2::class);
+        $this->call(ContentSeeder::class);
     }
 }

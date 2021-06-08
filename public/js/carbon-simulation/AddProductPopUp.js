@@ -72,7 +72,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -357,7 +356,7 @@ var render = function() {
                               ])
                             : _c("span", [
                                 _c("strong", [_vm._v(_vm._s(basket.name))]),
-                                _vm._v(",\n                        ")
+                                _vm._v(",")
                               ])
                         ])
                       })

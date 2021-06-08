@@ -35612,7 +35612,7 @@ var GeneralLayout = function GeneralLayout() {
 };
 
 var AdminPage = function AdminPage() {
-  return Promise.all(/*! import() | js/admin/AdminPage */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2"), __webpack_require__.e("js/admin/AdminPage")]).then(__webpack_require__.bind(null, /*! ./components/AdminPage.vue */ "./resources/js/components/AdminPage.vue"));
+  return Promise.all(/*! import() | js/admin/AdminPage */[__webpack_require__.e("vendors~js/admin/AdminPage~js/admin/carbon-simulation/CarbonSimulatorAdminPage~js/admin/carbon-simul~54ad64d2"), __webpack_require__.e("js/admin/AdminPage")]).then(__webpack_require__.bind(null, /*! ./components/admin/AdminPage.vue */ "./resources/js/components/admin/AdminPage.vue"));
 }; //import AdminPage from "./components/AdminPage";
 
 
@@ -35641,7 +35641,7 @@ var OriginsAdminPage = function OriginsAdminPage() {
 };
 
 var CountersAdminPage = function CountersAdminPage() {
-  return __webpack_require__.e(/*! import() | js/admin/CountersAdminPage */ "js/admin/CountersAdminPage").then(__webpack_require__.bind(null, /*! ./components/CountersAdminPage.vue */ "./resources/js/components/CountersAdminPage.vue"));
+  return __webpack_require__.e(/*! import() | js/admin/CountersAdminPage */ "js/admin/CountersAdminPage").then(__webpack_require__.bind(null, /*! ./components/admin/CountersAdminPage.vue */ "./resources/js/components/admin/CountersAdminPage.vue"));
 };
 
 var WysiwygAdminPage = function WysiwygAdminPage() {

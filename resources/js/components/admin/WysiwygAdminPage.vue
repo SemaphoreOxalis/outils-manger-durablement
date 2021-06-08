@@ -1,40 +1,51 @@
 <template>
     <div id="wysiwyg" class="mt-4">
-        <tiny-editor-component v-model="content" @input="log"></tiny-editor-component>
+        <select v-model="selectedContent">
+            <option v-for="content in contents" v-bind:value="content"> {{ content.name }}</option>
+        </select>
+
+        <tiny-editor-component
+            v-model="selectedContent.html_content"
+            v-bind:original="selectedContent.original"
+            v-on:save="update"
+            v-on:save-new-original="updateOriginal">
+        </tiny-editor-component>
     </div>
 </template>
 
 <script>
 import TinyEditorComponent from "./TinyEditorComponent";
+import DataBase from "../../helpers/DataBase";
 export default {
     name: 'wysiwyg',
     components: {
         TinyEditorComponent
     },
     mixins: [
+        DataBase
     ],
     data() {
         return {
-            content: `<div class="pt-2">
-                        <p class="text-center">
-                            Cet outil est le fruit du travail du CH de Niort, <br/>
-                            dans le cadre d'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l'Europe
-                        </p>
-                        <div class="d-flex justify-content-around pb-3">
-                            <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                            <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                            <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
-                        </div>
-                    </div>`,
+            contents: [],
+            selectedContent: {
+                'name': '',
+                'html_content': '',
+                'original': '',
+            },
         }
     },
     methods: {
-        log: function() {
-            console.log(this.content);
+        update(content) {
+            this.selectedContent.html_content = content;
+            this.updateContent(this.selectedContent);
+        },
+        updateOriginal(content) {
+            this.selectedContent.original = content;
+            this.updateContent(this.selectedContent);
         }
     },
     created() {
-
+        this.fetchContent();
     }
 }
 </script>

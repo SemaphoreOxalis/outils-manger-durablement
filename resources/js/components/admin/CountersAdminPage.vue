@@ -17,8 +17,8 @@
 </template>
 
 <script>
-    import AdminPageText from "../../texts/AdminPageText";
-    import DataBase from "../helpers/DataBase";
+    import AdminPageText from "../../../texts/AdminPageText";
+    import DataBase from "../../helpers/DataBase";
     export default {
         mixins: [
             AdminPageText,

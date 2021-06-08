@@ -1,16 +1,16 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["js/admin/CountersAdminPage"],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CountersAdminPage.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CountersAdminPage.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/CountersAdminPage.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/CountersAdminPage.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _texts_AdminPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/AdminPageText */ "./resources/texts/AdminPageText.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 //
 //
 //
@@ -45,10 +45,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CountersAdminPage.vue?vue&type=template&id=7c323028&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CountersAdminPage.vue?vue&type=template&id=7c323028& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/CountersAdminPage.vue?vue&type=template&id=022a7928&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/CountersAdminPage.vue?vue&type=template&id=022a7928& ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -223,18 +223,18 @@ function normalizeComponent (
 
 /***/ }),
 
-/***/ "./resources/js/components/CountersAdminPage.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/CountersAdminPage.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/admin/CountersAdminPage.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/admin/CountersAdminPage.vue ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CountersAdminPage_vue_vue_type_template_id_7c323028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountersAdminPage.vue?vue&type=template&id=7c323028& */ "./resources/js/components/CountersAdminPage.vue?vue&type=template&id=7c323028&");
-/* harmony import */ var _CountersAdminPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountersAdminPage.vue?vue&type=script&lang=js& */ "./resources/js/components/CountersAdminPage.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _CountersAdminPage_vue_vue_type_template_id_022a7928___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CountersAdminPage.vue?vue&type=template&id=022a7928& */ "./resources/js/components/admin/CountersAdminPage.vue?vue&type=template&id=022a7928&");
+/* harmony import */ var _CountersAdminPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CountersAdminPage.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/CountersAdminPage.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -244,8 +244,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _CountersAdminPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CountersAdminPage_vue_vue_type_template_id_7c323028___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CountersAdminPage_vue_vue_type_template_id_7c323028___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CountersAdminPage_vue_vue_type_template_id_022a7928___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CountersAdminPage_vue_vue_type_template_id_022a7928___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -255,38 +255,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/CountersAdminPage.vue"
+component.options.__file = "resources/js/components/admin/CountersAdminPage.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/CountersAdminPage.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/CountersAdminPage.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/admin/CountersAdminPage.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/admin/CountersAdminPage.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CountersAdminPage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CountersAdminPage.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CountersAdminPage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/CountersAdminPage.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/CountersAdminPage.vue?vue&type=template&id=7c323028&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/CountersAdminPage.vue?vue&type=template&id=7c323028& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/admin/CountersAdminPage.vue?vue&type=template&id=022a7928&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/admin/CountersAdminPage.vue?vue&type=template&id=022a7928& ***!
+  \********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_template_id_7c323028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CountersAdminPage.vue?vue&type=template&id=7c323028& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CountersAdminPage.vue?vue&type=template&id=7c323028&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_template_id_7c323028___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_template_id_022a7928___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CountersAdminPage.vue?vue&type=template&id=022a7928& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/CountersAdminPage.vue?vue&type=template&id=022a7928&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_template_id_022a7928___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_template_id_7c323028___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CountersAdminPage_vue_vue_type_template_id_022a7928___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -316,15 +316,30 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     // ADMIN component
-    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+    fetchContent: function fetchContent() {
       var _this2 = this;
 
+      getContent().then(function (response) {
+        _this2.contents = response.data;
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    updateContent: function updateContent(content) {
+      patchContent(content).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+      var _this3 = this;
+
       getCountersFromDB().then(function (response) {
-        _this2.counters = response.data;
+        _this3.counters = response.data;
       });
     },
     updateCounter: function updateCounter(counter) {
-      // Appel AJAX
       patchCounter(counter).then(function (response) {
         flash(response.data);
       })["catch"](function (error) {
@@ -363,6 +378,17 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
+
+function getContent() {
+  return axios.get('/api/contents');
+}
+
+function patchContent(content) {
+  return axios.patch('/api/contents/' + content.id, {
+    html_content: content.html_content,
+    original: content.original
+  });
+}
 
 function getCountersFromDB() {
   return axios.get('/api/counters');

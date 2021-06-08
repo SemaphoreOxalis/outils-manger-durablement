@@ -9,12 +9,12 @@ let config = {
     branding: false,
 
     plugins: [
-        "advlist autolink autosave autoresize link image lists charmap hr anchor preview",
+        "advlist autolink autoresize link image lists charmap hr anchor preview",
         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
         "table template paste importcss textpattern spellchecker emoticons help media visualblocks importcss"
     ],
 
-    menubar: 'file edit insert view format table tools help',
+    menubar: 'edit insert view format table tools help',
 
     content_css: '/css/app.css?' + new Date().getTime(),
     importcss_append: true,

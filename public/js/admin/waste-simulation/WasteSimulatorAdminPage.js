@@ -340,15 +340,30 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     // ADMIN component
-    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+    fetchContent: function fetchContent() {
       var _this2 = this;
 
+      getContent().then(function (response) {
+        _this2.contents = response.data;
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    updateContent: function updateContent(content) {
+      patchContent(content).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+      var _this3 = this;
+
       getCountersFromDB().then(function (response) {
-        _this2.counters = response.data;
+        _this3.counters = response.data;
       });
     },
     updateCounter: function updateCounter(counter) {
-      // Appel AJAX
       patchCounter(counter).then(function (response) {
         flash(response.data);
       })["catch"](function (error) {
@@ -387,6 +402,17 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
+
+function getContent() {
+  return axios.get('/api/contents');
+}
+
+function patchContent(content) {
+  return axios.patch('/api/contents/' + content.id, {
+    html_content: content.html_content,
+    original: content.original
+  });
+}
 
 function getCountersFromDB() {
   return axios.get('/api/counters');
