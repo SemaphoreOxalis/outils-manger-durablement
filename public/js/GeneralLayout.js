@@ -10,15 +10,7 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _texts_GeneralLayoutText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../texts/GeneralLayoutText */ "./resources/texts/GeneralLayoutText.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 //
 //
 //
@@ -41,8 +33,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_texts_GeneralLayoutText__WEBPACK_IMPORTED_MODULE_0__["default"]]
+  mixins: [_texts_GeneralLayoutText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  watch: {
+    $route: function $route(to, from) {
+      if (to.path.startsWith('/waste-simulator')) {
+        this.fetchFooter('Footer Gaspi');
+      } else if (to.path.startsWith('/carbon-simulator')) {
+        this.fetchFooter('Footer Carbone');
+      } else {
+        this.fetchFooter('Footer General');
+      }
+    }
+  },
+  data: function data() {
+    return {
+      footer: ''
+    };
+  },
+  mounted: function mounted() {
+    this.fetchFooter('Footer General');
+  }
 });
 
 /***/ }),
@@ -90,41 +102,7 @@ var render = function() {
       _c(
         "footer",
         { staticClass: "mt-auto w-100", attrs: { id: "general-footer" } },
-        [
-          _c("div", { staticClass: "pt-2" }, [
-            _c("p", { staticClass: "text-center" }, [
-              _vm._v("\n                " + _vm._s(_vm.this_is_from_Niort_CH)),
-              _c("br"),
-              _vm._v(_vm._s(_vm.financed_by) + "\n            ")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "d-flex justify-content-around pb-3" }, [
-              _c("img", {
-                staticClass: "footer-logo",
-                attrs: {
-                  src: "/images/logo-carasso.svg",
-                  alt: _vm.images_alt_text.carasso
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "footer-logo",
-                attrs: {
-                  src: "/images/logo-region-NA.svg",
-                  alt: _vm.images_alt_text.region_na
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                staticClass: "footer-logo",
-                attrs: {
-                  src: "/images/logo-UE.svg",
-                  alt: _vm.images_alt_text.europe
-                }
-              })
-            ])
-          ])
-        ]
+        [_c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } })]
       )
     ]
   )
@@ -314,6 +292,184 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GeneralLayout_vue_vue_type_template_id_ceab5652___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/helpers/DataBase.js":
+/*!******************************************!*\
+  !*** ./resources/js/helpers/DataBase.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HTMLSpecialCharsDecoder */ "./resources/js/helpers/HTMLSpecialCharsDecoder.js");
+// Intéractions avec la base de donnée
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  methods: {
+    // WASTE HOME-PAGE component
+    fetchCountersFromDB: function fetchCountersFromDB() {
+      var _this = this;
+
+      getCountersFromDB().then(function (response) {
+        _this.counters.auditsCounter = response.data[0].value;
+        _this.counters.simulationsCounter = response.data[1].value;
+        _this.counters.basketCounter = response.data[2].value;
+        _this.counters.productsCounter = response.data[3].value;
+      });
+    },
+    // ADMIN component
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+      var _this2 = this;
+
+      getCountersFromDB().then(function (response) {
+        _this2.counters = response.data;
+      });
+    },
+    updateCounter: function updateCounter(counter) {
+      patchCounter(counter).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    //INPUT component
+    // RESULTS component
+    incrementAuditCounter: function incrementAuditCounter() {
+      incrementAC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementSimulationCounter: function incrementSimulationCounter() {
+      incrementSC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementBasketCounter: function incrementBasketCounter() {
+      incrementBC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementProductCounter: function incrementProductCounter() {
+      incrementPC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    //CONTENTS
+    fetchContent: function fetchContent() {
+      var _this3 = this;
+
+      getContent().then(function (response) {
+        _this3.contents = response.data;
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    updateContent: function updateContent(content) {
+      patchContent(content).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    fetchFooter: function fetchFooter(type) {
+      var _this4 = this;
+
+      getFooter(type).then(function (response) {
+        _this4.footer = _this4.decode(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+}); // Situées ici, ces fonctions sont "privées"
+
+function getContent() {
+  return axios.get('/api/contents');
+}
+
+function patchContent(content) {
+  return axios.patch('/api/contents/' + content.id, {
+    html_content: content.html_content,
+    original: content.original
+  });
+}
+
+function getFooter(type) {
+  return axios.get('/api/contents/footer/' + type);
+}
+
+function getCountersFromDB() {
+  return axios.get('/api/counters');
+}
+
+function patchCounter(counter) {
+  return axios.patch('/api/counters/' + counter.id, {
+    value: counter.value
+  });
+}
+
+function incrementAC() {
+  return axios.patch('/api/counters/1/increment');
+}
+
+function incrementSC() {
+  return axios.patch('/api/counters/2/increment');
+}
+
+function incrementBC() {
+  return axios.patch('/api/counters/3/increment');
+}
+
+function incrementPC() {
+  return axios.patch('/api/counters/4/increment');
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/HTMLSpecialCharsDecoder.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/helpers/HTMLSpecialCharsDecoder.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    decode: function decode(string) {
+      var HTMLSpecialCharMap = {
+        '&amp;': '&',
+        '&#038;': "&",
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#039;': "'",
+        '&#8217;': "’",
+        '&#8216;': "‘",
+        '&#8211;': "–",
+        '&#8212;': "—",
+        '&#8230;': "…",
+        '&#8221;': '”'
+      };
+      return string.replace(/\&[\w\d\#]{2,5}\;/g, function (i) {
+        return HTMLSpecialCharMap[i];
+      });
+    }
+  }
+});
 
 /***/ }),
 

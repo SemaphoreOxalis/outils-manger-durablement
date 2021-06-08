@@ -301,8 +301,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HTMLSpecialCharsDecoder */ "./resources/js/helpers/HTMLSpecialCharsDecoder.js");
 // Intéractions avec la base de donnée
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_0__["default"]],
   methods: {
     // WASTE HOME-PAGE component
     fetchCountersFromDB: function fetchCountersFromDB() {
@@ -316,27 +319,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     // ADMIN component
-    fetchContent: function fetchContent() {
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
       var _this2 = this;
 
-      getContent().then(function (response) {
-        _this2.contents = response.data;
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    updateContent: function updateContent(content) {
-      patchContent(content).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
-      var _this3 = this;
-
       getCountersFromDB().then(function (response) {
-        _this3.counters = response.data;
+        _this2.counters = response.data;
       });
     },
     updateCounter: function updateCounter(counter) {
@@ -375,6 +362,32 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
+    },
+    //CONTENTS
+    fetchContent: function fetchContent() {
+      var _this3 = this;
+
+      getContent().then(function (response) {
+        _this3.contents = response.data;
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    updateContent: function updateContent(content) {
+      patchContent(content).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    fetchFooter: function fetchFooter(type) {
+      var _this4 = this;
+
+      getFooter(type).then(function (response) {
+        _this4.footer = _this4.decode(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
@@ -388,6 +401,10 @@ function patchContent(content) {
     html_content: content.html_content,
     original: content.original
   });
+}
+
+function getFooter(type) {
+  return axios.get('/api/contents/footer/' + type);
 }
 
 function getCountersFromDB() {
@@ -415,6 +432,41 @@ function incrementBC() {
 function incrementPC() {
   return axios.patch('/api/counters/4/increment');
 }
+
+/***/ }),
+
+/***/ "./resources/js/helpers/HTMLSpecialCharsDecoder.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/helpers/HTMLSpecialCharsDecoder.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    decode: function decode(string) {
+      var HTMLSpecialCharMap = {
+        '&amp;': '&',
+        '&#038;': "&",
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#039;': "'",
+        '&#8217;': "’",
+        '&#8216;': "‘",
+        '&#8211;': "–",
+        '&#8212;': "—",
+        '&#8230;': "…",
+        '&#8221;': '”'
+      };
+      return string.replace(/\&[\w\d\#]{2,5}\;/g, function (i) {
+        return HTMLSpecialCharMap[i];
+      });
+    }
+  }
+});
 
 /***/ }),
 

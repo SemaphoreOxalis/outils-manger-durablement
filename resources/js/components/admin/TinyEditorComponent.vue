@@ -75,7 +75,7 @@ export default {
     },
     mounted() {
         //console.log(tinyConfig.getConfig());
-    }
+    },
 }
 </script>
 

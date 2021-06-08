@@ -22,7 +22,7 @@
     export default {
         mixins: [
             AdminPageText,
-            DataBase
+            DataBase,
         ],
         data() {
             return {

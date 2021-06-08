@@ -49,6 +49,7 @@ Route::patch('/api/counters/{counter}/increment', 'CountersController@increment'
 
 // Wysiwyg
 Route::get('/api/contents', 'ContentController@index');
+Route::get('/api/contents/footer/{type}', 'ContentController@getFooter');
 Route::patch('/api/contents/{content}', 'ContentController@update');
 
 // Controller d'export

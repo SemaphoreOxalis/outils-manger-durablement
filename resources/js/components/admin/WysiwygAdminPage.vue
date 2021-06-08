@@ -1,7 +1,12 @@
 <template>
     <div id="wysiwyg" class="mt-4">
-        <select v-model="selectedContent">
-            <option v-for="content in contents" v-bind:value="content"> {{ content.name }}</option>
+        <select v-model="selectedContent" class="custom-select input custom-input">
+            <option
+                v-for="content in contents"
+                :key="content.id"
+                :value="content">
+                {{ content.name }}
+            </option>
         </select>
 
         <tiny-editor-component
@@ -46,6 +51,9 @@ export default {
     },
     created() {
         this.fetchContent();
+    },
+    updated() {
+        this.selectedContent = this.contents[0];
     }
 }
 </script>

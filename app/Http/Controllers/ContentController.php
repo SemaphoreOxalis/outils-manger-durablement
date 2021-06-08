@@ -18,8 +18,8 @@ class ContentController extends Controller
 
         return $contents->map(function($content) {
             return [
-                'id' => htmlspecialchars_decode($content->id) ,
-                'name' => htmlspecialchars_decode($content->name) ,
+                'id' => $content->id ,
+                'name' => $content->name ,
                 'html_content' => htmlspecialchars_decode($content->html_content) ,
                 'original' => htmlspecialchars_decode($content->original)
             ];
@@ -36,14 +36,24 @@ class ContentController extends Controller
 
             //return filter_var($request->input('html_content'), FILTER_SANITIZE_SPECIAL_CHARS);
             $content->update([
-                'html_content' => filter_var($request->input('html_content'), FILTER_SANITIZE_SPECIAL_CHARS),
-                'original' => filter_var($request->input('original'), FILTER_SANITIZE_SPECIAL_CHARS)
+                'html_content' => htmlspecialchars($request->input('html_content'), ENT_QUOTES),
+                'original' => htmlspecialchars($request->input('original'), ENT_QUOTES)
             ]);
 
             return response('Vos modifications ont été enregistrées', 202);
         } catch (\Exception $e)
         {
             return response('Erreur de sauvegarde', 422);
+        }
+    }
+
+    public function getFooter(String $type) {
+        try
+        {
+            return Content::firstWhere('name', $type)->html_content;
+        } catch (\Exception $e)
+        {
+            return response('Erreur', 404);
         }
     }
 }

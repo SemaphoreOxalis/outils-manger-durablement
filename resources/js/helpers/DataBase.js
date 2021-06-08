@@ -1,6 +1,11 @@
 // Intéractions avec la base de donnée
 
+import HTMLSpecialCharsDecoder from "./HTMLSpecialCharsDecoder";
+
 export default {
+    mixins: [
+        HTMLSpecialCharsDecoder
+    ],
     methods: {
 
         // WASTE HOME-PAGE component
@@ -14,22 +19,6 @@ export default {
         },
 
         // ADMIN component
-        fetchContent() {
-            getContent().then((response) => {
-                this.contents = response.data;
-            }).catch(error => {
-                flash(error.response.data, 'danger');
-            });
-        },
-
-        updateContent(content) {
-            patchContent(content).then(response => {
-                flash(response.data);
-            }).catch(error => {
-                flash(error.response.data, 'danger');
-            });
-        },
-
         fetchCountersValueFromDB() {
             getCountersFromDB().then((response) => {
                 this.counters = response.data;
@@ -77,6 +66,31 @@ export default {
                 flash(error.response.data, 'danger');
             });
         },
+
+        //CONTENTS
+        fetchContent() {
+            getContent().then((response) => {
+                this.contents = response.data;
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
+
+        updateContent(content) {
+            patchContent(content).then(response => {
+                flash(response.data);
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
+
+        fetchFooter(type) {
+            getFooter(type).then(response => {
+                this.footer = this.decode(response.data);
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        }
     }
 }
 
@@ -91,6 +105,10 @@ function patchContent(content) {
         html_content: content.html_content,
         original: content.original,
     });
+}
+
+function getFooter(type) {
+    return axios.get('/api/contents/footer/' + type)
 }
 
 function getCountersFromDB() {
