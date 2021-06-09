@@ -1,21 +1,8 @@
 <template>
     <div class="py-4 px-4">
-        <h1 id="title">{{ title.part_1 }}<br>{{ title.part_2 }}<br>{{ title.part_3 }}</h1>
+        <div v-html="title"></div>
 
-        <div class="row">
-            <div class="col">
-                <div class="info p-4 m-4">
-                    <p>
-                        <i>{{ welcome_text }}</i>
-                    </p>
-                </div>
-                <div class="info p-4 m-4">
-                    <p>{{ you_ll_be_able_to }}</p>
-                </div>
-            </div>
-
-            <div class="col"></div>
-        </div>
+        <div v-html="text"></div>
 
         <div class="row">
             <div class="col">
@@ -45,9 +32,21 @@
 
 <script>
     import HomePageText from "../../texts/HomePageText";
+    import DataBase from "../helpers/DataBase";
     export default {
         mixins: [
-            HomePageText
-        ]
+            HomePageText,
+            DataBase
+        ],
+        data() {
+            return {
+                title: '',
+                text: ''
+            }
+        },
+        async mounted() {
+            this.title = await this.fetchContent('Titre Page d\'accueil');
+            this.text = await this.fetchContent('Texte Page d\'accueil');
+        },
     }
 </script>

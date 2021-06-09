@@ -2,8 +2,7 @@
     <div class="py-4 px-4">
         <div v-if="editingReferenceValues" class="editing-mask"></div>
 
-        <h4 class="text-center mb-4">{{ get_an_audit }}
-            <br> {{ in_15m }}</h4>
+        <div v-html="subtitle"></div>
 
         <ul class="stepper linear">
 
@@ -225,23 +224,26 @@ export default {
 
             // Booléens servant au feedback visuel lorsqu'on édite les valeurs de référence
             editingReferenceValues: false,
-            defaultValues: true
+            defaultValues: true,
+
+            subtitle: '',
         }
     },
 
     // A la création du composent (i.e quand on arrive sur la "page")
     created() {
-
         // Va chercher les valeurs de référence, cf. méthode ci-dessous
         this.checkWasteReferenceValues();
     },
 
-    mounted() {
+    async mounted() {
         let stepper = document.querySelector('.stepper');
         let stepperInstance = new MStepper(stepper, {
             // options
             firstActive: 0 // this is the default
-        })
+        });
+
+        this.subtitle = await this.fetchContent('Gaspi - Input - Sous-titre');
     },
 
     // Fonctions utilisées par le composant

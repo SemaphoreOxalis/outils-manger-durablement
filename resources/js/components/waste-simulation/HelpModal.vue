@@ -5,17 +5,7 @@
                 <div class="modal-container">
 
                     <div class="modal-body">
-                        <p>{{ dish_cost_is_calculated }}</p>
-                        <ul>
-                            <li>{{ from.food_cost }}</li>
-                            <li>{{ from.team_size }}</li>
-                            <li>{{ from.investment }}</li>
-                            <li>{{ from.energy_cost }}</li>
-                        </ul>
-                        <p><strong>{{ or_with }}</strong>, {{ if_you_externalize }}</p>
-                        <ul>
-                            <li>{{ from.unit_cost_of_bought_dish }}</li>
-                        </ul>
+                        <div v-html="text"></div>
                     </div>
 
                     <div class="help-modal modal-footer">
@@ -32,17 +22,29 @@
 
 <script>
     import HelpModalText from "../../../texts/wasteSimulator/HelpModalText";
+    import DataBase from "../../helpers/DataBase";
 
     export default {
         mixins: [
-            HelpModalText
+            HelpModalText,
+            DataBase
         ],
+
+        data() {
+            return {
+                text: ''
+            }
+        },
 
         methods: {
             // nécessaire pour notifier le composant parent (WasteHomePage.vue)
             close() {
                 this.$emit('close');
             }
+        },
+
+        async mounted() {
+            this.text = await this.fetchContent('Gaspi - Modale calcul prix d\'un repas');
         }
     }
 </script>

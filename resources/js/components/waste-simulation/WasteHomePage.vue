@@ -7,11 +7,7 @@
         <div class="row">
 
             <div class="col">
-                <div class="info p-4 m-4">
-                    <p>
-                        <i>{{ no_private_info_sent_disclaimer }}</i>
-                    </p>
-                </div>
+                <div v-html="localStorageDisclaimer"></div>
 
                 <div class="info p-4 m-4" v-if="previousAuditDetectedInLocalStorage">
                     <p>{{ it_seems_you_have_sims_from }} <strong>{{ this.previousAuditDate }}</strong></p>
@@ -34,19 +30,8 @@
             </div>
 
             <div class="col p-4 m-4">
-                <p>{{ to_use_this }} <strong>{{ you_ll_need }}</strong> :</p>
-                <ul class="browser-default">
-                    <li>{{ need.dishes_number }}</li>
-                    <li>{{ need.dish_cost }}
-                        <a class="button alter" @click="showModal = true">?</a>
-                    </li>
-                    <li>{{ need.dish_weight }}</li>
-                    <li>{{ need.waste_volume }}</li>
-                    <li>{{ need.waste_cost }}</li>
-                </ul>
-                <p>
-                    <strong>{{ you_ll_get_results_in_15m }}</strong>
-                </p>
+                <div v-html="howToUse"></div>
+
 
                 <router-link to="input" tag="span">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
@@ -103,7 +88,11 @@ export default {
 
             // propriétés utilisées pour afficher (ou non) la possibilité de se rendre directement à l'audit enregistré en localStorage
             previousAuditDetectedInLocalStorage: false,
-            previousAuditDate: null
+            previousAuditDate: null,
+
+            localStorageDisclaimer: '',
+            howToUse: '',
+            button: null,
         }
     },
 
@@ -111,6 +100,23 @@ export default {
     created() {
         this.checkPreviousAuditFromLocalStorage();
         this.fetchCountersFromDB();
+    },
+
+    async mounted() {
+        this.localStorageDisclaimer = await this.fetchContent('Disclaimer LocalStorage');
+        this.howToUse = await this.fetchContent('Gaspi - Préparation');
+
+
+        this.$nextTick(() => {
+            this.button = document.createElement('span');
+            this.button.innerHTML = '<a class="button alter" @click="displayModal">?</a>';
+            this.button.addEventListener('click', this.displayModal);
+            document.getElementById('add-button').appendChild(this.button);
+        })
+    },
+
+    beforeDestroy() {
+        this.button.removeEventListener('click', this.displayModal);
     },
 
     methods: {
@@ -133,6 +139,10 @@ export default {
             this.previousAuditDetectedInLocalStorage = false;
 
             flash("Vos simulations ont bien été supprimées");
+        },
+
+        displayModal() {
+            this.showModal = true;
         },
     },
 }

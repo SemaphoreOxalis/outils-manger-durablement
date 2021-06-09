@@ -301,11 +301,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HTMLSpecialCharsDecoder */ "./resources/js/helpers/HTMLSpecialCharsDecoder.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HTMLSpecialCharsDecoder */ "./resources/js/helpers/HTMLSpecialCharsDecoder.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 // Intéractions avec la base de donnée
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
     // WASTE HOME-PAGE component
     fetchCountersFromDB: function fetchCountersFromDB() {
@@ -364,11 +372,12 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     //CONTENTS
-    fetchContent: function fetchContent() {
+    fetchContents: function fetchContents() {
       var _this3 = this;
 
-      getContent().then(function (response) {
+      getContents().then(function (response) {
         _this3.contents = response.data;
+        _this3.selectedContent = _this3.contents[0];
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
@@ -388,11 +397,43 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
+    },
+    fetchContent: function fetchContent(name) {
+      var _this5 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _yield$axios$get, response;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.get('/api/contents/' + name);
+
+              case 3:
+                _yield$axios$get = _context.sent;
+                response = _yield$axios$get.data;
+                return _context.abrupt("return", _this5.decode(response));
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                flash(_context.t0.response.data, 'danger');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
 
-function getContent() {
+function getContents() {
   return axios.get('/api/contents');
 }
 

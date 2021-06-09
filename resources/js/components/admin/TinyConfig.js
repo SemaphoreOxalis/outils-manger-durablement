@@ -69,7 +69,7 @@ let editorType = {
 
 let tinyConfig = {
     getAPIKey: function () {
-        return process.env.MIX_TINY_API_KEY;
+        return 'no-api-key';
     },
     getConfig: function (key = 'full') {
         if (!key || !editorType.hasOwnProperty(key))

@@ -1,6 +1,6 @@
 <template>
     <div id="wysiwyg" class="mt-4">
-        <select v-model="selectedContent" class="custom-select input custom-input">
+        <select v-model="selectedContent" class="custom-select input custom-input" style="min-width: 350px">
             <option
                 v-for="content in contents"
                 :key="content.id"
@@ -50,10 +50,7 @@ export default {
         }
     },
     created() {
-        this.fetchContent();
+        this.fetchContents();
     },
-    updated() {
-        this.selectedContent = this.contents[0];
-    }
 }
 </script>

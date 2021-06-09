@@ -33,6 +33,8 @@
                     this.fetchFooter('Footer Gaspi');
                 } else if (to.path.startsWith('/carbon-simulator')) {
                     this.fetchFooter('Footer Carbone');
+                } else if (to.path.startsWith('/admin')) {
+                    this.fetchFooter('Footer Admin');
                 } else {
                     this.fetchFooter('Footer General');
                 }

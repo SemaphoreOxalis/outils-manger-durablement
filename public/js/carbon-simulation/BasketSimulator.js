@@ -97,7 +97,7 @@ var AddProductPopUp = function AddProductPopUp() {
 };
 
 var BasketsList = function BasketsList() {
-  return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketsList */ "js/carbon-simulation/BasketsList").then(__webpack_require__.bind(null, /*! ./BasketsList */ "./resources/js/components/carbon-simulation/BasketsList.vue"));
+  return Promise.all(/*! import() | js/carbon-simulation/BasketsList */[__webpack_require__.e("vendors~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~js/admin/w~02e82f5f"), __webpack_require__.e("js/carbon-simulation/BasketsList")]).then(__webpack_require__.bind(null, /*! ./BasketsList */ "./resources/js/components/carbon-simulation/BasketsList.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({

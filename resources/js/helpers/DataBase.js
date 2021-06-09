@@ -68,9 +68,10 @@ export default {
         },
 
         //CONTENTS
-        fetchContent() {
-            getContent().then((response) => {
+        fetchContents() {
+            getContents().then((response) => {
                 this.contents = response.data;
+                this.selectedContent = this.contents[0];
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -90,13 +91,22 @@ export default {
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
+        },
+
+        async fetchContent(name) {
+            try {
+                const {data:response} = await axios.get('/api/contents/' + name);
+                return this.decode(response);
+            } catch(error) {
+                flash(error.response.data, 'danger');
+            }
         }
     }
 }
 
 // Situées ici, ces fonctions sont "privées"
 
-function getContent() {
+function getContents() {
     return axios.get('/api/contents');
 }
 
@@ -108,7 +118,7 @@ function patchContent(content) {
 }
 
 function getFooter(type) {
-    return axios.get('/api/contents/footer/' + type)
+    return axios.get('/api/contents/footer/' + type);
 }
 
 function getCountersFromDB() {

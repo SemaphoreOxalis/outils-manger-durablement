@@ -76,6 +76,11 @@ export default {
     mounted() {
         //console.log(tinyConfig.getConfig());
     },
+
+    beforeDestroy() {
+        this.editor.save();
+        this.editor.remove();
+    }
 }
 </script>
 

@@ -9,26 +9,19 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/GeneralText */ "./resources/texts/GeneralText.js");
-/* harmony import */ var _texts_wasteSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../texts/wasteSimulator/HomePageText */ "./resources/texts/wasteSimulator/HomePageText.js");
-/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _texts_GeneralText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../texts/GeneralText */ "./resources/texts/GeneralText.js");
+/* harmony import */ var _texts_wasteSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../texts/wasteSimulator/HomePageText */ "./resources/texts/wasteSimulator/HomePageText.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -94,7 +87,7 @@ var HelpModal = function HelpModal() {
     HelpModal: HelpModal
   },
   // Bibliothèqye de fonctions custom
-  mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_0__["default"], _texts_wasteSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_1__["default"], _texts_wasteSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_5__["default"]],
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
@@ -107,13 +100,55 @@ var HelpModal = function HelpModal() {
       showModal: false,
       // propriétés utilisées pour afficher (ou non) la possibilité de se rendre directement à l'audit enregistré en localStorage
       previousAuditDetectedInLocalStorage: false,
-      previousAuditDate: null
+      previousAuditDate: null,
+      localStorageDisclaimer: '',
+      howToUse: '',
+      button: null
     };
   },
   // A l'initialisation du composant
   created: function created() {
     this.checkPreviousAuditFromLocalStorage();
     this.fetchCountersFromDB();
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.fetchContent('Disclaimer LocalStorage');
+
+            case 2:
+              _this.localStorageDisclaimer = _context.sent;
+              _context.next = 5;
+              return _this.fetchContent('Gaspi - Préparation');
+
+            case 5:
+              _this.howToUse = _context.sent;
+
+              _this.$nextTick(function () {
+                _this.button = document.createElement('span');
+                _this.button.innerHTML = '<a class="button alter" @click="displayModal">?</a>';
+
+                _this.button.addEventListener('click', _this.displayModal);
+
+                document.getElementById('add-button').appendChild(_this.button);
+              });
+
+            case 7:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.button.removeEventListener('click', this.displayModal);
   },
   methods: {
     checkPreviousAuditFromLocalStorage: function checkPreviousAuditFromLocalStorage() {
@@ -134,6 +169,9 @@ var HelpModal = function HelpModal() {
       this.clearLocalStorage();
       this.previousAuditDetectedInLocalStorage = false;
       flash("Vos simulations ont bien été supprimées");
+    },
+    displayModal: function displayModal() {
+      this.showModal = true;
     }
   }
 });
@@ -171,11 +209,9 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col" }, [
-          _c("div", { staticClass: "info p-4 m-4" }, [
-            _c("p", [
-              _c("i", [_vm._v(_vm._s(_vm.no_private_info_sent_disclaimer))])
-            ])
-          ]),
+          _c("div", {
+            domProps: { innerHTML: _vm._s(_vm.localStorageDisclaimer) }
+          }),
           _vm._v(" "),
           _vm.previousAuditDetectedInLocalStorage
             ? _c("div", { staticClass: "info p-4 m-4" }, [
@@ -261,41 +297,7 @@ var render = function() {
           "div",
           { staticClass: "col p-4 m-4" },
           [
-            _c("p", [
-              _vm._v(_vm._s(_vm.to_use_this) + " "),
-              _c("strong", [_vm._v(_vm._s(_vm.you_ll_need))]),
-              _vm._v(" :")
-            ]),
-            _vm._v(" "),
-            _c("ul", { staticClass: "browser-default" }, [
-              _c("li", [_vm._v(_vm._s(_vm.need.dishes_number))]),
-              _vm._v(" "),
-              _c("li", [
-                _vm._v(_vm._s(_vm.need.dish_cost) + "\n                    "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "button alter",
-                    on: {
-                      click: function($event) {
-                        _vm.showModal = true
-                      }
-                    }
-                  },
-                  [_vm._v("?")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [_vm._v(_vm._s(_vm.need.dish_weight))]),
-              _vm._v(" "),
-              _c("li", [_vm._v(_vm._s(_vm.need.waste_volume))]),
-              _vm._v(" "),
-              _c("li", [_vm._v(_vm._s(_vm.need.waste_cost))])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v(_vm._s(_vm.you_ll_get_results_in_15m))])
-            ]),
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.howToUse) } }),
             _vm._v(" "),
             _c("router-link", { attrs: { to: "input", tag: "span" } }, [
               _c(

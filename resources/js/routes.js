@@ -7,7 +7,7 @@ const AdminPage = () => import(
     /* webpackChunkName: "js/admin/AdminPage" */
     './components/admin/AdminPage.vue'
     );
-//import AdminPage from "./components/AdminPage";
+//import AdminPage from "./components/admin/AdminPage";
 
 const WasteSimulatorAdminPage = () => import(
     /* webpackChunkName: "js/admin/waste-simulation/WasteSimulatorAdminPage" */

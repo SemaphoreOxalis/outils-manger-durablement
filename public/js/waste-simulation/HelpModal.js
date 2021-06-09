@@ -9,17 +9,16 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/HelpModalText */ "./resources/texts/wasteSimulator/HelpModalText.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../texts/wasteSimulator/HelpModalText */ "./resources/texts/wasteSimulator/HelpModalText.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -43,13 +42,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  data: function data() {
+    return {
+      text: ''
+    };
+  },
   methods: {
     // nécessaire pour notifier le composant parent (WasteHomePage.vue)
     close: function close() {
       this.$emit('close');
     }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.fetchContent('Gaspi - Modale calcul prix d\'un repas');
+
+            case 2:
+              _this.text = _context.sent;
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   }
 });
 
@@ -75,26 +102,7 @@ var render = function() {
       _c("div", { staticClass: "modal-wrapper" }, [
         _c("div", { staticClass: "modal-container" }, [
           _c("div", { staticClass: "modal-body" }, [
-            _c("p", [_vm._v(_vm._s(_vm.dish_cost_is_calculated))]),
-            _vm._v(" "),
-            _c("ul", [
-              _c("li", [_vm._v(_vm._s(_vm.from.food_cost))]),
-              _vm._v(" "),
-              _c("li", [_vm._v(_vm._s(_vm.from.team_size))]),
-              _vm._v(" "),
-              _c("li", [_vm._v(_vm._s(_vm.from.investment))]),
-              _vm._v(" "),
-              _c("li", [_vm._v(_vm._s(_vm.from.energy_cost))])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("strong", [_vm._v(_vm._s(_vm.or_with))]),
-              _vm._v(", " + _vm._s(_vm.if_you_externalize))
-            ]),
-            _vm._v(" "),
-            _c("ul", [
-              _c("li", [_vm._v(_vm._s(_vm.from.unit_cost_of_bought_dish))])
-            ])
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.text) } })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "help-modal modal-footer" }, [

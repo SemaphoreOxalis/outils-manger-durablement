@@ -34,7 +34,6 @@ class ContentController extends Controller
                 'original' => 'required|string',
             ]);
 
-            //return filter_var($request->input('html_content'), FILTER_SANITIZE_SPECIAL_CHARS);
             $content->update([
                 'html_content' => htmlspecialchars($request->input('html_content'), ENT_QUOTES),
                 'original' => htmlspecialchars($request->input('original'), ENT_QUOTES)
@@ -47,10 +46,10 @@ class ContentController extends Controller
         }
     }
 
-    public function getFooter(String $type) {
+    public function getContent(String $name) {
         try
         {
-            return Content::firstWhere('name', $type)->html_content;
+            return Content::firstWhere('name', $name)->html_content;
         } catch (\Exception $e)
         {
             return response('Erreur', 404);
