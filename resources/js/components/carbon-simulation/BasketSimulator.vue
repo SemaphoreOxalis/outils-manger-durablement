@@ -31,19 +31,7 @@
             <button data-target="mode_emploi" class="btn info modal-trigger">?</button>
             <div class="modal modal-fixed-footer" id="mode_emploi">
                 <div class="modal-content">
-                    <h4>{{ how_to.use }}</h4>
-                    <ul>
-                        <li><span class="icon"></span> {{ how_to.add_prod_to_basket }}</li>
-                        <li>{{ how_to.how_many_and_from_where }}</li>
-                        <li>{{ how_to.behold_your_carbon_impact }}</li>
-                        <li><span class="icon"></span> {{ how_to.add_mock_baskets }}</li>
-                        <li><span class="icon"></span> {{ how_to.copy_basket }}</li>
-                        <li>{{ how_to.go_wild_and_edit_things }}</li>
-                        <li><span class="icon"></span> {{ how_to.delete_a_basket }}</li>
-                        <li><span class="icon"></span> {{ how_to.clear_a_basket }}</li>
-                        <li><span class="icon"></span> {{ how_to.do_stuff }}</li>
-                        <li><span class="icon"></span> {{ how_to.export_baskets }}</li>
-                    </ul>
+                    <div v-html="howTo"></div>
                 </div>
                 <div class="modal-footer">
                     <a href="#!" class="modal-close waves-effect waves-green btn-flat">{{ how_to.close_btn }}</a>
@@ -67,6 +55,7 @@ import CategoriesDataBase from "../../helpers/carbon-simulation/database/Categor
 import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBase";
 import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
+import DataBase from "../../helpers/DataBase";
 const SearchBar = () => import(
     /* webpackChunkName: "js/carbon-simulation/SearchBar" */
     './SearchBar'
@@ -98,6 +87,7 @@ export default {
         UnitsDataBase,
         OriginsDataBase,
         BasketSimulatorText,
+        DataBase,
     ],
     data() {
         return {
@@ -119,6 +109,8 @@ export default {
             productAdded: {},
             productToAddWithDetails: {},
             focusOnSearchBar: false,
+
+            howTo:'',
         }
     },
 
@@ -134,6 +126,10 @@ export default {
         $(document).ready(function(){
             $('.modal').modal();
         });
+    },
+
+    async mounted() {
+        this.howTo = await this.fetchContent('Carbone - Mode d\'emploi');
     },
 
     methods: {

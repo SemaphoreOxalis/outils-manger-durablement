@@ -11,11 +11,12 @@ let config = {
     plugins: [
         "advlist autolink autoresize link image lists charmap hr anchor preview",
         "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime nonbreaking",
-        "table template paste importcss textpattern spellchecker emoticons help media visualblocks importcss"
+        "table template paste importcss textpattern spellchecker help media"
     ],
 
     menubar: 'edit insert view format table tools help',
 
+    skin: false,
     content_css: '/css/app.css?' + new Date().getTime(),
     importcss_append: true,
     importcss_groups: [
@@ -56,7 +57,7 @@ let editorType = {
         toolbar: [
             'undo redo | bold italic underline strikethrough | alignjustify alignleft aligncenter alignright  | blockquote | formatselect | spellchecker',
             'cut copy paste removeformat | searchreplace | bullist numlist | outdent indent | hr | link unlink anchor image | code | insertdatetime',
-            'table | subscript superscript | charmap | visualchars visualblocks nonbreaking | template emoticons | media | help | preview'
+            'table | subscript superscript | charmap | visualchars visualblocks nonbreaking | template | media | help | preview'
         ]
     },
     simple: {

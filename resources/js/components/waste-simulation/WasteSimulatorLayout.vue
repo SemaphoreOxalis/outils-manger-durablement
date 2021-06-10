@@ -1,15 +1,23 @@
 <template>
     <div>
-        <h1 id="title">{{ waste_simulator }}<br>{{ for_collective_restauration }}</h1>
+        <div v-html="title"></div>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
-    import WasteSimulatorLayoutText from "../../../texts/wasteSimulator/WasteSimulatorLayoutText";
+    import DataBase from "../../helpers/DataBase";
     export default {
         mixins: [
-            WasteSimulatorLayoutText
-        ]
+            DataBase
+        ],
+        data() {
+            return {
+                title: ''
+            }
+        },
+        async mounted() {
+            this.title = await this.fetchContent('Gaspi - Titre');
+        }
     }
 </script>

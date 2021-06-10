@@ -3,11 +3,7 @@
 
         <div class="row">
             <div class="col">
-                <div class="info p-4 m-4">
-                    <p>
-                        <i>{{ no_private_info_sent_disclaimer }}</i>
-                    </p>
-                </div>
+                <div v-html="localStorageDisclaimer"></div>
 
                 <div class="info p-4 m-4" v-if="previousBasketsDetectedInLocalStorage">
                     <p>{{ it_seems_you_have_baskets_from }} <strong>{{ this.previousBasketsDate }}</strong></p>
@@ -30,13 +26,7 @@
             </div>
 
             <div class="col p-4 m-4">
-                <p>{{ to_use_this }} <strong>{{ you_ll_need }}</strong> :</p>
-                <ul class="browser-default">
-                    <li>{{ shopping_list }}</li>
-                </ul>
-                <p>
-                    <strong>{{ you_ll_get_results_in_15m }}</strong>
-                </p>
+                <div v-html="howToUse"></div>
 
                 <router-link to="basket-simulator" tag="span" v-if="!previousBasketsDetectedInLocalStorage">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
@@ -73,11 +63,18 @@
                 },
                 previousBasketsDate: null,
                 previousBasketsDetectedInLocalStorage: false,
+
+                localStorageDisclaimer: '',
+                howToUse: '',
             }
         },
         created() {
             this.checkPreviousBasketsFromLocalStorage();
             this.fetchCountersFromDB();
+        },
+        async mounted() {
+            this.localStorageDisclaimer = await this.fetchContent('Disclaimer LocalStorage');
+            this.howToUse = await this.fetchContent('Carbone - Préparation');
         },
         methods: {
             checkPreviousBasketsFromLocalStorage() {

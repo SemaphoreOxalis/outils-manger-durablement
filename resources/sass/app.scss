@@ -12,6 +12,9 @@
 // Stepper
 @import '~materialize-css/dist/css/materialize.min.css';
 
+//TinyEditor
+@import "~tinymce/skins/ui/oxide/skin.css";
+
 // Custom
 .semaStyleStart { display: none}
 @import 'custom';

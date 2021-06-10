@@ -28,6 +28,7 @@
         "chart.js": "^2.9.4",
         "materialize-css": "^1.0.0-rc.2",
         "materialize-stepper": "^3.1.0",
+        "tinymce": "^5.8.1",
         "vue-router": "^3.3.4",
         "vuedraggable": "^2.24.0"
     }

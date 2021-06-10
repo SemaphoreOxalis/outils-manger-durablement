@@ -9,29 +9,24 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../texts/wasteSimulator/ResultsPageText */ "./resources/texts/wasteSimulator/ResultsPageText.js");
-/* harmony import */ var _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/SimulationValidation */ "./resources/js/helpers/waste-simulation/validation/SimulationValidation.js");
-/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
-/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../texts/wasteSimulator/ResultsPageText */ "./resources/texts/wasteSimulator/ResultsPageText.js");
+/* harmony import */ var _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../helpers/waste-simulation/validation/SimulationValidation */ "./resources/js/helpers/waste-simulation/validation/SimulationValidation.js");
+/* harmony import */ var _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../helpers/LocalStorageHelper */ "./resources/js/helpers/LocalStorageHelper.js");
+/* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -130,7 +125,7 @@ var AuditItem = function AuditItem() {
     AuditItem: AuditItem
   },
   // déclaration des helpers
-  mixins: [_texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_texts_wasteSimulator_ResultsPageText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_waste_simulation_validation_SimulationValidation__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_4__["default"]],
   // données à récupérer de la page Input
   props: {
     userInput: [Object, undefined],
@@ -144,7 +139,10 @@ var AuditItem = function AuditItem() {
       areSimulationsInvalid: false,
       legendShown: false,
       auditResults: {},
-      showResultsModal: false
+      showResultsModal: false,
+      title: '',
+      howTo: '',
+      links: ''
     };
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")
@@ -178,6 +176,38 @@ var AuditItem = function AuditItem() {
 
       _this.$forceUpdate();
     }, 10);
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this2.fetchContent('Gaspi - Résultats - Titre');
+
+            case 2:
+              _this2.title = _context.sent;
+              _context.next = 5;
+              return _this2.fetchContent('Gaspi - Résultats - Mode d\'emploi');
+
+            case 5:
+              _this2.howTo = _context.sent;
+              _context.next = 8;
+              return _this2.fetchContent('Gaspi - Résultats - Liens EGALIM-ANAP');
+
+            case 8:
+              _this2.links = _context.sent;
+
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   // Fonctions inhérentes au composant
   methods: {
@@ -251,9 +281,7 @@ var render = function() {
     _c(
       "div",
       [
-        _c("h4", { staticClass: "mb-4 text-center" }, [
-          _vm._v(_vm._s(_vm.your_results))
-        ]),
+        _c("div", { domProps: { innerHTML: _vm._s(_vm.title) } }),
         _vm._v(" "),
         _vm.showResultsModal
           ? _c("transition", { attrs: { name: "modal" } }, [
@@ -365,55 +393,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "collapse", attrs: { id: "legend" } }, [
-            _c("p", [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v(" " + _vm._s(_vm.how_to.add_sims_to_audit))
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.how_to.these_fields,
-                    expression: "how_to.these_fields"
-                  }
-                ],
-                staticClass: "custom-input browser-default",
-                attrs: { type: "text", readonly: "" },
-                domProps: { value: _vm.how_to.these_fields },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.how_to, "these_fields", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v("\n                    " + _vm._s(_vm.how_to.are_editable))
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v(" " + _vm._s(_vm.how_to.reorganize_sims))
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v(" " + _vm._s(_vm.how_to.delete_one_sim))
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v(" " + _vm._s(_vm.how_to.delete_all_sims))
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-              _vm._v(" " + _vm._s(_vm.how_to.export_sims))
-            ])
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.howTo) } })
           ])
         ]),
         _vm._v(" "),
@@ -465,41 +445,7 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "text-center mt-5", attrs: { id: "further-actions" } },
-          [
-            _c("p", [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.congrats_you_just_completed) +
-                  " "
-              ),
-              _c(
-                "a",
-                {
-                  attrs: {
-                    href:
-                      "https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation",
-                    target: "_blank"
-                  }
-                },
-                [
-                  _vm._v(_vm._s(_vm.egalim) + " "),
-                  _c("span", { staticClass: "icon" }, [_vm._v("")])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("\n                " + _vm._s(_vm.what_to_do) + " "),
-              _c("a", { attrs: { href: "#" } }, [
-                _vm._v(_vm._s(_vm.go_to_anap_site) + " "),
-                _c("span", { staticClass: "icon" }, [_vm._v("")])
-              ])
-            ])
-          ]
-        ),
+        _c("div", { domProps: { innerHTML: _vm._s(_vm.links) } }),
         _vm._v(" "),
         _c(
           "div",
@@ -522,118 +468,6 @@ var render = function() {
 var staticRenderFns = []
 render._withStripped = true
 
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () {
-        injectStyles.call(
-          this,
-          (options.functional ? this.parent : this).$root.$options.shadowRoot
-        )
-      }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
 
 
 /***/ }),

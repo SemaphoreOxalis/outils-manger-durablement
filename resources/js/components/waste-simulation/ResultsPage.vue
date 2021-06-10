@@ -3,7 +3,7 @@
         <div v-if="showResultsModal" id="results-modal"></div>
 
         <div>
-            <h4 class="mb-4 text-center">{{ your_results }}</h4>
+            <div v-html="title"></div>
 
             <transition name="modal" v-if="showResultsModal">
                 <div class="modal-mask">
@@ -39,13 +39,7 @@
                     </button>
                 </div>
                 <div class="collapse" id="legend">
-                    <p><i class="icon mr-2"></i> {{ how_to.add_sims_to_audit }}</p>
-                    <p><input type="text" class="custom-input browser-default" v-model="how_to.these_fields" readonly>
-                        {{ how_to.are_editable }}</p>
-                    <p><i class="icon mr-2"></i> {{ how_to.reorganize_sims }}</p>
-                    <p><i class="icon mr-2"></i> {{ how_to.delete_one_sim }}</p>
-                    <p><i class="icon mr-2"></i> {{ how_to.delete_all_sims }}</p>
-                    <p><i class="icon mr-2"></i> {{ how_to.export_sims }}</p>
+                    <div v-html="howTo"></div>
                 </div>
             </div>
 
@@ -72,15 +66,8 @@
                 </div>
             </div>
 
-            <div class="text-center mt-5" id="further-actions">
-                <p>
-                    {{ congrats_you_just_completed }} <a href="https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation" target="_blank">{{ egalim }} <span
-                    class="icon"></span></a>
-                </p>
-                <p>
-                    {{ what_to_do }} <a href="#">{{ go_to_anap_site }} <span class="icon"></span></a>
-                </p>
-            </div>
+            <div v-html="links"></div>
+
             <div class="text-center mt-2">
                 <router-link to="input" tag="span">
                     <button class="button alter">
@@ -135,7 +122,11 @@ export default {
             areSimulationsInvalid: false,
             legendShown: false,
             auditResults: {},
-            showResultsModal: false
+            showResultsModal: false,
+
+            title: '',
+            howTo: '',
+            links: '',
         }
     },
 
@@ -171,6 +162,12 @@ export default {
             this.fetchAuditResults();
             this.$forceUpdate();
         }, 10);
+    },
+
+    async mounted() {
+        this.title = await this.fetchContent('Gaspi - Résultats - Titre');
+        this.howTo = await this.fetchContent('Gaspi - Résultats - Mode d\'emploi');
+        this.links = await this.fetchContent('Gaspi - Résultats - Liens EGALIM-ANAP');
     },
 
     // Fonctions inhérentes au composant

@@ -1,15 +1,23 @@
 <template>
     <main class="container">
-        <h1 class="header">{{ waste_simulator }} <br> {{ for_collective_restauration }}</h1>
+        <div v-html="title"></div>
         <router-view></router-view>
     </main>
 </template>
 
 <script>
-import CarbonSimulatorLayoutText from "../../../texts/carbonSimulator/CarbonSimulatorLayoutText";
+import DataBase from "../../helpers/DataBase";
 export default {
     mixins: [
-        CarbonSimulatorLayoutText
-    ]
+        DataBase
+    ],
+    data() {
+        return {
+            title: ''
+        }
+    },
+    async mounted() {
+        this.title = await this.fetchContent('Carbone - Titre');
+    }
 }
 </script>

@@ -111,7 +111,7 @@ export default {
             this.button = document.createElement('span');
             this.button.innerHTML = '<a class="button alter" @click="displayModal">?</a>';
             this.button.addEventListener('click', this.displayModal);
-            document.getElementById('add-button').appendChild(this.button);
+            document.getElementById('add-help-modal-button').appendChild(this.button);
         })
     },
 

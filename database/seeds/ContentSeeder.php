@@ -97,6 +97,7 @@ class ContentSeeder extends Seeder
             'name' => 'Footer Admin',
             'html_content' => '<div class="px-5 text-center">
                                 <h3>HI, I\'M FOOTER ADMIN ! EDIT ME !!!</h3>
+                                <p>When lost, look at code <></p>
                                 <table style="border-collapse: collapse; width: 105.233%;" border="1">
                                 <tbody>
                                 <tr>
@@ -111,7 +112,10 @@ class ContentSeeder extends Seeder
                                 <td style="width: 36.0294%;">
                                 <p>CSS perso :</p>
                                 <ul>
-                                <li><strong>img.footer-logo : </strong>max-width: 100px<br /><strong>.info :</strong> entoure la div dans une "bulle" blanche</li>
+                                <li><strong>img.footer-logo :</strong>max-width: 100px<br /><strong>.info :</strong> entoure la div dans une "bulle" blanche</li>
+                                <li><strong>.browser-default :</strong> Pour éviter certains applications de styles par Materialize</li>
+                                <li><strong>.icon, .custom-input, h1.header</strong></li>
+                                <li><strong>#further-actions</strong></li>
                                 </ul>
                                 </td>
                                 </tr>
@@ -120,6 +124,7 @@ class ContentSeeder extends Seeder
                                 </div>',
             'original' => '<div class="px-5 text-center">
                             <h3>HI, I\'M FOOTER ADMIN ! EDIT ME !!!</h3>
+                            <p>When lost, look at code <></p>
                             <table style="border-collapse: collapse; width: 105.233%;" border="1">
                             <tbody>
                             <tr>
@@ -134,7 +139,10 @@ class ContentSeeder extends Seeder
                             <td style="width: 36.0294%;">
                             <p>CSS perso :</p>
                             <ul>
-                            <li><strong>img.footer-logo : </strong>max-width: 100px<br /><strong>.info :</strong> entoure la div dans une "bulle" blanche</li>
+                            <li><strong>img.footer-logo :</strong>max-width: 100px<br /><strong>.info :</strong> entoure la div dans une "bulle" blanche</li>
+                            <li><strong>.browser-default :</strong> Pour éviter certains applications de styles par Materialize</li>
+                            <li><strong>.icon, .custom-input, h1.header</strong></li>
+                            <li><strong>#further-actions</strong></li>
                             </ul>
                             </td>
                             </tr>
@@ -194,12 +202,18 @@ class ContentSeeder extends Seeder
         ]);
 
         DB::table('contents')->insert([
+            'name' => 'Gaspi - Titre',
+            'html_content' => '<h1 id="title">Simulateur de gaspillage alimentaire<br>pour la restauration collective</h1>',
+            'original' => '<h1 id="title">Simulateur de gaspillage alimentaire<br>pour la restauration collective</h1>',
+        ]);
+
+        DB::table('contents')->insert([
             'name' => 'Gaspi - Préparation',
             'html_content' => '<div>
                                     <p>Pour réaliser votre première simulation, <strong>vous aurez besoin</strong> :</p>
                                     <ul class="browser-default">
                                         <li>du nombre de repas produits dans votre établissement (par an)</li>
-                                        <li id="add-button">du coût de revient unitaire d\'un repas
+                                        <li id="add-help-modal-button">du coût de revient unitaire d\'un repas
                                         </li>
                                         <li>du poids moyen d\'un repas (en g)</li>
                                         <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
@@ -213,7 +227,7 @@ class ContentSeeder extends Seeder
                             <p>Pour réaliser votre première simulation, <strong>vous aurez besoin</strong> :</p>
                                 <ul class="browser-default">
                                     <li>du nombre de repas produits dans votre établissement (par an)</li>
-                                    <li id="add-button">du coût de revient unitaire d\'un repas
+                                    <li id="add-help-modal-button">du coût de revient unitaire d\'un repas
                                     </li>
                                     <li>du poids moyen d\'un repas (en g)</li>
                                     <li>du volume de déchets ménagers produits par votre établissement (en tonnes)</li>
@@ -261,5 +275,128 @@ class ContentSeeder extends Seeder
             'original' => '<h4 class="text-center mb-4">Obtenez une estimation économique et quantitative du gaspillage alimentaire<br>de votre établissement en 15 minutes</h4>',
         ]);
 
+        DB::table('contents')->insert([
+            'name' => 'Gaspi - Résultats - Titre',
+            'html_content' => '<h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>',
+            'original' => '<h4 class="mb-4 text-center">Résultats et comparaisons de vos simulations</h4>',
+        ]);
+
+        DB::table('contents')->insert([
+            'name' => 'Gaspi - Résultats - Mode d\'emploi',
+            'html_content' => '<p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
+                                <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly>
+                                    sont modifiables</p>
+                                <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant glisser</p>
+                                <p><i class="icon mr-2"></i> Vous pouvez supprimer les simulations inutiles une par une</p>
+                                <p><i class="icon mr-2"></i> ou toutes les supprimer d\'un seul clic</p>
+                                <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur</p>',
+            'original' => '<p><i class="icon mr-2"></i> Commencez par ajouter une ou plusieurs simulations à votre audit</p>
+                                <p><input type="text" class="custom-input browser-default" value="Les champs de ce type" readonly>
+                                    sont modifiables</p>
+                                <p><i class="icon mr-2"></i> Vous pouvez maintenant réorganiser vos simulations en les faisant glisser</p>
+                                <p><i class="icon mr-2"></i> Vous pouvez supprimer les simulations inutiles une par une</p>
+                                <p><i class="icon mr-2"></i> ou toutes les supprimer d\'un seul clic</p>
+                                <p><i class="icon mr-2"></i> Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur</p>',
+        ]);
+
+        DB::table('contents')->insert([
+            'name' => 'Gaspi - Résultats - Liens EGALIM-ANAP',
+            'html_content' => '<div class="text-center mt-5" id="further-actions">
+                                <p>
+                                    Bravo, vous venez de franchir la première étape de la démarche de <a href="https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation" target="_blank">la loi EGALIM <span class="icon"></span></a>
+                                </p>
+                                <p>
+                                    Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l\'ANAP pour découvrir les actions réalisables <span class="icon"></span></a>
+                                </p>
+                                </div>',
+            'original' => '<div class="text-center mt-5" id="further-actions">
+                                <p>
+                                    Bravo, vous venez de franchir la première étape de la démarche de <a href="https://agriculture.gouv.fr/egalim-ce-que-contient-la-loi-agriculture-et-alimentation" target="_blank">la loi EGALIM <span class="icon"></span></a>
+                                </p>
+                                <p>
+                                    Que faire de ces résultats ? Rendez vous sur le <a href="#">site ressource de l\'ANAP pour découvrir les actions réalisables <span class="icon"></span></a>
+                                </p>
+                                </div>',
+        ]);
+
+        DB::table('contents')->insert([
+            'name' => 'Carbone - Titre',
+            'html_content' => '<h1 class="header">Simulateur d\'émissions carbone <br> pour la restauration collective</h1>',
+            'original' => '<h1 class="header">Simulateur d\'émissions carbone <br> pour la restauration collective</h1>',
+        ]);
+
+        DB::table('contents')->insert([
+            'name' => 'Carbone - Préparation',
+            'html_content' => '<p>Pour réaliser votre première simulation, <strong>vous aurez besoin</strong> :</p>
+                                <ul class="browser-default">
+                                    <li>des achats alimentaires de votre cuisine (aliments ainsi que leur quantité et leur provenance)</li>
+                                </ul>
+                                <p>
+                                    <strong>Grâce à ces données, vous obtiendrez une estimation économique et quantitative de l\'impact carbone de votre établissement en 15 minutes</strong>
+                                </p>',
+            'original' => '<p>Pour réaliser votre première simulation, <strong>vous aurez besoin</strong> :</p>
+                                <ul class="browser-default">
+                                    <li>des achats alimentaires de votre cuisine (aliments ainsi que leur quantité et leur provenance)</li>
+                                </ul>
+                                <p>
+                                    <strong>Grâce à ces données, vous obtiendrez une estimation économique et quantitative de l\'impact carbone de votre établissement en 15 minutes</strong>
+                                </p>',
+        ]);
+
+        DB::table('contents')->insert([
+            'name' => 'Carbone - Mode d\'emploi',
+            'html_content' => '<h4>Mode d\'emploi</h4>
+                                <ul>
+                                    <li><span class="icon"></span> Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche</li>
+                                    <li>Vous êtes alors invités à en préciser le nombre et l\'origine</li>
+                                    <li>Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier</li>
+                                    <li><span class="icon"></span> Vous avez alors la possibilité d\'ajouter des paniers de "simulation" et de les renommer</li>
+                                    <li><span class="icon"></span> Vous pouvez aussi dupliquer un panier existant</li>
+                                    <li>N\'hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l\'impact de vos changements</li>
+                                    <li><span class="icon"></span> Vous pouvez effacer les paniers un par un</li>
+                                    <li><span class="icon"></span> ou les vider</li>
+                                    <li><span class="icon"></span> permet d\'effectuer des opérations sur l\'ensemble du panier</li>
+                                    <li><span class="icon"></span> Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur</li>
+                                </ul>',
+            'original' => '<h4>Mode d\'emploi</h4>
+                                <ul>
+                                    <li><span class="icon"></span> Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche</li>
+                                    <li>Vous êtes alors invités à en préciser le nombre et l\'origine</li>
+                                    <li>Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier</li>
+                                    <li><span class="icon"></span> Vous avez alors la possibilité d\'ajouter des paniers de "simulation" et de les renommer</li>
+                                    <li><span class="icon"></span> Vous pouvez aussi dupliquer un panier existant</li>
+                                    <li>N\'hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l\'impact de vos changements</li>
+                                    <li><span class="icon"></span> Vous pouvez effacer les paniers un par un</li>
+                                    <li><span class="icon"></span> ou les vider</li>
+                                    <li><span class="icon"></span> permet d\'effectuer des opérations sur l\'ensemble du panier</li>
+                                    <li><span class="icon"></span> Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur</li>
+                                </ul>',
+        ]);
+
+        DB::table('contents')->insert([
+            'name' => 'Mentions Légales',
+            'html_content' => '<div class="mt-4">
+                                <div class="pt-2">
+                                    <p class="text-center">Cet outil est le fruit du travail du CH de Niort, <br> dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe</p>
+                                    <div class="d-flex justify-content-around pb-3">
+                                        <img src="/images/logo-carasso.svg" alt="logo fondation Carasso">
+                                        <img src="/images/logo-region-NA.svg" alt="logo région Nouvelle-Aquitaine">
+                                        <img src="/images/logo-UE.svg" alt="logo Europe">
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-center">Réalisation : <a href="mailto:contact@semaphore-communication.fr">Sémaphore Communication</a></p>
+                            </div>',
+            'original' => '<div class="mt-4">
+                                <div class="pt-2">
+                                    <p class="text-center">Cet outil est le fruit du travail du CH de Niort, <br> dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe</p>
+                                    <div class="d-flex justify-content-around pb-3">
+                                        <img src="/images/logo-carasso.svg" alt="logo fondation Carasso">
+                                        <img src="/images/logo-region-NA.svg" alt="logo région Nouvelle-Aquitaine">
+                                        <img src="/images/logo-UE.svg" alt="logo Europe">
+                                    </div>
+                                </div>
+                                <p class="mt-4 text-center">Réalisation : <a href="mailto:contact@semaphore-communication.fr">Sémaphore Communication</a></p>
+                            </div>',
+        ]);
     }
 }
