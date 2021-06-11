@@ -6,7 +6,8 @@ let config = {
 
     schema: "html5",
 
-    branding: false,
+    path_absolute: "/",
+    relative_urls: false,
 
     plugins: [
         "advlist autolink autoresize link image lists charmap hr anchor preview",
@@ -55,7 +56,7 @@ function getBootstrapStyle(selector) {
 let editorType = {
     full: {
         toolbar: [
-            'undo redo | bold italic underline strikethrough | alignjustify alignleft aligncenter alignright  | blockquote | formatselect | spellchecker',
+            'undo redo | bold italic underline strikethrough forecolor backcolor| alignjustify alignleft aligncenter alignright  | blockquote | formatselect | spellchecker',
             'cut copy paste removeformat | searchreplace | bullist numlist | outdent indent | hr | link unlink anchor image | code | insertdatetime',
             'table | subscript superscript | charmap | visualchars visualblocks nonbreaking | template | media | help | preview'
         ]

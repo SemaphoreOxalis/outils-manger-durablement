@@ -46,14 +46,3 @@ export default {
     },
 }
 </script>
-
-<style>
-.admin-nav {
-    text-align: center;
-    padding: 10px;
-}
-
-.admin-nav span.router-link-active button.alter {
-    background-color: var(--main-color);
-}
-</style>

@@ -98,6 +98,7 @@ class ContentSeeder extends Seeder
             'html_content' => '<div class="px-5 text-center">
                                 <h3>HI, I\'M FOOTER ADMIN ! EDIT ME !!!</h3>
                                 <p>When lost, look at code <></p>
+                                <p><span style="text-decoration: underline;"><strong><span style="color: #e03e2d; text-decoration: underline;">ATTENTION à garder l\'id sur \'prix de revient\' dans \'Gaspi-Préparation\', et à Damien\'s magic, les icônes !</span></strong>
                                 <table style="border-collapse: collapse; width: 105.233%;" border="1">
                                 <tbody>
                                 <tr>
@@ -125,6 +126,7 @@ class ContentSeeder extends Seeder
             'original' => '<div class="px-5 text-center">
                             <h3>HI, I\'M FOOTER ADMIN ! EDIT ME !!!</h3>
                             <p>When lost, look at code <></p>
+                            <p><span style="text-decoration: underline;"><strong><span style="color: #e03e2d; text-decoration: underline;">ATTENTION à garder l\'id sur \'prix de revient\' dans \'Gaspi-Préparation\', et à Damien\'s magic, les icônes !</span></strong>
                             <table style="border-collapse: collapse; width: 105.233%;" border="1">
                             <tbody>
                             <tr>

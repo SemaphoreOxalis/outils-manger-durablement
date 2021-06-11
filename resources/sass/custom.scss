@@ -512,7 +512,7 @@ ul.stepper .step.active::before {
     width: 100%;
 }
 
-.credits-container {
+.credits-container:hover {
     margin-bottom: 20px;
 }
 
@@ -587,6 +587,15 @@ ul.stepper .step.active::before {
 
 .admin input:invalid {
     border: lightpink;
+}
+
+.admin-nav {
+    text-align: center;
+    padding: 10px;
+}
+
+.admin-nav span.router-link-active button.alter {
+    background-color: var(--main-color);
 }
 
 // Input Component

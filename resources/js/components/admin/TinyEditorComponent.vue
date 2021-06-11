@@ -45,6 +45,7 @@ import 'tinymce/plugins/textpattern';
 import 'tinymce/plugins/spellchecker';
 import 'tinymce/plugins/help';
 import 'tinymce/plugins/media';
+import 'tinymce/plugins/textcolor';
 
 import tinyConfig from "./TinyConfig";
 export default {
