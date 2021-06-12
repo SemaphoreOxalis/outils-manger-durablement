@@ -19,9 +19,9 @@ class ContentSeeder extends Seeder
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
                                 </p>
                                 <div class="d-flex justify-content-around pb-3">
-                                    <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-carasso.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-region-NA.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-UE.svg" alt="logo">
                                 </div>
                             </div>',
             'original' => '<div class="pt-2">
@@ -30,9 +30,9 @@ class ContentSeeder extends Seeder
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
                                 </p>
                                 <div class="d-flex justify-content-around pb-3">
-                                    <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-carasso.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-region-NA.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-UE.svg" alt="logo">
                                 </div>
                             </div>',
         ]);
@@ -46,9 +46,9 @@ class ContentSeeder extends Seeder
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
                                 </p>
                                 <div class="d-flex justify-content-around pb-3">
-                                    <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-carasso.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-region-NA.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-UE.svg" alt="logo">
                                 </div>
                             </div>',
             'original' => '<div class="pt-2">
@@ -58,9 +58,9 @@ class ContentSeeder extends Seeder
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
                                 </p>
                                 <div class="d-flex justify-content-around pb-3">
-                                    <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-carasso.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-region-NA.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-UE.svg" alt="logo">
                                 </div>
                             </div>',
         ]);
@@ -74,9 +74,9 @@ class ContentSeeder extends Seeder
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
                                 </p>
                                 <div class="d-flex justify-content-around pb-3">
-                                    <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-carasso.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-region-NA.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-UE.svg" alt="logo">
                                 </div>
                             </div>',
             'original' => '<div class="pt-2">
@@ -86,9 +86,9 @@ class ContentSeeder extends Seeder
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
                                 </p>
                                 <div class="d-flex justify-content-around pb-3">
-                                    <img class="footer-logo" src="/images/logo-carasso.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-region-NA.svg" alt="logo">
-                                    <img class="footer-logo" src="/images/logo-UE.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-carasso.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-region-NA.svg" alt="logo">
+                                    <img class="footer-logo" src="/storage/images/logo-UE.svg" alt="logo">
                                 </div>
                             </div>',
         ]);
@@ -381,9 +381,9 @@ class ContentSeeder extends Seeder
                                 <div class="pt-2">
                                     <p class="text-center">Cet outil est le fruit du travail du CH de Niort, <br> dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe</p>
                                     <div class="d-flex justify-content-around pb-3">
-                                        <img src="/images/logo-carasso.svg" alt="logo fondation Carasso">
-                                        <img src="/images/logo-region-NA.svg" alt="logo région Nouvelle-Aquitaine">
-                                        <img src="/images/logo-UE.svg" alt="logo Europe">
+                                        <img src="/storage/images/logo-carasso.svg" alt="logo fondation Carasso">
+                                        <img src="/storage/images/logo-region-NA.svg" alt="logo région Nouvelle-Aquitaine">
+                                        <img src="/storage/images/logo-UE.svg" alt="logo Europe">
                                     </div>
                                 </div>
                                 <p class="mt-4 text-center">Réalisation : <a href="mailto:contact@semaphore-communication.fr">Sémaphore Communication</a></p>
@@ -392,9 +392,9 @@ class ContentSeeder extends Seeder
                                 <div class="pt-2">
                                     <p class="text-center">Cet outil est le fruit du travail du CH de Niort, <br> dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe</p>
                                     <div class="d-flex justify-content-around pb-3">
-                                        <img src="/images/logo-carasso.svg" alt="logo fondation Carasso">
-                                        <img src="/images/logo-region-NA.svg" alt="logo région Nouvelle-Aquitaine">
-                                        <img src="/images/logo-UE.svg" alt="logo Europe">
+                                        <img src="/storage/images/logo-carasso.svg" alt="logo fondation Carasso">
+                                        <img src="/storage/images/logo-region-NA.svg" alt="logo région Nouvelle-Aquitaine">
+                                        <img src="/storage/images/logo-UE.svg" alt="logo Europe">
                                     </div>
                                 </div>
                                 <p class="mt-4 text-center">Réalisation : <a href="mailto:contact@semaphore-communication.fr">Sémaphore Communication</a></p>

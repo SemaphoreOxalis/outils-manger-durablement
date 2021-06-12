@@ -55,4 +55,15 @@ class ContentController extends Controller
             return response('Erreur', 404);
         }
     }
+
+    public function uploadImg(Request $request) {
+        $validation = $request->validate([
+            'file' => 'required|image'
+        ]);
+        $actualFile = $validation['file'];
+        $fileName = $actualFile->getClientOriginalName();
+        $path = $request->file('file')->storeAs('images', $fileName, 'public');
+        return response()->json(['location' => "/storage/$path"]);
+    }
 }
+

@@ -31,6 +31,60 @@ let config = {
         },
     ],
     visualblocks_default_state: true,
+
+    image_title: true,
+    automatic_uploads: true,
+    images_upload_url: '/upload',
+    file_picker_types: 'image',
+    images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
+    images_reuse_filename: true,
+    images_upload_handler: function (blobInfo, success, failure) {
+        let xhr, formData;
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', '/upload');
+        let token = document.head.querySelector('meta[name="csrf-token"]').content;
+        xhr.setRequestHeader("X-CSRF-Token", token);
+        xhr.onload = function() {
+            let json;
+            if (xhr.status !== 200) {
+                failure('HTTP Error: ' + xhr.status);
+                return;
+            }
+            json = JSON.parse(xhr.responseText);
+
+            if (!json || typeof json.location != 'string') {
+                failure('Invalid JSON: ' + xhr.responseText);
+                return;
+            }
+            success(json.location);
+        };
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+        xhr.send(formData);
+    },
+    file_picker_callback: function(cb, value, meta) {
+        let input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('name', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.onchange = function() {
+            let file = this.files[0];
+
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                let id = 'blobid' + (new Date()).getTime();
+                let blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                let base64 = reader.result.split(',')[1];
+                let blobInfo = blobCache.create(id, file, base64);
+                blobCache.add(blobInfo);
+                cb(blobInfo.blobUri(), { title: file.name });
+            };
+        };
+        input.click();
+    }
 };
 
 function getSemaStyle(selector) {

@@ -52,6 +52,7 @@ Route::get('/api/contents', 'ContentController@index');
 Route::get('/api/contents/footer/{type}', 'ContentController@getContent');
 Route::get('/api/contents/{name}', 'ContentController@getContent');
 Route::patch('/api/contents/{content}', 'ContentController@update');
+Route::post('/upload', 'ContentController@uploadImg');
 
 // Controller d'export
 Route::post('/export-sims', 'ExportController@exportSims');
