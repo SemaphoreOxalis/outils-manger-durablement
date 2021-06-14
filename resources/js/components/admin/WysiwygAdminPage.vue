@@ -17,9 +17,10 @@
                         <div class="modal-container">
 
                             <div class="modal-body">
-                                <div v-for="image in images" class="py-2">
+                                <div v-for="(image, index) in images" class="py-2">
                                     <span v-text="image.link"></span><br>
-                                    <img class="footer-logo pt-2" :src="'/storage/' + image.img"/><a class="button alter ml-4" @click="clipboardIt(image.link)">Copy to clipboard</a>
+                                    <img class="footer-logo pt-2 mr-1" :src="'/storage/' + image.img"/>
+                                    <a class="button alter ml-1 mt-4" @click="clipboardIt(image.link)"><span class="icon"></span></a>
                                     <hr>
                                 </div>
                             </div>
@@ -78,7 +79,6 @@ export default {
             this.updateContent(this.selectedContent);
         },
         clipboardIt(link) {
-            console.log(link);
             navigator.clipboard.writeText(link)
                 .then(() => {
                     flash('lien copié ! : ' + link);
@@ -87,7 +87,7 @@ export default {
                 .catch(err => {
                     console.log('Something went wrong', err);
                 });
-        }
+        },
     },
     created() {
         this.fetchContents();

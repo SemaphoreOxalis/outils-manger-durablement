@@ -260,6 +260,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         flash(error.response.data, 'danger');
       });
     },
+    deleteImage: function deleteImage(image) {
+      console.log(image);
+    },
     updateContent: function updateContent(content) {
       patchContent(content).then(function (response) {
         flash(response.data);

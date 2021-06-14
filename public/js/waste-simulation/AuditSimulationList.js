@@ -370,7 +370,7 @@ __webpack_require__.r(__webpack_exports__);
       // Demande aux composants concernés de lui envoyer leurs données complètes
       events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
 
-      this["export"].mode = this.compareToPreviousBasket ? 'Chaque panier est comparé au précédent' : 'Les paniers sont comparés au premier panier';
+      this["export"].mode = this.compareToPreviousBasket ? 'Chaque liste est comparée à la précédente' : 'Les listes sont comparées à la première';
       this["export"].baskets = this.baskets;
       this["export"].date = this.getBasketsDateFromLocalStorage(); // appel AJAX vers le côté Laravel (ExportController.php)
 

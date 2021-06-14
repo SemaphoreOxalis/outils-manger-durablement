@@ -2,35 +2,35 @@ export default {
     data() {
         return {
             how_to: {
-                title: 'Comment utiliser ce simulateur de panier de commande',
+                title: 'Comment utiliser ce simulateur de listes de courses',
                 use: 'Mode d\'emploi',
                 add_prod_to_basket: 'Commencez par ajouter de produits à votre liste de courses via le menu ou en faisant une recherche',
                 how_many_and_from_where: 'Vous êtes alors invités à en préciser le nombre et l\'origine',
-                behold_your_carbon_impact: 'Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre panier',
-                copy_basket: 'Vous pouvez aussi dupliquer un panier existant',
-                add_mock_baskets: 'Vous avez alors la possibilité d\'ajouter des paniers de "simulation" et de les renommer',
+                behold_your_carbon_impact: 'Vous pouvez alors constater en temps réel votre bilan carbone résumé sous votre liste',
+                copy_basket: 'Vous pouvez aussi dupliquer une liste existante',
+                add_mock_baskets: 'Vous avez alors la possibilité d\'ajouter des listes de "simulation" et de les renommer',
                 go_wild_and_edit_things: 'N\'hésitez pas à faire varier les produits, leur quantité et leur provenance avant de constater l\'impact de vos changements',
-                delete_a_basket: 'Vous pouvez effacer les paniers un par un',
+                delete_a_basket: 'Vous pouvez effacer les listes unes par unes',
                 clear_a_basket: 'ou les vider',
-                destroy_them_all: 'ou tous les supprimer d\'un seul clic',
-                do_stuff: 'permet d\'effectuer des opérations sur l\'ensemble du panier',
+                destroy_them_all: 'ou toutes les supprimer d\'un seul clic',
+                do_stuff: 'permet d\'effectuer des opérations sur l\'ensemble d\'une liste',
                 export_baskets: 'Le bouton "exporter" vous permet de récupérer l\'ensemble des données sur votre logiciel de tableur',
                 close_btn: 'Fermer',
             },
             hover: {
                 // sur les + à côté des produits sur la liste de gauche
-                add_product_to_marked_baskets: 'Ajouter ce produit aux paniers sélectionnés',
-                // Sur les checkboxes au dessus des paniers
-                mark_as_fillable: 'marquer ce panier afin que les produits saisis y soient déposés',
-                // Icônes du panier
-                delete_basket: 'supprimer ce panier',
-                edit_basket: 'modifier ce panier',
-                add_basket: 'dupliquer le panier',
-                clear_basket: 'vider le panier',
+                add_product_to_marked_baskets: 'Ajouter ce produit aux listes sélectionnées',
+                // Sur les checkboxes au dessus des listes
+                mark_as_fillable: 'marquer cette liste afin que les produits saisis y soient déposés',
+                // Icônes du liste
+                delete_basket: 'supprimer cette liste',
+                edit_basket: 'modifier cette liste',
+                add_basket: 'dupliquer la liste',
+                clear_basket: 'vider la liste',
             },
-            baskets: 'Paniers',
-            add_new_basket: 'Nouveau panier vide',
-            add_to_this_basket: 'Ajouter dans ce panier',
+            baskets: 'Listes',
+            add_new_basket: 'Nouvelle liste vide',
+            add_to_this_basket: 'Ajouter dans cette liste',
             placeholders: {
                 type_in_your_product: 'Tapez le nom de votre produit puis sélectionnez-le avec la souris ou les touches de votre clavier',
                 search_prod: 'Rechercher un produit',
@@ -64,7 +64,7 @@ export default {
             },
             sum: 'Total',
             btn: {
-                export_btn: 'Exporter les paniers au format tableur'
+                export_btn: 'Exporter les listes au format tableur'
             },
             add_popup: {
                 help: 'Utilisez les touches tabulation et entrée pour passer d\'un champ à l\'autre et valider votre produit',
@@ -72,17 +72,17 @@ export default {
                 by_this_amount: 'en quantité de',
                 for_that_much_$: 'pour un montant TOTAL de',
                 from: 'originaire de',
-                in_baskets: 'dans les paniers nommés',
+                in_baskets: 'dans les listes nommées',
                 cancel: 'annuler',
                 ok: 'OK',
             },
             edit: {
-                i_am_editing_to: 'Je modifie ce panier pour',
+                i_am_editing_to: 'Je modifie cette liste pour',
                 set_origin_to_france: 'Je modifie tous les produits qui le peuvent en origine France',
             },
             switch_labels: {
-                compare_to_first: 'Comparer avec le premier panier',
-                compare_to_previous: 'Comparer avec le panier précédent',
+                compare_to_first: 'Comparer avec la première liste',
+                compare_to_previous: 'Comparer avec la liste précédente',
             },
         }
     }

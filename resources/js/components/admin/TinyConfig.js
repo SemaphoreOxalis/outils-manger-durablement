@@ -71,7 +71,7 @@ let config = {
         input.setAttribute('accept', 'image/*');
         input.onchange = function() {
             let file = this.files[0];
-            let fileName = file.name.replace(/\.[^/.]+$/, "") + (new Date()).getTime();
+            let fileName = file.name.replace(/\.[^/.]+$/, "") + '-' + (new Date()).getTime();
 
             let reader = new FileReader();
             reader.readAsDataURL(file);

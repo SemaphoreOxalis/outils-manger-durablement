@@ -85,6 +85,10 @@ export default {
             });
         },
 
+        deleteImage(image) {
+            console.log(image);
+        },
+
         updateContent(content) {
             patchContent(content).then(response => {
                 flash(response.data);

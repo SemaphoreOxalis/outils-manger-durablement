@@ -14,16 +14,17 @@
             </div>
 
             <div class="d-flex">
-                <a class="btn-ico alt tool"
+                <a class="btn-ico alt tool info-bubble"
                   data-toggle="collapse"
                   :data-target="'#body-' + basketId + '-' + product.id"
                   aria-expanded="false"
                   :aria-controls="'body-' + basketId + '-' + product.id"
                   @click="toggleFullProduct">
-                <i :id="'collapse-icon-' + basketId + '-' + product.id" class="icon icon-angle-down"></i>
+                    <i :id="'collapse-icon-' + basketId + '-' + product.id" class="icon icon-angle-down"></i>
+                    <span>Détails</span>
             </a>
-                <a class="btn-ico alt tool"
-                   @click="removeProduct(index)"></a>
+                <a class="btn-ico alt tool info-bubble"
+                   @click="removeProduct(index)"><span>Supprimer ce produit de la liste</span></a>
             </div>
         </div>
 

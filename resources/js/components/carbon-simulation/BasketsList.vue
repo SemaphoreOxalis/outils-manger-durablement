@@ -134,7 +134,7 @@ export default {
         if (localStorage.hasOwnProperty('baskets')) {
             this.baskets = JSON.parse(localStorage.getItem('baskets'));
         } else {
-            this.addBasket('votre panier');
+            this.addBasket('votre liste');
         }
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
         events.$on('save-baskets-results', this.saveBasketsResults);

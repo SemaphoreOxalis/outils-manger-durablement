@@ -81,6 +81,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -177,7 +178,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "btn-ico alt tool",
+              staticClass: "btn-ico alt tool info-bubble",
               attrs: {
                 "data-toggle": "collapse",
                 "data-target": "#body-" + _vm.basketId + "-" + _vm.product.id,
@@ -192,21 +193,26 @@ var render = function() {
                 attrs: {
                   id: "collapse-icon-" + _vm.basketId + "-" + _vm.product.id
                 }
-              })
+              }),
+              _vm._v(" "),
+              _c("span", [_vm._v("Détails")])
             ]
           ),
           _vm._v(" "),
           _c(
             "a",
             {
-              staticClass: "btn-ico alt tool",
+              staticClass: "btn-ico alt tool info-bubble",
               on: {
                 click: function($event) {
                   return _vm.removeProduct(_vm.index)
                 }
               }
             },
-            [_vm._v("")]
+            [
+              _vm._v(""),
+              _c("span", [_vm._v("Supprimer ce produit de la liste")])
+            ]
           )
         ])
       ]

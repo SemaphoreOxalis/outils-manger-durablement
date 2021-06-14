@@ -90,7 +90,7 @@
                 this.deleteBasketsFromLocalStorage();
                 this.previousBasketsDetectedInLocalStorage = false;
 
-                flash("Vos paniers ont bien été supprimés");
+                flash("Vos listes ont bien été supprimés");
             },
         },
     }

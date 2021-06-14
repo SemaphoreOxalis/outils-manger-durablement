@@ -154,9 +154,9 @@ class ExportController extends Controller {
         $spreadsheet->getProperties()
             ->setCreator('Semaphore Communication')
             ->setLastModifiedBy('Semaphore Communication')
-            ->setTitle('Export des paniers du ' . $request->input('date'))
-            ->setDescription('Export des paniers du ' . $request->input('date'))
-            ->setKeywords('impact carbone paniers simulations');
+            ->setTitle('Export des listes du ' . $request->input('date'))
+            ->setDescription('Export des listes du ' . $request->input('date'))
+            ->setKeywords('impact carbone listes simulations');
 
         $firstSheet = $spreadsheet->getActiveSheet();
         $firstSheet->setTitle('Accueil');
@@ -175,7 +175,7 @@ class ExportController extends Controller {
         $firstSheet->getColumnDimension('A')->setWidth(65);
 
         // Récapitulatif des valeurs de référence
-        $firstSheet->setCellValue('A1', 'Export des paniers du ' . $request->input('date'));
+        $firstSheet->setCellValue('A1', 'Export des listes du ' . $request->input('date'));
         $firstSheet->setCellValue('A3', 'Mode de comparaison :  ' . $request->input('mode'));
 
         $firstSheet->getCell('A1')->getStyle()->getFont()->setBold(true);
@@ -350,7 +350,7 @@ class ExportController extends Controller {
 
                 $sheet->addChart($chart2);
             } else {
-                $sheet->setCellValue('A3', 'Ce panier est vide');
+                $sheet->setCellValue('A3', 'Cette liste de courses est vide');
             }
         }
 

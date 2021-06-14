@@ -132,7 +132,7 @@ var HelpModal = function HelpModal() {
 
               _this.$nextTick(function () {
                 _this.button = document.createElement('span');
-                _this.button.innerHTML = '<a class="button alter" @click="displayModal">?</a>';
+                _this.button.innerHTML = '<a class="button alter info-bubble" @click="displayModal">?<span>aide</span></a>';
 
                 _this.button.addEventListener('click', _this.displayModal);
 

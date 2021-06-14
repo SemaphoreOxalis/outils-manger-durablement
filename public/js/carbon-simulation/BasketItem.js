@@ -305,9 +305,14 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("a", { staticClass: "btn-ico", on: { click: _vm.copyBasket } }, [
-            _vm._v("")
-          ])
+          _c(
+            "a",
+            {
+              staticClass: "btn-ico info-bubble",
+              on: { click: _vm.copyBasket }
+            },
+            [_vm._v(""), _c("span", [_vm._v("Dupliquer cette liste")])]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "basket-toolbox" }, [
@@ -325,7 +330,7 @@ var render = function() {
               type: "search",
               maxlength: "256",
               name: "query",
-              placeholder: "chercher dans le panier"
+              placeholder: "chercher dans la liste"
             },
             domProps: { value: _vm.search },
             on: {
@@ -344,8 +349,11 @@ var render = function() {
           _vm.containsProducts
             ? _c(
                 "a",
-                { staticClass: "btn-ico alt tool", on: { click: _vm.doStuff } },
-                [_vm._v("")]
+                {
+                  staticClass: "btn-ico alt tool info-bubble",
+                  on: { click: _vm.doStuff }
+                },
+                [_vm._v(""), _c("span", [_vm._v("Modifier cette liste")])]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -353,20 +361,20 @@ var render = function() {
             ? _c(
                 "a",
                 {
-                  staticClass: "btn-ico alt tool",
+                  staticClass: "btn-ico alt tool info-bubble",
                   on: { click: _vm.clearBasket }
                 },
-                [_vm._v("")]
+                [_vm._v(""), _c("span", [_vm._v("Vider cette liste")])]
               )
             : _vm._e(),
           _vm._v(" "),
           _c(
             "a",
             {
-              staticClass: "btn-ico alt tool",
+              staticClass: "btn-ico alt tool info-bubble",
               on: { click: _vm.deleteBasket }
             },
-            [_vm._v("")]
+            [_vm._v(""), _c("span", [_vm._v("Supprimer cette liste")])]
           )
         ])
       ]),

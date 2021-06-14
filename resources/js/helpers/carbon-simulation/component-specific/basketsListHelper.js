@@ -30,7 +30,7 @@ export default {
 
         prepareBasketToAdd(name = '', products = [], results = []) {
             if(name === '') {
-                name = 'panier ' + (this.basketsCounter + 1);
+                name = 'liste ' + (this.basketsCounter + 1);
             }
             return {
                 id: 'basket-' + (this.basketsCounter + 1),

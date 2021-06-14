@@ -106,7 +106,7 @@ var render = function() {
                 _vm._v(
                   "\n                        Êtes-vous sûr(e) de vouloir " +
                     _vm._s(this.actionText) +
-                    ' le panier "' +
+                    ' la liste "' +
                     _vm._s(_vm.affectedBasket.name) +
                     '" ?\n                        Cette action est irréversible\n                    '
                 )

@@ -6,7 +6,7 @@
 
                     <div class="modal-body">
                         <p>
-                            Êtes-vous sûr(e) de vouloir {{ this.actionText }} le panier "{{ affectedBasket.name }}" ?
+                            Êtes-vous sûr(e) de vouloir {{ this.actionText }} la liste "{{ affectedBasket.name }}" ?
                             Cette action est irréversible
                         </p>
                     </div>

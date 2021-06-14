@@ -360,7 +360,7 @@ __webpack_require__.r(__webpack_exports__);
       new_audit: 'Nouvel audit',
       resume_sim: 'Reprendre simulation',
       carbon_simulator: 'Outil Carbone',
-      resume_basket: 'reprendre panier'
+      resume_basket: 'reprendre simulation'
     };
   }
 });

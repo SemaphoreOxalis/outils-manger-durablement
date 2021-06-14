@@ -28,13 +28,13 @@
                         @lose-focus="loseFocusOnSearchBar">
             </search-bar>
 
-            <button data-target="mode_emploi" class="btn info modal-trigger">?</button>
+            <button data-target="mode_emploi" class="btn info modal-trigger info-bubble">?<span>Mode d'emploi</span></button>
             <div class="modal modal-fixed-footer" id="mode_emploi">
                 <div class="modal-content">
                     <div v-html="howTo"></div>
                 </div>
                 <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">{{ how_to.close_btn }}</a>
+                    <a href="#!" class="modal-close waves-effect waves-green button">{{ how_to.close_btn }}</a>
                 </div>
             </div>
         </div>
@@ -149,9 +149,14 @@ export default {
 
         showAddingProductModal(product) {
             this.getSelectedBaskets();
-            this.loseFocusOnSearchBar();
-            this.productAdded = product;
-            this.showAddingModal = true;
+            if(!this.selectedBaskets.length) {
+                alert('Aucune liste sélectionnée');
+            } else {
+                this.getSelectedBaskets();
+                this.loseFocusOnSearchBar();
+                this.productAdded = product;
+                this.showAddingModal = true;
+            }
         },
         addProductToBasket(product) {
             this.showAddingModal = false;

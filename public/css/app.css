@@ -12048,6 +12048,7 @@ h1.header {
 
 .product-item {
   border-top: 1px dotted var(--third-color);
+  cursor: move;
 }
 
 .product-header-container {
@@ -12448,6 +12449,9 @@ ul.nav.nav-tabs {
 }
 
 .info-bubble span {
+  text-transform: none;
+  font-weight: bold;
+  font-family: "sema-font";
   position: absolute;
   margin-top: 20px;
   margin-left: -35px;

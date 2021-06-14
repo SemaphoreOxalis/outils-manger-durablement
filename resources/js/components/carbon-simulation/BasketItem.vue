@@ -12,7 +12,7 @@
                        class="input custom-input browser-default"
                        type="text"
                        required>
-                <a @click="copyBasket" class="btn-ico"></a>
+                <a @click="copyBasket" class="btn-ico info-bubble"><span>Dupliquer cette liste</span></a>
             </div>
             <div class="basket-toolbox">
                 <input type="search"
@@ -21,10 +21,10 @@
                        class="input tool custom-input browser-default"
                        maxlength="256"
                        name="query"
-                       placeholder="chercher dans le panier">
-                <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool"></a>
-                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool"></a>
-                <a @click="deleteBasket" class="btn-ico alt tool"></a>
+                       placeholder="chercher dans la liste">
+                <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool info-bubble"><span>Modifier cette liste</span></a>
+                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool info-bubble"><span>Vider cette liste</span></a>
+                <a @click="deleteBasket" class="btn-ico alt tool info-bubble"><span>Supprimer cette liste</span></a>
             </div>
         </div>
 
