@@ -71,14 +71,14 @@ let config = {
         input.setAttribute('accept', 'image/*');
         input.onchange = function() {
             let file = this.files[0];
+            let fileName = file.name.replace(/\.[^/.]+$/, "") + (new Date()).getTime();
 
             let reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = function () {
-                let id = 'blobid' + (new Date()).getTime();
                 let blobCache =  tinymce.activeEditor.editorUpload.blobCache;
                 let base64 = reader.result.split(',')[1];
-                let blobInfo = blobCache.create(id, file, base64);
+                let blobInfo = blobCache.create(fileName, file, base64);
                 blobCache.add(blobInfo);
                 cb(blobInfo.blobUri(), { title: file.name });
             };
@@ -112,7 +112,7 @@ let editorType = {
         toolbar: [
             'undo redo | bold italic underline strikethrough forecolor backcolor| alignjustify alignleft aligncenter alignright  | blockquote | formatselect | spellchecker',
             'cut copy paste removeformat | searchreplace | bullist numlist | outdent indent | hr | link unlink anchor image | code | insertdatetime',
-            'table | subscript superscript | charmap | visualchars visualblocks nonbreaking | template | media | help | preview'
+            'table | subscript superscript | charmap | visualchars visualblocks nonbreaking | media | help | preview'
         ]
     },
     simple: {

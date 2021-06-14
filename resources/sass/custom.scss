@@ -1635,3 +1635,8 @@ a.button:hover {
     text-decoration: none;
     cursor: pointer;
 }
+
+.modal-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}

@@ -9,6 +9,33 @@
             </option>
         </select>
 
+        <span><a class="button alter" @click="showModal = true">Bibliothèque d'images</a></span>
+        <div v-if="showModal">
+            <transition name="modal">
+                <div class="modal-mask">
+                    <div class="modal-wrapper">
+                        <div class="modal-container">
+
+                            <div class="modal-body">
+                                <div v-for="image in images" class="py-2">
+                                    <span v-text="image.link"></span><br>
+                                    <img class="footer-logo pt-2" :src="'/storage/' + image.img"/><a class="button alter ml-4" @click="clipboardIt(image.link)">Copy to clipboard</a>
+                                    <hr>
+                                </div>
+                            </div>
+
+                            <div class="help-modal modal-footer">
+                                <button class="modal-default-button button alter" @click="showModal = false">
+                                    FERMER
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </transition>
+        </div>
+
         <tiny-editor-component
             v-model="selectedContent.html_content"
             v-bind:original="selectedContent.original"
@@ -32,6 +59,8 @@ export default {
     data() {
         return {
             contents: [],
+            images: [],
+            showModal: false,
             selectedContent: {
                 'name': '',
                 'html_content': '',
@@ -47,10 +76,22 @@ export default {
         updateOriginal(content) {
             this.selectedContent.original = content;
             this.updateContent(this.selectedContent);
+        },
+        clipboardIt(link) {
+            console.log(link);
+            navigator.clipboard.writeText(link)
+                .then(() => {
+                    flash('lien copié ! : ' + link);
+                    this.showModal = false;
+                })
+                .catch(err => {
+                    console.log('Something went wrong', err);
+                });
         }
     },
     created() {
         this.fetchContents();
+        this.fetchImages();
     },
 }
 </script>

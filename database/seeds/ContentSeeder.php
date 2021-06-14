@@ -40,7 +40,6 @@ class ContentSeeder extends Seeder
         DB::table('contents')->insert([
             'name' => 'Footer Gaspi',
             'html_content' => '<div class="pt-2">
-                                <h1>Gaspi</h1>
                                 <p class="text-center">
                                     Cet outil est le fruit du travail du CH de Niort, <br/>
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
@@ -52,7 +51,6 @@ class ContentSeeder extends Seeder
                                 </div>
                             </div>',
             'original' => '<div class="pt-2">
-                                <h1>Gaspi</h1>
                                 <p class="text-center">
                                     Cet outil est le fruit du travail du CH de Niort, <br/>
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
@@ -68,7 +66,6 @@ class ContentSeeder extends Seeder
         DB::table('contents')->insert([
             'name' => 'Footer Carbone',
             'html_content' => '<div class="pt-2">
-                                <h1>Carbone</h1>
                                 <p class="text-center">
                                     Cet outil est le fruit du travail du CH de Niort, <br/>
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
@@ -80,7 +77,6 @@ class ContentSeeder extends Seeder
                                 </div>
                             </div>',
             'original' => '<div class="pt-2">
-                                <h1>Carbone</h1>
                                 <p class="text-center">
                                     Cet outil est le fruit du travail du CH de Niort, <br/>
                                     dans le cadre d\'un appel à projet de la fondation Carasso, financé par la région Nouvelle-Aquitaine et l\'Europe
@@ -116,7 +112,7 @@ class ContentSeeder extends Seeder
                                 <li><strong>img.footer-logo :</strong>max-width: 100px<br /><strong>.info :</strong> entoure la div dans une "bulle" blanche</li>
                                 <li><strong>.browser-default :</strong> Pour éviter certains applications de styles par Materialize</li>
                                 <li><strong>.icon, .custom-input, h1.header</strong></li>
-                                <li><strong>#further-actions</strong></li>
+                                <li><strong>#further-actions</strong> pour la div des liens EGALIM</li>
                                 </ul>
                                 </td>
                                 </tr>
@@ -144,7 +140,7 @@ class ContentSeeder extends Seeder
                             <li><strong>img.footer-logo :</strong>max-width: 100px<br /><strong>.info :</strong> entoure la div dans une "bulle" blanche</li>
                             <li><strong>.browser-default :</strong> Pour éviter certains applications de styles par Materialize</li>
                             <li><strong>.icon, .custom-input, h1.header</strong></li>
-                            <li><strong>#further-actions</strong></li>
+                            <li><strong>#further-actions</strong> pour la div des liens EGALIM</li>
                             </ul>
                             </td>
                             </tr>

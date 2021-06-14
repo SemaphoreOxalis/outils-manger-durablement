@@ -13,7 +13,8 @@
 @import '~materialize-css/dist/css/materialize.min.css';
 
 //TinyEditor
-@import "~tinymce/skins/ui/oxide/skin.css";
+@import "~tinymce/skins/ui/oxide/skin.min.css";
+@import "~tinymce/skins/ui/oxide/content.min.css";
 
 // Custom
 .semaStyleStart { display: none}

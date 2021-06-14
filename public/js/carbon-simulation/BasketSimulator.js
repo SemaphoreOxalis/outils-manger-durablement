@@ -486,6 +486,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         flash(error.response.data, 'danger');
       });
     },
+    fetchImages: function fetchImages() {
+      var _this4 = this;
+
+      getImages().then(function (response) {
+        _this4.images = response.data;
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
     updateContent: function updateContent(content) {
       patchContent(content).then(function (response) {
         flash(response.data);
@@ -494,16 +503,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     fetchFooter: function fetchFooter(type) {
-      var _this4 = this;
+      var _this5 = this;
 
       getFooter(type).then(function (response) {
-        _this4.footer = _this4.decode(response.data);
+        _this5.footer = _this5.decode(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     fetchContent: function fetchContent(name) {
-      var _this5 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _yield$axios$get, response;
@@ -519,7 +528,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _yield$axios$get = _context.sent;
                 response = _yield$axios$get.data;
-                return _context.abrupt("return", _this5.decode(response));
+                return _context.abrupt("return", _this6.decode(response));
 
               case 8:
                 _context.prev = 8;
@@ -539,6 +548,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function getContents() {
   return axios.get('/api/contents');
+}
+
+function getImages() {
+  return axios.get('/api/images');
 }
 
 function patchContent(content) {

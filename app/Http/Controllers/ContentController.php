@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
 {
@@ -64,6 +65,17 @@ class ContentController extends Controller
         $fileName = $actualFile->getClientOriginalName();
         $path = $request->file('file')->storeAs('images', $fileName, 'public');
         return response()->json(['location' => "/storage/$path"]);
+    }
+
+    public function getImages() {
+        $images = Storage::disk('public')->files('images');
+
+        return collect($images)->map(function($image) {
+            return [
+                'img' => $image ,
+                'link' => '<img src="/storage/' . $image . '" alt="">' ,
+            ];
+        });
     }
 }
 

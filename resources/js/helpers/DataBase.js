@@ -77,6 +77,14 @@ export default {
             });
         },
 
+        fetchImages() {
+            getImages().then((response) => {
+                this.images = response.data;
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
+
         updateContent(content) {
             patchContent(content).then(response => {
                 flash(response.data);
@@ -108,6 +116,10 @@ export default {
 
 function getContents() {
     return axios.get('/api/contents');
+}
+
+function getImages() {
+    return axios.get('/api/images');
 }
 
 function patchContent(content) {
