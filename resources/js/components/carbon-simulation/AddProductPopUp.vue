@@ -17,7 +17,7 @@
                             <input v-model="productToAdd.amount" type="number" min="0" required="required" class="number-field custom-input browser-default input" ref="qty"> <small>{{ this.productToAdd.unit.unit }}</small>
                         </div>
                         <div class="results-row">
-                            {{ add_popup.for_that_much_$ }} <input v-model="productToAdd.price" type="number" min="0" required="required" class="number-field custom-input browser-default input"> €
+                            pour un montant <strong>TOTAL</strong> de <input v-model="productToAdd.price" type="number" min="0" required="required" class="number-field custom-input browser-default input"> €
                         </div>
                         <div class="results-row">
                             {{ add_popup.from }}

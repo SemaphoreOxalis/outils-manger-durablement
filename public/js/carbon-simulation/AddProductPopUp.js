@@ -250,11 +250,9 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "results-row" }, [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.add_popup.for_that_much_$) +
-                        " "
-                    ),
+                    _vm._v("\n                        pour un montant "),
+                    _c("strong", [_vm._v("TOTAL")]),
+                    _vm._v(" de "),
                     _c("input", {
                       directives: [
                         {
