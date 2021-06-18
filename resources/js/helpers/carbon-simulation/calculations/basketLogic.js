@@ -100,7 +100,7 @@ export default {
             return this.roundToOneDecimal(amount);
         },
         getUnit(amount) {
-            if (amount >= 2000) {
+            if (amount > 1995) { // rounded to 2 decimals
                 return 'tonnes de CO2';
             }
             if (amount >= 1000) {

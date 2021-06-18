@@ -94,6 +94,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -174,10 +175,11 @@ var draggable = function draggable() {
       var tempProd = _objectSpread({}, product);
 
       tempProd.id = 'basket-product-' + (this.productCounter + 1);
-      this.basket.products.unshift(tempProd);
+      this.basket.products.push(tempProd);
       this.sendInternalCounter();
       this.incrementProductCounter();
       this.saveBasket();
+      this.scrollToBottom();
     },
     removeProduct: function removeProduct(productIndex) {
       this.basket.products.splice(productIndex, 1);
@@ -203,6 +205,17 @@ var draggable = function draggable() {
     },
     sendInternalCounter: function sendInternalCounter() {
       events.$emit('internal-counters', this.index, this.productCounter);
+    },
+    scrollToBottom: function scrollToBottom() {
+      var _this = this;
+
+      // takes a bit to actually update
+      setTimeout(function () {
+        _this.$refs.list.$el.scrollTo({
+          top: _this.$refs.list.$el.scrollHeight,
+          behavior: 'smooth'
+        });
+      }, 100);
     }
   }
 });
@@ -386,6 +399,7 @@ var render = function() {
       _c(
         "draggable",
         {
+          ref: "list",
           staticClass:
             "dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary",
           attrs: {

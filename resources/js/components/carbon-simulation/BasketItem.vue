@@ -29,6 +29,7 @@
         </div>
 
         <draggable v-model="basket.products"
+                   ref="list"
                    class="dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
                    :group="{ name: 'draggableProducts', pull: false }"
                    @change="saveBasket"
@@ -146,10 +147,11 @@ export default {
         addProduct(product) {
             let tempProd = {...product};
             tempProd.id = ('basket-product-' + (this.productCounter + 1));
-            this.basket.products.unshift(tempProd);
+            this.basket.products.push(tempProd);
             this.sendInternalCounter();
             this.incrementProductCounter();
             this.saveBasket();
+            this.scrollToBottom();
         },
         removeProduct(productIndex) {
             this.basket.products.splice(productIndex, 1);
@@ -178,6 +180,15 @@ export default {
 
         sendInternalCounter() {
             events.$emit('internal-counters', this.index, this.productCounter);
+        },
+        scrollToBottom() {
+            // takes a bit to actually update
+            setTimeout(() => {
+                this.$refs.list.$el.scrollTo({
+                    top: this.$refs.list.$el.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 100);
         },
     }
 }
