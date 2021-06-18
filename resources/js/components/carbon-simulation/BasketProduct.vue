@@ -8,9 +8,7 @@
                 <div class="text-block">
                     <span class="product-name">{{ product.name }} <small>{{ product.origin.from }}</small></span>
                 </div>
-                <a v-if="product.comment" class="info-bubble product-info-bubble btn-ico alt tool info ml-2">
-                    <span>{{ product.comment }}</span>
-                </a>
+                <a v-if="product.comment" class="info-bubble product-info-bubble btn-ico alt tool info ml-2" :title="product.comment"></a>
             </div>
 
             <div class="d-flex">
@@ -21,10 +19,9 @@
                   :aria-controls="'body-' + basketId + '-' + product.id"
                   @click="toggleFullProduct">
                     <i :id="'collapse-icon-' + basketId + '-' + product.id" class="icon icon-angle-down"></i>
-                    <span>Détails</span>
             </a>
                 <a class="btn-ico alt tool info-bubble"
-                   @click="removeProduct(index)"><span>Supprimer ce produit de la liste</span></a>
+                   @click="removeProduct(index)" title="Supprimer ce produit de la liste"></a>
             </div>
         </div>
 
@@ -39,9 +36,7 @@
                    @change="save">
             <div class="units">
                 {{ product.unit.shortUnit }}
-                <a class="info-bubble product-info-bubble btn-ico alt tool info">
-                    <span>{{ product.unit.unit }}</span>
-                </a>
+                <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
             </div>
 
             <input type="number"

@@ -92,8 +92,8 @@
         </div>
 
         <div class="trash-icon">
-            <a @click="removeSimulation(index)" class="info-bubble">
-                <i class="icon"></i><span>Effacer cette simulation</span>
+            <a @click="removeSimulation(index)" class="info-bubble" title="Effacer cette simulation">
+                <i class="icon"></i>
             </a>
         </div>
     </div>

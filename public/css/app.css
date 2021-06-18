@@ -11543,6 +11543,15 @@ ul.stepper .step.active::before {
   background-color: var(--main-color);
 }
 
+.admin-subnav {
+  text-align: center;
+  padding: 10px;
+}
+
+.admin-subnav span.router-link-active button.alter {
+  background-color: var(--main-color);
+}
+
 .editing-reference-values {
   position: relative;
   background-color: white;

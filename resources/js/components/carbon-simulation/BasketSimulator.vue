@@ -28,7 +28,7 @@
                         @lose-focus="loseFocusOnSearchBar">
             </search-bar>
 
-            <button data-target="mode_emploi" class="btn info modal-trigger info-bubble">?<span>Mode d'emploi</span></button>
+            <button data-target="mode_emploi" class="btn info modal-trigger info-bubble" title="Mode d'emploi">?</button>
             <div class="modal modal-fixed-footer" id="mode_emploi">
                 <div class="modal-content">
                     <div v-html="howTo"></div>

@@ -77,11 +77,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -164,12 +159,10 @@ var render = function() {
                 "a",
                 {
                   staticClass:
-                    "info-bubble product-info-bubble btn-ico alt tool info ml-2"
+                    "info-bubble product-info-bubble btn-ico alt tool info ml-2",
+                  attrs: { title: _vm.product.comment }
                 },
-                [
-                  _vm._v("\n                "),
-                  _c("span", [_vm._v(_vm._s(_vm.product.comment))])
-                ]
+                [_vm._v("")]
               )
             : _vm._e()
         ]),
@@ -193,9 +186,7 @@ var render = function() {
                 attrs: {
                   id: "collapse-icon-" + _vm.basketId + "-" + _vm.product.id
                 }
-              }),
-              _vm._v(" "),
-              _c("span", [_vm._v("Détails")])
+              })
             ]
           ),
           _vm._v(" "),
@@ -203,16 +194,14 @@ var render = function() {
             "a",
             {
               staticClass: "btn-ico alt tool info-bubble",
+              attrs: { title: "Supprimer ce produit de la liste" },
               on: {
                 click: function($event) {
                   return _vm.removeProduct(_vm.index)
                 }
               }
             },
-            [
-              _vm._v(""),
-              _c("span", [_vm._v("Supprimer ce produit de la liste")])
-            ]
+            [_vm._v("")]
           )
         ])
       ]
@@ -269,12 +258,10 @@ var render = function() {
             "a",
             {
               staticClass:
-                "info-bubble product-info-bubble btn-ico alt tool info"
+                "info-bubble product-info-bubble btn-ico alt tool info",
+              attrs: { title: _vm.product.unit.unit }
             },
-            [
-              _vm._v("\n                "),
-              _c("span", [_vm._v(_vm._s(_vm.product.unit.unit))])
-            ]
+            [_vm._v("")]
           )
         ]),
         _vm._v(" "),

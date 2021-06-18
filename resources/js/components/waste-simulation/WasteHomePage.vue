@@ -109,7 +109,7 @@ export default {
 
         this.$nextTick(() => {
             this.button = document.createElement('span');
-            this.button.innerHTML = '<a class="button alter info-bubble" @click="displayModal">?<span>aide</span></a>';
+            this.button.innerHTML = '<a class="button alter info-bubble" title="Aide" @click="displayModal">?</a>';
             this.button.addEventListener('click', this.displayModal);
             document.getElementById('add-help-modal-button').appendChild(this.button);
         })

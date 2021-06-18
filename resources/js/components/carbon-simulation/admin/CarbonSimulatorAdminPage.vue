@@ -34,12 +34,5 @@
 </script>
 
 <style>
-.admin-subnav {
-    text-align: center;
-    padding: 10px;
-}
 
-.admin-subnav span.router-link-active button.alter {
-    background-color: var(--main-color);
-}
 </style>

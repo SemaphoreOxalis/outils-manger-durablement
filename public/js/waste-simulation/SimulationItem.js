@@ -497,16 +497,14 @@ var render = function() {
         "a",
         {
           staticClass: "info-bubble",
+          attrs: { title: "Effacer cette simulation" },
           on: {
             click: function($event) {
               return _vm.removeSimulation(_vm.index)
             }
           }
         },
-        [
-          _c("i", { staticClass: "icon" }, [_vm._v("")]),
-          _c("span", [_vm._v("Effacer cette simulation")])
-        ]
+        [_c("i", { staticClass: "icon" }, [_vm._v("")])]
       )
     ])
   ])

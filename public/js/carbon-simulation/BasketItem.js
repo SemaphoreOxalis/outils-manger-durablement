@@ -309,9 +309,10 @@ var render = function() {
             "a",
             {
               staticClass: "btn-ico info-bubble",
+              attrs: { title: "Dupliquer cette liste" },
               on: { click: _vm.copyBasket }
             },
-            [_vm._v(""), _c("span", [_vm._v("Dupliquer cette liste")])]
+            [_vm._v("")]
           )
         ]),
         _vm._v(" "),
@@ -351,9 +352,10 @@ var render = function() {
                 "a",
                 {
                   staticClass: "btn-ico alt tool info-bubble",
+                  attrs: { title: "Modifier cette liste" },
                   on: { click: _vm.doStuff }
                 },
-                [_vm._v(""), _c("span", [_vm._v("Modifier cette liste")])]
+                [_vm._v("")]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -362,9 +364,10 @@ var render = function() {
                 "a",
                 {
                   staticClass: "btn-ico alt tool info-bubble",
+                  attrs: { title: "Vider cette liste" },
                   on: { click: _vm.clearBasket }
                 },
-                [_vm._v(""), _c("span", [_vm._v("Vider cette liste")])]
+                [_vm._v("")]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -372,9 +375,10 @@ var render = function() {
             "a",
             {
               staticClass: "btn-ico alt tool info-bubble",
+              attrs: { title: "Supprimer cette liste" },
               on: { click: _vm.deleteBasket }
             },
-            [_vm._v(""), _c("span", [_vm._v("Supprimer cette liste")])]
+            [_vm._v("")]
           )
         ])
       ]),
