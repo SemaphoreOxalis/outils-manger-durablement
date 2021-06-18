@@ -52,9 +52,3 @@
         }
     }
 </script>
-
-<style>
-.trash-icon {
-    cursor: pointer;
-}
-</style>

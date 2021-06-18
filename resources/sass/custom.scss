@@ -607,6 +607,14 @@ ul.stepper .step.active::before {
     background-color: var(--main-color);
 }
 
+.trash-icon {
+    cursor: pointer;
+}
+.form-group.admin select {
+    display: inline-block;
+    max-width: 200px;
+}
+
 // Input Component
 
 .editing-reference-values {

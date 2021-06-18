@@ -104,13 +104,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.trash-icon {
-    cursor: pointer;
-}
-.form-group.admin select {
-    display: inline-block;
-    max-width: 200px;
-}
-</style>

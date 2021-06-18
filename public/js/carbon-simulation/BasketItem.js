@@ -151,7 +151,7 @@ var draggable = function draggable() {
     productCounter: function productCounter() {
       if (this.basket.products.length > 0) {
         return Math.max.apply(Math, _toConsumableArray(this.basket.products.map(function (product) {
-          return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
+          return product.id.substring(5); // "prod-" id prefix is 5 characters long
         })));
       } else {
         return 0;
@@ -174,7 +174,7 @@ var draggable = function draggable() {
     addProduct: function addProduct(product) {
       var tempProd = _objectSpread({}, product);
 
-      tempProd.id = 'basket-product-' + (this.productCounter + 1);
+      tempProd.id = 'prod-' + (this.productCounter + 1);
       this.basket.products.push(tempProd);
       this.sendInternalCounter();
       this.incrementProductCounter();
@@ -209,7 +209,7 @@ var draggable = function draggable() {
     scrollToBottom: function scrollToBottom() {
       var _this = this;
 
-      // takes a bit to actually update
+      // takes a while to actually update DOM on add
       setTimeout(function () {
         _this.$refs.list.$el.scrollTo({
           top: _this.$refs.list.$el.scrollHeight,
@@ -376,11 +376,11 @@ var render = function() {
             ? _c(
                 "a",
                 {
-                  staticClass: "btn-ico alt tool info-bubble",
+                  staticClass: "btn-ico alt tool info-bubble pb-1",
                   attrs: { title: "Vider cette liste" },
                   on: { click: _vm.clearBasket }
                 },
-                [_vm._v("")]
+                [_c("strong", [_vm._v("✖")])]
               )
             : _vm._e(),
           _vm._v(" "),

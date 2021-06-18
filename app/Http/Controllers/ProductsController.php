@@ -14,9 +14,12 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $products = Product::all();
+        return Product::normal()->get();
+    }
 
-        return $products;
+    public function getSpecialProducts()
+    {
+        return Product::special()->get();
     }
 
     public function update(Request $request, Product $product) {
@@ -64,7 +67,7 @@ class ProductsController extends Controller
         try
         {
             $product->delete();
-            return response('Le produit a bien été supprimée', 202);
+            return response('Le produit a bien été supprimé', 202);
         } catch (\Exception $e)
         {
             return response('Erreur', 422);

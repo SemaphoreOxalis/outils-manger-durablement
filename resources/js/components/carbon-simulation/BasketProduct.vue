@@ -1,67 +1,69 @@
 <template>
     <div class="product-item">
 
+        <div v-if="true">
+            <div class="product-header-container" :id="'header-' + basketId + '-' + product.id">
 
-        <div class="product-header-container" :id="'header-' + basketId + '-' + product.id">
-
-            <div class="d-flex">
-                <div class="text-block">
-                    <span class="product-name">{{ product.name }} <small>{{ product.origin.from }}</small></span>
+                <div class="d-flex">
+                    <div class="text-block">
+                        <span class="product-name">{{ product.name }} <small>{{ product.origin.from }}</small></span>
+                    </div>
+                    <a v-if="product.comment" class="info-bubble product-info-bubble btn-ico alt tool info ml-2" :title="product.comment"></a>
                 </div>
-                <a v-if="product.comment" class="info-bubble product-info-bubble btn-ico alt tool info ml-2" :title="product.comment"></a>
+
+                <div class="d-flex">
+                    <a class="btn-ico alt tool info-bubble"
+                       data-toggle="collapse"
+                       :data-target="'#body-' + basketId + '-' + product.id"
+                       aria-expanded="false"
+                       :aria-controls="'body-' + basketId + '-' + product.id"
+                       @click="toggleFullProduct">
+                        <i :id="'collapse-icon-' + basketId + '-' + product.id" class="icon icon-angle-down"></i>
+                    </a>
+                    <a class="btn-ico alt tool info-bubble"
+                       @click="removeProduct(index)" title="Supprimer ce produit de la liste"></a>
+                </div>
             </div>
 
-            <div class="d-flex">
-                <a class="btn-ico alt tool info-bubble"
-                  data-toggle="collapse"
-                  :data-target="'#body-' + basketId + '-' + product.id"
-                  aria-expanded="false"
-                  :aria-controls="'body-' + basketId + '-' + product.id"
-                  @click="toggleFullProduct">
-                    <i :id="'collapse-icon-' + basketId + '-' + product.id" class="icon icon-angle-down"></i>
-            </a>
-                <a class="btn-ico alt tool info-bubble"
-                   @click="removeProduct(index)" title="Supprimer ce produit de la liste"></a>
+            <div :class="'collapse product-details-info collapse-' + basketId + '-' + product.id"
+                 :id="'body-' + basketId + '-' + product.id">
+                <input type="number"
+                       class="ignore-draggable custom-input browser-default number-field input"
+                       v-model="product.amount"
+                       maxlength="256"
+                       min="0" step="1"
+                       required
+                       @change="save">
+                <div class="units">
+                    {{ product.unit.shortUnit }}
+                    <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
+                </div>
+
+                <input type="number"
+                       class="ignore-draggable custom-input browser-default number-field input"
+                       v-model="product.price"
+                       maxlength="256"
+                       min="0" step="1"
+                       required
+                       @change="save">
+                <div class="units">€</div>
+
+                <label :for="'origin-' + basketId + '-' + product.id" class="center">Origine</label>
+                <select v-model="product.origin"
+                        :id="'origin-' + basketId + '-' + product.id"
+                        @change="save"
+                        class="custom-select input custom-input"
+                        :name="'origin-' + basketId + '-' + product.id"
+                        :data-name="'Origine ' + basketId + '-' + product.id">
+                    <option v-for="origin in origins" :value="origin">
+                        {{ origin.from }}
+                    </option>
+                </select>
+
             </div>
         </div>
 
-        <div :class="'collapse product-details-info collapse-' + basketId + '-' + product.id"
-             :id="'body-' + basketId + '-' + product.id">
-            <input type="number"
-                   class="ignore-draggable custom-input browser-default number-field input"
-                   v-model="product.amount"
-                   maxlength="256"
-                   min="0" step="1"
-                   required
-                   @change="save">
-            <div class="units">
-                {{ product.unit.shortUnit }}
-                <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
-            </div>
-
-            <input type="number"
-                   class="ignore-draggable custom-input browser-default number-field input"
-                   v-model="product.price"
-                   maxlength="256"
-                   min="0" step="1"
-                   required
-                   @change="save">
-            <div class="units">€</div>
-
-            <label :for="'origin-' + basketId + '-' + product.id" class="center">Origine</label>
-            <select v-model="product.origin"
-                    :id="'origin-' + basketId + '-' + product.id"
-                    @change="save"
-                    class="custom-select input custom-input"
-                    :name="'origin-' + basketId + '-' + product.id"
-                    :data-name="'Origine ' + basketId + '-' + product.id">
-                <option v-for="origin in origins" :value="origin">
-                    {{ origin.from }}
-                </option>
-            </select>
-
-        </div>
-
+        <div v-else>Bouh</div>
 
     </div>
 </template>

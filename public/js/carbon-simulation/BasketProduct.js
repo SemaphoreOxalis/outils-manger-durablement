@@ -77,6 +77,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -139,222 +141,236 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "product-item" }, [
-    _c(
-      "div",
-      {
-        staticClass: "product-header-container",
-        attrs: { id: "header-" + _vm.basketId + "-" + _vm.product.id }
-      },
-      [
-        _c("div", { staticClass: "d-flex" }, [
-          _c("div", { staticClass: "text-block" }, [
-            _c("span", { staticClass: "product-name" }, [
-              _vm._v(_vm._s(_vm.product.name) + " "),
-              _c("small", [_vm._v(_vm._s(_vm.product.origin.from))])
-            ])
-          ]),
-          _vm._v(" "),
-          _vm.product.comment
-            ? _c(
-                "a",
-                {
-                  staticClass:
-                    "info-bubble product-info-bubble btn-ico alt tool info ml-2",
-                  attrs: { title: _vm.product.comment }
-                },
-                [_vm._v("")]
-              )
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "d-flex" }, [
+    true
+      ? _c("div", [
           _c(
-            "a",
+            "div",
             {
-              staticClass: "btn-ico alt tool info-bubble",
-              attrs: {
-                "data-toggle": "collapse",
-                "data-target": "#body-" + _vm.basketId + "-" + _vm.product.id,
-                "aria-expanded": "false",
-                "aria-controls": "body-" + _vm.basketId + "-" + _vm.product.id
-              },
-              on: { click: _vm.toggleFullProduct }
+              staticClass: "product-header-container",
+              attrs: { id: "header-" + _vm.basketId + "-" + _vm.product.id }
             },
             [
-              _c("i", {
-                staticClass: "icon icon-angle-down",
-                attrs: {
-                  id: "collapse-icon-" + _vm.basketId + "-" + _vm.product.id
-                }
-              })
+              _c("div", { staticClass: "d-flex" }, [
+                _c("div", { staticClass: "text-block" }, [
+                  _c("span", { staticClass: "product-name" }, [
+                    _vm._v(_vm._s(_vm.product.name) + " "),
+                    _c("small", [_vm._v(_vm._s(_vm.product.origin.from))])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.product.comment
+                  ? _c(
+                      "a",
+                      {
+                        staticClass:
+                          "info-bubble product-info-bubble btn-ico alt tool info ml-2",
+                        attrs: { title: _vm.product.comment }
+                      },
+                      [_vm._v("")]
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "d-flex" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn-ico alt tool info-bubble",
+                    attrs: {
+                      "data-toggle": "collapse",
+                      "data-target":
+                        "#body-" + _vm.basketId + "-" + _vm.product.id,
+                      "aria-expanded": "false",
+                      "aria-controls":
+                        "body-" + _vm.basketId + "-" + _vm.product.id
+                    },
+                    on: { click: _vm.toggleFullProduct }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "icon icon-angle-down",
+                      attrs: {
+                        id:
+                          "collapse-icon-" + _vm.basketId + "-" + _vm.product.id
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn-ico alt tool info-bubble",
+                    attrs: { title: "Supprimer ce produit de la liste" },
+                    on: {
+                      click: function($event) {
+                        return _vm.removeProduct(_vm.index)
+                      }
+                    }
+                  },
+                  [_vm._v("")]
+                )
+              ])
             ]
           ),
           _vm._v(" "),
           _c(
-            "a",
+            "div",
             {
-              staticClass: "btn-ico alt tool info-bubble",
-              attrs: { title: "Supprimer ce produit de la liste" },
-              on: {
-                click: function($event) {
-                  return _vm.removeProduct(_vm.index)
-                }
-              }
+              class:
+                "collapse product-details-info collapse-" +
+                _vm.basketId +
+                "-" +
+                _vm.product.id,
+              attrs: { id: "body-" + _vm.basketId + "-" + _vm.product.id }
             },
-            [_vm._v("")]
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.product.amount,
+                    expression: "product.amount"
+                  }
+                ],
+                staticClass:
+                  "ignore-draggable custom-input browser-default number-field input",
+                attrs: {
+                  type: "number",
+                  maxlength: "256",
+                  min: "0",
+                  step: "1",
+                  required: ""
+                },
+                domProps: { value: _vm.product.amount },
+                on: {
+                  change: _vm.save,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.product, "amount", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "units" }, [
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.product.unit.shortUnit) +
+                    "\n                "
+                ),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "info-bubble product-info-bubble btn-ico alt tool info",
+                    attrs: { title: _vm.product.unit.unit }
+                  },
+                  [_vm._v("")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.product.price,
+                    expression: "product.price"
+                  }
+                ],
+                staticClass:
+                  "ignore-draggable custom-input browser-default number-field input",
+                attrs: {
+                  type: "number",
+                  maxlength: "256",
+                  min: "0",
+                  step: "1",
+                  required: ""
+                },
+                domProps: { value: _vm.product.price },
+                on: {
+                  change: _vm.save,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.product, "price", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "units" }, [_vm._v("€")]),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "center",
+                  attrs: {
+                    for: "origin-" + _vm.basketId + "-" + _vm.product.id
+                  }
+                },
+                [_vm._v("Origine")]
+              ),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.product.origin,
+                      expression: "product.origin"
+                    }
+                  ],
+                  staticClass: "custom-select input custom-input",
+                  attrs: {
+                    id: "origin-" + _vm.basketId + "-" + _vm.product.id,
+                    name: "origin-" + _vm.basketId + "-" + _vm.product.id,
+                    "data-name":
+                      "Origine " + _vm.basketId + "-" + _vm.product.id
+                  },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.product,
+                          "origin",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                      _vm.save
+                    ]
+                  }
+                },
+                _vm._l(_vm.origins, function(origin) {
+                  return _c("option", { domProps: { value: origin } }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(origin.from) +
+                        "\n                "
+                    )
+                  ])
+                }),
+                0
+              )
+            ]
           )
         ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        class:
-          "collapse product-details-info collapse-" +
-          _vm.basketId +
-          "-" +
-          _vm.product.id,
-        attrs: { id: "body-" + _vm.basketId + "-" + _vm.product.id }
-      },
-      [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.product.amount,
-              expression: "product.amount"
-            }
-          ],
-          staticClass:
-            "ignore-draggable custom-input browser-default number-field input",
-          attrs: {
-            type: "number",
-            maxlength: "256",
-            min: "0",
-            step: "1",
-            required: ""
-          },
-          domProps: { value: _vm.product.amount },
-          on: {
-            change: _vm.save,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.product, "amount", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "units" }, [
-          _vm._v(
-            "\n            " +
-              _vm._s(_vm.product.unit.shortUnit) +
-              "\n            "
-          ),
-          _c(
-            "a",
-            {
-              staticClass:
-                "info-bubble product-info-bubble btn-ico alt tool info",
-              attrs: { title: _vm.product.unit.unit }
-            },
-            [_vm._v("")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.product.price,
-              expression: "product.price"
-            }
-          ],
-          staticClass:
-            "ignore-draggable custom-input browser-default number-field input",
-          attrs: {
-            type: "number",
-            maxlength: "256",
-            min: "0",
-            step: "1",
-            required: ""
-          },
-          domProps: { value: _vm.product.price },
-          on: {
-            change: _vm.save,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.product, "price", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "units" }, [_vm._v("€")]),
-        _vm._v(" "),
-        _c(
-          "label",
-          {
-            staticClass: "center",
-            attrs: { for: "origin-" + _vm.basketId + "-" + _vm.product.id }
-          },
-          [_vm._v("Origine")]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.product.origin,
-                expression: "product.origin"
-              }
-            ],
-            staticClass: "custom-select input custom-input",
-            attrs: {
-              id: "origin-" + _vm.basketId + "-" + _vm.product.id,
-              name: "origin-" + _vm.basketId + "-" + _vm.product.id,
-              "data-name": "Origine " + _vm.basketId + "-" + _vm.product.id
-            },
-            on: {
-              change: [
-                function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.product,
-                    "origin",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                },
-                _vm.save
-              ]
-            }
-          },
-          _vm._l(_vm.origins, function(origin) {
-            return _c("option", { domProps: { value: origin } }, [
-              _vm._v(
-                "\n                " + _vm._s(origin.from) + "\n            "
-              )
-            ])
-          }),
-          0
-        )
-      ]
-    )
+      : undefined
   ])
 }
 var staticRenderFns = []

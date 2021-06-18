@@ -33,6 +33,7 @@ Route::post('/api/units', 'UnitsController@store');
 Route::delete('/api/units/{unit}', 'UnitsController@destroy');
 
 Route::get('/api/products', 'ProductsController@index');
+Route::get('/api/special-products', 'ProductsController@getSpecialProducts');
 Route::patch('/api/products/{product}', 'ProductsController@update');
 Route::post('/api/products', 'ProductsController@store');
 Route::delete('/api/products/{product}', 'ProductsController@destroy');

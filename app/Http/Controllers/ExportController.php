@@ -200,7 +200,8 @@ class ExportController extends Controller {
                 $sheet->setCellValue('F3', 'prix');
                 $sheet->mergeCells('G2:I2');
                 $sheet->getStyle('A2:I3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A2:I3')->applyFromArray($borderStyle);
+                $sheet->getStyle('A2:F3')->applyFromArray($borderStyle);
+                $sheet->getStyle('G2:I3')->applyFromArray($borderStyle);
                 $sheet->setCellValue('G2', 'impact carbone');
                 $sheet->setCellValue('G3', 'produit');
                 $sheet->setCellValue('H3', 'transport');

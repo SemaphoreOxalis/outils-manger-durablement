@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'unit_id', 'category_id', 'comment', 'emissionFactor'];
+    protected $fillable = ['name', 'unit_id', 'category_id', 'comment', 'emissionFactor', 'type'];
     protected $with = ['category', 'unit'];
 
     public function category()
@@ -17,5 +17,15 @@ class Product extends Model
     public function unit()
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    public function scopeNormal($query)
+    {
+        return $query->where('type', 'prod');
+    }
+
+    public function scopeSpecial($query)
+    {
+        return $query->where('type', 'special');
     }
 }

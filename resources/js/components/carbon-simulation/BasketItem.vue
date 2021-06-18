@@ -23,7 +23,7 @@
                        name="query"
                        placeholder="chercher dans la liste">
                 <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool info-bubble" title="Modifier cette liste"></a>
-                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool info-bubble" title="Vider cette liste"></a>
+                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool info-bubble pb-1" title="Vider cette liste"><strong>✖</strong></a>
                 <a @click="deleteBasket" class="btn-ico alt tool info-bubble" title="Supprimer cette liste"></a>
             </div>
         </div>
@@ -124,7 +124,7 @@ export default {
         productCounter: function () {
             if (this.basket.products.length > 0) {
                 return Math.max(...this.basket.products.map(product => {
-                    return product.id.substring(15); // "basket_product_" id prefix is 15 characters long
+                    return product.id.substring(5); // "prod-" id prefix is 5 characters long
                 }));
             } else {
                 return 0;
@@ -146,7 +146,7 @@ export default {
     methods: {
         addProduct(product) {
             let tempProd = {...product};
-            tempProd.id = ('basket-product-' + (this.productCounter + 1));
+            tempProd.id = ('prod-' + (this.productCounter + 1));
             this.basket.products.push(tempProd);
             this.sendInternalCounter();
             this.incrementProductCounter();
@@ -182,7 +182,7 @@ export default {
             events.$emit('internal-counters', this.index, this.productCounter);
         },
         scrollToBottom() {
-            // takes a bit to actually update
+            // takes a while to actually update DOM on add
             setTimeout(() => {
                 this.$refs.list.$el.scrollTo({
                     top: this.$refs.list.$el.scrollHeight,
