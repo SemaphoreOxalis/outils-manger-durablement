@@ -89,12 +89,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -166,20 +160,26 @@ var draggable = function draggable() {
   },
   created: function created() {
     events.$on('get-internal-counters', this.sendInternalCounter);
+    events.$on('insert-block', this.insertBlock);
   },
   mounted: function mounted() {
     this.sendInternalCounter();
   },
   methods: {
-    addProduct: function addProduct(product) {
+    addProduct: function addProduct(product, special) {
       var tempProd = _objectSpread({}, product);
 
-      tempProd.id = 'prod-' + (this.productCounter + 1);
-      this.basket.products.push(tempProd);
+      if (special === 'true') {
+        this.basket.products.unshift(tempProd);
+      } else {
+        tempProd.id = 'prod-' + (this.productCounter + 1);
+        this.basket.products.push(tempProd);
+        this.scrollToBottom();
+      }
+
       this.sendInternalCounter();
       this.incrementProductCounter();
       this.saveBasket();
-      this.scrollToBottom();
     },
     removeProduct: function removeProduct(productIndex) {
       this.basket.products.splice(productIndex, 1);
@@ -200,6 +200,8 @@ var draggable = function draggable() {
     doStuff: function doStuff() {
       this.$emit('do-stuff', this.index);
     },
+    insertBlock: function insertBlock() {//this.addProduct({}, 'true');
+    },
     searchInBasket: function searchInBasket() {
       this.$emit('search-in-basket', this.search, this.index);
     },
@@ -215,7 +217,7 @@ var draggable = function draggable() {
           top: _this.$refs.list.$el.scrollHeight,
           behavior: 'smooth'
         });
-      }, 100);
+      }, 200);
     }
   }
 });
@@ -330,35 +332,11 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "basket-toolbox" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.search,
-                expression: "search"
-              }
-            ],
-            staticClass: "input tool custom-input browser-default",
-            attrs: {
-              type: "search",
-              maxlength: "256",
-              name: "query",
-              placeholder: "chercher dans la liste"
-            },
-            domProps: { value: _vm.search },
-            on: {
-              input: [
-                function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.search = $event.target.value
-                },
-                _vm.searchInBasket
-              ]
-            }
-          }),
+          _c(
+            "button",
+            { staticClass: "button alter", on: { click: _vm.insertBlock } },
+            [_vm._v("Insérer un bloc")]
+          ),
           _vm._v(" "),
           _vm.containsProducts
             ? _c(

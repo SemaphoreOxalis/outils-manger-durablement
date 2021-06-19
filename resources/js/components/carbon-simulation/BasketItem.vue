@@ -15,13 +15,7 @@
                 <a @click="copyBasket" class="btn-ico info-bubble" title="Dupliquer cette liste"></a>
             </div>
             <div class="basket-toolbox">
-                <input type="search"
-                       v-model="search"
-                       @input="searchInBasket"
-                       class="input tool custom-input browser-default"
-                       maxlength="256"
-                       name="query"
-                       placeholder="chercher dans la liste">
+                <button class="button alter" @click="insertBlock">Insérer un bloc</button>
                 <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool info-bubble" title="Modifier cette liste"></a>
                 <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool info-bubble pb-1" title="Vider cette liste"><strong>✖</strong></a>
                 <a @click="deleteBasket" class="btn-ico alt tool info-bubble" title="Supprimer cette liste"></a>
@@ -139,19 +133,24 @@ export default {
     },
     created() {
         events.$on('get-internal-counters', this.sendInternalCounter);
+        events.$on('insert-block', this.insertBlock);
     },
     mounted() {
         this.sendInternalCounter();
     },
     methods: {
-        addProduct(product) {
+        addProduct(product, special) {
             let tempProd = {...product};
-            tempProd.id = ('prod-' + (this.productCounter + 1));
-            this.basket.products.push(tempProd);
+            if(special === 'true') {
+                this.basket.products.unshift(tempProd);
+            } else {
+                tempProd.id = ('prod-' + (this.productCounter + 1));
+                this.basket.products.push(tempProd);
+                this.scrollToBottom();
+            }
             this.sendInternalCounter();
             this.incrementProductCounter();
             this.saveBasket();
-            this.scrollToBottom();
         },
         removeProduct(productIndex) {
             this.basket.products.splice(productIndex, 1);
@@ -173,7 +172,9 @@ export default {
         doStuff() {
             this.$emit('do-stuff', this.index);
         },
-
+        insertBlock() {
+            //this.addProduct({}, 'true');
+        },
         searchInBasket() {
             this.$emit('search-in-basket', this.search, this.index);
         },
@@ -188,7 +189,7 @@ export default {
                     top: this.$refs.list.$el.scrollHeight,
                     behavior: 'smooth'
                 });
-            }, 100);
+            }, 200);
         },
     }
 }

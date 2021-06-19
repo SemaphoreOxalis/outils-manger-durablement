@@ -55,6 +55,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return [];
       }
     },
+    specialProducts: {
+      type: Array,
+      required: false,
+      "default": function _default() {
+        return [];
+      }
+    },
     focus: Boolean
   },
   data: function data() {
@@ -82,7 +89,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     onChange: function onChange() {
       this.isOpen = true;
-      this.results = this.searchWithSearchBar(this.products);
+      this.results = this.searchWithSearchBar(this.products.concat(this.specialProducts));
       this.$emit('search-complete', this.results);
     },
     setResult: function setResult(result) {

@@ -13,6 +13,7 @@
             <product-list v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:products="this.products"
+                          v-bind:specialProducts="this.specialProducts"
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
                           v-bind:counters="this.internalCounters"
@@ -22,6 +23,7 @@
             </product-list>
 
             <search-bar :products="this.products"
+                        :specialProducts="this.specialProducts"
                         :focus="this.focusOnSearchBar"
                         @search-complete="filterProductsBySearch"
                         @product-chosen="showAddingProductModal"
@@ -92,6 +94,7 @@ export default {
     data() {
         return {
             products: [],
+            specialProducts: [],
             categories: [],
             units: [],
             origins: [],
@@ -117,6 +120,7 @@ export default {
     created() {
         events.$on('internal-counters', this.setInternalCounters);
         this.fetchProducts();
+        this.fetchSpecialProducts();
         this.fetchCategories();
         this.fetchUnits();
         this.fetchOrigins();
@@ -151,12 +155,15 @@ export default {
             this.getSelectedBaskets();
             if(!this.selectedBaskets.length) {
                 alert('Aucune liste sélectionnée');
-            } else {
-                this.getSelectedBaskets();
-                this.loseFocusOnSearchBar();
-                this.productAdded = product;
-                this.showAddingModal = true;
+                return;
             }
+            if(product.type === 'special') {
+                events.$emit('insert-block');
+                return;
+            }
+            this.loseFocusOnSearchBar();
+            this.productAdded = product;
+            this.showAddingModal = true;
         },
         addProductToBasket(product) {
             this.showAddingModal = false;

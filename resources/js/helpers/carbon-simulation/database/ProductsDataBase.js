@@ -6,6 +6,12 @@ export default {
             });
         },
 
+        fetchSpecialProducts() {
+            getSpecialProducts().then((response) => {
+                this.specialProducts = response.data;
+            });
+        },
+
         updateProduct(product) {
             patchProduct(product).then(response => {
                 flash(response.data);
@@ -36,6 +42,10 @@ export default {
 
 function getProducts() {
     return axios.get('/api/products');
+}
+
+function getSpecialProducts() {
+    return axios.get('/api/special-products');
 }
 
 function patchProduct(product) {

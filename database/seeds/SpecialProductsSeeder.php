@@ -12,17 +12,7 @@ class SpecialProductsSeeder extends Seeder
     public function run()
     {
         DB::table('products')->insert([
-            'name' => 'Titre de bloc',
-            'unit_id' => null,
-            'category_id' => null,
-            'uncertainty' => null,
-            'comment' => null,
-            'emissionFactor' => null,
-            'type' => 'special'
-        ]);
-
-        DB::table('products')->insert([
-            'name' => 'Fin de bloc',
+            'name' => 'Bloc',
             'unit_id' => null,
             'category_id' => null,
             'uncertainty' => null,

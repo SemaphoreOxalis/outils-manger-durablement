@@ -76,6 +76,7 @@ var draggable = function draggable() {
   props: {
     categories: Array,
     products: Array,
+    specialProducts: Array,
     selectedCategoryId: Number,
     selectedByCategory: Boolean,
     origins: Array,
@@ -97,8 +98,8 @@ var draggable = function draggable() {
       }
 
       if (this.selectedByCategory && this.selectedCategoryId != null) {
-        return this.products.filter(function (product) {
-          return product.category.id === _this.selectedCategoryId;
+        return this.products.concat(this.specialProducts).filter(function (product) {
+          return product.category_id == _this.selectedCategoryId;
         });
       }
 
@@ -106,6 +107,8 @@ var draggable = function draggable() {
     }
   },
   mounted: function mounted() {
+    var _this2 = this;
+
     events.$on('clear-search-bar', this.clearSearchBar);
     var _self = document.body;
     $(document).on('click', function (e) {
@@ -123,6 +126,16 @@ var draggable = function draggable() {
     }).on('hide.bs.dropdown', function () {
       return _self.closable;
     });
+    setTimeout(function () {
+      _this2.categories.push({
+        name: 'Spécial',
+        id: _this2.categories.length + 1
+      });
+
+      _this2.specialProducts.forEach(function (p) {
+        p.category_id = _this2.categories.length;
+      });
+    }, 1000);
   },
   methods: {
     getClasses: function getClasses(categoryId) {

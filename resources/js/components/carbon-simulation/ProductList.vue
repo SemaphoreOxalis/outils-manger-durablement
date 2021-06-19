@@ -54,6 +54,7 @@ export default {
     props: {
         categories: Array,
         products: Array,
+        specialProducts: Array,
         selectedCategoryId: Number,
         selectedByCategory: Boolean,
         origins: Array,
@@ -72,8 +73,8 @@ export default {
                 return this.searchWithSearchBar(this.products);
             }
             if(this.selectedByCategory && this.selectedCategoryId != null) {
-                return this.products.filter(product => {
-                    return product.category.id === this.selectedCategoryId;
+                return (this.products.concat(this.specialProducts)).filter(product => {
+                    return product.category_id == this.selectedCategoryId;
                 });
             }
 
@@ -103,6 +104,13 @@ export default {
             .on('hide.bs.dropdown', function() {
                 return _self.closable
             });
+
+        setTimeout(() => {
+            this.categories.push({name: 'Spécial', id: this.categories.length + 1});
+            this.specialProducts.forEach((p) => {
+               p.category_id = this.categories.length;
+            });
+        }, 1000);
     },
     methods: {
         getClasses(categoryId) {

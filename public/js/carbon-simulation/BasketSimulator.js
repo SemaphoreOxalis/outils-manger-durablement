@@ -74,6 +74,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -109,6 +111,7 @@ var BasketsList = function BasketsList() {
   data: function data() {
     return {
       products: [],
+      specialProducts: [],
       categories: [],
       units: [],
       origins: [],
@@ -128,6 +131,7 @@ var BasketsList = function BasketsList() {
   created: function created() {
     events.$on('internal-counters', this.setInternalCounters);
     this.fetchProducts();
+    this.fetchSpecialProducts();
     this.fetchCategories();
     this.fetchUnits();
     this.fetchOrigins();
@@ -177,12 +181,17 @@ var BasketsList = function BasketsList() {
 
       if (!this.selectedBaskets.length) {
         alert('Aucune liste sélectionnée');
-      } else {
-        this.getSelectedBaskets();
-        this.loseFocusOnSearchBar();
-        this.productAdded = product;
-        this.showAddingModal = true;
+        return;
       }
+
+      if (product.type === 'special') {
+        events.$emit('insert-block');
+        return;
+      }
+
+      this.loseFocusOnSearchBar();
+      this.productAdded = product;
+      this.showAddingModal = true;
     },
     addProductToBasket: function addProductToBasket(product) {
       this.showAddingModal = false;
@@ -257,6 +266,7 @@ var render = function() {
               categories: this.categories,
               origins: this.origins,
               products: this.products,
+              specialProducts: this.specialProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
               counters: this.internalCounters
@@ -269,7 +279,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("search-bar", {
-            attrs: { products: this.products, focus: this.focusOnSearchBar },
+            attrs: {
+              products: this.products,
+              specialProducts: this.specialProducts,
+              focus: this.focusOnSearchBar
+            },
             on: {
               "search-complete": _vm.filterProductsBySearch,
               "product-chosen": _vm.showAddingProductModal,
@@ -804,6 +818,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.products = response.data;
       });
     },
+    fetchSpecialProducts: function fetchSpecialProducts() {
+      var _this2 = this;
+
+      getSpecialProducts().then(function (response) {
+        _this2.specialProducts = response.data;
+      });
+    },
     updateProduct: function updateProduct(product) {
       patchProduct(product).then(function (response) {
         flash(response.data);
@@ -812,23 +833,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addProduct: function addProduct() {
-      var _this2 = this;
+      var _this3 = this;
 
       postProduct(this.newProduct).then(function (response) {
-        _this2.products.push(response.data);
+        _this3.products.push(response.data);
 
-        _this2.newProduct = {};
+        _this3.newProduct = {};
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     deleteProduct: function deleteProduct(productId) {
-      var _this3 = this;
+      var _this4 = this;
 
       destroyProduct(productId).then(function (response) {
         flash(response.data);
 
-        _this3.refreshProducts();
+        _this4.refreshProducts();
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
@@ -838,6 +859,10 @@ __webpack_require__.r(__webpack_exports__);
 
 function getProducts() {
   return axios.get('/api/products');
+}
+
+function getSpecialProducts() {
+  return axios.get('/api/special-products');
 }
 
 function patchProduct(product) {

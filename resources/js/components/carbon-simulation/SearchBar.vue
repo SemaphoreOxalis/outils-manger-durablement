@@ -39,6 +39,11 @@
                 required: false,
                 default: () => [],
             },
+            specialProducts: {
+                type: Array,
+                required: false,
+                default: () => [],
+            },
             focus: Boolean,
         },
         data() {
@@ -66,7 +71,7 @@
         methods: {
             onChange() {
                 this.isOpen = true;
-                this.results = this.searchWithSearchBar(this.products);
+                this.results = this.searchWithSearchBar(this.products.concat(this.specialProducts));
                 this.$emit('search-complete', this.results);
             },
             setResult(result) {
