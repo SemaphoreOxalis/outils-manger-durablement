@@ -16,8 +16,8 @@
             </div>
             <div class="basket-toolbox">
                 <button class="button" @click="insertBlock">Insérer un bloc</button>
-                <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool info-bubble" title="Modifier cette liste"></a>
-                <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool info-bubble pb-1" title="Vider cette liste"><strong>✖</strong></a>
+                <a v-if="contains('prod')" @click="doStuff" class="btn-ico alt tool info-bubble" title="Modifier cette liste"></a>
+                <a v-if="contains('prod')" @click="clearBasket" class="btn-ico alt tool info-bubble pb-1" title="Vider cette liste"><strong>✖</strong></a>
                 <a @click="deleteBasket" class="btn-ico alt tool info-bubble" title="Supprimer cette liste"></a>
             </div>
         </div>
@@ -41,7 +41,7 @@
             </basket-product>
         </draggable>
 
-        <basket-result v-if="containsProducts"
+        <basket-result v-if="contains('prod')"
                        :index="index"
                        :basket="basket"
                        :is-first="isFirst"
@@ -104,7 +104,6 @@ export default {
     },
     watch: {
         productToAdd(newProduct) {
-            console.log(this.productToAdd);
             if (this.basket.isSelected) {
                 this.addProduct(newProduct);
             }
@@ -118,17 +117,28 @@ export default {
             return this.basket.products;
         },
         productCounter: function () {
-            if (this.basket.products.length > 0) {
+            if (this.contains('prod')) {
                 return Math.max(...this.basket.products.map(product => {
-                    return product.id.substring(5); // "prod-" id prefix is 5 characters long
+                    if(product.type === 'prod') {
+                        return product.id.substring(5); // "prod-" id prefix is 5 characters long
+                    } else { return 0; }
                 }));
             } else {
                 return 0;
             }
         },
-        containsProducts: function () {
-            return this.basket.products.length > 0;
+        blockCounter: function () {
+            if (this.contains('special')) {
+                return Math.max(...this.basket.products.map(product => {
+                    if(product.type === 'special') {
+                        return product.id.substring(12); // "block-start-" and "block-fnish-" id prefixes are 12 characters long
+                    } else { return 0; }
+                }));
+            } else {
+                return 0;
+            }
         },
+
         isFirst() {
             return this.index === 0;
         },
@@ -141,13 +151,11 @@ export default {
         this.sendInternalCounter();
     },
     methods: {
-        addProduct(product, special) {
-            console.log(product);
-            let tempProd = {...product};
-            console.log(tempProd);
-            if(special === 'true') {
-                this.basket.products.unshift(tempProd);
+        addProduct(product) {
+            if(product.type === 'special') {
+                this.basket.products.unshift(product);
             } else {
+                let tempProd = {...product};
                 tempProd.id = ('prod-' + (this.productCounter + 1));
                 this.basket.products.push(tempProd);
                 this.scrollToBottom();
@@ -160,7 +168,6 @@ export default {
             this.basket.products.splice(productIndex, 1);
             this.saveBasket();
         },
-
         copyBasket() {
             this.$emit('copy-basket', this.basket, this.index);
         },
@@ -177,10 +184,30 @@ export default {
             this.$emit('do-stuff', this.index);
         },
         insertBlock() {
-            if(this.isSelected) {
-                console.log('bloc');
+            let id = this.blockCounter + 1;
+            if(this.isSelected) { // in reverse order because they're prepended
+                this.addProduct({
+                    id: 'block-fnish-' + id,
+                    name: 'Fin du bloc ' + id,
+                    type: 'special',
+                });
+                this.addProduct({
+                    id: 'block-start-' + id,
+                    name: 'Titre du bloc ' + id,
+                    type: 'special',
+                });
             }
-            //this.addProduct({}, 'true');
+        },
+        contains(type) {
+            let result = false;
+            if(this.basket.products) {
+                this.basket.products.forEach((p) => {
+                    if(p.type === type) {
+                        result = true;
+                    }
+                });
+            }
+            return result;
         },
         searchInBasket() {
             this.$emit('search-in-basket', this.search, this.index);

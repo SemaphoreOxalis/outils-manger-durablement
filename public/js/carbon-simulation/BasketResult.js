@@ -1103,7 +1103,9 @@ __webpack_require__.r(__webpack_exports__);
       var categoryTransportationImpact = 0;
       var categoryCarbonImpact = 0;
       var categoryProducts = this.products.filter(function (product) {
-        return product.category.id === category.id;
+        if (product.type !== 'special') {
+          return product.category.id === category.id;
+        }
       });
       categoryProducts.forEach(function (product) {
         // let productImpact = 0;
@@ -1149,7 +1151,9 @@ __webpack_require__.r(__webpack_exports__);
     getMoneyImpactFor: function getMoneyImpactFor(category) {
       var categoryMoneySpent = 0;
       var categoryProducts = this.products.filter(function (product) {
-        return product.category.id === category.id;
+        if (product.type !== 'special') {
+          return product.category.id === category.id;
+        }
       });
       categoryProducts.forEach(function (product) {
         var productPrice = parseFloat(product.price);

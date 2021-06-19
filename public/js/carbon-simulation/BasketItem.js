@@ -130,8 +130,6 @@ var draggable = function draggable() {
   },
   watch: {
     productToAdd: function productToAdd(newProduct) {
-      console.log(this.productToAdd);
-
       if (this.basket.isSelected) {
         this.addProduct(newProduct);
       }
@@ -146,16 +144,30 @@ var draggable = function draggable() {
       return this.basket.products;
     },
     productCounter: function productCounter() {
-      if (this.basket.products.length > 0) {
+      if (this.contains('prod')) {
         return Math.max.apply(Math, _toConsumableArray(this.basket.products.map(function (product) {
-          return product.id.substring(5); // "prod-" id prefix is 5 characters long
+          if (product.type === 'prod') {
+            return product.id.substring(5); // "prod-" id prefix is 5 characters long
+          } else {
+            return 0;
+          }
         })));
       } else {
         return 0;
       }
     },
-    containsProducts: function containsProducts() {
-      return this.basket.products.length > 0;
+    blockCounter: function blockCounter() {
+      if (this.contains('special')) {
+        return Math.max.apply(Math, _toConsumableArray(this.basket.products.map(function (product) {
+          if (product.type === 'special') {
+            return product.id.substring(12); // "block-start-" and "block-fnish-" id prefixes are 12 characters long
+          } else {
+            return 0;
+          }
+        })));
+      } else {
+        return 0;
+      }
     },
     isFirst: function isFirst() {
       return this.index === 0;
@@ -169,16 +181,12 @@ var draggable = function draggable() {
     this.sendInternalCounter();
   },
   methods: {
-    addProduct: function addProduct(product, special) {
-      console.log(product);
-
-      var tempProd = _objectSpread({}, product);
-
-      console.log(tempProd);
-
-      if (special === 'true') {
-        this.basket.products.unshift(tempProd);
+    addProduct: function addProduct(product) {
+      if (product.type === 'special') {
+        this.basket.products.unshift(product);
       } else {
+        var tempProd = _objectSpread({}, product);
+
         tempProd.id = 'prod-' + (this.productCounter + 1);
         this.basket.products.push(tempProd);
         this.scrollToBottom();
@@ -208,10 +216,34 @@ var draggable = function draggable() {
       this.$emit('do-stuff', this.index);
     },
     insertBlock: function insertBlock() {
-      if (this.isSelected) {
-        console.log('bloc');
-      } //this.addProduct({}, 'true');
+      var id = this.blockCounter + 1;
 
+      if (this.isSelected) {
+        // in reverse order because they're prepended
+        this.addProduct({
+          id: 'block-fnish-' + id,
+          name: 'Fin du bloc ' + id,
+          type: 'special'
+        });
+        this.addProduct({
+          id: 'block-start-' + id,
+          name: 'Titre du bloc ' + id,
+          type: 'special'
+        });
+      }
+    },
+    contains: function contains(type) {
+      var result = false;
+
+      if (this.basket.products) {
+        this.basket.products.forEach(function (p) {
+          if (p.type === type) {
+            result = true;
+          }
+        });
+      }
+
+      return result;
     },
     searchInBasket: function searchInBasket() {
       this.$emit('search-in-basket', this.search, this.index);
@@ -349,7 +381,7 @@ var render = function() {
             [_vm._v("Insérer un bloc")]
           ),
           _vm._v(" "),
-          _vm.containsProducts
+          _vm.contains("prod")
             ? _c(
                 "a",
                 {
@@ -361,7 +393,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.containsProducts
+          _vm.contains("prod")
             ? _c(
                 "a",
                 {
@@ -424,7 +456,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.containsProducts
+      _vm.contains("prod")
         ? _c("basket-result", {
             attrs: {
               index: _vm.index,

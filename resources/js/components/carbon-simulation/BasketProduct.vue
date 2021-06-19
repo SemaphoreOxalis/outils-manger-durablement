@@ -1,7 +1,6 @@
 <template>
-    <div class="product-item">
-
-        <div v-if="true">
+    <div v-if="product.type === 'prod'">
+        <div class="product-item">
             <div class="product-header-container" :id="'header-' + basketId + '-' + product.id">
 
                 <div class="d-flex">
@@ -62,9 +61,22 @@
 
             </div>
         </div>
+    </div>
 
-        <div v-else>Bouh</div>
+    <div v-else-if="product.type === 'special'">
+        <div :class="getClasses(product.id)" :id="'header-' + basketId + '-' + product.id">
 
+            <div class="d-flex">
+                <div class="text-block">
+                    <span class="product-name">{{ product.name }}</span>
+                </div>
+            </div>
+
+            <div v-if="product.id.includes('start')" class="d-flex">
+                <a class="btn-ico alt tool info-bubble"
+                   @click="" title="Supprimer ce bloc"></a>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -110,6 +122,13 @@ export default {
             }).on('hide.bs.collapse', function () {
                 $(collapseIconId).removeClass("reversed");
             });
+        },
+        getClasses(productId) {
+            return [
+                'special-product-header-container',
+                'border-left',
+                productId.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'
+            ];
         }
     }
 }

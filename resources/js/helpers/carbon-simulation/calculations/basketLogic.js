@@ -6,7 +6,9 @@ export default {
             let categoryCarbonImpact = 0;
 
             let categoryProducts = this.products.filter(product => {
-                return product.category.id === category.id
+                if(product.type !== 'special') {
+                    return product.category.id === category.id;
+                }
             });
 
             categoryProducts.forEach(product => {
@@ -61,7 +63,9 @@ export default {
             let categoryMoneySpent = 0;
 
             let categoryProducts = this.products.filter(product => {
-                return product.category.id === category.id
+                if(product.type !== 'special') {
+                    return product.category.id === category.id;
+                }
             });
 
             categoryProducts.forEach(product => {

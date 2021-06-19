@@ -79,6 +79,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -119,6 +131,9 @@ __webpack_require__.r(__webpack_exports__);
       }).on('hide.bs.collapse', function () {
         $(collapseIconId).removeClass("reversed");
       });
+    },
+    getClasses: function getClasses(productId) {
+      return ['special-product-header-container', 'border-left', productId.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
     }
   }
 });
@@ -140,9 +155,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "product-item" }, [
-    true
-      ? _c("div", [
+  return _vm.product.type === "prod"
+    ? _c("div", [
+        _c("div", { staticClass: "product-item" }, [
           _c(
             "div",
             {
@@ -370,8 +385,41 @@ var render = function() {
             ]
           )
         ])
-      : undefined
-  ])
+      ])
+    : _vm.product.type === "special"
+    ? _c("div", [
+        _c(
+          "div",
+          {
+            class: _vm.getClasses(_vm.product.id),
+            attrs: { id: "header-" + _vm.basketId + "-" + _vm.product.id }
+          },
+          [
+            _c("div", { staticClass: "d-flex" }, [
+              _c("div", { staticClass: "text-block" }, [
+                _c("span", { staticClass: "product-name" }, [
+                  _vm._v(_vm._s(_vm.product.name))
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.product.id.includes("start")
+              ? _c("div", { staticClass: "d-flex" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn-ico alt tool info-bubble",
+                      attrs: { title: "Supprimer ce bloc" },
+                      on: { click: function($event) {} }
+                    },
+                    [_vm._v("")]
+                  )
+                ])
+              : _vm._e()
+          ]
+        )
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
