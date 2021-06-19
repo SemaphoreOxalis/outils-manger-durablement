@@ -25,6 +25,7 @@
                          v-bind:product-to-add="productToAdd"
                          v-bind:previous-basket="previousBasket(i)"
                          v-bind:first-basket="firstBasket"
+                         v-bind:is-selected="isSelected(i)"
                          v-bind:compare-to-previous-basket="compareToPreviousBasket"
                          @save-baskets="saveBasketsToLocalStorage"
                          @do-stuff="showGroupedActionPopUp"
@@ -128,7 +129,7 @@ export default {
         },
         firstBasket: function () {
             return this.baskets[0];
-        }
+        },
     },
     created() {
         if (localStorage.hasOwnProperty('baskets')) {
@@ -161,6 +162,12 @@ export default {
         previousBasket(index) {
             return index > 0 ? this.baskets[index - 1] : null;
         },
+
+        isSelected(i) {
+            if(this.baskets[i]) {
+                return this.baskets[i].isSelected;
+            }
+        }
     }
 }
 </script>

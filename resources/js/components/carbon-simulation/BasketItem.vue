@@ -15,7 +15,7 @@
                 <a @click="copyBasket" class="btn-ico info-bubble" title="Dupliquer cette liste"></a>
             </div>
             <div class="basket-toolbox">
-                <button class="button alter" @click="insertBlock">Insérer un bloc</button>
+                <button class="button" @click="insertBlock">Insérer un bloc</button>
                 <a v-if="containsProducts" @click="doStuff" class="btn-ico alt tool info-bubble" title="Modifier cette liste"></a>
                 <a v-if="containsProducts" @click="clearBasket" class="btn-ico alt tool info-bubble pb-1" title="Vider cette liste"><strong>✖</strong></a>
                 <a @click="deleteBasket" class="btn-ico alt tool info-bubble" title="Supprimer cette liste"></a>
@@ -94,6 +94,7 @@ export default {
         productToAdd: Object,
         previousBasket: Object,
         firstBasket: Object,
+        isSelected: Boolean,
         compareToPreviousBasket: Boolean,
     },
     data() {
@@ -103,6 +104,7 @@ export default {
     },
     watch: {
         productToAdd(newProduct) {
+            console.log(this.productToAdd);
             if (this.basket.isSelected) {
                 this.addProduct(newProduct);
             }
@@ -140,7 +142,9 @@ export default {
     },
     methods: {
         addProduct(product, special) {
+            console.log(product);
             let tempProd = {...product};
+            console.log(tempProd);
             if(special === 'true') {
                 this.basket.products.unshift(tempProd);
             } else {
@@ -173,6 +177,9 @@ export default {
             this.$emit('do-stuff', this.index);
         },
         insertBlock() {
+            if(this.isSelected) {
+                console.log('bloc');
+            }
             //this.addProduct({}, 'true');
         },
         searchInBasket() {

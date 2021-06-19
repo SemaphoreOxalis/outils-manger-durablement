@@ -125,17 +125,11 @@ var draggable = function draggable() {
       _self.closable = true;
     }).on('hide.bs.dropdown', function () {
       return _self.closable;
+    }).on('hidden.bs.dropdown', function () {
+      _this2.hideSpecialProducts();
+    }).on('show.bs.dropdown', function () {
+      _this2.showSpecialProducts();
     });
-    setTimeout(function () {
-      _this2.categories.push({
-        name: 'Spécial',
-        id: _this2.categories.length + 1
-      });
-
-      _this2.specialProducts.forEach(function (p) {
-        p.category_id = _this2.categories.length;
-      });
-    }, 1000);
   },
   methods: {
     getClasses: function getClasses(categoryId) {
@@ -146,6 +140,20 @@ var draggable = function draggable() {
     },
     addProdToBasket: function addProdToBasket(product) {
       this.$emit('add-product-to-basket', product);
+    },
+    showSpecialProducts: function showSpecialProducts() {
+      var _this3 = this;
+
+      this.categories.push({
+        name: 'Spécial',
+        id: this.categories.length + 1
+      });
+      this.specialProducts.forEach(function (p) {
+        p.category_id = _this3.categories.length;
+      });
+    },
+    hideSpecialProducts: function hideSpecialProducts() {
+      this.categories.pop();
     },
     addProductByDrag: function addProductByDrag(product) {
       events.$emit('get-internal-counters');

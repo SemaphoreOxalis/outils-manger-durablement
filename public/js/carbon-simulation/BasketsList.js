@@ -84,6 +84,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -176,6 +177,11 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     },
     previousBasket: function previousBasket(index) {
       return index > 0 ? this.baskets[index - 1] : null;
+    },
+    isSelected: function isSelected(i) {
+      if (this.baskets[i]) {
+        return this.baskets[i].isSelected;
+      }
     }
   }
 });
@@ -242,6 +248,7 @@ var render = function() {
               "product-to-add": _vm.productToAdd,
               "previous-basket": _vm.previousBasket(i),
               "first-basket": _vm.firstBasket,
+              "is-selected": _vm.isSelected(i),
               "compare-to-previous-basket": _vm.compareToPreviousBasket
             },
             on: {

@@ -93,24 +93,23 @@ export default {
         });
         $('#dropDownList')
             .on('click', '.category', function() {
-                _self.closable = false
+                _self.closable = false;
             })
             .on('click', '.add-product', function() {
-                _self.closable = true
+                _self.closable = true;
             })
             .on('click', '.product', function() {
-                _self.closable = true
+                _self.closable = true;
             })
             .on('hide.bs.dropdown', function() {
-                return _self.closable
+                return _self.closable;
+            })
+            .on('hidden.bs.dropdown', () => {
+                this.hideSpecialProducts();
+            })
+            .on('show.bs.dropdown', () => {
+                this.showSpecialProducts();
             });
-
-        setTimeout(() => {
-            this.categories.push({name: 'Spécial', id: this.categories.length + 1});
-            this.specialProducts.forEach((p) => {
-               p.category_id = this.categories.length;
-            });
-        }, 1000);
     },
     methods: {
         getClasses(categoryId) {
@@ -127,8 +126,16 @@ export default {
         addProdToBasket(product) {
             this.$emit('add-product-to-basket', product);
         },
+        showSpecialProducts() {
+            this.categories.push({name: 'Spécial', id: this.categories.length + 1});
+            this.specialProducts.forEach((p) => {
+                p.category_id = this.categories.length;
+            });
+        },
+        hideSpecialProducts() {
+            this.categories.pop();
+        },
         addProductByDrag(product) {
-
             events.$emit('get-internal-counters');
             this.productListInternalCounter = this.getMaxCounter();
             return {

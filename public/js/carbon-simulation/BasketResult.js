@@ -1186,8 +1186,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.roundToOneDecimal(amount);
     },
     getUnit: function getUnit(amount) {
-      if (amount > 1995) {
-        // rounded to 2 decimals
+      if (amount > 2000) {
         return 'tonnes de CO2';
       }
 

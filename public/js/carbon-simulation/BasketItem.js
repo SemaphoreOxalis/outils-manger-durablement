@@ -120,6 +120,7 @@ var draggable = function draggable() {
     productToAdd: Object,
     previousBasket: Object,
     firstBasket: Object,
+    isSelected: Boolean,
     compareToPreviousBasket: Boolean
   },
   data: function data() {
@@ -129,6 +130,8 @@ var draggable = function draggable() {
   },
   watch: {
     productToAdd: function productToAdd(newProduct) {
+      console.log(this.productToAdd);
+
       if (this.basket.isSelected) {
         this.addProduct(newProduct);
       }
@@ -167,7 +170,11 @@ var draggable = function draggable() {
   },
   methods: {
     addProduct: function addProduct(product, special) {
+      console.log(product);
+
       var tempProd = _objectSpread({}, product);
+
+      console.log(tempProd);
 
       if (special === 'true') {
         this.basket.products.unshift(tempProd);
@@ -200,7 +207,11 @@ var draggable = function draggable() {
     doStuff: function doStuff() {
       this.$emit('do-stuff', this.index);
     },
-    insertBlock: function insertBlock() {//this.addProduct({}, 'true');
+    insertBlock: function insertBlock() {
+      if (this.isSelected) {
+        console.log('bloc');
+      } //this.addProduct({}, 'true');
+
     },
     searchInBasket: function searchInBasket() {
       this.$emit('search-in-basket', this.search, this.index);
@@ -334,7 +345,7 @@ var render = function() {
         _c("div", { staticClass: "basket-toolbox" }, [
           _c(
             "button",
-            { staticClass: "button alter", on: { click: _vm.insertBlock } },
+            { staticClass: "button", on: { click: _vm.insertBlock } },
             [_vm._v("Insérer un bloc")]
           ),
           _vm._v(" "),
