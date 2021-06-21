@@ -651,7 +651,9 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     saveBasketsResults: function saveBasketsResults(basketIndex, results) {
-      this.baskets[basketIndex].results = results;
+      if (this.baskets[basketIndex]) {
+        this.baskets[basketIndex].results = results;
+      }
     }
   }
 });

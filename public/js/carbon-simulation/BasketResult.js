@@ -1292,18 +1292,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateChart: function updateChart() {
+      var _this4 = this;
+
       this.prepareChartValues();
+      setTimeout(function () {
+        if (_this4.chartViewMoney) {
+          _this4.chart.data.datasets[0].data = _this4.chartData.money;
+        } else {
+          _this4.chart.data.datasets[0].data = _this4.chartData.values;
+        }
 
-      if (this.chartViewMoney) {
-        this.chart.data.datasets[0].data = this.chartData.money;
-      } else {
-        this.chart.data.datasets[0].data = this.chartData.values;
-      }
-
-      this.chart.update({
-        duration: 1000,
-        easing: 'easeOutBounce'
-      });
+        _this4.chart.update({
+          duration: 1000,
+          easing: 'easeOutBounce'
+        });
+      }, 100);
     }
   }
 });

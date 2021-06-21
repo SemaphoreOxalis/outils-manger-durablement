@@ -1172,7 +1172,18 @@ h1.header {
       -ms-flex-pack: justify;
       justify-content: space-between;
       border-color: var(--third-color) !important;
+      cursor: move;
+  }
 
+  .special-product-header-container i {
+    color: var(--third-color);
+  }
+
+  .border-left-3 {
+    border-left:3px solid var(--third-color) !important;
+  }
+  .border-3 {
+    border-width:3px !important;
   }
 
   .special-product-top {

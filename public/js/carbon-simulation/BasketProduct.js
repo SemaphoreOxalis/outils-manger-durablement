@@ -91,12 +91,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
     basketId: String,
     index: Number,
-    origins: Array
+    origins: Array,
+    isInBlock: Number
   },
   data: function data() {
     return {
@@ -132,8 +135,11 @@ __webpack_require__.r(__webpack_exports__);
         $(collapseIconId).removeClass("reversed");
       });
     },
-    getClasses: function getClasses(productId) {
-      return ['special-product-header-container', 'border-left', productId.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
+    getClasses: function getClasses() {
+      return ['product-item', this.isInBlock > 0 ? 'border-left-3' : ''];
+    },
+    getSpecialClasses: function getSpecialClasses(product) {
+      return ['special-product-header-container', 'border-left', 'border-3', product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
     }
   }
 });
@@ -157,7 +163,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _vm.product.type === "prod"
     ? _c("div", [
-        _c("div", { staticClass: "product-item" }, [
+        _c("div", { class: _vm.getClasses() }, [
           _c(
             "div",
             {
@@ -391,16 +397,37 @@ var render = function() {
         _c(
           "div",
           {
-            class: _vm.getClasses(_vm.product.id),
+            class: _vm.getSpecialClasses(_vm.product),
             attrs: { id: "header-" + _vm.basketId + "-" + _vm.product.id }
           },
           [
-            _c("div", { staticClass: "d-flex" }, [
-              _c("div", { staticClass: "text-block" }, [
-                _c("span", { staticClass: "product-name" }, [
-                  _vm._v(_vm._s(_vm.product.name))
-                ])
-              ])
+            _c("div", { staticClass: "text-block" }, [
+              _vm.product.id.includes("start")
+                ? _c("div", { staticClass: "product-name" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.product.name,
+                          expression: "product.name"
+                        }
+                      ],
+                      staticClass:
+                        "ignore-draggable custom-input browser-default input",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.product.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.product, "name", $event.target.value)
+                        }
+                      }
+                    })
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _vm.product.id.includes("start")
@@ -410,12 +437,18 @@ var render = function() {
                     {
                       staticClass: "btn-ico alt tool info-bubble",
                       attrs: { title: "Supprimer ce bloc" },
-                      on: { click: function($event) {} }
+                      on: {
+                        click: function($event) {
+                          return _vm.removeProduct(_vm.index)
+                        }
+                      }
                     },
                     [_vm._v("")]
                   )
                 ])
-              : _vm._e()
+              : _c("div", [
+                  _c("i", { staticClass: "icon mr-2 p-1" }, [_vm._v("")])
+                ])
           ]
         )
       ])

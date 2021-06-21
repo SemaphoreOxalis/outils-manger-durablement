@@ -41,9 +41,5 @@
     "/vendors~js/admin/WysiwygAdminPage.js": "/vendors~js/admin/WysiwygAdminPage.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js",
-    "/vendors~js/admin/carbon-simulation/CategoriesAdminPage~js/admin/carbon-simulation/OriginsAdminPage~j~f9c30c95.js": "/vendors~js/admin/carbon-simulation/CategoriesAdminPage~js/admin/carbon-simulation/OriginsAdminPage~j~f9c30c95.js",
-    "/vendors~js/admin/carbon-simulation/CategoriesAdminPage~js/admin/carbon-simulation/OriginsAdminPage~j~e814e8ed.js": "/vendors~js/admin/carbon-simulation/CategoriesAdminPage~js/admin/carbon-simulation/OriginsAdminPage~j~e814e8ed.js",
-    "/vendors~js/admin/carbon-simulation/OriginsAdminPage~js/admin/carbon-simulation/ProductsAdminPage.js": "/vendors~js/admin/carbon-simulation/OriginsAdminPage~js/admin/carbon-simulation/ProductsAdminPage.js",
-    "/vendors~js/admin/carbon-simulation/ProductsAdminPage.js": "/vendors~js/admin/carbon-simulation/ProductsAdminPage.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js"
 }

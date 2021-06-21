@@ -83,15 +83,17 @@ export default {
         },
         updateChart() {
             this.prepareChartValues();
-            if(this.chartViewMoney) {
-                this.chart.data.datasets[0].data = this.chartData.money;
-            } else {
-                this.chart.data.datasets[0].data = this.chartData.values;
-            }
-            this.chart.update({
-                duration: 1000,
-                easing: 'easeOutBounce'
-            });
+            setTimeout(() => {
+                if(this.chartViewMoney) {
+                    this.chart.data.datasets[0].data = this.chartData.money;
+                } else {
+                    this.chart.data.datasets[0].data = this.chartData.values;
+                }
+                this.chart.update({
+                    duration: 1000,
+                    easing: 'easeOutBounce'
+                });
+            }, 100);
         },
     },
 }

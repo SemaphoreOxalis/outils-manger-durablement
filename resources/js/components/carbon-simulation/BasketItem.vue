@@ -27,6 +27,7 @@
                    class="dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary"
                    :group="{ name: 'draggableProducts', pull: false }"
                    @change="saveBasket"
+                   :move="checkIfMovable"
                    filter=".ignore-draggable"
                    :preventOnFilter="false"
                    :animation="150">
@@ -36,6 +37,7 @@
                             v-bind:basket-id="basket.id"
                             v-bind:index="i"
                             v-bind:origins="origins"
+                            v-bind:isInBlock="isInBlock(i)"
                             @save-changes="saveBasket"
                             @remove-product="removeProduct">
             </basket-product>
@@ -142,6 +144,10 @@ export default {
         isFirst() {
             return this.index === 0;
         },
+
+        blocks() {
+            return this.getBlocksIndexes();
+        },
     },
     created() {
         events.$on('get-internal-counters', this.sendInternalCounter);
@@ -159,12 +165,15 @@ export default {
                 tempProd.id = ('prod-' + (this.productCounter + 1));
                 this.basket.products.push(tempProd);
                 this.scrollToBottom();
+                this.sendInternalCounter();
+                this.incrementProductCounter();
             }
-            this.sendInternalCounter();
-            this.incrementProductCounter();
             this.saveBasket();
         },
         removeProduct(productIndex) {
+            if(this.basket.products[productIndex].id.includes('start')) {
+                this.basket.products.splice(this.getCorrespondingIndex(this.basket.products[productIndex]), 1);
+            }
             this.basket.products.splice(productIndex, 1);
             this.saveBasket();
         },
@@ -225,6 +234,65 @@ export default {
                 });
             }, 200);
         },
+        checkIfMovable(e, originalE) {
+            if(e.draggedContext.element.type === 'special') {
+                let dragged = e.draggedContext.element;
+                let number = this.getBlockNumber(dragged);
+                let correspondingIndex = this.getCorrespondingIndex(dragged);
+
+                // prevent block-end before block-start
+                if ((dragged.id.includes('start') && e.draggedContext.futureIndex >= correspondingIndex)
+                    || (dragged.id.includes('fnish') && e.draggedContext.futureIndex <= correspondingIndex)) {
+                    return false;
+                }
+
+                // prevent blocks entanglements
+                let result = true;
+                this.blocks.forEach((block) => {
+                    if(block[2] !== this.getBlockNumber(dragged)) {
+                        if (block[0] <= e.draggedContext.futureIndex && e.draggedContext.futureIndex <= block[1]) {
+                            result = false;
+                        }
+                    }
+                });
+                return result
+            }
+        },
+        getBlockIndex(type, number) {
+            for (let i = 0; i < this.basket.products.length; i++) {
+                if (this.basket.products[i].id.includes('block-' + type + '-' + number)) {
+                    return i;
+                }
+            }
+        },
+        getBlocksIndexes() {
+            let blocks  = [];
+            for (let i = 0; i < this.basket.products.length; i++) {
+                if (this.basket.products[i].id.includes('block-start')) {
+                    blocks.push([i, this.getCorrespondingIndex(this.basket.products[i]), this.getBlockNumber(this.basket.products[i])]);
+                }
+            }
+            return blocks;
+        },
+        getCorrespondingIndex(element) {
+            return element.id.includes('start') ? this.getBlockIndex('fnish', this.getBlockNumber(element)) : this.getBlockIndex('start', this.getBlockNumber(element));
+        },
+        isInBlock(index) {
+            let result = -1;
+            if (!this.blocks.length) {
+                result = -1;
+            } else {
+                this.blocks.forEach((block) => {
+                    if (block[0] < index && index < block[1]) {
+                        result =  Number(block[2]);
+                    }
+                });
+            }
+            return result
+        },
+        getBlockNumber(block) {
+            return block.id.substring(12);
+        }
     }
 }
 </script>

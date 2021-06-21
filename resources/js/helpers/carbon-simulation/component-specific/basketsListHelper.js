@@ -41,7 +41,9 @@ export default {
             };
         },
         saveBasketsResults(basketIndex, results) {
-            this.baskets[basketIndex].results = results;
+            if(this.baskets[basketIndex]) {
+                this.baskets[basketIndex].results = results;
+            }
         },
     }
 }

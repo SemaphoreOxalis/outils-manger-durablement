@@ -1,6 +1,6 @@
 <template>
     <div v-if="product.type === 'prod'">
-        <div class="product-item">
+        <div :class="getClasses()">
             <div class="product-header-container" :id="'header-' + basketId + '-' + product.id">
 
                 <div class="d-flex">
@@ -64,18 +64,20 @@
     </div>
 
     <div v-else-if="product.type === 'special'">
-        <div :class="getClasses(product.id)" :id="'header-' + basketId + '-' + product.id">
+        <div :class="getSpecialClasses(product)" :id="'header-' + basketId + '-' + product.id">
 
-            <div class="d-flex">
-                <div class="text-block">
-                    <span class="product-name">{{ product.name }}</span>
+
+            <div class="text-block">
+                <div v-if="product.id.includes('start')" class="product-name">
+                    <input v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text">
                 </div>
             </div>
 
             <div v-if="product.id.includes('start')" class="d-flex">
                 <a class="btn-ico alt tool info-bubble"
-                   @click="" title="Supprimer ce bloc"></a>
+                   @click="removeProduct(index)" title="Supprimer ce bloc"></a>
             </div>
+            <div v-else><i class="icon mr-2 p-1"></i></div>
         </div>
     </div>
 </template>
@@ -87,6 +89,7 @@ export default {
         basketId: String,
         index: Number,
         origins: Array,
+        isInBlock: Number,
     },
     data() {
         return {
@@ -123,11 +126,18 @@ export default {
                 $(collapseIconId).removeClass("reversed");
             });
         },
-        getClasses(productId) {
+        getClasses() {
+            return [
+                'product-item',
+                this.isInBlock > 0 ? 'border-left-3' : ''
+            ];
+        },
+        getSpecialClasses(product) {
             return [
                 'special-product-header-container',
                 'border-left',
-                productId.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'
+                'border-3',
+                product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'
             ];
         }
     }

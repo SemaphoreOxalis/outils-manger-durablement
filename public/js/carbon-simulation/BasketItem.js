@@ -89,6 +89,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 
 
@@ -171,6 +173,9 @@ var draggable = function draggable() {
     },
     isFirst: function isFirst() {
       return this.index === 0;
+    },
+    blocks: function blocks() {
+      return this.getBlocksIndexes();
     }
   },
   created: function created() {
@@ -190,13 +195,17 @@ var draggable = function draggable() {
         tempProd.id = 'prod-' + (this.productCounter + 1);
         this.basket.products.push(tempProd);
         this.scrollToBottom();
+        this.sendInternalCounter();
+        this.incrementProductCounter();
       }
 
-      this.sendInternalCounter();
-      this.incrementProductCounter();
       this.saveBasket();
     },
     removeProduct: function removeProduct(productIndex) {
+      if (this.basket.products[productIndex].id.includes('start')) {
+        this.basket.products.splice(this.getCorrespondingIndex(this.basket.products[productIndex]), 1);
+      }
+
       this.basket.products.splice(productIndex, 1);
       this.saveBasket();
     },
@@ -261,6 +270,69 @@ var draggable = function draggable() {
           behavior: 'smooth'
         });
       }, 200);
+    },
+    checkIfMovable: function checkIfMovable(e, originalE) {
+      var _this2 = this;
+
+      if (e.draggedContext.element.type === 'special') {
+        var dragged = e.draggedContext.element;
+        var number = this.getBlockNumber(dragged);
+        var correspondingIndex = this.getCorrespondingIndex(dragged); // prevent block-end before block-start
+
+        if (dragged.id.includes('start') && e.draggedContext.futureIndex >= correspondingIndex || dragged.id.includes('fnish') && e.draggedContext.futureIndex <= correspondingIndex) {
+          return false;
+        } // prevent blocks entanglements
+
+
+        var result = true;
+        this.blocks.forEach(function (block) {
+          if (block[2] !== _this2.getBlockNumber(dragged)) {
+            if (block[0] <= e.draggedContext.futureIndex && e.draggedContext.futureIndex <= block[1]) {
+              result = false;
+            }
+          }
+        });
+        return result;
+      }
+    },
+    getBlockIndex: function getBlockIndex(type, number) {
+      for (var i = 0; i < this.basket.products.length; i++) {
+        if (this.basket.products[i].id.includes('block-' + type + '-' + number)) {
+          return i;
+        }
+      }
+    },
+    getBlocksIndexes: function getBlocksIndexes() {
+      var blocks = [];
+
+      for (var i = 0; i < this.basket.products.length; i++) {
+        if (this.basket.products[i].id.includes('block-start')) {
+          blocks.push([i, this.getCorrespondingIndex(this.basket.products[i]), this.getBlockNumber(this.basket.products[i])]);
+        }
+      }
+
+      return blocks;
+    },
+    getCorrespondingIndex: function getCorrespondingIndex(element) {
+      return element.id.includes('start') ? this.getBlockIndex('fnish', this.getBlockNumber(element)) : this.getBlockIndex('start', this.getBlockNumber(element));
+    },
+    isInBlock: function isInBlock(index) {
+      var result = -1;
+
+      if (!this.blocks.length) {
+        result = -1;
+      } else {
+        this.blocks.forEach(function (block) {
+          if (block[0] < index && index < block[1]) {
+            result = Number(block[2]);
+          }
+        });
+      }
+
+      return result;
+    },
+    getBlockNumber: function getBlockNumber(block) {
+      return block.id.substring(12);
     }
   }
 });
@@ -425,6 +497,7 @@ var render = function() {
             "dragArea basket--products-container my-custom-scrollbar my-custom-scrollbar-primary",
           attrs: {
             group: { name: "draggableProducts", pull: false },
+            move: _vm.checkIfMovable,
             filter: ".ignore-draggable",
             preventOnFilter: false,
             animation: 150
@@ -445,7 +518,8 @@ var render = function() {
               product: product,
               "basket-id": _vm.basket.id,
               index: i,
-              origins: _vm.origins
+              origins: _vm.origins,
+              isInBlock: _vm.isInBlock(i)
             },
             on: {
               "save-changes": _vm.saveBasket,
