@@ -12098,6 +12098,10 @@ h1.header {
   border-width: 3px !important;
 }
 
+.edit-block {
+  cursor: pointer;
+}
+
 .special-product-top {
   background-color: rgba(17, 153, 142, 0.1);
 }

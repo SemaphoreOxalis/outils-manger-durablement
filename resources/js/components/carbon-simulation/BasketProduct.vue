@@ -68,8 +68,9 @@
 
 
             <div class="text-block">
-                <div v-if="product.id.includes('start')" class="product-name">
-                    <input v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text">
+                <div v-if="product.id.includes('start')" class="product-name d-flex">
+                    <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="edit = false">
+                    <div v-else><strong>{{ product.name }}</strong><a @click="editTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a></div>
                 </div>
             </div>
 
@@ -94,6 +95,7 @@ export default {
     data() {
         return {
             fullProductShown: false,
+            edit: false,
         }
     },
     computed: {
@@ -106,6 +108,9 @@ export default {
         collapseIconId: function () {
             return '#collapse-icon-' + this.basketId + '-' + this.product.id;
         },
+        titleId: function () {
+            return this.basketId + '-' + this.product.id + '-input'
+        }
     },
     methods: {
         removeProduct(index) {
@@ -139,6 +144,17 @@ export default {
                 'border-3',
                 product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'
             ];
+        },
+        editTitle() {
+            this.edit = true;
+            setTimeout(() => {
+                document.getElementById(this.titleId).focus();
+            }, 100);
+        },
+        processKey(e) {
+            if(e.key === 'Enter') {
+                this.edit = false;
+            }
         }
     }
 }

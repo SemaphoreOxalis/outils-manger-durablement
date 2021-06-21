@@ -237,8 +237,9 @@ export default {
         checkIfMovable(e, originalE) {
             if(e.draggedContext.element.type === 'special') {
                 let dragged = e.draggedContext.element;
-                let number = this.getBlockNumber(dragged);
                 let correspondingIndex = this.getCorrespondingIndex(dragged);
+                let prevBlock = this.previousBlockIndex(e.draggedContext.index);
+                let nextBlock = this.nextBlockIndex(e.draggedContext.index);
 
                 // prevent block-end before block-start
                 if ((dragged.id.includes('start') && e.draggedContext.futureIndex >= correspondingIndex)
@@ -247,15 +248,10 @@ export default {
                 }
 
                 // prevent blocks entanglements
-                let result = true;
-                this.blocks.forEach((block) => {
-                    if(block[2] !== this.getBlockNumber(dragged)) {
-                        if (block[0] <= e.draggedContext.futureIndex && e.draggedContext.futureIndex <= block[1]) {
-                            result = false;
-                        }
-                    }
-                });
-                return result
+                if ((dragged.id.includes('start') && e.draggedContext.futureIndex <= prevBlock)
+                    || (dragged.id.includes('fnish') && e.draggedContext.futureIndex >= nextBlock)) {
+                    return false;
+                }
             }
         },
         getBlockIndex(type, number) {
@@ -289,6 +285,30 @@ export default {
                 });
             }
             return result
+        },
+        previousBlockIndex(index) {
+            let elmts = [];
+            let found = 0;
+            if(index === 0 || index === 1){
+                return 0;
+            }
+            for (let i = index - 1; i >= 0; i--) {
+                elmts.push({id: this.basket.products[i].id, index: i});
+            }
+            found = elmts.find(e => e.id.includes('fnish'));
+            return found ? found.index : 0;
+        },
+        nextBlockIndex(index) {
+            let elmts = [];
+            let found = this.basket.products.length - 1;
+            if(index === (this.basket.products.length - 1) || index === (this.basket.products.length - 2)){
+                return this.basket.products.length - 1;
+            }
+            for (let i = index + 1; i <= this.basket.products.length - 1; i++) {
+                elmts.push({id: this.basket.products[i].id, index: i});
+            }
+            found = elmts.find(e => e.id.includes('start'));
+            return found ? found.index : this.basket.products.length - 1;
         },
         getBlockNumber(block) {
             return block.id.substring(12);

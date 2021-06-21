@@ -93,6 +93,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -103,7 +104,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      fullProductShown: false
+      fullProductShown: false,
+      edit: false
     };
   },
   computed: {
@@ -115,6 +117,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     collapseIconId: function collapseIconId() {
       return '#collapse-icon-' + this.basketId + '-' + this.product.id;
+    },
+    titleId: function titleId() {
+      return this.basketId + '-' + this.product.id + '-input';
     }
   },
   methods: {
@@ -140,6 +145,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     getSpecialClasses: function getSpecialClasses(product) {
       return ['special-product-header-container', 'border-left', 'border-3', product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
+    },
+    editTitle: function editTitle() {
+      var _this = this;
+
+      this.edit = true;
+      setTimeout(function () {
+        document.getElementById(_this.titleId).focus();
+      }, 100);
+    },
+    processKey: function processKey(e) {
+      if (e.key === 'Enter') {
+        this.edit = false;
+      }
     }
   }
 });
@@ -403,29 +421,49 @@ var render = function() {
           [
             _c("div", { staticClass: "text-block" }, [
               _vm.product.id.includes("start")
-                ? _c("div", { staticClass: "product-name" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.product.name,
-                          expression: "product.name"
-                        }
-                      ],
-                      staticClass:
-                        "ignore-draggable custom-input browser-default input",
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.product.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                ? _c("div", { staticClass: "product-name d-flex" }, [
+                    _vm.edit
+                      ? _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.product.name,
+                              expression: "product.name"
+                            }
+                          ],
+                          staticClass:
+                            "ignore-draggable custom-input browser-default input",
+                          attrs: { id: _vm.titleId, type: "text" },
+                          domProps: { value: _vm.product.name },
+                          on: {
+                            keydown: _vm.processKey,
+                            focusout: function($event) {
+                              _vm.edit = false
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.product, "name", $event.target.value)
+                            }
                           }
-                          _vm.$set(_vm.product, "name", $event.target.value)
-                        }
-                      }
-                    })
+                        })
+                      : _c("div", [
+                          _c("strong", [_vm._v(_vm._s(_vm.product.name))]),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "ignore-draggable edit-block",
+                              on: { click: _vm.editTitle }
+                            },
+                            [
+                              _c("i", { staticClass: "icon ml-2" }, [
+                                _vm._v("")
+                              ])
+                            ]
+                          )
+                        ])
                   ])
                 : _vm._e()
             ]),

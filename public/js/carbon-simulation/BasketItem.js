@@ -272,27 +272,20 @@ var draggable = function draggable() {
       }, 200);
     },
     checkIfMovable: function checkIfMovable(e, originalE) {
-      var _this2 = this;
-
       if (e.draggedContext.element.type === 'special') {
         var dragged = e.draggedContext.element;
-        var number = this.getBlockNumber(dragged);
-        var correspondingIndex = this.getCorrespondingIndex(dragged); // prevent block-end before block-start
+        var correspondingIndex = this.getCorrespondingIndex(dragged);
+        var prevBlock = this.previousBlockIndex(e.draggedContext.index);
+        var nextBlock = this.nextBlockIndex(e.draggedContext.index); // prevent block-end before block-start
 
         if (dragged.id.includes('start') && e.draggedContext.futureIndex >= correspondingIndex || dragged.id.includes('fnish') && e.draggedContext.futureIndex <= correspondingIndex) {
           return false;
         } // prevent blocks entanglements
 
 
-        var result = true;
-        this.blocks.forEach(function (block) {
-          if (block[2] !== _this2.getBlockNumber(dragged)) {
-            if (block[0] <= e.draggedContext.futureIndex && e.draggedContext.futureIndex <= block[1]) {
-              result = false;
-            }
-          }
-        });
-        return result;
+        if (dragged.id.includes('start') && e.draggedContext.futureIndex <= prevBlock || dragged.id.includes('fnish') && e.draggedContext.futureIndex >= nextBlock) {
+          return false;
+        }
       }
     },
     getBlockIndex: function getBlockIndex(type, number) {
@@ -330,6 +323,46 @@ var draggable = function draggable() {
       }
 
       return result;
+    },
+    previousBlockIndex: function previousBlockIndex(index) {
+      var elmts = [];
+      var found = 0;
+
+      if (index === 0 || index === 1) {
+        return 0;
+      }
+
+      for (var i = index - 1; i >= 0; i--) {
+        elmts.push({
+          id: this.basket.products[i].id,
+          index: i
+        });
+      }
+
+      found = elmts.find(function (e) {
+        return e.id.includes('fnish');
+      });
+      return found ? found.index : 0;
+    },
+    nextBlockIndex: function nextBlockIndex(index) {
+      var elmts = [];
+      var found = this.basket.products.length - 1;
+
+      if (index === this.basket.products.length - 1 || index === this.basket.products.length - 2) {
+        return this.basket.products.length - 1;
+      }
+
+      for (var i = index + 1; i <= this.basket.products.length - 1; i++) {
+        elmts.push({
+          id: this.basket.products[i].id,
+          index: i
+        });
+      }
+
+      found = elmts.find(function (e) {
+        return e.id.includes('start');
+      });
+      return found ? found.index : this.basket.products.length - 1;
     },
     getBlockNumber: function getBlockNumber(block) {
       return block.id.substring(12);
