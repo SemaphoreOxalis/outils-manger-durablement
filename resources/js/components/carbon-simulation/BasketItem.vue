@@ -235,6 +235,8 @@ export default {
             }, 200);
         },
         checkIfMovable(e, originalE) {
+            //console.log(e);
+            // Special Logic for blocks
             if(e.draggedContext.element.type === 'special') {
                 let dragged = e.draggedContext.element;
                 let correspondingIndex = this.getCorrespondingIndex(dragged);
@@ -248,12 +250,18 @@ export default {
                 }
 
                 // prevent blocks entanglements
+                if ((dragged.id.includes('start') && prevBlock === 0)
+                    || (dragged.id.includes('fnish') && nextBlock === this.basket.products.length - 1)) {
+                    return true;
+                }
                 if ((dragged.id.includes('start') && e.draggedContext.futureIndex <= prevBlock)
                     || (dragged.id.includes('fnish') && e.draggedContext.futureIndex >= nextBlock)) {
                     return false;
                 }
             }
         },
+
+        // BLOCKS STUFF
         getBlockIndex(type, number) {
             for (let i = 0; i < this.basket.products.length; i++) {
                 if (this.basket.products[i].id.includes('block-' + type + '-' + number)) {
