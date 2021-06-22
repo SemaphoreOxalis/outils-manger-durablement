@@ -91,6 +91,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -272,7 +273,6 @@ var draggable = function draggable() {
       }, 200);
     },
     checkIfMovable: function checkIfMovable(e, originalE) {
-      //console.log(e);
       // Special Logic for blocks
       if (e.draggedContext.element.type === 'special') {
         var dragged = e.draggedContext.element;
@@ -329,6 +329,7 @@ var draggable = function draggable() {
         });
       }
 
+      this.basket.products[index].isInBlock = result;
       return result;
     },
     previousBlockIndex: function previousBlockIndex(index) {
@@ -373,6 +374,15 @@ var draggable = function draggable() {
     },
     getBlockNumber: function getBlockNumber(block) {
       return block.id.substring(12);
+    },
+    emptyBlock: function emptyBlock(blockStart) {
+      var end = this.getCorrespondingIndex(blockStart);
+      var begin = this.getCorrespondingIndex(this.basket.products[end]);
+      console.log(begin, end);
+
+      for (var i = end - 1; i > begin; i--) {
+        this.basket.products.splice(i, 1);
+      }
     }
   }
 });
@@ -563,7 +573,8 @@ var render = function() {
             },
             on: {
               "save-changes": _vm.saveBasket,
-              "remove-product": _vm.removeProduct
+              "remove-product": _vm.removeProduct,
+              "empty-block": _vm.emptyBlock
             }
           })
         }),

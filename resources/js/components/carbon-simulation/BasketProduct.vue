@@ -67,17 +67,21 @@
         <div :class="getSpecialClasses(product)" :id="'header-' + basketId + '-' + product.id">
 
 
-            <div class="text-block">
-                <div v-if="product.id.includes('start')" class="product-name d-flex">
+            <div v-if="product.id.includes('start')" class="text-block">
+                <div class="product-name d-flex">
                     <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="edit = false">
-                    <div v-else><strong>{{ product.name }}</strong><a @click="editTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a></div>
+                    <div v-else><strong>{{ product.name }}</strong><a @click="editTitle" class="ignore-draggable edit-block" title="Modifier le titre de ce bloc"><i class="icon ml-2"></i></a></div>
                 </div>
+
             </div>
 
             <div v-if="product.id.includes('start')" class="d-flex">
+                <a class="btn-ico alt tool info-bubble pb-1"
+                   @click="emptyBlock(product)" title="Vider ce bloc (supprimer ses produits)"><strong>✖</strong></a>
                 <a class="btn-ico alt tool info-bubble"
                    @click="removeProduct(index)" title="Supprimer ce bloc"></a>
             </div>
+
             <div v-else><i class="icon mr-2 p-1"></i></div>
         </div>
     </div>
@@ -118,6 +122,9 @@ export default {
         },
         save() {
             this.$emit('save-changes');
+        },
+        emptyBlock(id) {
+            this.$emit('empty-block', id);
         },
         toggleFullProduct() {
             this.fullProductShown = !this.fullProductShown;

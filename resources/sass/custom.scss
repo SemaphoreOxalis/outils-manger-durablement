@@ -1192,6 +1192,11 @@ h1.header {
 
   .special-product-top {
       background-color: rgba(17, 153, 142, 0.1);
+      margin-top: 3px;
+  }
+
+  .special-product-bottom {
+      border-top: 1px dotted var(--third-color) !important;
   }
 
   .product-name {

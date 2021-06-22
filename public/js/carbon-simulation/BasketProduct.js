@@ -94,6 +94,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -128,6 +132,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     save: function save() {
       this.$emit('save-changes');
+    },
+    emptyBlock: function emptyBlock(id) {
+      this.$emit('empty-block', id);
     },
     toggleFullProduct: function toggleFullProduct() {
       this.fullProductShown = !this.fullProductShown;
@@ -419,9 +426,9 @@ var render = function() {
             attrs: { id: "header-" + _vm.basketId + "-" + _vm.product.id }
           },
           [
-            _c("div", { staticClass: "text-block" }, [
-              _vm.product.id.includes("start")
-                ? _c("div", { staticClass: "product-name d-flex" }, [
+            _vm.product.id.includes("start")
+              ? _c("div", { staticClass: "text-block" }, [
+                  _c("div", { staticClass: "product-name d-flex" }, [
                     _vm.edit
                       ? _c("input", {
                           directives: [
@@ -455,6 +462,7 @@ var render = function() {
                             "a",
                             {
                               staticClass: "ignore-draggable edit-block",
+                              attrs: { title: "Modifier le titre de ce bloc" },
                               on: { click: _vm.editTitle }
                             },
                             [
@@ -465,11 +473,27 @@ var render = function() {
                           )
                         ])
                   ])
-                : _vm._e()
-            ]),
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _vm.product.id.includes("start")
               ? _c("div", { staticClass: "d-flex" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn-ico alt tool info-bubble pb-1",
+                      attrs: {
+                        title: "Vider ce bloc (supprimer ses produits)"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.emptyBlock(_vm.product)
+                        }
+                      }
+                    },
+                    [_c("strong", [_vm._v("✖")])]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "a",
                     {

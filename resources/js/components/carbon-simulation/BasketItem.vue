@@ -39,7 +39,8 @@
                             v-bind:origins="origins"
                             v-bind:isInBlock="isInBlock(i)"
                             @save-changes="saveBasket"
-                            @remove-product="removeProduct">
+                            @remove-product="removeProduct"
+                            @empty-block="emptyBlock">
             </basket-product>
         </draggable>
 
@@ -235,7 +236,6 @@ export default {
             }, 200);
         },
         checkIfMovable(e, originalE) {
-            //console.log(e);
             // Special Logic for blocks
             if(e.draggedContext.element.type === 'special') {
                 let dragged = e.draggedContext.element;
@@ -292,6 +292,7 @@ export default {
                     }
                 });
             }
+            this.basket.products[index].isInBlock = result;
             return result
         },
         previousBlockIndex(index) {
@@ -320,6 +321,14 @@ export default {
         },
         getBlockNumber(block) {
             return block.id.substring(12);
+        },
+        emptyBlock(blockStart) {
+            let end = this.getCorrespondingIndex(blockStart);
+            let begin = this.getCorrespondingIndex(this.basket.products[end]);
+            console.log(begin, end);
+            for(let i = end - 1; i > begin; i--) {
+                this.basket.products.splice(i, 1);
+            }
         }
     }
 }
