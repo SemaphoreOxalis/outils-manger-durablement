@@ -25,6 +25,7 @@ export default {
                 link.click();
             }).catch(e => {
                 console.log(e);
+                flash('Une erreur est survenue', 'danger');
             });
         },
 
@@ -48,6 +49,7 @@ export default {
                 link.click();
             }).catch(e => {
                 console.log(e);
+                flash('Une erreur est survenue', 'danger');
             });
         }
     }

@@ -323,6 +323,7 @@ export default {
 
         sendResults() {
             this.results.cats = this.cats;
+            this.results.blocks = this.blcks;
             this.results.globalProductImpact = this.globalProductImpact.impact;
             this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
             this.results.globalCarbonImpact = this.globalCarbonImpact.impact;

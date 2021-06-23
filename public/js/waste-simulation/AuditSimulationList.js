@@ -364,6 +364,7 @@ __webpack_require__.r(__webpack_exports__);
         link.click();
       })["catch"](function (e) {
         console.log(e);
+        flash('Une erreur est survenue', 'danger');
       });
     },
     exportBaskets: function exportBaskets() {
@@ -385,6 +386,7 @@ __webpack_require__.r(__webpack_exports__);
         link.click();
       })["catch"](function (e) {
         console.log(e);
+        flash('Une erreur est survenue', 'danger');
       });
     }
   }

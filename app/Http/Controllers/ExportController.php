@@ -192,34 +192,46 @@ class ExportController extends Controller {
             $sheet->getStyle('A1')->getFont()->setSize(15);
 
             if ($basket['products']) {
-                $sheet->setCellValue('A3', 'produit');
-                $sheet->setCellValue('B3', 'commentaire');
-                $sheet->setCellValue('C3', 'quantité');
-                $sheet->setCellValue('D3', 'unité');
-                $sheet->setCellValue('E3', 'origine');
-                $sheet->setCellValue('F3', 'prix');
-                $sheet->mergeCells('G2:I2');
-                $sheet->getStyle('A2:I3')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A2:F3')->applyFromArray($borderStyle);
-                $sheet->getStyle('G2:I3')->applyFromArray($borderStyle);
-                $sheet->setCellValue('G2', 'impact carbone');
-                $sheet->setCellValue('G3', 'produit');
-                $sheet->setCellValue('H3', 'transport');
-                $sheet->setCellValue('I3', 'total');
-                $sheet->getStyle('A2:I3')->getFont()->setBold(true);
+                $categoriesNumber = count($basket['results']['cats']);
+                $blocksNumber = count($basket['results']['blocks']);
 
-                $line = 5;
+                $sheet->setCellValue('A4', 'produit');
+                $sheet->setCellValue('B4', 'commentaire');
+                $sheet->setCellValue('C4', 'quantité');
+                $sheet->setCellValue('D4', 'unité');
+                $sheet->setCellValue('E4', 'origine');
+                $sheet->setCellValue('F4', 'prix');
+                $sheet->mergeCells('G3:I3');
+                $sheet->getStyle('A3:I4')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3:F4')->applyFromArray($borderStyle);
+                $sheet->getStyle('G3:I4')->applyFromArray($borderStyle);
+                $sheet->setCellValue('G3', 'impact carbone');
+                $sheet->setCellValue('G4', 'produit');
+                $sheet->setCellValue('H4', 'transport');
+                $sheet->setCellValue('I4', 'total');
+                $sheet->getStyle('A3:I4')->getFont()->setBold(true);
+
+                $line = 6;
 
                 foreach($basket['products'] as $product) {
-                    $sheet->setCellValue('A' . $line, $product['name']);
-                    $sheet->setCellValue('B' . $line, $product['comment']);
-                    $sheet->setCellValue('C' . $line, $product['amount']);
-                    $sheet->setCellValue('D' . $line, $product['unit']['unit']);
-                    $sheet->setCellValue('E' . $line, $product['origin']['from']);
-                    $sheet->setCellValue('F' . $line, $product['price'] . ' €');
-                    $sheet->setCellValue('G' . $line, $product['productImpact'] . ' kgCO2');
-                    $sheet->setCellValue('H' . $line, $product['transportationImpact'] . ' kgCO2');
-                    $sheet->setCellValue('I' . $line, $product['carbonImpact'] . ' kgCO2');
+                    if($product['type'] == 'prod') {
+                        $sheet->setCellValue('A' . $line, $product['name']);
+                        $sheet->setCellValue('B' . $line, $product['comment']);
+                        $sheet->setCellValue('C' . $line, $product['amount']);
+                        $sheet->setCellValue('D' . $line, $product['unit']['unit']);
+                        $sheet->setCellValue('E' . $line, $product['origin']['from']);
+                        $sheet->setCellValue('F' . $line, $product['price'] . ' €');
+                        $sheet->setCellValue('G' . $line, $product['productImpact'] . ' kgCO2');
+                        $sheet->setCellValue('H' . $line, $product['transportationImpact'] . ' kgCO2');
+                        $sheet->setCellValue('I' . $line, $product['carbonImpact'] . ' kgCO2');
+                    } else {
+                        if(str_contains($product['id'], 'start')) {
+                            $sheet->setCellValue('A' . $line, $product['name']);
+                            $sheet->getStyle('A' . $line)->getFont()->setBold(true);
+                        } elseif (str_contains($product['id'], 'fnish')) {
+                            $sheet->setCellValue('A' . $line, '----------');
+                        }
+                    }
                     $line++;
                 }
                 $sheet->getStyle('E5:I' . $line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
@@ -254,24 +266,46 @@ class ExportController extends Controller {
                     $line++;
                 }
                 $endLine = $line - 1;
+                $sheet->setCellValue('A' . $line, '----------');
+                $sheet->setCellValue('G' . $line, '----------');
                 $line++;
                 $sheet->setCellValue('A' . $line, 'Total');
+                $sheet->getStyle('A' . $line)->getFont()->setBold(true);
                 $sheet->setCellValue('B' . $line, $basket['results']['globalProductImpact'] . ' kgCO2');
                 $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' kgCO2');
                 $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' kgCO2');
                 $sheet->setCellValue('E' . $line, $basket['globalCarbonDelta']);
 
                 $sheet->setCellValue('G' . $line, 'Total');
+                $sheet->getStyle('G' . $line)->getFont()->setBold(true);
                 $sheet->setCellValue('H' . $line, $basket['results']['globalMoneySpend'] . ' €');
                 $sheet->setCellValue('I' . $line, $basket['globalMoneyDelta']);
 
                 $sheet->getStyle('B' . $startLine . ':E' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
                 $sheet->getStyle('H' . $startLine . ':I' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
 
-                $line = $line + 2;
-                $categoriesNumber = count($basket['results']['cats']);
+                if($blocksNumber > 1) {
+                    $line ++;
+                    $sheet->setCellValue('A' . $line, '----------');
+                    $sheet->setCellValue('G' . $line, '----------');
+                    $line ++;
+                    $startLineBlocks = $line;
+                    foreach($basket['results']['blocks'] as $block) {
+                        $sheet->setCellValue('A' . $line, $block['name']);
+                        $sheet->setCellValue('B' . $line, $block['productImpact']);
+                        $sheet->setCellValue('C' . $line, $block['transportationImpact']);
+                        $sheet->setCellValue('D' . $line, $block['carbonImpact']);
 
-                // CARBON CHART
+                        $sheet->setCellValue('G' . $line, $block['name']);
+                        $sheet->setCellValue('H' . $line, $block['moneySpent']);
+                        $line++;
+                    }
+                    $endLineBlocks = $line - 1;
+                }
+
+                $line = $line + 2;
+
+                // CARBON CHARTS
                 $dataSeriesLabels = [
                     new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$B$" . ($startLine - 1), null, 1),
                     new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$C$" . ($startLine - 1), null, 1),
@@ -313,6 +347,48 @@ class ExportController extends Controller {
 
                 $sheet->addChart($chart);
 
+                if($blocksNumber > 1) {
+                    $dataSeriesLabels3 = [
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$B$" . ($startLine - 1), null, 1),
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$C$" . ($startLine - 1), null, 1),
+                    ];
+                    $xAxisTickValues3 = [
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$A$" . $startLineBlocks . ":\$A$" . $endLineBlocks, null, $blocksNumber),
+                    ];
+                    $dataSeriesValues3 = [
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$B$" . $startLineBlocks . ":\$B$" . $endLineBlocks, null, $blocksNumber),
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$C$" . $startLineBlocks . ":\$C$" . $endLineBlocks, null, $blocksNumber),
+                    ];
+                    $series3 = new DataSeries(
+                        DataSeries::TYPE_BARCHART_3D,
+                        DataSeries::GROUPING_STACKED,
+                        range(0, count($dataSeriesValues3) - 1),
+                        $dataSeriesLabels3,
+                        $xAxisTickValues3,
+                        $dataSeriesValues3
+                    );
+                    $series3->setPlotDirection(DataSeries::DIRECTION_BAR);
+                    $plotArea3 = new PlotArea(null, [$series3]);
+                    $legend3 = new Legend(Legend::POSITION_TOP, null, false);
+
+                    $chart3 = new Chart(
+                        'carbonImpactPerBlock',
+                        null,
+                        $legend3,
+                        $plotArea3,
+                        true,
+                        DataSeries::EMPTY_AS_GAP,
+                        null,
+                        $xAxisLabel
+                    );
+
+                    $chart3->setTopLeftPosition('A' . ($line + 25));
+                    $chart3->setBottomRightPosition('F' . ($line + 25 + ($blocksNumber * 2 + 5)));
+
+                    $sheet->addChart($chart3);
+                }
+
+
                 // MONEY CHART
                 $dataSeriesLabels2 = [];
                 $xAxisTickValues2 = [
@@ -350,6 +426,43 @@ class ExportController extends Controller {
                 $chart2->setBottomRightPosition('K' . ($line + 25));
 
                 $sheet->addChart($chart2);
+
+                if($blocksNumber > 1) {
+                    $dataSeriesLabels4 = [];
+                    $xAxisTickValues4 = [
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$A$" . $startLineBlocks . ":\$A$" . $endLineBlocks, null, $blocksNumber),
+                    ];
+                    $dataSeriesValues4 = [
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$H$" . $startLineBlocks . ":\$H$" . $endLineBlocks, null, $blocksNumber),
+                    ];
+                    $series4 = new DataSeries(
+                        DataSeries::TYPE_BARCHART_3D,
+                        DataSeries::GROUPING_STACKED,
+                        range(0, count($dataSeriesValues4) - 1),
+                        $dataSeriesLabels4,
+                        $xAxisTickValues4,
+                        $dataSeriesValues4
+                    );
+                    $series4->setPlotDirection(DataSeries::DIRECTION_BAR);
+                    $plotArea4 = new PlotArea(null, [$series4]);
+                    $xAxisLabel4 = new Title('euros');
+
+                    $chart4 = new Chart(
+                        'moneyImpact',
+                        null,
+                        null,
+                        $plotArea4,
+                        true,
+                        DataSeries::EMPTY_AS_GAP,
+                        null,
+                        $xAxisLabel4
+                    );
+
+                    $chart4->setTopLeftPosition('F' . ($line + 25));
+                    $chart4->setBottomRightPosition('K' . ($line + 25 + ($blocksNumber * 2 + 5)));
+
+                    $sheet->addChart($chart4);
+                }
             } else {
                 $sheet->setCellValue('A3', 'Cette liste de courses est vide');
             }
