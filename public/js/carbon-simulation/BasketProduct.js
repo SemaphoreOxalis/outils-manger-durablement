@@ -98,6 +98,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -165,6 +167,10 @@ __webpack_require__.r(__webpack_exports__);
       if (e.key === 'Enter') {
         this.edit = false;
       }
+    },
+    renamed: function renamed() {
+      this.edit = false;
+      this.save();
     }
   }
 });
@@ -445,9 +451,7 @@ var render = function() {
                           domProps: { value: _vm.product.name },
                           on: {
                             keydown: _vm.processKey,
-                            focusout: function($event) {
-                              _vm.edit = false
-                            },
+                            focusout: _vm.renamed,
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -456,8 +460,16 @@ var render = function() {
                             }
                           }
                         })
-                      : _c("div", [
-                          _c("strong", [_vm._v(_vm._s(_vm.product.name))]),
+                      : _c("div", { staticClass: "ignore-draggable" }, [
+                          _c(
+                            "strong",
+                            {
+                              staticClass: "block-title",
+                              on: { click: _vm.editTitle }
+                            },
+                            [_vm._v(_vm._s(_vm.product.name))]
+                          ),
+                          _vm._v(" "),
                           _c(
                             "a",
                             {

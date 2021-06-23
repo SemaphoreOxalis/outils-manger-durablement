@@ -116,6 +116,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -132,7 +181,8 @@ __webpack_require__.r(__webpack_exports__);
     isFirst: Boolean,
     previousBasket: Object,
     firstBasket: Object,
-    compareToPreviousBasket: Boolean
+    compareToPreviousBasket: Boolean,
+    blocks: Array
   },
   computed: {
     carbonDelta: function carbonDelta() {
@@ -168,6 +218,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       cats: [],
+      blcks: [],
       globalProductImpact: {},
       globalTransportationImpact: {},
       globalCarbonImpact: {},
@@ -176,6 +227,7 @@ __webpack_require__.r(__webpack_exports__);
       globalCO2PerEuro: Number,
       globalCO2PerEuroFormatted: Number,
       globalCO2PerEuroUnit: String,
+      listByBlocks: false,
       chart: chart_js__WEBPACK_IMPORTED_MODULE_0___default.a,
       chartViewMoney: false,
       results: {},
@@ -203,9 +255,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.cats = JSON.parse(JSON.stringify(this.categories));
+      this.updateInternalBlocks();
       this.getCarbonImpactByCategory();
+      this.getCarbonImpactByBlock();
       this.getGlobalCarbonImpact();
       this.getMoneyImpactByCategory();
+      this.getMoneyImpactByBlock();
       this.getGlobalMoneyImpact();
 
       if (!this.isFirst) {
@@ -243,11 +298,25 @@ __webpack_require__.r(__webpack_exports__);
         _this3.getMoneyImpactFor(cat);
       });
     },
-    getDeltas: function getDeltas() {
+    getCarbonImpactByBlock: function getCarbonImpactByBlock() {
       var _this4 = this;
 
+      this.blcks.forEach(function (block) {
+        _this4.getCarbonImpactForBlock(block);
+      });
+    },
+    getMoneyImpactByBlock: function getMoneyImpactByBlock() {
+      var _this5 = this;
+
+      this.blcks.forEach(function (block) {
+        _this5.getMoneyImpactForBlock(block);
+      });
+    },
+    getDeltas: function getDeltas() {
+      var _this6 = this;
+
       this.cats.forEach(function (cat, index) {
-        _this4.getDeltasFor(cat, index);
+        _this6.getDeltasFor(cat, index);
       });
     },
     updateEquivalence: function updateEquivalence() {
@@ -259,6 +328,21 @@ __webpack_require__.r(__webpack_exports__);
         // "la voiture moyenne émettant 0,253 kg CO2e/km"
         // Source: ADEME https://datagir.ademe.fr/blog/transport/impact-carbone-mobilite-eco-deplacement.md
       }
+    },
+    updateInternalBlocks: function updateInternalBlocks() {
+      var _this7 = this;
+
+      this.blcks = [];
+      this.blocks.forEach(function (block) {
+        _this7.blcks.push({
+          number: block[2],
+          name: _this7.basket.products[block[0]].name
+        });
+      });
+      this.blcks.push({
+        name: 'Produits hors blocs',
+        number: -1
+      });
     },
     sendResults: function sendResults() {
       this.results.cats = this.cats;
@@ -683,53 +767,155 @@ var render = function() {
           attrs: { id: _vm.basketId + "-carbon", role: "tabpanel" }
         },
         [
-          _vm._l(_vm.cats, function(category) {
-            return _c("div", { staticClass: "results-row flex-horizontal" }, [
-              _c("div", { staticClass: "results-categorie-name" }, [
-                _vm._v(_vm._s(category.name))
-              ]),
-              _vm._v(" "),
-              _c("div", { class: _vm.getClasses() }, [
-                _c("a", { staticClass: "info-bubble" }, [
-                  _vm._v(
-                    _vm._s(category.carbonFormattedImpact) +
-                      " " +
-                      _vm._s(category.carbonImpactUnit) +
-                      "\n                        "
-                  ),
-                  _c("span", [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.impact.product_impact) +
-                        " : " +
-                        _vm._s(category.productFormattedImpact) +
-                        " " +
-                        _vm._s(category.productImpactUnit)
-                    ),
-                    _c("br"),
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.impact.transportation_impact) +
-                        " : " +
-                        _vm._s(category.transportationFormattedImpact) +
-                        " " +
-                        _vm._s(category.transportationImpactUnit) +
-                        "\n                    "
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              !_vm.isFirst
-                ? _c("div", {
-                    staticClass: "results-div",
-                    domProps: {
-                      innerHTML: _vm._s(_vm.getStyle(category.carbonDelta))
-                    }
-                  })
-                : _vm._e()
+          _c("div", { staticClass: "custom-control switch center" }, [
+            _c("label", [
+              _vm._v("\n                    Catégories\n                    "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.listByBlocks,
+                    expression: "listByBlocks"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.listByBlocks)
+                    ? _vm._i(_vm.listByBlocks, null) > -1
+                    : _vm.listByBlocks
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.listByBlocks,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.listByBlocks = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.listByBlocks = $$c
+                      }
+                    },
+                    _vm.updateChart
+                  ]
+                }
+              }),
+              _c("span", { staticClass: "lever" }),
+              _vm._v("\n                    Blocs\n                ")
             ])
-          }),
+          ]),
+          _vm._v(" "),
+          !_vm.listByBlocks
+            ? _c(
+                "div",
+                _vm._l(_vm.cats, function(category) {
+                  return _c(
+                    "div",
+                    { staticClass: "results-row flex-horizontal" },
+                    [
+                      _c("div", { staticClass: "results-categorie-name" }, [
+                        _vm._v(_vm._s(category.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { class: _vm.getClasses() }, [
+                        _c("a", { staticClass: "info-bubble" }, [
+                          _vm._v(
+                            _vm._s(category.carbonFormattedImpact) +
+                              " " +
+                              _vm._s(category.carbonImpactUnit) +
+                              "\n                            "
+                          ),
+                          _c("span", [
+                            _vm._v(
+                              _vm._s(_vm.impact.product_impact) +
+                                " : " +
+                                _vm._s(category.productFormattedImpact) +
+                                " " +
+                                _vm._s(category.productImpactUnit)
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.impact.transportation_impact) +
+                                " : " +
+                                _vm._s(category.transportationFormattedImpact) +
+                                " " +
+                                _vm._s(category.transportationImpactUnit)
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      !_vm.isFirst
+                        ? _c("div", {
+                            staticClass: "results-div",
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.getStyle(category.carbonDelta)
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                0
+              )
+            : _c(
+                "div",
+                _vm._l(_vm.blcks, function(block) {
+                  return _c(
+                    "div",
+                    { staticClass: "results-row flex-horizontal" },
+                    [
+                      _c("div", { staticClass: "results-categorie-name" }, [
+                        _vm._v(_vm._s(block.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { class: _vm.getClasses() }, [
+                        _c("a", { staticClass: "info-bubble" }, [
+                          _vm._v(
+                            _vm._s(block.carbonFormattedImpact) +
+                              " " +
+                              _vm._s(block.carbonImpactUnit) +
+                              "\n                            "
+                          ),
+                          _c("span", [
+                            _vm._v(
+                              _vm._s(_vm.impact.product_impact) +
+                                " : " +
+                                _vm._s(block.productFormattedImpact) +
+                                " " +
+                                _vm._s(block.productImpactUnit)
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              _vm._s(_vm.impact.transportation_impact) +
+                                " : " +
+                                _vm._s(block.transportationFormattedImpact) +
+                                " " +
+                                _vm._s(block.transportationImpactUnit) +
+                                "\n                    "
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                }),
+                0
+              ),
           _vm._v(" "),
           _c(
             "div",
@@ -749,8 +935,7 @@ var render = function() {
                   ),
                   _c("span", [
                     _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.impact.product_impact) +
+                      _vm._s(_vm.impact.product_impact) +
                         " : " +
                         _vm._s(_vm.globalProductImpact.formatted) +
                         " " +
@@ -763,8 +948,7 @@ var render = function() {
                         " : " +
                         _vm._s(_vm.globalTransportationImpact.formatted) +
                         " " +
-                        _vm._s(_vm.globalTransportationImpact.unit) +
-                        "\n                    "
+                        _vm._s(_vm.globalTransportationImpact.unit)
                     )
                   ])
                 ])
@@ -792,8 +976,7 @@ var render = function() {
               )
             ])
           ])
-        ],
-        2
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -803,39 +986,129 @@ var render = function() {
           attrs: { id: _vm.basketId + "-finance", role: "tabpanel" }
         },
         [
-          _vm._l(_vm.cats, function(category) {
-            return _c("div", { staticClass: "results-row flex-horizontal" }, [
-              _c("div", { staticClass: "results-categorie-name" }, [
-                _vm._v(_vm._s(category.name))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [
-                _c("a", { staticClass: "info-bubble" }, [
-                  _vm._v(
-                    _vm._s(category.moneySpent) + " €\n                        "
-                  ),
-                  _c("span", [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(category.co2PerEuroFormatted) +
-                        " " +
-                        _vm._s(category.co2PerEuroUnit) +
-                        "\n                        "
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              !_vm.isFirst
-                ? _c("div", {
-                    staticClass: "results-div",
-                    domProps: {
-                      innerHTML: _vm._s(_vm.getStyle(category.moneyDelta))
-                    }
-                  })
-                : _vm._e()
+          _c("div", { staticClass: "custom-control switch center" }, [
+            _c("label", [
+              _vm._v("\n                    Catégories\n                    "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.listByBlocks,
+                    expression: "listByBlocks"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.listByBlocks)
+                    ? _vm._i(_vm.listByBlocks, null) > -1
+                    : _vm.listByBlocks
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.listByBlocks,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.listByBlocks = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.listByBlocks = $$c
+                      }
+                    },
+                    _vm.updateChart
+                  ]
+                }
+              }),
+              _c("span", { staticClass: "lever" }),
+              _vm._v("\n                    Blocs\n                ")
             ])
-          }),
+          ]),
+          _vm._v(" "),
+          !_vm.listByBlocks
+            ? _c(
+                "div",
+                _vm._l(_vm.cats, function(category) {
+                  return _c(
+                    "div",
+                    { staticClass: "results-row flex-horizontal" },
+                    [
+                      _c("div", { staticClass: "results-categorie-name" }, [
+                        _vm._v(_vm._s(category.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "results-div" }, [
+                        _c("a", { staticClass: "info-bubble" }, [
+                          _vm._v(
+                            _vm._s(category.moneySpent) +
+                              " €\n                            "
+                          ),
+                          _c("span", [
+                            _vm._v(
+                              _vm._s(category.co2PerEuroFormatted) +
+                                " " +
+                                _vm._s(category.co2PerEuroUnit)
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      !_vm.isFirst
+                        ? _c("div", {
+                            staticClass: "results-div",
+                            domProps: {
+                              innerHTML: _vm._s(
+                                _vm.getStyle(category.moneyDelta)
+                              )
+                            }
+                          })
+                        : _vm._e()
+                    ]
+                  )
+                }),
+                0
+              )
+            : _c(
+                "div",
+                _vm._l(_vm.blcks, function(block) {
+                  return _c(
+                    "div",
+                    { staticClass: "results-row flex-horizontal" },
+                    [
+                      _c("div", { staticClass: "results-categorie-name" }, [
+                        _vm._v(_vm._s(block.name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "results-div" }, [
+                        _c("a", { staticClass: "info-bubble" }, [
+                          _vm._v(
+                            _vm._s(block.moneySpent) +
+                              " €\n                            "
+                          ),
+                          _c("span", [
+                            _vm._v(
+                              _vm._s(block.co2PerEuroFormatted) +
+                                " " +
+                                _vm._s(block.co2PerEuroUnit)
+                            )
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                }),
+                0
+              ),
           _vm._v(" "),
           _c(
             "div",
@@ -885,8 +1158,7 @@ var render = function() {
               )
             ])
           ])
-        ],
-        2
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -900,6 +1172,55 @@ var render = function() {
           }
         },
         [
+          _c("div", { staticClass: "custom-control switch center" }, [
+            _c("label", [
+              _vm._v("\n                    Catégories\n                    "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.listByBlocks,
+                    expression: "listByBlocks"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox" },
+                domProps: {
+                  checked: Array.isArray(_vm.listByBlocks)
+                    ? _vm._i(_vm.listByBlocks, null) > -1
+                    : _vm.listByBlocks
+                },
+                on: {
+                  change: [
+                    function($event) {
+                      var $$a = _vm.listByBlocks,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.listByBlocks = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.listByBlocks = $$c
+                      }
+                    },
+                    _vm.updateChart
+                  ]
+                }
+              }),
+              _c("span", { staticClass: "lever" }),
+              _vm._v("\n                    Blocs\n                ")
+            ])
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "custom-control switch center" }, [
             _c("label", [
               _vm._v(
@@ -948,7 +1269,6 @@ var render = function() {
                   ]
                 }
               }),
-              _vm._v(" "),
               _c("span", { staticClass: "lever" }),
               _vm._v(
                 "\n                    " +
@@ -1108,9 +1428,6 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       categoryProducts.forEach(function (product) {
-        // let productImpact = 0;
-        // let transportationImpact = 0;
-        // let carbonImpact = 0;
         product.productImpact = product.amount * product.emissionFactor;
         product.transportationImpact = product.amount * product.origin.carbonImpactPerKg;
         product.carbonImpact = product.productImpact + product.transportationImpact;
@@ -1148,6 +1465,30 @@ __webpack_require__.r(__webpack_exports__);
       this.globalTransportationImpact.formatted = this.divideIfNecessary(this.globalTransportationImpact.impact);
       this.globalCarbonImpact.formatted = this.divideIfNecessary(this.globalCarbonImpact.impact);
     },
+    getCarbonImpactForBlock: function getCarbonImpactForBlock(block) {
+      var blockProductImpact = 0;
+      var blockTransportationImpact = 0;
+      var blockCarbonImpact = 0;
+      var blockProducts = this.products.filter(function (product) {
+        if (product.type !== 'special') {
+          return product.isInBlock === parseInt(block.number);
+        }
+      });
+      blockProducts.forEach(function (product) {
+        blockProductImpact += product.productImpact;
+        blockTransportationImpact += product.transportationImpact;
+        blockCarbonImpact += product.carbonImpact;
+      });
+      block.productImpact = this.roundToThreeDecimal(blockProductImpact);
+      block.transportationImpact = this.roundToThreeDecimal(blockTransportationImpact);
+      block.carbonImpact = this.roundToThreeDecimal(blockCarbonImpact);
+      block.productFormattedImpact = this.divideIfNecessary(blockProductImpact);
+      block.transportationFormattedImpact = this.divideIfNecessary(blockTransportationImpact);
+      block.carbonFormattedImpact = this.divideIfNecessary(blockCarbonImpact);
+      block.productImpactUnit = this.getUnit(blockProductImpact);
+      block.transportationImpactUnit = this.getUnit(blockTransportationImpact);
+      block.carbonImpactUnit = this.getUnit(blockCarbonImpact);
+    },
     getMoneyImpactFor: function getMoneyImpactFor(category) {
       var categoryMoneySpent = 0;
       var categoryProducts = this.products.filter(function (product) {
@@ -1160,7 +1501,7 @@ __webpack_require__.r(__webpack_exports__);
         categoryMoneySpent += productPrice;
       });
       category.moneySpent = categoryMoneySpent;
-      category.co2PerEuro = category.carbonImpact / categoryMoneySpent;
+      category.co2PerEuro = category.carbonImpact / categoryMoneySpent || 0;
       category.co2PerEuroFormatted = this.divideIfNecessary(category.co2PerEuro);
       category.co2PerEuroUnit = this.getUnit(category.co2PerEuro) + '/€';
     },
@@ -1177,6 +1518,22 @@ __webpack_require__.r(__webpack_exports__);
       this.globalCO2PerEuro = totalCo2 / this.globalMoneySpend;
       this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
       this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
+    },
+    getMoneyImpactForBlock: function getMoneyImpactForBlock(block) {
+      var moneySpent = 0;
+      var blockProducts = this.products.filter(function (product) {
+        if (product.type !== 'special') {
+          return product.isInBlock === parseInt(block.number);
+        }
+      });
+      blockProducts.forEach(function (product) {
+        var productPrice = parseFloat(product.price);
+        moneySpent += productPrice;
+      });
+      block.moneySpent = moneySpent;
+      block.co2PerEuro = block.carbonImpact / moneySpent || 0;
+      block.co2PerEuroFormatted = this.divideIfNecessary(block.co2PerEuro);
+      block.co2PerEuroUnit = this.getUnit(block.co2PerEuro) + '/€';
     },
     getDeltasFor: function getDeltasFor(category, index) {
       category.carbonDelta = this.getDelta(category.carbonImpact, this.comparedBasket.results.cats[index].carbonImpact);
@@ -1262,18 +1619,21 @@ __webpack_require__.r(__webpack_exports__);
     prepareChartLabels: function prepareChartLabels() {
       var _this = this;
 
-      this.cats.forEach(function (cat) {
-        _this.chartData.labels.push(cat.name);
+      this.chartData.labels = [];
+      var array = this.listByBlocks ? this.blcks : this.cats;
+      array.forEach(function (key) {
+        _this.chartData.labels.push(key.name);
       });
     },
     prepareChartValues: function prepareChartValues() {
       var _this2 = this;
 
+      var array = this.listByBlocks ? this.blcks : this.cats;
       this.clearChartValues();
-      this.cats.forEach(function (cat) {
-        _this2.chartData.values.push(cat.carbonImpact);
+      array.forEach(function (key) {
+        _this2.chartData.values.push(key.carbonImpact);
 
-        _this2.chartData.money.push(cat.moneySpent);
+        _this2.chartData.money.push(key.moneySpent);
       });
     },
     clearChartValues: function clearChartValues() {
@@ -1294,8 +1654,11 @@ __webpack_require__.r(__webpack_exports__);
     updateChart: function updateChart() {
       var _this4 = this;
 
+      this.prepareChartLabels();
       this.prepareChartValues();
       setTimeout(function () {
+        _this4.chart.data.labels = _this4.chartData.labels;
+
         if (_this4.chartViewMoney) {
           _this4.chart.data.datasets[0].data = _this4.chartData.money;
         } else {

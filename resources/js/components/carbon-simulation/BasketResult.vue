@@ -1,6 +1,7 @@
 <template>
     <div class="results-container">
 
+        <!-- Onglets -->
         <ul class="nav nav-tabs" :id="basketId + '-nav-tab'" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active button btn-2" :id="basketId + '-carbon-tab'" data-toggle="tab"
@@ -19,29 +20,49 @@
             </li>
         </ul>
 
+        <!-- Résultats -->
         <div class="tab-content">
-
+            <!-- Bilan carbone / catégories -->
             <div class="tab-pane fade show active" :id="basketId + '-carbon'" role="tabpanel">
-                <div v-for="category in cats" class="results-row flex-horizontal">
-                    <div class="results-categorie-name">{{ category.name }}</div>
-                    <div :class="getClasses()">
-                        <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
-                            <span>
-                            {{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
-                            {{ impact.transportation_impact }} : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}
-                        </span>
-                        </a>
-                    </div>
-                    <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
+                <div class="custom-control switch center">
+                    <label>
+                        Catégories
+                        <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
+                        Blocs
+                    </label>
                 </div>
+                <!-- Par catégories -->
+                <div v-if="!listByBlocks">
+                    <div v-for="category in cats" class="results-row flex-horizontal">
+                        <div class="results-categorie-name">{{ category.name }}</div>
+                        <div :class="getClasses()">
+                            <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
+                                <span>{{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
+                                {{ impact.transportation_impact }} : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}</span>
+                            </a>
+                        </div>
+                        <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
+                    </div>
+                </div>
+                <!-- Par blocs -->
+                <div v-else>
+                    <div v-for="block in blcks" class="results-row flex-horizontal">
+                        <div class="results-categorie-name">{{ block.name }}</div>
+                        <div :class="getClasses()">
+                            <a class="info-bubble">{{ block.carbonFormattedImpact }} {{ block.carbonImpactUnit }}
+                                <span>{{ impact.product_impact }} : {{ block.productFormattedImpact }} {{ block.productImpactUnit }}<br>{{ impact.transportation_impact }} : {{ block.transportationFormattedImpact }} {{ block.transportationImpactUnit }}
+                        </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total -->
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">{{ sum }}</div>
                     <div :class="getClasses()">
                         <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
-                            <span>
-                            {{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
-                            {{ impact.transportation_impact }} : {{ globalTransportationImpact.formatted }} {{ globalTransportationImpact.unit }}
-                        </span>
+                            <span>{{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
+                            {{ impact.transportation_impact }} : {{ globalTransportationImpact.formatted }} {{ globalTransportationImpact.unit }}</span>
                         </a>
                     </div>
                     <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
@@ -51,18 +72,39 @@
                 </div>
             </div>
 
+            <!-- Bilan financier / catégories -->
             <div class="tab-pane fade" :id="basketId + '-finance'" role="tabpanel">
-                <div v-for="category in cats" class="results-row flex-horizontal">
-                    <div class="results-categorie-name">{{ category.name }}</div>
-                    <div class="results-div">
-                        <a class="info-bubble">{{ category.moneySpent }} €
-                            <span>
-                            {{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}
-                            </span>
-                        </a>
-                    </div>
-                    <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
+                <div class="custom-control switch center">
+                    <label>
+                        Catégories
+                        <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
+                        Blocs
+                    </label>
                 </div>
+                <!-- Par catégories -->
+                <div v-if="!listByBlocks">
+                    <div v-for="category in cats" class="results-row flex-horizontal">
+                        <div class="results-categorie-name">{{ category.name }}</div>
+                        <div class="results-div">
+                            <a class="info-bubble">{{ category.moneySpent }} €
+                                <span>{{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}</span>
+                            </a>
+                        </div>
+                        <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
+                    </div>
+                </div>
+                <!-- Par blocs -->
+                <div v-else>
+                    <div v-for="block in blcks" class="results-row flex-horizontal">
+                        <div class="results-categorie-name">{{ block.name }}</div>
+                        <div class="results-div">
+                            <a class="info-bubble">{{ block.moneySpent }} €
+                                <span>{{ block.co2PerEuroFormatted }} {{ block.co2PerEuroUnit }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total -->
                 <div class="results-row flex-horizontal final-results">
                     <div class="results-categorie-name">{{ sum }}</div>
                     <div class="results-div">
@@ -79,12 +121,19 @@
                 </div>
             </div>
 
+            <!-- "Camembert" graphs -->
             <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="custom-control switch center">
                     <label>
+                        Catégories
+                        <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
+                        Blocs
+                    </label>
+                </div>
+                <div class="custom-control switch center">
+                    <label>
                         {{ impact.title.carbon }}
-                        <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart">
-                        <span class="lever"></span>
+                        <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
                         {{ impact.title.money }}
                     </label>
                 </div>
@@ -123,6 +172,7 @@ export default {
         previousBasket: Object,
         firstBasket: Object,
         compareToPreviousBasket: Boolean,
+        blocks: Array,
     },
     computed: {
         carbonDelta: function () {
@@ -156,6 +206,7 @@ export default {
     data() {
         return {
             cats: [],
+            blcks: [],
 
             globalProductImpact: {},
             globalTransportationImpact: {},
@@ -167,6 +218,7 @@ export default {
             globalCO2PerEuroFormatted: Number,
             globalCO2PerEuroUnit: String,
 
+            listByBlocks: false,
             chart: Chart,
             chartViewMoney: false,
 
@@ -194,10 +246,14 @@ export default {
             }
 
             this.cats = JSON.parse(JSON.stringify(this.categories));
+            this.updateInternalBlocks();
+
             this.getCarbonImpactByCategory();
+            this.getCarbonImpactByBlock();
             this.getGlobalCarbonImpact();
 
             this.getMoneyImpactByCategory();
+            this.getMoneyImpactByBlock();
             this.getGlobalMoneyImpact();
 
             if (!this.isFirst) {
@@ -232,6 +288,16 @@ export default {
                 this.getMoneyImpactFor(cat);
             });
         },
+        getCarbonImpactByBlock() {
+            this.blcks.forEach(block => {
+                this.getCarbonImpactForBlock(block);
+            });
+        },
+        getMoneyImpactByBlock() {
+            this.blcks.forEach(block => {
+                this.getMoneyImpactForBlock(block);
+            });
+        },
         getDeltas() {
             this.cats.forEach((cat, index) => {
                 this.getDeltasFor(cat, index);
@@ -246,6 +312,13 @@ export default {
                 // "la voiture moyenne émettant 0,253 kg CO2e/km"
                 // Source: ADEME https://datagir.ademe.fr/blog/transport/impact-carbone-mobilite-eco-deplacement.md
             }
+        },
+        updateInternalBlocks() {
+            this.blcks = [];
+            this.blocks.forEach(block => {
+                this.blcks.push({number: block[2], name: this.basket.products[block[0]].name});
+            });
+            this.blcks.push({name: 'Produits hors blocs', number: -1});
         },
 
         sendResults() {

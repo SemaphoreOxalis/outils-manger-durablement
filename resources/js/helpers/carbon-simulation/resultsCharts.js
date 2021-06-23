@@ -59,15 +59,18 @@ export default {
             });
         },
         prepareChartLabels() {
-            this.cats.forEach(cat => {
-                this.chartData.labels.push(cat.name);
+            this.chartData.labels = [];
+            let array = this.listByBlocks ? this.blcks : this.cats;
+            array.forEach(key => {
+                this.chartData.labels.push(key.name);
             });
         },
         prepareChartValues() {
+            let array = this.listByBlocks ? this.blcks : this.cats;
             this.clearChartValues();
-            this.cats.forEach(cat => {
-                this.chartData.values.push(cat.carbonImpact);
-                this.chartData.money.push(cat.moneySpent);
+            array.forEach(key => {
+                this.chartData.values.push(key.carbonImpact);
+                this.chartData.money.push(key.moneySpent);
             });
         },
         clearChartValues() {
@@ -82,8 +85,10 @@ export default {
             });
         },
         updateChart() {
+            this.prepareChartLabels();
             this.prepareChartValues();
             setTimeout(() => {
+                this.chart.data.labels = this.chartData.labels;
                 if(this.chartViewMoney) {
                     this.chart.data.datasets[0].data = this.chartData.money;
                 } else {

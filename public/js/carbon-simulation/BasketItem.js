@@ -92,6 +92,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -225,23 +226,6 @@ var draggable = function draggable() {
     doStuff: function doStuff() {
       this.$emit('do-stuff', this.index);
     },
-    insertBlock: function insertBlock() {
-      var id = this.blockCounter + 1;
-
-      if (this.isSelected) {
-        // in reverse order because they're prepended
-        this.addProduct({
-          id: 'block-fnish-' + id,
-          name: 'Fin du bloc ' + id,
-          type: 'special'
-        });
-        this.addProduct({
-          id: 'block-start-' + id,
-          name: 'Titre du bloc ' + id,
-          type: 'special'
-        });
-      }
-    },
     contains: function contains(type) {
       var result = false;
 
@@ -295,9 +279,26 @@ var draggable = function draggable() {
       }
     },
     // BLOCKS STUFF
+    insertBlock: function insertBlock() {
+      var id = this.blockCounter + 1;
+
+      if (this.isSelected && this.blocks.length < 12) {
+        // in reverse order because they're prepended
+        this.addProduct({
+          id: 'block-fnish-' + id,
+          name: 'Fin du bloc ' + id,
+          type: 'special'
+        });
+        this.addProduct({
+          id: 'block-start-' + id,
+          name: 'Titre du bloc ' + id,
+          type: 'special'
+        });
+      }
+    },
     getBlockIndex: function getBlockIndex(type, number) {
       for (var i = 0; i < this.basket.products.length; i++) {
-        if (this.basket.products[i].id.includes('block-' + type + '-' + number)) {
+        if (this.basket.products[i].id.endsWith('block-' + type + '-' + number)) {
           return i;
         }
       }
@@ -592,7 +593,8 @@ var render = function() {
               "compare-to-previous-basket": _vm.compareToPreviousBasket,
               products: _vm.basket.products,
               categories: _vm.categories,
-              "basket-id": _vm.basket.id
+              "basket-id": _vm.basket.id,
+              blocks: _vm.blocks
             }
           })
         : _vm._e()

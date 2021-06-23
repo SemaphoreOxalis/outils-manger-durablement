@@ -52,7 +52,7 @@ export default {
                 trans: 'Part transport',
             },
             ventilation: {
-                carbon: 'Ventilation de l\'empreinte carbone en grammes de CO2',
+                carbon: 'Ventilation de l\'empreinte carbone en Kg de CO2',
                 money: 'Ventilation des dépenses (en €)',
             },
             origin: {

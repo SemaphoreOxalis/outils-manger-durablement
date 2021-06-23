@@ -66,11 +66,13 @@
     <div v-else-if="product.type === 'special'">
         <div :class="getSpecialClasses(product)" :id="'header-' + basketId + '-' + product.id">
 
-
             <div v-if="product.id.includes('start')" class="text-block">
                 <div class="product-name d-flex">
-                    <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="edit = false">
-                    <div v-else><strong>{{ product.name }}</strong><a @click="editTitle" class="ignore-draggable edit-block" title="Modifier le titre de ce bloc"><i class="icon ml-2"></i></a></div>
+                    <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="renamed">
+                    <div v-else class="ignore-draggable">
+                        <strong @click="editTitle" class="block-title">{{ product.name }}</strong>
+                        <a @click="editTitle" class="ignore-draggable edit-block" title="Modifier le titre de ce bloc"><i class="icon ml-2"></i></a>
+                    </div>
                 </div>
 
             </div>
@@ -162,6 +164,10 @@ export default {
             if(e.key === 'Enter') {
                 this.edit = false;
             }
+        },
+        renamed() {
+            this.edit = false;
+            this.save();
         }
     }
 }

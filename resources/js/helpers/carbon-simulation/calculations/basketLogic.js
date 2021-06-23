@@ -12,10 +12,6 @@ export default {
             });
 
             categoryProducts.forEach(product => {
-                // let productImpact = 0;
-                // let transportationImpact = 0;
-                // let carbonImpact = 0;
-
                 product.productImpact = (product.amount * product.emissionFactor);
                 product.transportationImpact = (product.amount * product.origin.carbonImpactPerKg);
                 product.carbonImpact = product.productImpact + product.transportationImpact;
@@ -58,6 +54,35 @@ export default {
             this.globalTransportationImpact.formatted = this.divideIfNecessary(this.globalTransportationImpact.impact);
             this.globalCarbonImpact.formatted = this.divideIfNecessary(this.globalCarbonImpact.impact);
         },
+        getCarbonImpactForBlock(block) {
+            let blockProductImpact = 0;
+            let blockTransportationImpact = 0;
+            let blockCarbonImpact = 0;
+
+            let blockProducts = this.products.filter(product => {
+                if(product.type !== 'special') {
+                    return product.isInBlock === parseInt(block.number);
+                }
+            });
+
+            blockProducts.forEach(product => {
+                blockProductImpact += product.productImpact;
+                blockTransportationImpact += product.transportationImpact;
+                blockCarbonImpact += product.carbonImpact;
+            });
+
+            block.productImpact = this.roundToThreeDecimal(blockProductImpact);
+            block.transportationImpact = this.roundToThreeDecimal(blockTransportationImpact);
+            block.carbonImpact = this.roundToThreeDecimal(blockCarbonImpact);
+
+            block.productFormattedImpact = this.divideIfNecessary(blockProductImpact);
+            block.transportationFormattedImpact = this.divideIfNecessary(blockTransportationImpact);
+            block.carbonFormattedImpact = this.divideIfNecessary(blockCarbonImpact);
+
+            block.productImpactUnit = this.getUnit(blockProductImpact);
+            block.transportationImpactUnit = this.getUnit(blockTransportationImpact);
+            block.carbonImpactUnit = this.getUnit(blockCarbonImpact);
+        },
 
         getMoneyImpactFor(category) {
             let categoryMoneySpent = 0;
@@ -74,7 +99,7 @@ export default {
             });
 
             category.moneySpent = categoryMoneySpent;
-            category.co2PerEuro = category.carbonImpact / categoryMoneySpent;
+            category.co2PerEuro = category.carbonImpact / categoryMoneySpent || 0;
             category.co2PerEuroFormatted = this.divideIfNecessary(category.co2PerEuro);
             category.co2PerEuroUnit = this.getUnit(category.co2PerEuro) + '/€';
         },
@@ -92,6 +117,26 @@ export default {
             this.globalCO2PerEuroFormatted = this.divideIfNecessary(this.globalCO2PerEuro);
             this.globalCO2PerEuroUnit = this.getUnit(this.globalCO2PerEuro) + '/€';
         },
+        getMoneyImpactForBlock(block) {
+            let moneySpent = 0;
+
+            let blockProducts = this.products.filter(product => {
+                if(product.type !== 'special') {
+                    return product.isInBlock === parseInt(block.number);
+                }
+            });
+
+            blockProducts.forEach(product => {
+                let productPrice = parseFloat(product.price);
+                moneySpent += productPrice;
+            });
+
+            block.moneySpent = moneySpent;
+            block.co2PerEuro = block.carbonImpact / moneySpent || 0;
+            block.co2PerEuroFormatted = this.divideIfNecessary(block.co2PerEuro);
+            block.co2PerEuroUnit = this.getUnit(block.co2PerEuro) + '/€';
+        },
+
         getDeltasFor(category, index) {
             category.carbonDelta = this.getDelta(category.carbonImpact, this.comparedBasket.results.cats[index].carbonImpact);
             category.moneyDelta = this.getDelta(category.moneySpent, this.comparedBasket.results.cats[index].moneySpent);

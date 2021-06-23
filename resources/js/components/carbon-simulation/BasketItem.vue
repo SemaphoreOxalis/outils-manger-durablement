@@ -53,7 +53,8 @@
                        :compare-to-previous-basket="compareToPreviousBasket"
                        :products="basket.products"
                        :categories="categories"
-                       :basket-id="basket.id">
+                       :basket-id="basket.id"
+                       :blocks="blocks">
         </basket-result>
 
     </div>
@@ -193,21 +194,6 @@ export default {
         doStuff() {
             this.$emit('do-stuff', this.index);
         },
-        insertBlock() {
-            let id = this.blockCounter + 1;
-            if(this.isSelected) { // in reverse order because they're prepended
-                this.addProduct({
-                    id: 'block-fnish-' + id,
-                    name: 'Fin du bloc ' + id,
-                    type: 'special',
-                });
-                this.addProduct({
-                    id: 'block-start-' + id,
-                    name: 'Titre du bloc ' + id,
-                    type: 'special',
-                });
-            }
-        },
         contains(type) {
             let result = false;
             if(this.basket.products) {
@@ -262,9 +248,24 @@ export default {
         },
 
         // BLOCKS STUFF
+        insertBlock() {
+            let id = this.blockCounter + 1;
+            if(this.isSelected && this.blocks.length < 12) { // in reverse order because they're prepended
+                this.addProduct({
+                    id: 'block-fnish-' + id,
+                    name: 'Fin du bloc ' + id,
+                    type: 'special',
+                });
+                this.addProduct({
+                    id: 'block-start-' + id,
+                    name: 'Titre du bloc ' + id,
+                    type: 'special',
+                });
+            }
+        },
         getBlockIndex(type, number) {
             for (let i = 0; i < this.basket.products.length; i++) {
-                if (this.basket.products[i].id.includes('block-' + type + '-' + number)) {
+                if (this.basket.products[i].id.endsWith('block-' + type + '-' + number)) {
                     return i;
                 }
             }
@@ -329,7 +330,7 @@ export default {
             for(let i = end - 1; i > begin; i--) {
                 this.basket.products.splice(i, 1);
             }
-        }
+        },
     }
 }
 </script>

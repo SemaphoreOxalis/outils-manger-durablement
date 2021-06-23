@@ -12102,6 +12102,10 @@ h1.header {
   cursor: pointer;
 }
 
+.block-title {
+  cursor: text;
+}
+
 .special-product-top {
   background-color: rgba(17, 153, 142, 0.1);
   margin-top: 3px;
@@ -12338,7 +12342,7 @@ input.custom-control-input {
 }
 
 .switch {
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .switch label {
