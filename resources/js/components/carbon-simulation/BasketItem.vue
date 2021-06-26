@@ -250,8 +250,8 @@ export default {
         // BLOCKS STUFF
         insertBlock() {
             let id = this.blockCounter + 1;
-            if(this.isSelected && this.blocks.length < 12) { // in reverse order because they're prepended
-                this.addProduct({
+            if(this.isSelected && this.blocks.length < 11) {
+                this.addProduct({ // in reverse order because they're prepended
                     id: 'block-fnish-' + id,
                     name: 'Fin du bloc ' + id,
                     type: 'special',

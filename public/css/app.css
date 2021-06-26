@@ -12121,7 +12121,9 @@ h1.header {
 }
 
 .results-container {
+  min-height: 619.033px;
   margin-top: 2rem;
+  align-self: start;
 }
 
 .basket-header {
@@ -12448,6 +12450,12 @@ ul.nav.nav-tabs {
   font-style: italic;
   font-weight: 400;
   text-align: center;
+}
+
+.sum {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 
 /*************/

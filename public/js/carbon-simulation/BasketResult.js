@@ -158,13 +158,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -347,6 +340,8 @@ __webpack_require__.r(__webpack_exports__);
     sendResults: function sendResults() {
       this.results.cats = this.cats;
       this.results.blocks = this.blcks;
+      this.results.equivalence = this.equivalent + ' ' + this.equivalentUnit;
+      this.results.co2PerEuro = this.globalCO2PerEuroFormatted + ' ' + this.globalCO2PerEuroUnit;
       this.results.globalProductImpact = this.globalProductImpact.impact;
       this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
       this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
@@ -696,604 +691,516 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "results-container" }, [
-    _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs",
-        attrs: { id: _vm.basketId + "-nav-tab", role: "tablist" }
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active button btn-2",
-              attrs: {
-                id: _vm.basketId + "-carbon-tab",
-                "data-toggle": "tab",
-                href: "#" + _vm.basketId + "-carbon",
-                role: "tab",
-                "aria-controls": "home",
-                "aria-selected": "true"
-              }
-            },
-            [_vm._v(_vm._s(_vm.impact.title.carbon))]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link button btn-2",
-              attrs: {
-                id: _vm.basketId + "-finance-tab",
-                "data-toggle": "tab",
-                href: "#" + _vm.basketId + "-finance",
-                role: "tab",
-                "aria-controls": "profile",
-                "aria-selected": "false"
-              }
-            },
-            [_vm._v(_vm._s(_vm.impact.title.money))]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link button btn-2 nav-ico",
-              attrs: {
-                id: _vm.basketId + "-graph-tab",
-                "data-toggle": "tab",
-                href: "#" + _vm.basketId + "-graph",
-                role: "tab",
-                "aria-controls": "contact",
-                "aria-selected": "false"
-              }
-            },
-            [_vm._v("")]
-          )
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "tab-content" }, [
+  return _c("div", { staticClass: "results-container flex flex-column" }, [
+    _c("div", [
       _c(
-        "div",
+        "ul",
         {
-          staticClass: "tab-pane fade show active",
-          attrs: { id: _vm.basketId + "-carbon", role: "tabpanel" }
+          staticClass: "nav nav-tabs",
+          attrs: { id: _vm.basketId + "-nav-tab", role: "tablist" }
         },
         [
-          _c("div", { staticClass: "custom-control switch center" }, [
-            _c("label", [
-              _vm._v("\n                    Catégories\n                    "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.listByBlocks,
-                    expression: "listByBlocks"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.listByBlocks)
-                    ? _vm._i(_vm.listByBlocks, null) > -1
-                    : _vm.listByBlocks
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.listByBlocks,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.listByBlocks = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.listByBlocks = $$c
-                      }
-                    },
-                    _vm.updateChart
-                  ]
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link active button btn-2",
+                attrs: {
+                  id: _vm.basketId + "-carbon-tab",
+                  "data-toggle": "tab",
+                  href: "#" + _vm.basketId + "-carbon",
+                  role: "tab",
+                  "aria-controls": "home",
+                  "aria-selected": "true"
                 }
-              }),
-              _c("span", { staticClass: "lever" }),
-              _vm._v("\n                    Blocs\n                ")
-            ])
+              },
+              [_vm._v(_vm._s(_vm.impact.title.carbon))]
+            )
           ]),
           _vm._v(" "),
-          !_vm.listByBlocks
-            ? _c(
-                "div",
-                _vm._l(_vm.cats, function(category) {
-                  return _c(
-                    "div",
-                    { staticClass: "results-row flex-horizontal" },
-                    [
-                      _c("div", { staticClass: "results-categorie-name" }, [
-                        _vm._v(_vm._s(category.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { class: _vm.getClasses() }, [
-                        _c("a", { staticClass: "info-bubble" }, [
-                          _vm._v(
-                            _vm._s(category.carbonFormattedImpact) +
-                              " " +
-                              _vm._s(category.carbonImpactUnit) +
-                              "\n                            "
-                          ),
-                          _c("span", [
-                            _vm._v(
-                              _vm._s(_vm.impact.product_impact) +
-                                " : " +
-                                _vm._s(category.productFormattedImpact) +
-                                " " +
-                                _vm._s(category.productImpactUnit)
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(_vm.impact.transportation_impact) +
-                                " : " +
-                                _vm._s(category.transportationFormattedImpact) +
-                                " " +
-                                _vm._s(category.transportationImpactUnit)
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      !_vm.isFirst
-                        ? _c("div", {
-                            staticClass: "results-div",
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.getStyle(category.carbonDelta)
-                              )
-                            }
-                          })
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                0
-              )
-            : _c(
-                "div",
-                _vm._l(_vm.blcks, function(block) {
-                  return _c(
-                    "div",
-                    { staticClass: "results-row flex-horizontal" },
-                    [
-                      _c("div", { staticClass: "results-categorie-name" }, [
-                        _vm._v(_vm._s(block.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { class: _vm.getClasses() }, [
-                        _c("a", { staticClass: "info-bubble" }, [
-                          _vm._v(
-                            _vm._s(block.carbonFormattedImpact) +
-                              " " +
-                              _vm._s(block.carbonImpactUnit) +
-                              "\n                            "
-                          ),
-                          _c("span", [
-                            _vm._v(
-                              _vm._s(_vm.impact.product_impact) +
-                                " : " +
-                                _vm._s(block.productFormattedImpact) +
-                                " " +
-                                _vm._s(block.productImpactUnit)
-                            ),
-                            _c("br"),
-                            _vm._v(
-                              _vm._s(_vm.impact.transportation_impact) +
-                                " : " +
-                                _vm._s(block.transportationFormattedImpact) +
-                                " " +
-                                _vm._s(block.transportationImpactUnit) +
-                                "\n                    "
-                            )
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                }),
-                0
-              ),
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link button btn-2",
+                attrs: {
+                  id: _vm.basketId + "-finance-tab",
+                  "data-toggle": "tab",
+                  href: "#" + _vm.basketId + "-finance",
+                  role: "tab",
+                  "aria-controls": "profile",
+                  "aria-selected": "false"
+                }
+              },
+              [_vm._v(_vm._s(_vm.impact.title.money))]
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "results-row flex-horizontal final-results" },
-            [
-              _c("div", { staticClass: "results-categorie-name" }, [
-                _vm._v(_vm._s(_vm.sum))
-              ]),
-              _vm._v(" "),
-              _c("div", { class: _vm.getClasses() }, [
-                _c("a", { staticClass: "info-bubble" }, [
-                  _vm._v(
-                    _vm._s(_vm.globalCarbonImpact.formatted) +
-                      " " +
-                      _vm._s(_vm.globalCarbonImpact.unit) +
-                      "\n                        "
-                  ),
-                  _c("span", [
-                    _vm._v(
-                      _vm._s(_vm.impact.product_impact) +
-                        " : " +
-                        _vm._s(_vm.globalProductImpact.formatted) +
-                        " " +
-                        _vm._s(_vm.globalProductImpact.unit)
-                    ),
-                    _c("br"),
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.impact.transportation_impact) +
-                        " : " +
-                        _vm._s(_vm.globalTransportationImpact.formatted) +
-                        " " +
-                        _vm._s(_vm.globalTransportationImpact.unit)
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              !_vm.isFirst
-                ? _c("div", {
-                    staticClass: "results-div",
-                    domProps: {
-                      innerHTML: _vm._s(_vm.getStyle(_vm.carbonDelta))
-                    }
-                  })
-                : _vm._e()
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "results-comment" }, [
-            _c("div", [
-              _vm._v(
-                _vm._s(_vm.impact.carbon) +
-                  " : " +
-                  _vm._s(_vm.equivalent) +
-                  " " +
-                  _vm._s(_vm.equivalentUnit)
-              )
-            ])
+          _c("li", { staticClass: "nav-item" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link button btn-2 nav-ico",
+                attrs: {
+                  id: _vm.basketId + "-graph-tab",
+                  "data-toggle": "tab",
+                  href: "#" + _vm.basketId + "-graph",
+                  role: "tab",
+                  "aria-controls": "contact",
+                  "aria-selected": "false"
+                }
+              },
+              [_vm._v("")]
+            )
           ])
         ]
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane fade",
-          attrs: { id: _vm.basketId + "-finance", role: "tabpanel" }
-        },
-        [
-          _c("div", { staticClass: "custom-control switch center" }, [
-            _c("label", [
-              _vm._v("\n                    Catégories\n                    "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.listByBlocks,
-                    expression: "listByBlocks"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.listByBlocks)
-                    ? _vm._i(_vm.listByBlocks, null) > -1
-                    : _vm.listByBlocks
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.listByBlocks,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.listByBlocks = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.listByBlocks = $$c
-                      }
-                    },
-                    _vm.updateChart
-                  ]
-                }
-              }),
-              _c("span", { staticClass: "lever" }),
-              _vm._v("\n                    Blocs\n                ")
-            ])
-          ]),
-          _vm._v(" "),
-          !_vm.listByBlocks
-            ? _c(
-                "div",
-                _vm._l(_vm.cats, function(category) {
-                  return _c(
-                    "div",
-                    { staticClass: "results-row flex-horizontal" },
-                    [
-                      _c("div", { staticClass: "results-categorie-name" }, [
-                        _vm._v(_vm._s(category.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "results-div" }, [
-                        _c("a", { staticClass: "info-bubble" }, [
-                          _vm._v(
-                            _vm._s(category.moneySpent) +
-                              " €\n                            "
-                          ),
-                          _c("span", [
-                            _vm._v(
-                              _vm._s(category.co2PerEuroFormatted) +
-                                " " +
-                                _vm._s(category.co2PerEuroUnit)
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      !_vm.isFirst
-                        ? _c("div", {
-                            staticClass: "results-div",
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.getStyle(category.moneyDelta)
-                              )
-                            }
-                          })
-                        : _vm._e()
-                    ]
-                  )
-                }),
-                0
-              )
-            : _c(
-                "div",
-                _vm._l(_vm.blcks, function(block) {
-                  return _c(
-                    "div",
-                    { staticClass: "results-row flex-horizontal" },
-                    [
-                      _c("div", { staticClass: "results-categorie-name" }, [
-                        _vm._v(_vm._s(block.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "results-div" }, [
-                        _c("a", { staticClass: "info-bubble" }, [
-                          _vm._v(
-                            _vm._s(block.moneySpent) +
-                              " €\n                            "
-                          ),
-                          _c("span", [
-                            _vm._v(
-                              _vm._s(block.co2PerEuroFormatted) +
-                                " " +
-                                _vm._s(block.co2PerEuroUnit)
-                            )
-                          ])
-                        ])
-                      ])
-                    ]
-                  )
-                }),
-                0
-              ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "results-row flex-horizontal final-results" },
-            [
-              _c("div", { staticClass: "results-categorie-name" }, [
-                _vm._v(_vm._s(_vm.sum))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "results-div" }, [
-                _c("a", { staticClass: "info-bubble" }, [
-                  _vm._v(
-                    _vm._s(_vm.globalMoneySpend) +
-                      " €\n                        "
-                  ),
-                  _c("span", [
-                    _vm._v(
-                      "\n                        " +
-                        _vm._s(_vm.globalCO2PerEuroFormatted) +
-                        " " +
-                        _vm._s(_vm.globalCO2PerEuroUnit) +
-                        "\n                        "
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              !_vm.isFirst
-                ? _c("div", {
-                    staticClass: "results-div",
-                    domProps: {
-                      innerHTML: _vm._s(_vm.getStyle(_vm.moneyDelta))
+      _c("div", { staticClass: "custom-control switch center" }, [
+        _c("label", [
+          _vm._v("\n                Catégories\n                "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.listByBlocks,
+                expression: "listByBlocks"
+              }
+            ],
+            staticClass: "custom-control-input",
+            attrs: { type: "checkbox" },
+            domProps: {
+              checked: Array.isArray(_vm.listByBlocks)
+                ? _vm._i(_vm.listByBlocks, null) > -1
+                : _vm.listByBlocks
+            },
+            on: {
+              change: [
+                function($event) {
+                  var $$a = _vm.listByBlocks,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = null,
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
+                    } else {
+                      $$i > -1 &&
+                        (_vm.listByBlocks = $$a
+                          .slice(0, $$i)
+                          .concat($$a.slice($$i + 1)))
                     }
-                  })
-                : _vm._e()
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "results-comment" }, [
-            _c("div", [
-              _vm._v(
-                _vm._s(_vm.impact.co2_per_euro) +
-                  " : " +
-                  _vm._s(_vm.globalCO2PerEuroFormatted) +
-                  " " +
-                  _vm._s(_vm.globalCO2PerEuroUnit)
-              )
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tab-pane fade",
-          attrs: {
-            id: _vm.basketId + "-graph",
-            role: "tabpanel",
-            "aria-labelledby": "contact-tab"
-          }
-        },
-        [
-          _c("div", { staticClass: "custom-control switch center" }, [
-            _c("label", [
-              _vm._v("\n                    Catégories\n                    "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.listByBlocks,
-                    expression: "listByBlocks"
+                  } else {
+                    _vm.listByBlocks = $$c
                   }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.listByBlocks)
-                    ? _vm._i(_vm.listByBlocks, null) > -1
-                    : _vm.listByBlocks
                 },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.listByBlocks,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.listByBlocks = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.listByBlocks = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.listByBlocks = $$c
-                      }
-                    },
-                    _vm.updateChart
-                  ]
-                }
-              }),
-              _c("span", { staticClass: "lever" }),
-              _vm._v("\n                    Blocs\n                ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "custom-control switch center" }, [
-            _c("label", [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.impact.title.carbon) +
-                  "\n                    "
-              ),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.chartViewMoney,
-                    expression: "chartViewMoney"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox" },
-                domProps: {
-                  checked: Array.isArray(_vm.chartViewMoney)
-                    ? _vm._i(_vm.chartViewMoney, null) > -1
-                    : _vm.chartViewMoney
-                },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$a = _vm.chartViewMoney,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.chartViewMoney = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.chartViewMoney = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.chartViewMoney = $$c
-                      }
-                    },
-                    _vm.updateChart
-                  ]
-                }
-              }),
-              _c("span", { staticClass: "lever" }),
-              _vm._v(
-                "\n                    " +
-                  _vm._s(_vm.impact.title.money) +
-                  "\n                "
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "my-4 text-center" }, [
-            _vm.chartViewMoney
-              ? _c("span", [_vm._v(_vm._s(_vm.ventilation.money))])
-              : _c("span", [_vm._v(_vm._s(_vm.ventilation.carbon))])
-          ]),
-          _vm._v(" "),
-          _c("canvas", {
-            attrs: {
-              id: _vm.basketId + "-chart",
-              width: "370px",
-              height: "400px"
+                _vm.updateChart
+              ]
             }
-          })
-        ]
-      )
+          }),
+          _c("span", { staticClass: "lever" }),
+          _vm._v("\n                Blocs\n            ")
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "flex-grow-1 flex flex-column" }, [
+      _c("div", { staticClass: "tab-content flex-grow-1 flex flex-column" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "tab-pane fade show active flex-grow-1 position-relative",
+            attrs: { id: _vm.basketId + "-carbon", role: "tabpanel" }
+          },
+          [
+            !_vm.listByBlocks
+              ? _c(
+                  "div",
+                  _vm._l(_vm.cats, function(category) {
+                    return _c(
+                      "div",
+                      { staticClass: "results-row flex-horizontal" },
+                      [
+                        _c("div", { staticClass: "results-categorie-name" }, [
+                          _vm._v(_vm._s(category.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { class: _vm.getClasses() }, [
+                          _c("a", { staticClass: "info-bubble" }, [
+                            _vm._v(
+                              _vm._s(category.carbonFormattedImpact) +
+                                " " +
+                                _vm._s(category.carbonImpactUnit) +
+                                "\n                                "
+                            ),
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(_vm.impact.product_impact) +
+                                  " : " +
+                                  _vm._s(category.productFormattedImpact) +
+                                  " " +
+                                  _vm._s(category.productImpactUnit)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.impact.transportation_impact) +
+                                  " : " +
+                                  _vm._s(
+                                    category.transportationFormattedImpact
+                                  ) +
+                                  " " +
+                                  _vm._s(category.transportationImpactUnit)
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        !_vm.isFirst
+                          ? _c("div", {
+                              staticClass: "results-div",
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.getStyle(category.carbonDelta)
+                                )
+                              }
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _c(
+                  "div",
+                  _vm._l(_vm.blcks, function(block) {
+                    return _c(
+                      "div",
+                      { staticClass: "results-row flex-horizontal" },
+                      [
+                        _c("div", { staticClass: "results-categorie-name" }, [
+                          _vm._v(_vm._s(block.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { class: _vm.getClasses() }, [
+                          _c("a", { staticClass: "info-bubble" }, [
+                            _vm._v(
+                              _vm._s(block.carbonFormattedImpact) +
+                                " " +
+                                _vm._s(block.carbonImpactUnit) +
+                                "\n                                "
+                            ),
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(_vm.impact.product_impact) +
+                                  " : " +
+                                  _vm._s(block.productFormattedImpact) +
+                                  " " +
+                                  _vm._s(block.productImpactUnit)
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                _vm._s(_vm.impact.transportation_impact) +
+                                  " : " +
+                                  _vm._s(block.transportationFormattedImpact) +
+                                  " " +
+                                  _vm._s(block.transportationImpactUnit) +
+                                  "\n                    "
+                              )
+                            ])
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                ),
+            _vm._v(" "),
+            _c("div", { staticClass: "sum" }, [
+              _c(
+                "div",
+                { staticClass: "results-row flex-horizontal final-results" },
+                [
+                  _c("div", { staticClass: "results-categorie-name" }, [
+                    _vm._v(_vm._s(_vm.sum))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { class: _vm.getClasses() }, [
+                    _c("a", { staticClass: "info-bubble" }, [
+                      _vm._v(
+                        _vm._s(_vm.globalCarbonImpact.formatted) +
+                          " " +
+                          _vm._s(_vm.globalCarbonImpact.unit) +
+                          "\n                                "
+                      ),
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.impact.product_impact) +
+                            " : " +
+                            _vm._s(_vm.globalProductImpact.formatted) +
+                            " " +
+                            _vm._s(_vm.globalProductImpact.unit)
+                        ),
+                        _c("br"),
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(_vm.impact.transportation_impact) +
+                            " : " +
+                            _vm._s(_vm.globalTransportationImpact.formatted) +
+                            " " +
+                            _vm._s(_vm.globalTransportationImpact.unit)
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  !_vm.isFirst
+                    ? _c("div", {
+                        staticClass: "results-div",
+                        domProps: {
+                          innerHTML: _vm._s(_vm.getStyle(_vm.carbonDelta))
+                        }
+                      })
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-comment" }, [
+                _c("div", [
+                  _vm._v(
+                    _vm._s(_vm.impact.carbon) +
+                      " : " +
+                      _vm._s(_vm.equivalent) +
+                      " " +
+                      _vm._s(_vm.equivalentUnit)
+                  )
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tab-pane fade flex-grow-1 position-relative",
+            attrs: { id: _vm.basketId + "-finance", role: "tabpanel" }
+          },
+          [
+            !_vm.listByBlocks
+              ? _c(
+                  "div",
+                  _vm._l(_vm.cats, function(category) {
+                    return _c(
+                      "div",
+                      { staticClass: "results-row flex-horizontal" },
+                      [
+                        _c("div", { staticClass: "results-categorie-name" }, [
+                          _vm._v(_vm._s(category.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "results-div" }, [
+                          _c("a", { staticClass: "info-bubble" }, [
+                            _vm._v(
+                              _vm._s(category.moneySpent) +
+                                " €\n                                "
+                            ),
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(category.co2PerEuroFormatted) +
+                                  " " +
+                                  _vm._s(category.co2PerEuroUnit)
+                              )
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        !_vm.isFirst
+                          ? _c("div", {
+                              staticClass: "results-div",
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.getStyle(category.moneyDelta)
+                                )
+                              }
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  }),
+                  0
+                )
+              : _c(
+                  "div",
+                  _vm._l(_vm.blcks, function(block) {
+                    return _c(
+                      "div",
+                      { staticClass: "results-row flex-horizontal" },
+                      [
+                        _c("div", { staticClass: "results-categorie-name" }, [
+                          _vm._v(_vm._s(block.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "results-div" }, [
+                          _c("a", { staticClass: "info-bubble" }, [
+                            _vm._v(
+                              _vm._s(block.moneySpent) +
+                                " €\n                                "
+                            ),
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(block.co2PerEuroFormatted) +
+                                  " " +
+                                  _vm._s(block.co2PerEuroUnit)
+                              )
+                            ])
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  0
+                ),
+            _vm._v(" "),
+            _c("div", { staticClass: "sum" }, [
+              _c(
+                "div",
+                { staticClass: "results-row flex-horizontal final-results" },
+                [
+                  _c("div", { staticClass: "results-categorie-name" }, [
+                    _vm._v(_vm._s(_vm.sum))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "results-div" }, [
+                    _c("a", { staticClass: "info-bubble" }, [
+                      _vm._v(
+                        _vm._s(_vm.globalMoneySpend) +
+                          " €\n                                "
+                      ),
+                      _c("span", [
+                        _vm._v(
+                          _vm._s(_vm.globalCO2PerEuroFormatted) +
+                            " " +
+                            _vm._s(_vm.globalCO2PerEuroUnit)
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  !_vm.isFirst
+                    ? _c("div", {
+                        staticClass: "results-div",
+                        domProps: {
+                          innerHTML: _vm._s(_vm.getStyle(_vm.moneyDelta))
+                        }
+                      })
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "results-comment" }, [
+                _c("div", [
+                  _vm._v(
+                    _vm._s(_vm.impact.co2_per_euro) +
+                      " : " +
+                      _vm._s(_vm.globalCO2PerEuroFormatted) +
+                      " " +
+                      _vm._s(_vm.globalCO2PerEuroUnit) +
+                      "\n                        "
+                  )
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tab-pane fade",
+            attrs: {
+              id: _vm.basketId + "-graph",
+              role: "tabpanel",
+              "aria-labelledby": "contact-tab"
+            }
+          },
+          [
+            _c("div", { staticClass: "custom-control switch center" }, [
+              _c("label", [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.impact.title.carbon) +
+                    "\n                        "
+                ),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.chartViewMoney,
+                      expression: "chartViewMoney"
+                    }
+                  ],
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox" },
+                  domProps: {
+                    checked: Array.isArray(_vm.chartViewMoney)
+                      ? _vm._i(_vm.chartViewMoney, null) > -1
+                      : _vm.chartViewMoney
+                  },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$a = _vm.chartViewMoney,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 && (_vm.chartViewMoney = $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              (_vm.chartViewMoney = $$a
+                                .slice(0, $$i)
+                                .concat($$a.slice($$i + 1)))
+                          }
+                        } else {
+                          _vm.chartViewMoney = $$c
+                        }
+                      },
+                      _vm.updateChart
+                    ]
+                  }
+                }),
+                _c("span", { staticClass: "lever" }),
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(_vm.impact.title.money) +
+                    "\n                    "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "my-4 text-center" }, [
+              _vm.chartViewMoney
+                ? _c("span", [_vm._v(_vm._s(_vm.ventilation.money))])
+                : _c("span", [_vm._v(_vm._s(_vm.ventilation.carbon))])
+            ]),
+            _vm._v(" "),
+            _c("canvas", {
+              attrs: {
+                id: _vm.basketId + "-chart",
+                width: "370px",
+                height: "400px"
+              }
+            })
+          ]
+        )
+      ])
     ])
   ])
 }

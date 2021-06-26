@@ -282,9 +282,9 @@ var draggable = function draggable() {
     insertBlock: function insertBlock() {
       var id = this.blockCounter + 1;
 
-      if (this.isSelected && this.blocks.length < 12) {
-        // in reverse order because they're prepended
+      if (this.isSelected && this.blocks.length < 11) {
         this.addProduct({
+          // in reverse order because they're prepended
           id: 'block-fnish-' + id,
           name: 'Fin du bloc ' + id,
           type: 'special'

@@ -1209,7 +1209,9 @@ h1.header {
   }
 
   .results-container {
+    min-height: 619.033px; // maximum height of this element with 12 blocks
     margin-top: 2rem;
+    align-self: start;
   }
 
   .basket-header {
@@ -1578,6 +1580,12 @@ h1.header {
     font-style: italic;
     font-weight: 400;
     text-align: center;
+  }
+
+  .sum {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
   }
 
 /*************/

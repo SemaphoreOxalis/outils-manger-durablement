@@ -1,149 +1,142 @@
 <template>
-    <div class="results-container">
+    <div class="results-container flex flex-column">
+        <div>
+            <!-- Onglets -->
+            <ul class="nav nav-tabs" :id="basketId + '-nav-tab'" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active button btn-2" :id="basketId + '-carbon-tab'" data-toggle="tab"
+                       :href="'#' + basketId + '-carbon'" role="tab" aria-controls="home"
+                       aria-selected="true">{{ impact.title.carbon }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link button btn-2" :id="basketId + '-finance-tab'" data-toggle="tab"
+                       :href="'#' + basketId + '-finance'" role="tab" aria-controls="profile"
+                       aria-selected="false">{{ impact.title.money }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link button btn-2 nav-ico" :id="basketId + '-graph-tab'" data-toggle="tab"
+                       :href="'#' + basketId + '-graph'" role="tab" aria-controls="contact"
+                       aria-selected="false"></a>
+                </li>
+            </ul>
 
-        <!-- Onglets -->
-        <ul class="nav nav-tabs" :id="basketId + '-nav-tab'" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active button btn-2" :id="basketId + '-carbon-tab'" data-toggle="tab"
-                   :href="'#' + basketId + '-carbon'" role="tab" aria-controls="home"
-                   aria-selected="true">{{ impact.title.carbon }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link button btn-2" :id="basketId + '-finance-tab'" data-toggle="tab"
-                   :href="'#' + basketId + '-finance'" role="tab" aria-controls="profile"
-                   aria-selected="false">{{ impact.title.money }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link button btn-2 nav-ico" :id="basketId + '-graph-tab'" data-toggle="tab"
-                   :href="'#' + basketId + '-graph'" role="tab" aria-controls="contact"
-                   aria-selected="false"></a>
-            </li>
-        </ul>
+            <div class="custom-control switch center">
+                <label>
+                    Catégories
+                    <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
+                    Blocs
+                </label>
+            </div>
+        </div>
 
-        <!-- Résultats -->
-        <div class="tab-content">
-            <!-- Bilan carbone / catégories -->
-            <div class="tab-pane fade show active" :id="basketId + '-carbon'" role="tabpanel">
-                <div class="custom-control switch center">
-                    <label>
-                        Catégories
-                        <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
-                        Blocs
-                    </label>
-                </div>
-                <!-- Par catégories -->
-                <div v-if="!listByBlocks">
-                    <div v-for="category in cats" class="results-row flex-horizontal">
-                        <div class="results-categorie-name">{{ category.name }}</div>
-                        <div :class="getClasses()">
-                            <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
-                                <span>{{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
+        <div class="flex-grow-1 flex flex-column">
+            <!-- Résultats -->
+            <div class="tab-content flex-grow-1 flex flex-column">
+                <!-- Bilan carbone / catégories -->
+                <div class="tab-pane fade show active flex-grow-1 position-relative" :id="basketId + '-carbon'" role="tabpanel">
+                    <!-- Par catégories -->
+                    <div v-if="!listByBlocks">
+                        <div v-for="category in cats" class="results-row flex-horizontal">
+                            <div class="results-categorie-name">{{ category.name }}</div>
+                            <div :class="getClasses()">
+                                <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
+                                    <span>{{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
                                 {{ impact.transportation_impact }} : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}</span>
-                            </a>
+                                </a>
+                            </div>
+                            <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
                         </div>
-                        <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
                     </div>
-                </div>
-                <!-- Par blocs -->
-                <div v-else>
-                    <div v-for="block in blcks" class="results-row flex-horizontal">
-                        <div class="results-categorie-name">{{ block.name }}</div>
-                        <div :class="getClasses()">
-                            <a class="info-bubble">{{ block.carbonFormattedImpact }} {{ block.carbonImpactUnit }}
-                                <span>{{ impact.product_impact }} : {{ block.productFormattedImpact }} {{ block.productImpactUnit }}<br>{{ impact.transportation_impact }} : {{ block.transportationFormattedImpact }} {{ block.transportationImpactUnit }}
+                    <!-- Par blocs -->
+                    <div v-else>
+                        <div v-for="block in blcks" class="results-row flex-horizontal">
+                            <div class="results-categorie-name">{{ block.name }}</div>
+                            <div :class="getClasses()">
+                                <a class="info-bubble">{{ block.carbonFormattedImpact }} {{ block.carbonImpactUnit }}
+                                    <span>{{ impact.product_impact }} : {{ block.productFormattedImpact }} {{ block.productImpactUnit }}<br>{{ impact.transportation_impact }} : {{ block.transportationFormattedImpact }} {{ block.transportationImpactUnit }}
                         </span>
-                            </a>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total -->
+                    <div class="sum">
+                        <div class="results-row flex-horizontal final-results">
+                            <div class="results-categorie-name">{{ sum }}</div>
+                            <div :class="getClasses()">
+                                <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
+                                    <span>{{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
+                                    {{ impact.transportation_impact }} : {{ globalTransportationImpact.formatted }} {{ globalTransportationImpact.unit }}</span>
+                                </a>
+                            </div>
+                            <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
+                        </div>
+                        <div class="results-comment">
+                            <div>{{ impact.carbon }} : {{ equivalent }} {{ equivalentUnit }}</div>
                         </div>
                     </div>
                 </div>
-                <!-- Total -->
-                <div class="results-row flex-horizontal final-results">
-                    <div class="results-categorie-name">{{ sum }}</div>
-                    <div :class="getClasses()">
-                        <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
-                            <span>{{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
-                            {{ impact.transportation_impact }} : {{ globalTransportationImpact.formatted }} {{ globalTransportationImpact.unit }}</span>
-                        </a>
-                    </div>
-                    <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
-                </div>
-                <div class="results-comment">
-                    <div>{{ impact.carbon }} : {{ equivalent }} {{ equivalentUnit }}</div>
-                </div>
-            </div>
 
-            <!-- Bilan financier / catégories -->
-            <div class="tab-pane fade" :id="basketId + '-finance'" role="tabpanel">
-                <div class="custom-control switch center">
-                    <label>
-                        Catégories
-                        <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
-                        Blocs
-                    </label>
-                </div>
-                <!-- Par catégories -->
-                <div v-if="!listByBlocks">
-                    <div v-for="category in cats" class="results-row flex-horizontal">
-                        <div class="results-categorie-name">{{ category.name }}</div>
-                        <div class="results-div">
-                            <a class="info-bubble">{{ category.moneySpent }} €
-                                <span>{{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}</span>
-                            </a>
+                <!-- Bilan financier / catégories -->
+                <div class="tab-pane fade flex-grow-1 position-relative" :id="basketId + '-finance'" role="tabpanel">
+                    <!-- Par catégories -->
+                    <div v-if="!listByBlocks">
+                        <div v-for="category in cats" class="results-row flex-horizontal">
+                            <div class="results-categorie-name">{{ category.name }}</div>
+                            <div class="results-div">
+                                <a class="info-bubble">{{ category.moneySpent }} €
+                                    <span>{{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}</span>
+                                </a>
+                            </div>
+                            <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
                         </div>
-                        <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
                     </div>
-                </div>
-                <!-- Par blocs -->
-                <div v-else>
-                    <div v-for="block in blcks" class="results-row flex-horizontal">
-                        <div class="results-categorie-name">{{ block.name }}</div>
-                        <div class="results-div">
-                            <a class="info-bubble">{{ block.moneySpent }} €
-                                <span>{{ block.co2PerEuroFormatted }} {{ block.co2PerEuroUnit }}</span>
-                            </a>
+                    <!-- Par blocs -->
+                    <div v-else>
+                        <div v-for="block in blcks" class="results-row flex-horizontal">
+                            <div class="results-categorie-name">{{ block.name }}</div>
+                            <div class="results-div">
+                                <a class="info-bubble">{{ block.moneySpent }} €
+                                    <span>{{ block.co2PerEuroFormatted }} {{ block.co2PerEuroUnit }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total -->
+                    <div class="sum">
+                        <div class="results-row flex-horizontal final-results">
+                            <div class="results-categorie-name">{{ sum }}</div>
+                            <div class="results-div">
+                                <a class="info-bubble">{{ globalMoneySpend }} €
+                                    <span>{{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}</span>
+                                </a>
+                            </div>
+                            <div v-if="!isFirst" class="results-div" v-html="getStyle(moneyDelta)"></div>
+                        </div>
+                        <div class="results-comment">
+                            <div>{{ impact.co2_per_euro }} : {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Total -->
-                <div class="results-row flex-horizontal final-results">
-                    <div class="results-categorie-name">{{ sum }}</div>
-                    <div class="results-div">
-                        <a class="info-bubble">{{ globalMoneySpend }} €
-                            <span>
-                            {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}
-                            </span>
-                        </a>
+
+                <!-- "Camembert" graphs -->
+                <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="custom-control switch center">
+                        <label>
+                            {{ impact.title.carbon }}
+                            <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
+                            {{ impact.title.money }}
+                        </label>
                     </div>
-                    <div v-if="!isFirst" class="results-div" v-html="getStyle(moneyDelta)"></div>
+                    <div class="my-4 text-center">
+                        <span v-if="chartViewMoney">{{ ventilation.money }}</span>
+                        <span v-else>{{ ventilation.carbon }}</span>
+                    </div>
+                    <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
                 </div>
-                <div class="results-comment">
-                    <div>{{ impact.co2_per_euro }} : {{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}</div>
-                </div>
-            </div>
 
-            <!-- "Camembert" graphs -->
-            <div class="tab-pane fade" :id="basketId + '-graph'" role="tabpanel" aria-labelledby="contact-tab">
-                <div class="custom-control switch center">
-                    <label>
-                        Catégories
-                        <input v-model="listByBlocks" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
-                        Blocs
-                    </label>
-                </div>
-                <div class="custom-control switch center">
-                    <label>
-                        {{ impact.title.carbon }}
-                        <input v-model="chartViewMoney" type="checkbox" class="custom-control-input" @change="updateChart"><span class="lever"></span>
-                        {{ impact.title.money }}
-                    </label>
-                </div>
-                <div class="my-4 text-center">
-                    <span v-if="chartViewMoney">{{ ventilation.money }}</span>
-                    <span v-else>{{ ventilation.carbon }}</span>
-                </div>
-                <canvas :id="basketId + '-chart'" width="370px" height="400px"></canvas>
             </div>
-
         </div>
     </div>
 </template>
@@ -189,7 +182,7 @@ export default {
                 return "km en voiture";
             }
             return "kms en voiture";
-        }
+        },
     },
     watch: {
         products: {
@@ -324,6 +317,8 @@ export default {
         sendResults() {
             this.results.cats = this.cats;
             this.results.blocks = this.blcks;
+            this.results.equivalence = this.equivalent + ' ' + this.equivalentUnit;
+            this.results.co2PerEuro = this.globalCO2PerEuroFormatted + ' ' +  this.globalCO2PerEuroUnit;
             this.results.globalProductImpact = this.globalProductImpact.impact;
             this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
             this.results.globalCarbonImpact = this.globalCarbonImpact.impact;

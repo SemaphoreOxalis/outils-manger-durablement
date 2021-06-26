@@ -169,6 +169,14 @@ class ExportController extends Controller {
                 ],
             ],
         ];
+        $blackBorderStyle = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => Border::BORDER_THICK,
+                    'color' => ['rgb' => '999999'],
+                ],
+            ],
+        ];
 
         // taille des colonnes
         $firstSheet->getDefaultColumnDimension()->setWidth(25);
@@ -181,7 +189,7 @@ class ExportController extends Controller {
         $firstSheet->getCell('A1')->getStyle()->getFont()->setBold(true);
         $firstSheet->getCell('A1')->getStyle()->getFont()->setSize(15);
 
-        foreach($request->input('baskets') as $basket) {
+        foreach($request->input('baskets') as $key=>$basket) {
             $sheet = new Worksheet($spreadsheet, $basket['name']);
             $spreadsheet->addSheet($sheet);
             $spreadsheet->setActiveSheetIndexByName($basket['name']);
@@ -234,22 +242,31 @@ class ExportController extends Controller {
                     }
                     $line++;
                 }
-                $sheet->getStyle('E5:I' . $line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('E5:J' . $line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
                 $line = $line + 2;
 
                 $sheet->mergeCells('A' . $line . ':E' . $line);
-                $sheet->mergeCells('G' . $line . ':I' . $line);
+                $sheet->mergeCells('H' . $line . ':J' . $line);
                 $sheet->setCellValue('A' . $line, 'bilan carbone (en kg de CO2)');
-                $sheet->setCellValue('G' . $line, 'bilan financier (en €)');
-                $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A' . $line . ':I' . ($line + 1))->getFont()->setBold(true);
-                $sheet->getStyle('A' . $line . ':I' . $line)->getFont()->setSize(12);
-                $sheet->getStyle('A' . $line . ':E' . $line)->applyFromArray($borderStyle);
-                $sheet->getStyle('G' . $line . ':I' . $line)->applyFromArray($borderStyle);
+                $sheet->setCellValue('H' . $line, 'bilan financier');
+                $sheet->getStyle('A' . $line . ':K' . ($line + 1))->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A' . $line . ':K' . ($line + 1))->getFont()->setBold(true);
+                $sheet->getStyle('A' . $line . ':K' . $line)->getFont()->setSize(12);
+                $sheet->getStyle('A' . $line . ':F' . $line)->applyFromArray($borderStyle);
+                $sheet->getStyle('H' . $line . ':K' . $line)->applyFromArray($borderStyle);
                 $line++;
                 $sheet->setCellValue('B' . $line, 'produit');
                 $sheet->setCellValue('C' . $line, 'transport');
                 $sheet->setCellValue('D' . $line, 'total');
+                $sheet->setCellValue('F' . $line, 'équivalence');
+                if($key != 0) {
+                    $mode = explode(' ', $request->input('mode'));
+                    $last_word = array_pop($mode);
+                    $sheet->setCellValue('E' . $line, "par rapport à la " . $last_word . " liste");
+                    $sheet->setCellValue('J' . $line, "par rapport à la " . $last_word . " liste");
+                }
+                $sheet->setCellValue('I' . $line, 'dépenses (en €)');
+                $sheet->setCellValue('K' . $line, 'bilan');
                 $line++;
 
                 $startLine = $line;
@@ -260,14 +277,14 @@ class ExportController extends Controller {
                     $sheet->setCellValue('D' . $line, $category['carbonImpact']);
                     $sheet->setCellValue('E' . $line, $category['carbonDelta']);
 
-                    $sheet->setCellValue('G' . $line, $category['name']);
-                    $sheet->setCellValue('H' . $line, $category['moneySpent']);
-                    $sheet->setCellValue('I' . $line, $category['moneyDelta']);
+                    $sheet->setCellValue('H' . $line, $category['name']);
+                    $sheet->setCellValue('I' . $line, $category['moneySpent']);
+                    $sheet->setCellValue('J' . $line, $category['moneyDelta']);
                     $line++;
                 }
                 $endLine = $line - 1;
                 $sheet->setCellValue('A' . $line, '----------');
-                $sheet->setCellValue('G' . $line, '----------');
+                $sheet->setCellValue('H' . $line, '----------');
                 $line++;
                 $sheet->setCellValue('A' . $line, 'Total');
                 $sheet->getStyle('A' . $line)->getFont()->setBold(true);
@@ -275,19 +292,24 @@ class ExportController extends Controller {
                 $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' kgCO2');
                 $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' kgCO2');
                 $sheet->setCellValue('E' . $line, $basket['globalCarbonDelta']);
+                $sheet->setCellValue('F' . $line, $basket['results']['equivalence']);
 
-                $sheet->setCellValue('G' . $line, 'Total');
-                $sheet->getStyle('G' . $line)->getFont()->setBold(true);
-                $sheet->setCellValue('H' . $line, $basket['results']['globalMoneySpend'] . ' €');
-                $sheet->setCellValue('I' . $line, $basket['globalMoneyDelta']);
+                $sheet->setCellValue('H' . $line, 'Total');
+                $sheet->getStyle('H' . $line)->getFont()->setBold(true);
+                $sheet->setCellValue('I' . $line, $basket['results']['globalMoneySpend'] . ' €');
+                $sheet->setCellValue('J' . $line, $basket['globalMoneyDelta']);
+                $sheet->setCellValue('K' . $line, $basket['results']['co2PerEuro']);
+                $sheet->getStyle('A' . $line . ':F' . $line)->applyFromArray($blackBorderStyle);
+                $sheet->getStyle('H' . $line . ':K' . $line)->applyFromArray($blackBorderStyle);
+
 
                 $sheet->getStyle('B' . $startLine . ':E' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
-                $sheet->getStyle('H' . $startLine . ':I' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('I' . $startLine . ':J' .$line)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
 
                 if($blocksNumber > 1) {
                     $line ++;
                     $sheet->setCellValue('A' . $line, '----------');
-                    $sheet->setCellValue('G' . $line, '----------');
+                    $sheet->setCellValue('H' . $line, '----------');
                     $line ++;
                     $startLineBlocks = $line;
                     foreach($basket['results']['blocks'] as $block) {
@@ -296,8 +318,8 @@ class ExportController extends Controller {
                         $sheet->setCellValue('C' . $line, $block['transportationImpact']);
                         $sheet->setCellValue('D' . $line, $block['carbonImpact']);
 
-                        $sheet->setCellValue('G' . $line, $block['name']);
-                        $sheet->setCellValue('H' . $line, $block['moneySpent']);
+                        $sheet->setCellValue('H' . $line, $block['name']);
+                        $sheet->setCellValue('I' . $line, $block['moneySpent']);
                         $line++;
                     }
                     $endLineBlocks = $line - 1;
@@ -318,14 +340,14 @@ class ExportController extends Controller {
                     new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$C$" . $startLine . ":\$C$" . $endLine, null, $categoriesNumber),
                 ];
                 $series = new DataSeries(
-                    DataSeries::TYPE_BARCHART_3D,
+                    DataSeries::TYPE_BARCHART,
                     DataSeries::GROUPING_STACKED,
                     range(0, count($dataSeriesValues) - 1),
                     $dataSeriesLabels,
                     $xAxisTickValues,
                     $dataSeriesValues
                 );
-                $series->setPlotDirection(DataSeries::DIRECTION_BAR);
+                //$series->setPlotDirection(DataSeries::DIRECTION_BAR);
                 $plotArea = new PlotArea(null, [$series]);
                 $legend = new Legend(Legend::POSITION_TOP, null, false);
                 $title = new Title('Ventilation de l\'empreinte carbone');
@@ -360,14 +382,14 @@ class ExportController extends Controller {
                         new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$C$" . $startLineBlocks . ":\$C$" . $endLineBlocks, null, $blocksNumber),
                     ];
                     $series3 = new DataSeries(
-                        DataSeries::TYPE_BARCHART_3D,
+                        DataSeries::TYPE_BARCHART,
                         DataSeries::GROUPING_STACKED,
                         range(0, count($dataSeriesValues3) - 1),
                         $dataSeriesLabels3,
                         $xAxisTickValues3,
                         $dataSeriesValues3
                     );
-                    $series3->setPlotDirection(DataSeries::DIRECTION_BAR);
+                    //$series3->setPlotDirection(DataSeries::DIRECTION_BAR);
                     $plotArea3 = new PlotArea(null, [$series3]);
                     $legend3 = new Legend(Legend::POSITION_TOP, null, false);
 
@@ -383,29 +405,29 @@ class ExportController extends Controller {
                     );
 
                     $chart3->setTopLeftPosition('A' . ($line + 25));
-                    $chart3->setBottomRightPosition('F' . ($line + 25 + ($blocksNumber * 2 + 5)));
+                    $chart3->setBottomRightPosition('F' . ($line + 50));
 
                     $sheet->addChart($chart3);
                 }
 
 
-                // MONEY CHART
+                // MONEY CHARTS
                 $dataSeriesLabels2 = [];
                 $xAxisTickValues2 = [
                     new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$A$" . $startLine . ":\$A$" . $endLine, null, $categoriesNumber),
                 ];
                 $dataSeriesValues2 = [
-                    new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$H$" . $startLine . ":\$H$" . $endLine, null, $categoriesNumber),
+                    new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$I$" . $startLine . ":\$I$" . $endLine, null, $categoriesNumber),
                 ];
                 $series2 = new DataSeries(
-                    DataSeries::TYPE_BARCHART_3D,
+                    DataSeries::TYPE_BARCHART,
                     DataSeries::GROUPING_STACKED,
                     range(0, count($dataSeriesValues2) - 1),
                     $dataSeriesLabels2,
                     $xAxisTickValues2,
                     $dataSeriesValues2
                 );
-                $series2->setPlotDirection(DataSeries::DIRECTION_BAR);
+                //$series2->setPlotDirection(DataSeries::DIRECTION_BAR);
                 $plotArea2 = new PlotArea(null, [$series2]);
                 $legend2 = new Legend(Legend::POSITION_TOP, null, false);
                 $title2 = new Title('Ventilation des dépenses');
@@ -433,17 +455,17 @@ class ExportController extends Controller {
                         new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, "'" . $basket['name'] . "'!\$A$" . $startLineBlocks . ":\$A$" . $endLineBlocks, null, $blocksNumber),
                     ];
                     $dataSeriesValues4 = [
-                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$H$" . $startLineBlocks . ":\$H$" . $endLineBlocks, null, $blocksNumber),
+                        new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, "'" . $basket['name'] . "'!\$I$" . $startLineBlocks . ":\$I$" . $endLineBlocks, null, $blocksNumber),
                     ];
                     $series4 = new DataSeries(
-                        DataSeries::TYPE_BARCHART_3D,
+                        DataSeries::TYPE_BARCHART,
                         DataSeries::GROUPING_STACKED,
                         range(0, count($dataSeriesValues4) - 1),
                         $dataSeriesLabels4,
                         $xAxisTickValues4,
                         $dataSeriesValues4
                     );
-                    $series4->setPlotDirection(DataSeries::DIRECTION_BAR);
+                    //$series4->setPlotDirection(DataSeries::DIRECTION_BAR);
                     $plotArea4 = new PlotArea(null, [$series4]);
                     $xAxisLabel4 = new Title('euros');
 
@@ -459,7 +481,7 @@ class ExportController extends Controller {
                     );
 
                     $chart4->setTopLeftPosition('F' . ($line + 25));
-                    $chart4->setBottomRightPosition('K' . ($line + 25 + ($blocksNumber * 2 + 5)));
+                    $chart4->setBottomRightPosition('K' . ($line + 50));
 
                     $sheet->addChart($chart4);
                 }
