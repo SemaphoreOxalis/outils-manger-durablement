@@ -127,9 +127,9 @@ export default {
             this.$emit('add-product-to-basket', product);
         },
         showSpecialProducts() {
-            this.categories.push({name: 'Spécial', id: this.categories.length + 1});
+            this.categories.push({name: 'Spécial', id: -1});
             this.specialProducts.forEach((p) => {
-                p.category_id = this.categories.length;
+                p.category_id = -1;
             });
         },
         hideSpecialProducts() {

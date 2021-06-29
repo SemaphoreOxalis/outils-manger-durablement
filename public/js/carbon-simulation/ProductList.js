@@ -142,14 +142,12 @@ var draggable = function draggable() {
       this.$emit('add-product-to-basket', product);
     },
     showSpecialProducts: function showSpecialProducts() {
-      var _this3 = this;
-
       this.categories.push({
         name: 'Spécial',
-        id: this.categories.length + 1
+        id: -1
       });
       this.specialProducts.forEach(function (p) {
-        p.category_id = _this3.categories.length;
+        p.category_id = -1;
       });
     },
     hideSpecialProducts: function hideSpecialProducts() {
