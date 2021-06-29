@@ -399,7 +399,6 @@ function makeSimsExportAjaxCall(exportData) {
 }
 
 function makeBasketsExportAjaxCall(exportData) {
-  console.log(exportData);
   return axios.post('/export-baskets', exportData, {
     responseType: 'arraybuffer'
   });
