@@ -144,10 +144,10 @@ var draggable = function draggable() {
     showSpecialProducts: function showSpecialProducts() {
       this.categories.push({
         name: 'Spécial',
-        id: -1
+        id: 999
       });
       this.specialProducts.forEach(function (p) {
-        p.category_id = -1;
+        p.category_id = 999;
       });
     },
     hideSpecialProducts: function hideSpecialProducts() {
