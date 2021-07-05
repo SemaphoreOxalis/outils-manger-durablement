@@ -379,7 +379,6 @@ var draggable = function draggable() {
     emptyBlock: function emptyBlock(blockStart) {
       var end = this.getCorrespondingIndex(blockStart);
       var begin = this.getCorrespondingIndex(this.basket.products[end]);
-      console.log(begin, end);
 
       for (var i = end - 1; i > begin; i--) {
         this.basket.products.splice(i, 1);

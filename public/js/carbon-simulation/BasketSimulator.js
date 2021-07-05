@@ -1067,8 +1067,8 @@ __webpack_require__.r(__webpack_exports__);
           carbon: 'Bilan Carbone',
           money: 'Bilan Financier'
         },
-        product_impact: 'Impact Produit',
-        transportation_impact: 'Impact Transport',
+        product_impact: "Impact\xA0Produit",
+        transportation_impact: "Impact\xA0Transport",
         carbon: 'Equivalent carbone',
         equals_to: 'équivaut à',
         money: 'Votre bilan financier',

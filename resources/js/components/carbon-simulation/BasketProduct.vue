@@ -5,7 +5,7 @@
 
                 <div class="d-flex">
                     <div class="text-block">
-                        <span class="product-name">{{ product.name }} <small>{{ product.origin.from }}</small></span>
+                        <span class="product-name">{{ product.name }} <small>{{ product.origin.from }}</small><small> - {{ product.amount }}&nbsp;{{ unit }}</small></span>
                     </div>
                     <a v-if="product.comment" class="info-bubble product-info-bubble btn-ico alt tool info ml-2" :title="product.comment"></a>
                 </div>
@@ -34,7 +34,7 @@
                        required
                        @change="save">
                 <div class="units">
-                    {{ product.unit.shortUnit }}
+                    {{ unit }}
                     <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
                 </div>
 
@@ -64,9 +64,14 @@
     </div>
 
     <div v-else-if="product.type === 'special'">
+
         <div :class="getSpecialClasses(product)" :id="'header-' + basketId + '-' + product.id">
 
             <div v-if="product.id.includes('start')" class="text-block">
+                <div class="move-list-controls">
+                    <a @click="" class="ignore-draggable edit-block" title="Déplacer vers le haut"><i class="icon ml-2"></i></a><br>
+                    <a @click="" class="ignore-draggable edit-block" title="Déplacer vers le bas"><i class="icon ml-2"></i></a>
+                </div>
                 <div class="product-name d-flex">
                     <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="renamed">
                     <div v-else class="ignore-draggable">
@@ -78,8 +83,10 @@
             </div>
 
             <div v-if="product.id.includes('start')" class="d-flex">
+                <!--
                 <a class="btn-ico alt tool info-bubble pb-1"
                    @click="emptyBlock(product)" title="Vider ce bloc (supprimer ses produits)"><strong>✖</strong></a>
+                -->
                 <a class="btn-ico alt tool info-bubble"
                    @click="removeProduct(index)" title="Supprimer ce bloc"></a>
             </div>
@@ -116,6 +123,12 @@ export default {
         },
         titleId: function () {
             return this.basketId + '-' + this.product.id + '-input'
+        },
+        unit: function () {
+            if (this.product.unit.shortUnit != 'kg' && this.product.amount >= 2) {
+                return this.product.unit.shortUnit + 's';
+            }
+            return this.product.unit.shortUnit;
         }
     },
     methods: {

@@ -326,7 +326,6 @@ export default {
         emptyBlock(blockStart) {
             let end = this.getCorrespondingIndex(blockStart);
             let begin = this.getCorrespondingIndex(this.basket.products[end]);
-            console.log(begin, end);
             for(let i = end - 1; i > begin; i--) {
                 this.basket.products.splice(i, 1);
             }

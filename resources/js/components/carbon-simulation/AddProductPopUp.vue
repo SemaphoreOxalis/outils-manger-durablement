@@ -91,7 +91,9 @@ export default {
     },
     methods: {
         add() {
-            this.$emit('add', this.productToAdd);
+            if(!this.isInputInvalid) {
+                this.$emit('add', this.productToAdd);
+            }
         },
         exit() {
             this.productToAdd = {};

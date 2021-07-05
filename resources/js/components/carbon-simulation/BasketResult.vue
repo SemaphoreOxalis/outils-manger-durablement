@@ -40,8 +40,8 @@
                             <div class="results-categorie-name">{{ category.name }}</div>
                             <div :class="getClasses()">
                                 <a class="info-bubble">{{ category.carbonFormattedImpact }} {{ category.carbonImpactUnit }}
-                                    <span>{{ impact.product_impact }} : {{ category.productFormattedImpact }} {{ category.productImpactUnit }}<br>
-                                {{ impact.transportation_impact }} : {{ category.transportationFormattedImpact }} {{ category.transportationImpactUnit }}</span>
+                                    <span>{{ impact.product_impact }}&nbsp;:&nbsp;{{ category.productFormattedImpact }}&nbsp;{{ category.productImpactUnit }}<br>
+                                {{ impact.transportation_impact }}&nbsp;:&nbsp;{{ category.transportationFormattedImpact }}&nbsp;{{ category.transportationImpactUnit }}</span>
                                 </a>
                             </div>
                             <div v-if="!isFirst" class="results-div" v-html="getStyle(category.carbonDelta)"></div>
@@ -53,7 +53,8 @@
                             <div class="results-categorie-name">{{ block.name }}</div>
                             <div :class="getClasses()">
                                 <a class="info-bubble">{{ block.carbonFormattedImpact }} {{ block.carbonImpactUnit }}
-                                    <span>{{ impact.product_impact }} : {{ block.productFormattedImpact }} {{ block.productImpactUnit }}<br>{{ impact.transportation_impact }} : {{ block.transportationFormattedImpact }} {{ block.transportationImpactUnit }}
+                                    <span>{{ impact.product_impact }}&nbsp;:&nbsp;{{ block.productFormattedImpact }}&nbsp;{{ block.productImpactUnit }}<br>
+                                        {{ impact.transportation_impact }}&nbsp;:&nbsp;{{ block.transportationFormattedImpact }}&nbsp;{{ block.transportationImpactUnit }}
                         </span>
                                 </a>
                             </div>
@@ -65,8 +66,8 @@
                             <div class="results-categorie-name">{{ sum }}</div>
                             <div :class="getClasses()">
                                 <a class="info-bubble">{{ globalCarbonImpact.formatted }} {{ globalCarbonImpact.unit }}
-                                    <span>{{ impact.product_impact }} : {{ globalProductImpact.formatted }} {{ globalProductImpact.unit }}<br>
-                                    {{ impact.transportation_impact }} : {{ globalTransportationImpact.formatted }} {{ globalTransportationImpact.unit }}</span>
+                                    <span>{{ impact.product_impact }}&nbsp;:&nbsp;{{ globalProductImpact.formatted }}&nbsp;{{ globalProductImpact.unit }}<br>
+                                    {{ impact.transportation_impact }}&nbsp;:&nbsp;{{ globalTransportationImpact.formatted }}&nbsp;{{ globalTransportationImpact.unit }}</span>
                                 </a>
                             </div>
                             <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
@@ -85,7 +86,7 @@
                             <div class="results-categorie-name">{{ category.name }}</div>
                             <div class="results-div">
                                 <a class="info-bubble">{{ category.moneySpent }} €
-                                    <span>{{ category.co2PerEuroFormatted }} {{ category.co2PerEuroUnit }}</span>
+                                    <span>{{ category.co2PerEuroFormatted }}&nbsp;{{ category.co2PerEuroUnit }}</span>
                                 </a>
                             </div>
                             <div v-if="!isFirst" class="results-div" v-html="getStyle(category.moneyDelta)"></div>
@@ -97,7 +98,7 @@
                             <div class="results-categorie-name">{{ block.name }}</div>
                             <div class="results-div">
                                 <a class="info-bubble">{{ block.moneySpent }} €
-                                    <span>{{ block.co2PerEuroFormatted }} {{ block.co2PerEuroUnit }}</span>
+                                    <span>{{ block.co2PerEuroFormatted }}&nbsp;{{ block.co2PerEuroUnit }}</span>
                                 </a>
                             </div>
                         </div>
@@ -108,7 +109,7 @@
                             <div class="results-categorie-name">{{ sum }}</div>
                             <div class="results-div">
                                 <a class="info-bubble">{{ globalMoneySpend }} €
-                                    <span>{{ globalCO2PerEuroFormatted }} {{ globalCO2PerEuroUnit }}</span>
+                                    <span>{{ globalCO2PerEuroFormatted }}&nbsp;{{ globalCO2PerEuroUnit }}</span>
                                 </a>
                             </div>
                             <div v-if="!isFirst" class="results-div" v-html="getStyle(moneyDelta)"></div>

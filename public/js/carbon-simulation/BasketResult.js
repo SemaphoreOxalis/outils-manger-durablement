@@ -158,6 +158,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -839,20 +840,20 @@ var render = function() {
                             _c("span", [
                               _vm._v(
                                 _vm._s(_vm.impact.product_impact) +
-                                  " : " +
+                                  " : " +
                                   _vm._s(category.productFormattedImpact) +
-                                  " " +
+                                  " " +
                                   _vm._s(category.productImpactUnit)
                               ),
                               _c("br"),
                               _vm._v(
                                 "\n                            " +
                                   _vm._s(_vm.impact.transportation_impact) +
-                                  " : " +
+                                  " : " +
                                   _vm._s(
                                     category.transportationFormattedImpact
                                   ) +
-                                  " " +
+                                  " " +
                                   _vm._s(category.transportationImpactUnit)
                               )
                             ])
@@ -896,17 +897,18 @@ var render = function() {
                             _c("span", [
                               _vm._v(
                                 _vm._s(_vm.impact.product_impact) +
-                                  " : " +
+                                  " : " +
                                   _vm._s(block.productFormattedImpact) +
-                                  " " +
+                                  " " +
                                   _vm._s(block.productImpactUnit)
                               ),
                               _c("br"),
                               _vm._v(
-                                _vm._s(_vm.impact.transportation_impact) +
-                                  " : " +
+                                "\n                                    " +
+                                  _vm._s(_vm.impact.transportation_impact) +
+                                  " : " +
                                   _vm._s(block.transportationFormattedImpact) +
-                                  " " +
+                                  " " +
                                   _vm._s(block.transportationImpactUnit) +
                                   "\n                    "
                               )
@@ -939,18 +941,18 @@ var render = function() {
                       _c("span", [
                         _vm._v(
                           _vm._s(_vm.impact.product_impact) +
-                            " : " +
+                            " : " +
                             _vm._s(_vm.globalProductImpact.formatted) +
-                            " " +
+                            " " +
                             _vm._s(_vm.globalProductImpact.unit)
                         ),
                         _c("br"),
                         _vm._v(
                           "\n                                " +
                             _vm._s(_vm.impact.transportation_impact) +
-                            " : " +
+                            " : " +
                             _vm._s(_vm.globalTransportationImpact.formatted) +
-                            " " +
+                            " " +
                             _vm._s(_vm.globalTransportationImpact.unit)
                         )
                       ])
@@ -1011,7 +1013,7 @@ var render = function() {
                             _c("span", [
                               _vm._v(
                                 _vm._s(category.co2PerEuroFormatted) +
-                                  " " +
+                                  " " +
                                   _vm._s(category.co2PerEuroUnit)
                               )
                             ])
@@ -1053,7 +1055,7 @@ var render = function() {
                             _c("span", [
                               _vm._v(
                                 _vm._s(block.co2PerEuroFormatted) +
-                                  " " +
+                                  " " +
                                   _vm._s(block.co2PerEuroUnit)
                               )
                             ])
@@ -1083,7 +1085,7 @@ var render = function() {
                       _c("span", [
                         _vm._v(
                           _vm._s(_vm.globalCO2PerEuroFormatted) +
-                            " " +
+                            " " +
                             _vm._s(_vm.globalCO2PerEuroUnit)
                         )
                       ])
@@ -1493,7 +1495,7 @@ __webpack_require__.r(__webpack_exports__);
         colors: [],
         hoverColors: []
       },
-      chartColors: [[38, 41, 74], [1, 84, 90], [1, 115, 81], [3, 195, 131], [170, 217, 98], [251, 191, 69], [239, 106, 50], [237, 3, 69], [161, 42, 94], [113, 1, 98], [70, 10, 75], [26, 19, 52]]
+      chartColors: [[3, 195, 131], [170, 217, 98], [251, 191, 69], [239, 106, 50], [237, 3, 69], [161, 42, 94], [113, 1, 98], [70, 10, 75], [26, 19, 52], [38, 41, 74], [1, 84, 90], [1, 115, 81]]
     };
   },
   methods: {

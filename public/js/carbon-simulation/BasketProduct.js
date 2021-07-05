@@ -100,6 +100,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -126,6 +133,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     titleId: function titleId() {
       return this.basketId + '-' + this.product.id + '-input';
+    },
+    unit: function unit() {
+      if (this.product.unit.shortUnit != 'kg' && this.product.amount >= 2) {
+        return this.product.unit.shortUnit + 's';
+      }
+
+      return this.product.unit.shortUnit;
     }
   },
   methods: {
@@ -206,7 +220,15 @@ var render = function() {
                 _c("div", { staticClass: "text-block" }, [
                   _c("span", { staticClass: "product-name" }, [
                     _vm._v(_vm._s(_vm.product.name) + " "),
-                    _c("small", [_vm._v(_vm._s(_vm.product.origin.from))])
+                    _c("small", [_vm._v(_vm._s(_vm.product.origin.from))]),
+                    _c("small", [
+                      _vm._v(
+                        " - " +
+                          _vm._s(_vm.product.amount) +
+                          " " +
+                          _vm._s(_vm.unit)
+                      )
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
@@ -309,9 +331,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "units" }, [
                 _vm._v(
-                  "\n                " +
-                    _vm._s(_vm.product.unit.shortUnit) +
-                    "\n                "
+                  "\n                " + _vm._s(_vm.unit) + "\n                "
                 ),
                 _c(
                   "a",
@@ -434,6 +454,29 @@ var render = function() {
           [
             _vm.product.id.includes("start")
               ? _c("div", { staticClass: "text-block" }, [
+                  _c("div", { staticClass: "move-list-controls" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "ignore-draggable edit-block",
+                        attrs: { title: "Déplacer vers le haut" },
+                        on: { click: function($event) {} }
+                      },
+                      [_c("i", { staticClass: "icon ml-2" }, [_vm._v("")])]
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "ignore-draggable edit-block",
+                        attrs: { title: "Déplacer vers le bas" },
+                        on: { click: function($event) {} }
+                      },
+                      [_c("i", { staticClass: "icon ml-2" }, [_vm._v("")])]
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "product-name d-flex" }, [
                     _vm.edit
                       ? _c("input", {
@@ -490,22 +533,6 @@ var render = function() {
             _vm._v(" "),
             _vm.product.id.includes("start")
               ? _c("div", { staticClass: "d-flex" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn-ico alt tool info-bubble pb-1",
-                      attrs: {
-                        title: "Vider ce bloc (supprimer ses produits)"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.emptyBlock(_vm.product)
-                        }
-                      }
-                    },
-                    [_c("strong", [_vm._v("✖")])]
-                  ),
-                  _vm._v(" "),
                   _c(
                     "a",
                     {

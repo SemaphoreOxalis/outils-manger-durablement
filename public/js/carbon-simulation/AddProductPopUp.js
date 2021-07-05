@@ -112,7 +112,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     add: function add() {
-      this.$emit('add', this.productToAdd);
+      if (!this.isInputInvalid) {
+        this.$emit('add', this.productToAdd);
+      }
     },
     exit: function exit() {
       this.productToAdd = {};

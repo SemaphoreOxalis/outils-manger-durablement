@@ -12084,10 +12084,16 @@ h1.header {
   justify-content: space-between;
   border-color: var(--third-color) !important;
   cursor: move;
+  position: relative;
 }
 
 .special-product-header-container i {
   color: var(--third-color);
+}
+
+.move-list-controls {
+  position: absolute;
+  left: -25px;
 }
 
 .border-left-3 {
