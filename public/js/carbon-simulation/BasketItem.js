@@ -93,6 +93,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -141,10 +145,9 @@ var draggable = function draggable() {
   },
   computed: {
     filteredProducts: function filteredProducts() {
-      if (this.search) {
-        return this.searchWithSearchBar(this.basket.products);
-      }
-
+      // if (this.search) {
+      //     return this.searchWithSearchBar(this.basket.products);
+      // }
       return this.basket.products;
     },
     productCounter: function productCounter() {
@@ -188,6 +191,9 @@ var draggable = function draggable() {
     this.sendInternalCounter();
   },
   methods: {
+    getProductByIx: function getProductByIx(index) {
+      return this.basket.products[index];
+    },
     addProduct: function addProduct(product) {
       if (product.type === 'special') {
         this.basket.products.unshift(product);
@@ -279,6 +285,12 @@ var draggable = function draggable() {
       }
     },
     // BLOCKS STUFF
+    isFirstBlockTitle: function isFirstBlockTitle(index) {
+      return index === this.blocks[0][0];
+    },
+    isLastBlockTitle: function isLastBlockTitle(index) {
+      return index === this.blocks[this.blocks.length - 1][0];
+    },
     insertBlock: function insertBlock() {
       var id = this.blockCounter + 1;
 
@@ -383,6 +395,24 @@ var draggable = function draggable() {
       for (var i = end - 1; i > begin; i--) {
         this.basket.products.splice(i, 1);
       }
+    },
+    moveBlockUp: function moveBlockUp(index) {
+      var _this$basket$products;
+
+      var insertPlace = this.getCorrespondingIndex(this.getProductByIx(this.previousBlockIndex(index)));
+      var blockLength = this.getCorrespondingIndex(this.getProductByIx(index)) - index + 1;
+      var block = this.basket.products.splice(index, blockLength);
+
+      (_this$basket$products = this.basket.products).splice.apply(_this$basket$products, [insertPlace, 0].concat(_toConsumableArray(block)));
+    },
+    moveBlockDown: function moveBlockDown(index) {
+      var _this$basket$products2;
+
+      var insertPlace = this.getCorrespondingIndex(this.getProductByIx(this.nextBlockIndex(index))) + 1;
+      var blockLength = this.getCorrespondingIndex(this.getProductByIx(index)) - index + 1;
+      var block = this.basket.products.splice(index, blockLength);
+
+      (_this$basket$products2 = this.basket.products).splice.apply(_this$basket$products2, [insertPlace - blockLength, 0].concat(_toConsumableArray(block)));
     }
   }
 });
@@ -561,7 +591,7 @@ var render = function() {
             expression: "basket.products"
           }
         },
-        _vm._l(_vm.filteredProducts, function(product, i) {
+        _vm._l(_vm.basket.products, function(product, i) {
           return _c("basket-product", {
             key: product.id,
             attrs: {
@@ -569,11 +599,15 @@ var render = function() {
               "basket-id": _vm.basket.id,
               index: i,
               origins: _vm.origins,
-              isInBlock: _vm.isInBlock(i)
+              isInBlock: _vm.isInBlock(i),
+              isFirstBlockTitle: _vm.isFirstBlockTitle(i),
+              isLastBlockTitle: _vm.isLastBlockTitle(i)
             },
             on: {
               "save-changes": _vm.saveBasket,
               "remove-product": _vm.removeProduct,
+              "move-block-up": _vm.moveBlockUp,
+              "move-block-down": _vm.moveBlockDown,
               "empty-block": _vm.emptyBlock
             }
           })

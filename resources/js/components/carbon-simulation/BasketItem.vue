@@ -31,15 +31,19 @@
                    filter=".ignore-draggable"
                    :preventOnFilter="false"
                    :animation="150">
-            <basket-product v-for="(product, i) in filteredProducts"
+            <basket-product v-for="(product, i) in basket.products"
                             v-bind:key="product.id"
                             v-bind:product="product"
                             v-bind:basket-id="basket.id"
                             v-bind:index="i"
                             v-bind:origins="origins"
                             v-bind:isInBlock="isInBlock(i)"
+                            v-bind:isFirstBlockTitle="isFirstBlockTitle(i)"
+                            v-bind:isLastBlockTitle="isLastBlockTitle(i)"
                             @save-changes="saveBasket"
                             @remove-product="removeProduct"
+                            @move-block-up="moveBlockUp"
+                            @move-block-down="moveBlockDown"
                             @empty-block="emptyBlock">
             </basket-product>
         </draggable>
@@ -115,9 +119,9 @@ export default {
     },
     computed: {
         filteredProducts: function () {
-            if (this.search) {
-                return this.searchWithSearchBar(this.basket.products);
-            }
+            // if (this.search) {
+            //     return this.searchWithSearchBar(this.basket.products);
+            // }
             return this.basket.products;
         },
         productCounter: function () {
@@ -142,11 +146,9 @@ export default {
                 return 0;
             }
         },
-
         isFirst() {
             return this.index === 0;
         },
-
         blocks() {
             return this.getBlocksIndexes();
         },
@@ -159,6 +161,9 @@ export default {
         this.sendInternalCounter();
     },
     methods: {
+        getProductByIx(index) {
+            return this.basket.products[index];
+        },
         addProduct(product) {
             if(product.type === 'special') {
                 this.basket.products.unshift(product);
@@ -248,6 +253,12 @@ export default {
         },
 
         // BLOCKS STUFF
+        isFirstBlockTitle(index) {
+            return index === this.blocks[0][0];
+        },
+        isLastBlockTitle(index) {
+            return index === this.blocks[this.blocks.length - 1][0];
+        },
         insertBlock() {
             let id = this.blockCounter + 1;
             if(this.isSelected && this.blocks.length < 11) {
@@ -330,6 +341,18 @@ export default {
                 this.basket.products.splice(i, 1);
             }
         },
+        moveBlockUp(index) {
+            let insertPlace = this.getCorrespondingIndex(this.getProductByIx(this.previousBlockIndex(index)));
+            let blockLength = (this.getCorrespondingIndex(this.getProductByIx(index)) - index) + 1;
+            let block = this.basket.products.splice(index, blockLength);
+            this.basket.products.splice(insertPlace, 0, ...block);
+        },
+        moveBlockDown(index) {
+            let insertPlace = this.getCorrespondingIndex(this.getProductByIx(this.nextBlockIndex(index))) + 1;
+            let blockLength = (this.getCorrespondingIndex(this.getProductByIx(index)) - index) + 1;
+            let block = this.basket.products.splice(index, blockLength);
+            this.basket.products.splice(insertPlace - blockLength, 0, ...block)
+        }
     }
 }
 </script>

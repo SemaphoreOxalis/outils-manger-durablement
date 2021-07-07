@@ -113,7 +113,9 @@ __webpack_require__.r(__webpack_exports__);
     basketId: String,
     index: Number,
     origins: Array,
-    isInBlock: Number
+    isInBlock: Number,
+    isFirstBlockTitle: Boolean,
+    isLastBlockTitle: Boolean
   },
   data: function data() {
     return {
@@ -166,6 +168,7 @@ __webpack_require__.r(__webpack_exports__);
     getClasses: function getClasses() {
       return ['product-item', this.isInBlock > 0 ? 'border-left-3' : ''];
     },
+    // BLOCK STUFF
     getSpecialClasses: function getSpecialClasses(product) {
       return ['special-product-header-container', 'border-left', 'border-3', product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
     },
@@ -185,6 +188,12 @@ __webpack_require__.r(__webpack_exports__);
     renamed: function renamed() {
       this.edit = false;
       this.save();
+    },
+    moveBlockUp: function moveBlockUp(index) {
+      this.$emit('move-block-up', index);
+    },
+    moveBlockDown: function moveBlockDown(index) {
+      this.$emit('move-block-down', index);
     }
   }
 });
@@ -455,26 +464,38 @@ var render = function() {
             _vm.product.id.includes("start")
               ? _c("div", { staticClass: "text-block" }, [
                   _c("div", { staticClass: "move-list-controls" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "ignore-draggable edit-block",
-                        attrs: { title: "Déplacer vers le haut" },
-                        on: { click: function($event) {} }
-                      },
-                      [_c("i", { staticClass: "icon ml-2" }, [_vm._v("")])]
-                    ),
+                    !_vm.isFirstBlockTitle
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "ignore-draggable edit-block",
+                            attrs: { title: "Déplacer vers le haut" },
+                            on: {
+                              click: function($event) {
+                                return _vm.moveBlockUp(_vm.index)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon ml-2" }, [_vm._v("")])]
+                        )
+                      : _vm._e(),
                     _c("br"),
                     _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "ignore-draggable edit-block",
-                        attrs: { title: "Déplacer vers le bas" },
-                        on: { click: function($event) {} }
-                      },
-                      [_c("i", { staticClass: "icon ml-2" }, [_vm._v("")])]
-                    )
+                    !_vm.isLastBlockTitle
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "ignore-draggable edit-block",
+                            attrs: { title: "Déplacer vers le bas" },
+                            on: {
+                              click: function($event) {
+                                return _vm.moveBlockDown(_vm.index)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "icon ml-2" }, [_vm._v("")])]
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "product-name d-flex" }, [

@@ -69,8 +69,8 @@
 
             <div v-if="product.id.includes('start')" class="text-block">
                 <div class="move-list-controls">
-                    <a @click="" class="ignore-draggable edit-block" title="Déplacer vers le haut"><i class="icon ml-2"></i></a><br>
-                    <a @click="" class="ignore-draggable edit-block" title="Déplacer vers le bas"><i class="icon ml-2"></i></a>
+                    <a @click="moveBlockUp(index)" title="Déplacer vers le haut" v-if="!isFirstBlockTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a><br>
+                    <a @click="moveBlockDown(index)" title="Déplacer vers le bas" v-if="!isLastBlockTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a>
                 </div>
                 <div class="product-name d-flex">
                     <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="renamed">
@@ -104,6 +104,8 @@ export default {
         index: Number,
         origins: Array,
         isInBlock: Number,
+        isFirstBlockTitle: Boolean,
+        isLastBlockTitle: Boolean
     },
     data() {
         return {
@@ -159,6 +161,8 @@ export default {
                 this.isInBlock > 0 ? 'border-left-3' : ''
             ];
         },
+
+        // BLOCK STUFF
         getSpecialClasses(product) {
             return [
                 'special-product-header-container',
@@ -181,6 +185,12 @@ export default {
         renamed() {
             this.edit = false;
             this.save();
+        },
+        moveBlockUp(index) {
+            this.$emit('move-block-up', index);
+        },
+        moveBlockDown(index) {
+            this.$emit('move-block-down', index);
         }
     }
 }
