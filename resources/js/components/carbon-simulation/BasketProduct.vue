@@ -109,7 +109,6 @@ export default {
     },
     data() {
         return {
-            fullProductShown: false,
             edit: false,
         }
     },
@@ -127,7 +126,7 @@ export default {
             return this.basketId + '-' + this.product.id + '-input'
         },
         unit: function () {
-            if (this.product.unit.shortUnit != 'kg' && this.product.amount >= 2) {
+            if (this.product.unit.shortUnit !== 'kg' && this.product.amount >= 2) {
                 return this.product.unit.shortUnit + 's';
             }
             return this.product.unit.shortUnit;
@@ -144,9 +143,7 @@ export default {
             this.$emit('empty-block', id);
         },
         toggleFullProduct() {
-            this.fullProductShown = !this.fullProductShown;
             let collapseClass = this.collapseClass;
-            let headerId = this.headerId;
             let collapseIconId = this.collapseIconId;
 
             $(collapseClass).on('show.bs.collapse', function () {

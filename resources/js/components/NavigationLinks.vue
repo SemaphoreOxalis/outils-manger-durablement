@@ -36,6 +36,12 @@
             class="menu-item button icon sub-menu">
             <span>{{ resume_basket }}</span>
         </router-link>
+
+        <router-link
+            :to="{ name: 'recipes-index'}"
+            class="menu-item button icon sub-menu">
+            <span>Recettes de chef</span>
+        </router-link>
     </div>
 </template>
 

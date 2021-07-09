@@ -11933,7 +11933,7 @@ h1.header {
 }
 
 .search-bar.main-search {
-  margin-bottom: 5rem;
+  margin-bottom: 1rem;
 }
 
 .search-bar.main-search .autocomplete {
@@ -12184,6 +12184,7 @@ h1.header {
   grid-template-columns: 370px;
   -ms-grid-rows: auto;
   grid-template-rows: auto;
+  margin-top: 4rem;
   margin-bottom: 3rem;
 }
 

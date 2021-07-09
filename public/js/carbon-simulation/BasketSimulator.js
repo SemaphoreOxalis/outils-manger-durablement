@@ -76,6 +76,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -325,6 +329,12 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        { attrs: { to: { name: "recipes-index" }, tag: "span" } },
+        [_c("button", { staticClass: "button" }, [_vm._v("Recettes de Chef")])]
       ),
       _vm._v(" "),
       _c("baskets-list", {

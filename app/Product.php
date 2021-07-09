@@ -19,6 +19,11 @@ class Product extends Model
         return $this->belongsTo(Unit::class);
     }
 
+    public function recipes()
+    {
+        return $this->belongsToMany(Recipe::class)->withPivot('amount', 'price', 'origin');
+    }
+
     public function scopeNormal($query)
     {
         return $query->where('type', 'prod');

@@ -41,6 +41,10 @@
             </div>
         </div>
 
+        <router-link :to="{ name: 'recipes-index'}" tag="span">
+            <button class="button">Recettes de Chef</button>
+        </router-link>
+
         <baskets-list v-bind:origins="this.origins"
                       v-bind:categories="this.categories"
                       v-bind:product-to-add="this.productToAddWithDetails"

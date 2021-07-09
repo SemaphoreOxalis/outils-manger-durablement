@@ -119,7 +119,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      fullProductShown: false,
       edit: false
     };
   },
@@ -137,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.basketId + '-' + this.product.id + '-input';
     },
     unit: function unit() {
-      if (this.product.unit.shortUnit != 'kg' && this.product.amount >= 2) {
+      if (this.product.unit.shortUnit !== 'kg' && this.product.amount >= 2) {
         return this.product.unit.shortUnit + 's';
       }
 
@@ -155,9 +154,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('empty-block', id);
     },
     toggleFullProduct: function toggleFullProduct() {
-      this.fullProductShown = !this.fullProductShown;
       var collapseClass = this.collapseClass;
-      var headerId = this.headerId;
       var collapseIconId = this.collapseIconId;
       $(collapseClass).on('show.bs.collapse', function () {
         $(collapseIconId).addClass("reversed");

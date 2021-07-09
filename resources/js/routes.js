@@ -7,7 +7,6 @@ const AdminPage = () => import(
     /* webpackChunkName: "js/admin/AdminPage" */
     './components/admin/AdminPage.vue'
     );
-//import AdminPage from "./components/admin/AdminPage";
 
 const WasteSimulatorAdminPage = () => import(
     /* webpackChunkName: "js/admin/waste-simulation/WasteSimulatorAdminPage" */
@@ -98,7 +97,16 @@ const BasketSimulator = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketSimulator" */
     './components/carbon-simulation/BasketSimulator.vue'
     );
-//import BasketSimulator from "./components/carbon-simulation/BasketSimulator";
+
+const RecipesLayout = () => import(
+    /* webpackChunkName: "js/carbon-simulation/RecipesLayout" */
+    './components/carbon-simulation/recipes/RecipesLayout.vue'
+    );
+
+const RecipesIndex = () => import(
+    /* webpackChunkName: "js/carbon-simulation/RecipesIndex" */
+    './components/carbon-simulation/recipes/RecipesIndex.vue'
+    );
 
 export default {
 
@@ -161,6 +169,18 @@ export default {
                             path: 'basket-simulator',
                             component: BasketSimulator,
                             name: 'basket-simulator'
+                        },
+                        {
+                            path: 'recipes',
+                            component: RecipesLayout,
+                            name: 'recipes',
+                            children: [
+                                {
+                                    path: 'index',
+                                    component: RecipesIndex,
+                                    name: 'recipes-index',
+                                },
+                            ]
                         },
                         {
                             path: '',

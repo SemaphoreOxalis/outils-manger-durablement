@@ -51,6 +51,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_NavigationLinksText__WEBPACK_IMPORTED_MODULE_0__["default"]],
@@ -150,6 +156,15 @@ var render = function() {
           attrs: { to: "/carbon-simulator/basket-simulator" }
         },
         [_vm._v("\n        "), _c("span", [_vm._v(_vm._s(_vm.resume_basket))])]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          staticClass: "menu-item button icon sub-menu",
+          attrs: { to: { name: "recipes-index" } }
+        },
+        [_vm._v("\n        "), _c("span", [_vm._v("Recettes de chef")])]
       )
     ],
     1

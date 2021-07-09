@@ -43,6 +43,11 @@ Route::patch('/api/origins/{origin}', 'OriginsController@update');
 Route::post('/api/origins', 'OriginsController@store');
 Route::delete('/api/origins/{origin}', 'OriginsController@destroy');
 
+Route::get('/api/recipes', 'RecipesController@index');
+Route::patch('/api/recipes/{recipe}', 'RecipesController@update');
+Route::post('/api/recipes', 'RecipesController@store');
+Route::delete('/api/recipes/{recipe}', 'RecipesController@destroy');
+
 // Compteurs
 Route::get('/api/counters', 'CountersController@index');
 Route::patch('/api/counters/{counter}', 'CountersController@update');
