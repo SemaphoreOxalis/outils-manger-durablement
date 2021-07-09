@@ -186,6 +186,7 @@ var draggable = function draggable() {
   created: function created() {
     events.$on('get-internal-counters', this.sendInternalCounter);
     events.$on('insert-block', this.insertBlock);
+    events.$on('insert-recipe', this.insertRecipe);
   },
   mounted: function mounted() {
     this.sendInternalCounter();
@@ -194,15 +195,19 @@ var draggable = function draggable() {
     getProductByIx: function getProductByIx(index) {
       return this.basket.products[index];
     },
-    addProduct: function addProduct(product) {
+    addProduct: function addProduct(product, prepended) {
       if (product.type === 'special') {
         this.basket.products.unshift(product);
       } else {
         var tempProd = _objectSpread({}, product);
 
         tempProd.id = 'prod-' + (this.productCounter + 1);
-        this.basket.products.push(tempProd);
-        this.scrollToBottom();
+        prepended ? this.basket.products.unshift(tempProd) : this.basket.products.push(tempProd);
+
+        if (!prepended) {
+          this.scrollToBottom();
+        }
+
         this.sendInternalCounter();
         this.incrementProductCounter();
       }
@@ -225,6 +230,7 @@ var draggable = function draggable() {
     },
     clearBasket: function clearBasket() {
       this.$emit('clear-basket', this.basket, this.index, 'clear');
+      this.saveBasket();
     },
     saveBasket: function saveBasket() {
       this.$emit('save-baskets');
@@ -262,6 +268,29 @@ var draggable = function draggable() {
         });
       }, 200);
     },
+    insertRecipe: function insertRecipe(recipe) {
+      var _this2 = this;
+
+      var id = this.blockCounter + 1;
+
+      if (this.isSelected && this.blocks.length < 11) {
+        this.addProduct({
+          // in reverse order because they're prepended
+          id: 'block-fnish-' + id,
+          name: 'Fin du bloc ' + id,
+          type: 'special'
+        });
+        recipe.products.forEach(function (p) {
+          _this2.addProduct(p, true);
+        });
+        this.addProduct({
+          id: 'block-start-' + id,
+          name: recipe.name,
+          type: 'special'
+        });
+      }
+    },
+    // BLOCKS STUFF
     checkIfMovable: function checkIfMovable(e, originalE) {
       // Special Logic for blocks
       if (e.draggedContext.element.type === 'special') {
@@ -284,12 +313,19 @@ var draggable = function draggable() {
         }
       }
     },
-    // BLOCKS STUFF
     isFirstBlockTitle: function isFirstBlockTitle(index) {
-      return index === this.blocks[0][0];
+      if (this.blocks.length) {
+        return index === this.blocks[0][0];
+      }
+
+      return null;
     },
     isLastBlockTitle: function isLastBlockTitle(index) {
-      return index === this.blocks[this.blocks.length - 1][0];
+      if (this.blocks.length) {
+        return index === this.blocks[this.blocks.length - 1][0];
+      }
+
+      return null;
     },
     insertBlock: function insertBlock() {
       var id = this.blockCounter + 1;
@@ -395,6 +431,8 @@ var draggable = function draggable() {
       for (var i = end - 1; i > begin; i--) {
         this.basket.products.splice(i, 1);
       }
+
+      this.saveBasket();
     },
     moveBlockUp: function moveBlockUp(index) {
       var _this$basket$products;
@@ -404,6 +442,8 @@ var draggable = function draggable() {
       var block = this.basket.products.splice(index, blockLength);
 
       (_this$basket$products = this.basket.products).splice.apply(_this$basket$products, [insertPlace, 0].concat(_toConsumableArray(block)));
+
+      this.saveBasket();
     },
     moveBlockDown: function moveBlockDown(index) {
       var _this$basket$products2;
@@ -413,6 +453,8 @@ var draggable = function draggable() {
       var block = this.basket.products.splice(index, blockLength);
 
       (_this$basket$products2 = this.basket.products).splice.apply(_this$basket$products2, [insertPlace - blockLength, 0].concat(_toConsumableArray(block)));
+
+      this.saveBasket();
     }
   }
 });

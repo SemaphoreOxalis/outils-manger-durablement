@@ -20,6 +20,7 @@
                 class="autocomplete-result"
                 :class="{ 'is-active': index === arrowCounter }">
                 {{ result.name }}<small v-if="result.comment"> - {{ result.comment }}</small>
+                <span v-if="result.type === 'recipe'" class="ml-5">⭐ Recette de chef</span>
             </li>
         </ul>
     </div>
@@ -40,6 +41,11 @@
                 default: () => [],
             },
             specialProducts: {
+                type: Array,
+                required: false,
+                default: () => [],
+            },
+            recipes: {
                 type: Array,
                 required: false,
                 default: () => [],
@@ -71,7 +77,7 @@
         methods: {
             onChange() {
                 this.isOpen = true;
-                this.results = this.searchWithSearchBar(this.products.concat(this.specialProducts));
+                this.results = this.searchWithSearchBar(this.products.concat(this.specialProducts).concat(this.recipes));
                 this.$emit('search-complete', this.results);
             },
             setResult(result) {

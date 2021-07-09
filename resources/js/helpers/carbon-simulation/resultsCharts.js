@@ -88,16 +88,18 @@ export default {
             this.prepareChartLabels();
             this.prepareChartValues();
             setTimeout(() => {
-                this.chart.data.labels = this.chartData.labels;
-                if(this.chartViewMoney) {
-                    this.chart.data.datasets[0].data = this.chartData.money;
-                } else {
-                    this.chart.data.datasets[0].data = this.chartData.values;
+                if(this.chart.data) {
+                    this.chart.data.labels = this.chartData.labels;
+                    if(this.chartViewMoney) {
+                        this.chart.data.datasets[0].data = this.chartData.money;
+                    } else {
+                        this.chart.data.datasets[0].data = this.chartData.values;
+                    }
+                    this.chart.update({
+                        duration: 1000,
+                        easing: 'easeOutBounce'
+                    });
                 }
-                this.chart.update({
-                    duration: 1000,
-                    easing: 'easeOutBounce'
-                });
             }, 100);
         },
     },

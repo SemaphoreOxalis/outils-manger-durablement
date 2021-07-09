@@ -156,6 +156,7 @@ export default {
     created() {
         events.$on('get-internal-counters', this.sendInternalCounter);
         events.$on('insert-block', this.insertBlock);
+        events.$on('insert-recipe', this.insertRecipe);
     },
     mounted() {
         this.sendInternalCounter();
@@ -164,14 +165,16 @@ export default {
         getProductByIx(index) {
             return this.basket.products[index];
         },
-        addProduct(product) {
+        addProduct(product, prepended) {
             if(product.type === 'special') {
                 this.basket.products.unshift(product);
             } else {
                 let tempProd = {...product};
                 tempProd.id = ('prod-' + (this.productCounter + 1));
-                this.basket.products.push(tempProd);
-                this.scrollToBottom();
+                prepended ? this.basket.products.unshift(tempProd) : this.basket.products.push(tempProd);
+                if (!prepended) {
+                    this.scrollToBottom();
+                }
                 this.sendInternalCounter();
                 this.incrementProductCounter();
             }
@@ -192,6 +195,7 @@ export default {
         },
         clearBasket() {
             this.$emit('clear-basket', this.basket, this.index, 'clear');
+            this.saveBasket();
         },
         saveBasket() {
             this.$emit('save-baskets');
@@ -213,7 +217,6 @@ export default {
         searchInBasket() {
             this.$emit('search-in-basket', this.search, this.index);
         },
-
         sendInternalCounter() {
             events.$emit('internal-counters', this.index, this.productCounter);
         },
@@ -226,6 +229,27 @@ export default {
                 });
             }, 200);
         },
+
+        insertRecipe(recipe) {
+            let id = this.blockCounter + 1;
+            if(this.isSelected && this.blocks.length < 11) {
+                this.addProduct({ // in reverse order because they're prepended
+                    id: 'block-fnish-' + id,
+                    name: 'Fin du bloc ' + id,
+                    type: 'special',
+                });
+                recipe.products.forEach(p => {
+                    this.addProduct(p, true);
+                })
+                this.addProduct({
+                    id: 'block-start-' + id,
+                    name: recipe.name,
+                    type: 'special',
+                });
+            }
+        },
+
+        // BLOCKS STUFF
         checkIfMovable(e, originalE) {
             // Special Logic for blocks
             if(e.draggedContext.element.type === 'special') {
@@ -251,13 +275,17 @@ export default {
                 }
             }
         },
-
-        // BLOCKS STUFF
         isFirstBlockTitle(index) {
-            return index === this.blocks[0][0];
+            if(this.blocks.length) {
+                return index === this.blocks[0][0];
+            }
+            return null;
         },
         isLastBlockTitle(index) {
-            return index === this.blocks[this.blocks.length - 1][0];
+            if(this.blocks.length) {
+                return index === this.blocks[this.blocks.length - 1][0];
+            }
+            return null;
         },
         insertBlock() {
             let id = this.blockCounter + 1;
@@ -340,18 +368,21 @@ export default {
             for(let i = end - 1; i > begin; i--) {
                 this.basket.products.splice(i, 1);
             }
+            this.saveBasket();
         },
         moveBlockUp(index) {
             let insertPlace = this.getCorrespondingIndex(this.getProductByIx(this.previousBlockIndex(index)));
             let blockLength = (this.getCorrespondingIndex(this.getProductByIx(index)) - index) + 1;
             let block = this.basket.products.splice(index, blockLength);
             this.basket.products.splice(insertPlace, 0, ...block);
+            this.saveBasket();
         },
         moveBlockDown(index) {
             let insertPlace = this.getCorrespondingIndex(this.getProductByIx(this.nextBlockIndex(index))) + 1;
             let blockLength = (this.getCorrespondingIndex(this.getProductByIx(index)) - index) + 1;
             let block = this.basket.products.splice(index, blockLength);
-            this.basket.products.splice(insertPlace - blockLength, 0, ...block)
+            this.basket.products.splice(insertPlace - blockLength, 0, ...block);
+            this.saveBasket();
         }
     }
 }

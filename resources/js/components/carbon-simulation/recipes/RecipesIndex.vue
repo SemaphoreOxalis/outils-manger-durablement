@@ -14,7 +14,7 @@
                        @click="toggleFullRecipe(recipe.id)">
                         <i :id="'collapse-icon-' + recipe.id" class="icon icon-angle-down"></i>
                     </a>
-                    <a @click="" class="btn-ico alt tool pb-1" title="Modifier"><i class="icon ml-2"></i></a>
+                    <a @click="" class="btn-ico alt tool pb-1" title="Modifier"><i class="icon"></i></a>
                     <a @click="" class="btn-ico alt tool" title="Supprimer"></a>
                 </div>
             </div>
@@ -44,9 +44,6 @@ export default {
             recipes: [],
             products: [],
         }
-    },
-    computed: {
-
     },
     created() {
         this.fetchRecipes();

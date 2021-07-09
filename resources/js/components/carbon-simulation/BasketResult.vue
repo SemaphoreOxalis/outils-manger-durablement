@@ -228,7 +228,6 @@ export default {
     },
     mounted() {
         setTimeout(() => {
-            this.updateResults();
             this.createChart(this.basketId + '-chart');
         }, 1500);
         events.$on('update-results', this.updateResults);
@@ -269,8 +268,8 @@ export default {
 
             this.updateEquivalence();
 
-            this.sendResults();
             this.$forceUpdate();
+            this.sendResults();
         },
         getCarbonImpactByCategory() {
             this.cats.forEach(cat => {
@@ -309,9 +308,11 @@ export default {
         },
         updateInternalBlocks() {
             this.blcks = [];
-            this.blocks.forEach(block => {
-                this.blcks.push({number: block[2], name: this.basket.products[block[0]].name});
-            });
+            if(this.blocks.length && this.basket.products.length) {
+                this.blocks.forEach(block => {
+                    this.blcks.push({number: block[2], name: this.basket.products[block[0]].name});
+                });
+            }
             this.blcks.push({name: 'Produits hors blocs', number: -1});
         },
 

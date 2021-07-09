@@ -13,6 +13,7 @@
             <product-list v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
                           v-bind:products="this.products"
+                          v-bind:recipes="this.recipesAsProducts"
                           v-bind:specialProducts="this.specialProducts"
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
@@ -23,6 +24,7 @@
             </product-list>
 
             <search-bar :products="this.products"
+                        :recipes="this.recipesAsProducts"
                         :specialProducts="this.specialProducts"
                         :focus="this.focusOnSearchBar"
                         @search-complete="filterProductsBySearch"
@@ -62,6 +64,7 @@ import UnitsDataBase from "../../helpers/carbon-simulation/database/UnitsDataBas
 import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDataBase";
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 import DataBase from "../../helpers/DataBase";
+import RecipesDataBase from "../../helpers/carbon-simulation/database/RecipesDataBase";
 const SearchBar = () => import(
     /* webpackChunkName: "js/carbon-simulation/SearchBar" */
     './SearchBar'
@@ -89,6 +92,7 @@ export default {
     mixins: [
         searchBar,
         ProductsDataBase,
+        RecipesDataBase,
         CategoriesDataBase,
         UnitsDataBase,
         OriginsDataBase,
@@ -99,6 +103,8 @@ export default {
         return {
             products: [],
             specialProducts: [],
+            recipes: [],
+            recipesAsProducts: [],
             categories: [],
             units: [],
             origins: [],
@@ -124,6 +130,7 @@ export default {
     created() {
         events.$on('internal-counters', this.setInternalCounters);
         this.fetchProducts();
+        this.fetchRecipes();
         this.fetchSpecialProducts();
         this.fetchCategories();
         this.fetchUnits();
@@ -131,13 +138,14 @@ export default {
 
         this.getInternalCounters();
 
-        $(document).ready(function(){
+        $(document).ready(() => {
             $('.modal').modal();
         });
     },
 
     async mounted() {
         this.howTo = await this.fetchContent('Carbone - Mode d\'emploi');
+        this.turnRecipesIntoProducts();
     },
 
     methods: {
@@ -163,6 +171,10 @@ export default {
             }
             if(product.type === 'special') {
                 events.$emit('insert-block');
+                return;
+            }
+            if(product.type === 'recipe') {
+                events.$emit('insert-recipe', product);
                 return;
             }
             this.loseFocusOnSearchBar();
@@ -195,6 +207,24 @@ export default {
         loseFocusOnSearchBar() {
             events.$emit('clear-search-bar');
             this.focusOnSearchBar = false;
+        },
+
+        getOriginObject(from) {
+            return this.origins.filter(origin => origin.from === from)[0];
+        },
+
+        turnRecipesIntoProducts() {
+            this.recipes.forEach((recipe) => {
+                let prod = {...recipe};
+                prod.type = "recipe";
+                prod.comment = recipe.description;
+                recipe.products.forEach((product) => {
+                    product.origin = this.getOriginObject(product.pivot.origin);
+                    product.amount = product.pivot.amount;
+                    product.price = product.pivot.price;
+                });
+                this.recipesAsProducts.push(prod);
+            });
         },
     }
 }

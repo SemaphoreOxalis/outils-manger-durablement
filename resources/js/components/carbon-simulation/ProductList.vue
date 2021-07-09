@@ -7,7 +7,7 @@
         <div class="dropdown-menu" id="productList">
             <div class="row">
                 <div class="col-3">
-                    <div v-for="category in categories"
+                    <div v-for="category in cats"
                          :class="getClasses(category.id)"
                          :key="category.id"
                          @click="filterProdByCategory(category.id)">
@@ -54,6 +54,7 @@ export default {
     props: {
         categories: Array,
         products: Array,
+        recipes: Array,
         specialProducts: Array,
         selectedCategoryId: Number,
         selectedByCategory: Boolean,
@@ -63,6 +64,7 @@ export default {
     data() {
         return {
             search: '',
+            cats: [],
             productListInternalCounter: 0,
         }
     },
@@ -73,11 +75,10 @@ export default {
                 return this.searchWithSearchBar(this.products);
             }
             if(this.selectedByCategory && this.selectedCategoryId != null) {
-                return (this.products.concat(this.specialProducts)).filter(product => {
+                return (this.products.concat(this.specialProducts).concat(this.recipes)).filter(product => {
                     return product.category_id == this.selectedCategoryId;
                 });
             }
-
             return this.products;
         }
     },
@@ -105,10 +106,10 @@ export default {
                 return _self.closable;
             })
             .on('hidden.bs.dropdown', () => {
-                this.hideSpecialProducts();
+                this.hideProducts();
             })
             .on('show.bs.dropdown', () => {
-                this.showSpecialProducts();
+                this.showProducts();
             });
     },
     methods: {
@@ -126,31 +127,36 @@ export default {
         addProdToBasket(product) {
             this.$emit('add-product-to-basket', product);
         },
-        showSpecialProducts() {
-            this.categories.push({name: 'Spécial', id: 999});
+        showProducts() {
+            this.cats = JSON.parse(JSON.stringify(this.categories));
+            this.cats.push({name: '⭐ Recettes de chef', id: 998});
+            this.cats.push({name: '⭐ Spécial', id: 999});
             this.specialProducts.forEach((p) => {
                 p.category_id = 999;
             });
+            this.recipes.forEach((r) => {
+                r.category_id = 998;
+            });
         },
-        hideSpecialProducts() {
-            this.categories.pop();
+        hideProducts() {
+            this.cats = [];
         },
         addProductByDrag(product) {
-            events.$emit('get-internal-counters');
-            this.productListInternalCounter = this.getMaxCounter();
-            return {
-                id: 'basket-product-' + (this.productListInternalCounter + 1),
-                name: product.name,
-                comment: product.comment,
-                unit: product.unit,
-                category: product.category,
-                origin: this.origins[2], // France par défaut
-                unit_id: product.unit_id,
-                category_id: product.category_id,
-                emissionFactor: product.emissionFactor,
-                amount: 1,
-                price: 1,
-            }
+            // events.$emit('get-internal-counters');
+            // this.productListInternalCounter = this.getMaxCounter();
+            // return {
+            //     id: 'basket-product-' + (this.productListInternalCounter + 1),
+            //     name: product.name,
+            //     comment: product.comment,
+            //     unit: product.unit,
+            //     category: product.category,
+            //     origin: this.origins[2], // France par défaut
+            //     unit_id: product.unit_id,
+            //     category_id: product.category_id,
+            //     emissionFactor: product.emissionFactor,
+            //     amount: 1,
+            //     price: 1,
+            // }
         },
         clearSearchBar() {
             this.search = '';

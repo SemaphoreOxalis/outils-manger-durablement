@@ -43,6 +43,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 // from https://www.digitalocean.com/community/tutorials/vuejs-vue-autocomplete-component
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -56,6 +57,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     specialProducts: {
+      type: Array,
+      required: false,
+      "default": function _default() {
+        return [];
+      }
+    },
+    recipes: {
       type: Array,
       required: false,
       "default": function _default() {
@@ -89,7 +97,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     onChange: function onChange() {
       this.isOpen = true;
-      this.results = this.searchWithSearchBar(this.products.concat(this.specialProducts));
+      this.results = this.searchWithSearchBar(this.products.concat(this.specialProducts).concat(this.recipes));
       this.$emit('search-complete', this.results);
     },
     setResult: function setResult(result) {
@@ -247,6 +255,12 @@ var render = function() {
             _vm._v("\n            " + _vm._s(result.name)),
             result.comment
               ? _c("small", [_vm._v(" - " + _vm._s(result.comment))])
+              : _vm._e(),
+            _vm._v(" "),
+            result.type === "recipe"
+              ? _c("span", { staticClass: "ml-5" }, [
+                  _vm._v("⭐ Recette de chef")
+                ])
               : _vm._e()
           ]
         )

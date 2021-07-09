@@ -18,7 +18,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/OriginsDataBase */ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js");
 /* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/RecipesDataBase */ "./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js");
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -80,6 +87,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+
 
 
 
@@ -111,11 +121,13 @@ var BasketsList = function BasketsList() {
     AddProductPopUp: AddProductPopUp,
     BasketsList: BasketsList
   },
-  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"]],
   data: function data() {
     return {
       products: [],
       specialProducts: [],
+      recipes: [],
+      recipesAsProducts: [],
       categories: [],
       units: [],
       origins: [],
@@ -135,6 +147,7 @@ var BasketsList = function BasketsList() {
   created: function created() {
     events.$on('internal-counters', this.setInternalCounters);
     this.fetchProducts();
+    this.fetchRecipes();
     this.fetchSpecialProducts();
     this.fetchCategories();
     this.fetchUnits();
@@ -158,7 +171,9 @@ var BasketsList = function BasketsList() {
             case 2:
               _this.howTo = _context.sent;
 
-            case 3:
+              _this.turnRecipesIntoProducts();
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -193,6 +208,11 @@ var BasketsList = function BasketsList() {
         return;
       }
 
+      if (product.type === 'recipe') {
+        events.$emit('insert-recipe', product);
+        return;
+      }
+
       this.loseFocusOnSearchBar();
       this.productAdded = product;
       this.showAddingModal = true;
@@ -220,6 +240,28 @@ var BasketsList = function BasketsList() {
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       events.$emit('clear-search-bar');
       this.focusOnSearchBar = false;
+    },
+    getOriginObject: function getOriginObject(from) {
+      return this.origins.filter(function (origin) {
+        return origin.from === from;
+      })[0];
+    },
+    turnRecipesIntoProducts: function turnRecipesIntoProducts() {
+      var _this2 = this;
+
+      this.recipes.forEach(function (recipe) {
+        var prod = _objectSpread({}, recipe);
+
+        prod.type = "recipe";
+        prod.comment = recipe.description;
+        recipe.products.forEach(function (product) {
+          product.origin = _this2.getOriginObject(product.pivot.origin);
+          product.amount = product.pivot.amount;
+          product.price = product.pivot.price;
+        });
+
+        _this2.recipesAsProducts.push(prod);
+      });
     }
   }
 });
@@ -270,6 +312,7 @@ var render = function() {
               categories: this.categories,
               origins: this.origins,
               products: this.products,
+              recipes: this.recipesAsProducts,
               specialProducts: this.specialProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
@@ -285,6 +328,7 @@ var render = function() {
           _c("search-bar", {
             attrs: {
               products: this.products,
+              recipes: this.recipesAsProducts,
               specialProducts: this.specialProducts,
               focus: this.focusOnSearchBar
             },
@@ -901,6 +945,74 @@ function destroyProduct(productId) {
 
 /***/ }),
 
+/***/ "./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchRecipes: function fetchRecipes() {
+      var _this = this;
+
+      getRecipes().then(function (response) {
+        _this.recipes = response.data;
+      });
+    },
+    updateRecipe: function updateRecipe(recipe) {
+      patchRecipe(recipe).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addRecipe: function addRecipe() {
+      var _this2 = this;
+
+      postRecipe(this.newRecipe).then(function (response) {
+        _this2.recipes.push(response.data);
+
+        _this2.newRecipe = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteRecipe: function deleteRecipe(recipeId) {
+      destroyRecipe(recipeId).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getRecipes() {
+  return axios.get('/api/recipes');
+}
+
+function patchRecipe(recipe) {
+  return axios.patch('/api/recipes/' + recipe.id, {
+    name: recipe.name
+  });
+}
+
+function postRecipe(newRecipe) {
+  return axios.post('/api/recipes', {
+    name: newRecipe.name
+  });
+}
+
+function destroyRecipe(recipeId) {
+  return axios["delete"]('/api/recipes/' + recipeId);
+}
+
+/***/ }),
+
 /***/ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js":
 /*!**************************************************************************!*\
   !*** ./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js ***!
@@ -992,13 +1104,17 @@ __webpack_require__.r(__webpack_exports__);
       return products.filter(function (product) {
         var productName = _this.areWeLookingForBeefAndEggs(product.name);
 
-        if (product.comment) {
+        if (product.type === 'recipe') {
+          if (product.comment) {
+            return _this.searchByProduct(productName, _this.search) || _this.searchByComment(product.comment, _this.search) || _this.searchRecipe(product, _this.search);
+          }
+
+          return _this.searchByProduct(productName, _this.search) || _this.searchRecipe(product, _this.search);
+        } else if (product.comment) {
           var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
 
           return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
-        }
-
-        return _this.searchByProduct(productName, _this.search);
+        } else return _this.searchByProduct(productName, _this.search);
       });
     },
     // TODO : See if it works with IE
@@ -1020,6 +1136,13 @@ __webpack_require__.r(__webpack_exports__);
     areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
       // remplace œ par oe
       return string.toLowerCase().replace(/[\u0153]/, "oe");
+    },
+    searchRecipe: function searchRecipe(recipe, search) {
+      var _this2 = this;
+
+      return recipe.products.some(function (p) {
+        return _this2.searchByProduct(p.name, search);
+      });
     }
   }
 });

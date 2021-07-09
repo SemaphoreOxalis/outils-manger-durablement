@@ -76,6 +76,7 @@ var draggable = function draggable() {
   props: {
     categories: Array,
     products: Array,
+    recipes: Array,
     specialProducts: Array,
     selectedCategoryId: Number,
     selectedByCategory: Boolean,
@@ -85,6 +86,7 @@ var draggable = function draggable() {
   data: function data() {
     return {
       search: '',
+      cats: [],
       productListInternalCounter: 0
     };
   },
@@ -98,7 +100,7 @@ var draggable = function draggable() {
       }
 
       if (this.selectedByCategory && this.selectedCategoryId != null) {
-        return this.products.concat(this.specialProducts).filter(function (product) {
+        return this.products.concat(this.specialProducts).concat(this.recipes).filter(function (product) {
           return product.category_id == _this.selectedCategoryId;
         });
       }
@@ -126,9 +128,9 @@ var draggable = function draggable() {
     }).on('hide.bs.dropdown', function () {
       return _self.closable;
     }).on('hidden.bs.dropdown', function () {
-      _this2.hideSpecialProducts();
+      _this2.hideProducts();
     }).on('show.bs.dropdown', function () {
-      _this2.showSpecialProducts();
+      _this2.showProducts();
     });
   },
   methods: {
@@ -141,35 +143,41 @@ var draggable = function draggable() {
     addProdToBasket: function addProdToBasket(product) {
       this.$emit('add-product-to-basket', product);
     },
-    showSpecialProducts: function showSpecialProducts() {
-      this.categories.push({
-        name: 'Spécial',
+    showProducts: function showProducts() {
+      this.cats = JSON.parse(JSON.stringify(this.categories));
+      this.cats.push({
+        name: '⭐ Recettes de chef',
+        id: 998
+      });
+      this.cats.push({
+        name: '⭐ Spécial',
         id: 999
       });
       this.specialProducts.forEach(function (p) {
         p.category_id = 999;
       });
+      this.recipes.forEach(function (r) {
+        r.category_id = 998;
+      });
     },
-    hideSpecialProducts: function hideSpecialProducts() {
-      this.categories.pop();
+    hideProducts: function hideProducts() {
+      this.cats = [];
     },
-    addProductByDrag: function addProductByDrag(product) {
-      events.$emit('get-internal-counters');
-      this.productListInternalCounter = this.getMaxCounter();
-      return {
-        id: 'basket-product-' + (this.productListInternalCounter + 1),
-        name: product.name,
-        comment: product.comment,
-        unit: product.unit,
-        category: product.category,
-        origin: this.origins[2],
-        // France par défaut
-        unit_id: product.unit_id,
-        category_id: product.category_id,
-        emissionFactor: product.emissionFactor,
-        amount: 1,
-        price: 1
-      };
+    addProductByDrag: function addProductByDrag(product) {// events.$emit('get-internal-counters');
+      // this.productListInternalCounter = this.getMaxCounter();
+      // return {
+      //     id: 'basket-product-' + (this.productListInternalCounter + 1),
+      //     name: product.name,
+      //     comment: product.comment,
+      //     unit: product.unit,
+      //     category: product.category,
+      //     origin: this.origins[2], // France par défaut
+      //     unit_id: product.unit_id,
+      //     category_id: product.category_id,
+      //     emissionFactor: product.emissionFactor,
+      //     amount: 1,
+      //     price: 1,
+      // }
     },
     clearSearchBar: function clearSearchBar() {
       this.search = '';
@@ -230,7 +238,7 @@ var render = function() {
             _c(
               "div",
               { staticClass: "col-3" },
-              _vm._l(_vm.categories, function(category) {
+              _vm._l(_vm.cats, function(category) {
                 return _c(
                   "div",
                   {

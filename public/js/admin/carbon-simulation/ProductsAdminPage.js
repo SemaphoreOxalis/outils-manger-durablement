@@ -971,13 +971,17 @@ __webpack_require__.r(__webpack_exports__);
       return products.filter(function (product) {
         var productName = _this.areWeLookingForBeefAndEggs(product.name);
 
-        if (product.comment) {
+        if (product.type === 'recipe') {
+          if (product.comment) {
+            return _this.searchByProduct(productName, _this.search) || _this.searchByComment(product.comment, _this.search) || _this.searchRecipe(product, _this.search);
+          }
+
+          return _this.searchByProduct(productName, _this.search) || _this.searchRecipe(product, _this.search);
+        } else if (product.comment) {
           var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
 
           return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
-        }
-
-        return _this.searchByProduct(productName, _this.search);
+        } else return _this.searchByProduct(productName, _this.search);
       });
     },
     // TODO : See if it works with IE
@@ -999,6 +1003,13 @@ __webpack_require__.r(__webpack_exports__);
     areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
       // remplace œ par oe
       return string.toLowerCase().replace(/[\u0153]/, "oe");
+    },
+    searchRecipe: function searchRecipe(recipe, search) {
+      var _this2 = this;
+
+      return recipe.products.some(function (p) {
+        return _this2.searchByProduct(p.name, search);
+      });
     }
   }
 });

@@ -236,8 +236,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     setTimeout(function () {
-      _this.updateResults();
-
       _this.createChart(_this.basketId + '-chart');
     }, 1500);
     events.$on('update-results', this.updateResults);
@@ -275,8 +273,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.updateEquivalence();
-      this.sendResults();
       this.$forceUpdate();
+      this.sendResults();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
       var _this2 = this;
@@ -327,12 +325,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this7 = this;
 
       this.blcks = [];
-      this.blocks.forEach(function (block) {
-        _this7.blcks.push({
-          number: block[2],
-          name: _this7.basket.products[block[0]].name
+
+      if (this.blocks.length && this.basket.products.length) {
+        this.blocks.forEach(function (block) {
+          _this7.blcks.push({
+            number: block[2],
+            name: _this7.basket.products[block[0]].name
+          });
         });
-      });
+      }
+
       this.blcks.push({
         name: 'Produits hors blocs',
         number: -1
@@ -1567,18 +1569,20 @@ __webpack_require__.r(__webpack_exports__);
       this.prepareChartLabels();
       this.prepareChartValues();
       setTimeout(function () {
-        _this4.chart.data.labels = _this4.chartData.labels;
+        if (_this4.chart.data) {
+          _this4.chart.data.labels = _this4.chartData.labels;
 
-        if (_this4.chartViewMoney) {
-          _this4.chart.data.datasets[0].data = _this4.chartData.money;
-        } else {
-          _this4.chart.data.datasets[0].data = _this4.chartData.values;
+          if (_this4.chartViewMoney) {
+            _this4.chart.data.datasets[0].data = _this4.chartData.money;
+          } else {
+            _this4.chart.data.datasets[0].data = _this4.chartData.values;
+          }
+
+          _this4.chart.update({
+            duration: 1000,
+            easing: 'easeOutBounce'
+          });
         }
-
-        _this4.chart.update({
-          duration: 1000,
-          easing: 'easeOutBounce'
-        });
       }, 100);
     }
   }
