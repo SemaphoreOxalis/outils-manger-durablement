@@ -75,7 +75,7 @@ export default {
     mounted() {
         setTimeout(() => {
             this.turnRecipesIntoProducts();
-        }, 500);
+        }, 1000);
     },
     methods: {
         collapseClass: function () {

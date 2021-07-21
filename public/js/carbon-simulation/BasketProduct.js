@@ -466,7 +466,7 @@ var render = function() {
                           "a",
                           {
                             staticClass: "ignore-draggable edit-block",
-                            attrs: { title: "Déplacer vers le haut" },
+                            attrs: { title: "Déplacer le bloc vers le haut" },
                             on: {
                               click: function($event) {
                                 return _vm.moveBlockUp(_vm.index)
@@ -483,7 +483,7 @@ var render = function() {
                           "a",
                           {
                             staticClass: "ignore-draggable edit-block",
-                            attrs: { title: "Déplacer vers le bas" },
+                            attrs: { title: "Déplacer le bloc vers le bas" },
                             on: {
                               click: function($event) {
                                 return _vm.moveBlockDown(_vm.index)

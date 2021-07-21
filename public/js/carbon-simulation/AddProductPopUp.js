@@ -91,10 +91,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return true;
       }
 
-      if (this.productToAdd.price < 0.01) {
-        return true;
-      }
-
       return false;
     }
   },

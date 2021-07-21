@@ -69,8 +69,8 @@
 
             <div v-if="product.id.includes('start')" class="text-block">
                 <div class="move-list-controls">
-                    <a @click="moveBlockUp(index)" title="Déplacer vers le haut" v-if="!isFirstBlockTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a><br>
-                    <a @click="moveBlockDown(index)" title="Déplacer vers le bas" v-if="!isLastBlockTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a>
+                    <a @click="moveBlockUp(index)" title="Déplacer le bloc vers le haut" v-if="!isFirstBlockTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a><br>
+                    <a @click="moveBlockDown(index)" title="Déplacer le bloc vers le bas" v-if="!isLastBlockTitle" class="ignore-draggable edit-block"><i class="icon ml-2"></i></a>
                 </div>
                 <div class="product-name d-flex">
                     <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="renamed">

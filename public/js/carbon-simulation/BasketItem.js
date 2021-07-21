@@ -201,6 +201,10 @@ var draggable = function draggable() {
       } else {
         var tempProd = _objectSpread({}, product);
 
+        if (!tempProd.price) {
+          tempProd.price = 0;
+        }
+
         tempProd.id = 'prod-' + (this.productCounter + 1);
         prepended ? this.basket.products.unshift(tempProd) : this.basket.products.push(tempProd);
 

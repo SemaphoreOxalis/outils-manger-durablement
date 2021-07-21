@@ -75,10 +75,6 @@ export default {
             if (this.productToAdd.amount < 0.01) {
                 return true;
             }
-            if (this.productToAdd.price < 0.01) {
-                return true;
-            }
-
             return false
         }
     },
