@@ -236,6 +236,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     setTimeout(function () {
+      _this.updateResults();
+
       _this.createChart(_this.basketId + '-chart');
     }, 1500);
     events.$on('update-results', this.updateResults);
@@ -273,8 +275,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.updateEquivalence();
-      this.$forceUpdate();
       this.sendResults();
+      this.$forceUpdate();
     },
     getCarbonImpactByCategory: function getCarbonImpactByCategory() {
       var _this2 = this;

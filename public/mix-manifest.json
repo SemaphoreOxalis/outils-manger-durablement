@@ -43,6 +43,5 @@
     "/vendors~js/admin/WysiwygAdminPage.js": "/vendors~js/admin/WysiwygAdminPage.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js",
-    "/js/admin/carbon-simulation/ProductsAdminPage~js/carbon-simulation/BasketSimulator.js": "/js/admin/carbon-simulation/ProductsAdminPage~js/carbon-simulation/BasketSimulator.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js"
 }

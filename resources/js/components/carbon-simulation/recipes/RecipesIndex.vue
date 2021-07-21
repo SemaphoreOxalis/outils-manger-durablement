@@ -11,8 +11,9 @@
                        :data-target="'#body-' + recipe.id"
                        aria-expanded="false"
                        :aria-controls="'body-' + recipe.id"
-                       @click="toggleFullRecipe(recipe.id)">
-                        <i :id="'collapse-icon-' + recipe.id" class="icon icon-angle-down"></i>
+                       @click="toggleFullRecipe(recipe.id)"
+                       title="Détails">
+                        <i :id="'collapse-icon-' + recipe.id" class="icon icon-eye"></i>
                     </a>
                     <a @click="" class="btn-ico alt tool pb-1" title="Modifier"><i class="icon"></i></a>
                     <a @click="" class="btn-ico alt tool" title="Supprimer"></a>
@@ -23,7 +24,7 @@
                 <ul>
                     <div v-for="product in recipe.products" :key="recipe.id+ '-' + product.id" class="ml-3 d-flex">
                         <p class="w-50"><strong>{{ product.name }} &nbsp; </strong> {{ product.comment }}</p>
-                        <p>{{ product.pivot.amount }} {{ product.unit.shortUnit }} - {{ product.pivot.price }} € - {{ product.pivot.origin }}</p>
+                        <p class="ml-5">{{ product.pivot.amount }} {{ product.unit.shortUnit }} - {{ product.pivot.price }} € - {{ product.pivot.origin }}</p>
                     </div>
                 </ul>
             </div>
@@ -61,9 +62,11 @@ export default {
             let collapseIconId = '#collapse-icon-' + id;
 
             $(collapseClass).on('show.bs.collapse', function () {
-                $(collapseIconId).addClass("reversed");
+                $(collapseIconId).removeClass("icon-eye");
+                $(collapseIconId).addClass("icon-eye-slash");
             }).on('hide.bs.collapse', function () {
-                $(collapseIconId).removeClass("reversed");
+                $(collapseIconId).removeClass("icon-eye-slash");
+                $(collapseIconId).addClass("icon-eye");
             });
         },
     }

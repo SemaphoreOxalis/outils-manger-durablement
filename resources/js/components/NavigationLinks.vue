@@ -40,7 +40,7 @@
         <router-link
             :to="{ name: 'recipes-index'}"
             class="menu-item button icon sub-menu">
-            <span>Recettes de chef</span>
+            <span>Recettes de chef</span>
         </router-link>
     </div>
 </template>

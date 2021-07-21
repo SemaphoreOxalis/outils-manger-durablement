@@ -228,6 +228,7 @@ export default {
     },
     mounted() {
         setTimeout(() => {
+            this.updateResults();
             this.createChart(this.basketId + '-chart');
         }, 1500);
         events.$on('update-results', this.updateResults);
@@ -268,8 +269,8 @@ export default {
 
             this.updateEquivalence();
 
-            this.$forceUpdate();
             this.sendResults();
+            this.$forceUpdate();
         },
         getCarbonImpactByCategory() {
             this.cats.forEach(cat => {

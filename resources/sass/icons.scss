@@ -1,288 +1,393 @@
-/*--------------------------------
+/* --------------------------------
 
 sema-font Web Font
 Generated using nucleoapp.com
 
 -------------------------------- */
+$icon-font-path: "../fonts" !default;
+
 @font-face {
-    font-family: 'sema-font';
-    src: url('../fonts/sema-font.eot');
-    src: url('../fonts/sema-font.eot') format('embedded-opentype'), url('../fonts/sema-font.woff2') format('woff2'), url('../fonts/sema-font.woff') format('woff'), url('../fonts/sema-font.ttf') format('truetype'), url('../fonts/sema-font.svg') format('svg');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'sema-font';
+  src: url('#{$icon-font-path}/sema-font.eot');
+  src: url('#{$icon-font-path}/sema-font.eot') format('embedded-opentype'),
+    url('#{$icon-font-path}/sema-font.woff2') format('woff2'),
+    url('#{$icon-font-path}/sema-font.woff') format('woff'),
+    url('#{$icon-font-path}/sema-font.ttf') format('truetype'),
+    url('#{$icon-font-path}/sema-font.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
 }
+
 /*------------------------
 	base class definition
 -------------------------*/
+
 .icon {
-    display: inline-block;
-    font: normal normal normal 1em/1 'sema-font';
-    speak: none;
-    text-transform: none;
-    /* Better Font Rendering */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font: normal normal normal 1em/1 'sema-font';
+  color: inherit;
+  flex-shrink: 0;
+  speak: none;
+  text-transform: none;
+  /* Better Font Rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 /*------------------------
   change icon size
 -------------------------*/
+
 /* relative units */
 .icon-sm {
-    font-size: 0.8em;
+  font-size: 0.8em;
 }
 .icon-lg {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 /* absolute units */
 .icon-16 {
-    font-size: 16px;
+  font-size: 16px;
 }
 .icon-32 {
-    font-size: 32px;
+  font-size: 32px;
 }
-/*----------------------------------
-  add a square/circle background
------------------------------------*/
-.icon-bg-square,
-.icon-bg-circle {
-    padding: 0.35em;
-    background-color: #eee;
-}
-.icon-bg-circle {
-    border-radius: 50%;
-}
-/*------------------------------------
-  use icons as list item markers
--------------------------------------*/
-.icon-ul {
-    padding-left: 0;
-    list-style-type: none;
-}
-.icon-ul > li {
-    display: flex;
-    align-items: flex-start;
-    line-height: 1.4;
-}
-.icon-ul > li > .icon {
-    margin-right: 0.4em;
-    line-height: inherit;
-}
+
 /*------------------------
   spinning icons
 -------------------------*/
+
 .icon-is-spinning {
-    -webkit-animation: icon-spin 2s infinite linear;
-    -moz-animation: icon-spin 2s infinite linear;
-    animation: icon-spin 2s infinite linear;
+  animation: icon-spin 1s infinite linear;
 }
-@-webkit-keyframes icon-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-@-moz-keyframes icon-spin {
-    0% {
-        -moz-transform: rotate(0deg);
-    }
-    100% {
-        -moz-transform: rotate(360deg);
-    }
-}
+
 @keyframes icon-spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
 /*------------------------
   rotated/flipped icons
 -------------------------*/
-.icon-rotate-90 {
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-    -webkit-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -ms-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    transform: rotate(90deg);
+
+.icon-rotate-90  {
+	transform: rotate(90deg);
 }
+
 .icon-rotate-180 {
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);
+	transform: rotate(180deg);
 }
+
 .icon-rotate-270 {
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-    -webkit-transform: rotate(270deg);
-    -moz-transform: rotate(270deg);
-    -ms-transform: rotate(270deg);
-    -o-transform: rotate(270deg);
-    transform: rotate(270deg);
+	transform: rotate(270deg);
 }
+
 .icon-flip-y {
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
-    -webkit-transform: scale(-1, 1);
-    -moz-transform: scale(-1, 1);
-    -ms-transform: scale(-1, 1);
-    -o-transform: scale(-1, 1);
-    transform: scale(-1, 1);
+	transform: scaleY(-1);
 }
 .icon-flip-x {
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-    -webkit-transform: scale(1, -1);
-    -moz-transform: scale(1, -1);
-    -ms-transform: scale(1, -1);
-    -o-transform: scale(1, -1);
-    transform: scale(1, -1);
+	transform: scaleX(-1);
 }
+
 /*------------------------
 	icons
 -------------------------*/
+@function unicode($str) {
+  @return unquote("\"\\#{$str}\"");
+}
+
+$icon-file-times: unicode(ea02);
+$icon-file-plus: unicode(ea03);
+$icon-file: unicode(ea04);
+$icon-cog: unicode(ea05);
+$icon-home: unicode(ea06);
+$icon-arrows: unicode(ea07);
+$icon-long-arrow-left: unicode(ea08);
+$icon-long-arrow-down: unicode(ea09);
+$icon-long-arrow-right: unicode(ea0a);
+$icon-long-arrow-up: unicode(ea0b);
+$icon-arrows-v: unicode(ea0c);
+$icon-arrows-h: unicode(ea0d);
+$icon-plus: unicode(ea0e);
+$icon-minus: unicode(ea0f);
+$icon-redo: unicode(ea10);
+$icon-angle-double-down: unicode(ea11);
+$icon-angle-down: unicode(ea12);
+$icon-chevron-double-down: unicode(ea13);
+$icon-chevron-down: unicode(ea14);
+$icon-grip-vertical: unicode(ea15);
+$icon-pen: unicode(ea17);
+$icon-pen-2: unicode(ea1a);
+$icon-file-import: unicode(ea1b);
+$icon-file-export: unicode(ea1c);
+$icon-file-csv: unicode(ea1d);
+$icon-trash-2: unicode(ea1e);
+$icon-trash-3: unicode(ea1f);
+$icon-file-recent: unicode(ea21);
+$icon-sign-out: unicode(ea22);
+$icon-ellipsis-h: unicode(ea23);
+$icon-ellipsis-v: unicode(ea24);
+$icon-link: unicode(ea25);
+$icon-external-link: unicode(ea26);
+$icon-filter: unicode(ea27);
+$icon-info-circle: unicode(ea28);
+$icon-magic: unicode(ea29);
+$icon-copy: unicode(ea2a);
+$icon-chart-pie: unicode(ea2b);
+$icon-check-circle: unicode(ea2c);
+$icon-check: unicode(ea2d);
+$icon-circle: unicode(ea2e);
+$icon-shopping-cart: unicode(ea2f);
+$icon-cart-plus: unicode(ea30);
+$icon-cart-arrow-down: unicode(ea31);
+$icon-bars: unicode(ea32);
+$icon-times-circle: unicode(ea33);
+$icon-times: unicode(ea34);
+$icon-chevron-up: unicode(ea35);
+$icon-angle-up: unicode(ea36);
+$icon-app-carbon: unicode(ea37);
+$icon-app-wawste: unicode(ea38);
+$icon-angle-left: unicode(ea39);
+$icon-angle-right: unicode(ea3a);
+$icon-chevron-left: unicode(ea3b);
+$icon-chevron-right: unicode(ea3c);
+$icon-eye: unicode(ea3d);
+$icon-eye-slash: unicode(ea3e);
+$icon-hat-chef: unicode(ea3f);
 
 .icon-file-times::before {
-    content: "\ea02";
+  content: $icon-file-times;
 }
 
 .icon-file-plus::before {
-    content: "\ea03";
+  content: $icon-file-plus;
 }
 
 .icon-file::before {
-    content: "\ea04";
+  content: $icon-file;
 }
 
 .icon-cog::before {
-    content: "\ea05";
+  content: $icon-cog;
 }
 
 .icon-home::before {
-    content: "\ea06";
+  content: $icon-home;
 }
 
 .icon-arrows::before {
-    content: "\ea07";
+  content: $icon-arrows;
 }
 
 .icon-long-arrow-left::before {
-    content: "\ea08";
+  content: $icon-long-arrow-left;
 }
 
 .icon-long-arrow-down::before {
-    content: "\ea09";
+  content: $icon-long-arrow-down;
 }
 
 .icon-long-arrow-right::before {
-    content: "\ea0a";
+  content: $icon-long-arrow-right;
 }
 
 .icon-long-arrow-up::before {
-    content: "\ea0b";
+  content: $icon-long-arrow-up;
 }
 
 .icon-arrows-v::before {
-    content: "\ea0c";
+  content: $icon-arrows-v;
 }
 
 .icon-arrows-h::before {
-    content: "\ea0d";
+  content: $icon-arrows-h;
 }
 
 .icon-plus::before {
-    content: "\ea0e";
+  content: $icon-plus;
 }
 
 .icon-minus::before {
-    content: "\ea0f";
+  content: $icon-minus;
 }
 
 .icon-redo::before {
-    content: "\ea10";
+  content: $icon-redo;
 }
 
 .icon-angle-double-down::before {
-    content: "\ea11";
+  content: $icon-angle-double-down;
 }
 
 .icon-angle-down::before {
-    content: "\ea12";
+  content: $icon-angle-down;
 }
 
 .icon-chevron-double-down::before {
-    content: "\ea13";
+  content: $icon-chevron-double-down;
 }
 
 .icon-chevron-down::before {
-    content: "\ea14";
+  content: $icon-chevron-down;
 }
 
 .icon-grip-vertical::before {
-    content: "\ea15";
+  content: $icon-grip-vertical;
 }
 
 .icon-pen::before {
-    content: "\ea17";
+  content: $icon-pen;
 }
 
 .icon-pen-2::before {
-    content: "\ea1a";
+  content: $icon-pen-2;
 }
 
 .icon-file-import::before {
-    content: "\ea1b";
+  content: $icon-file-import;
 }
 
 .icon-file-export::before {
-    content: "\ea1c";
+  content: $icon-file-export;
 }
 
 .icon-file-csv::before {
-    content: "\ea1d";
+  content: $icon-file-csv;
 }
 
 .icon-trash-2::before {
-    content: "\ea1e";
+  content: $icon-trash-2;
 }
 
 .icon-trash-3::before {
-    content: "\ea1f";
+  content: $icon-trash-3;
 }
 
 .icon-file-recent::before {
-    content: "\ea21";
+  content: $icon-file-recent;
 }
 
 .icon-sign-out::before {
-    content: "\ea22";
+  content: $icon-sign-out;
 }
 
 .icon-ellipsis-h::before {
-    content: "\ea23";
+  content: $icon-ellipsis-h;
 }
 
 .icon-ellipsis-v::before {
-    content: "\ea24";
+  content: $icon-ellipsis-v;
 }
 
 .icon-link::before {
-    content: "\ea25";
+  content: $icon-link;
 }
 
 .icon-external-link::before {
-    content: "\ea26";
+  content: $icon-external-link;
+}
+
+.icon-filter::before {
+  content: $icon-filter;
+}
+
+.icon-info-circle::before {
+  content: $icon-info-circle;
+}
+
+.icon-magic::before {
+  content: $icon-magic;
+}
+
+.icon-copy::before {
+  content: $icon-copy;
+}
+
+.icon-chart-pie::before {
+  content: $icon-chart-pie;
+}
+
+.icon-check-circle::before {
+  content: $icon-check-circle;
+}
+
+.icon-check::before {
+  content: $icon-check;
+}
+
+.icon-circle::before {
+  content: $icon-circle;
+}
+
+.icon-shopping-cart::before {
+  content: $icon-shopping-cart;
+}
+
+.icon-cart-plus::before {
+  content: $icon-cart-plus;
+}
+
+.icon-cart-arrow-down::before {
+  content: $icon-cart-arrow-down;
+}
+
+.icon-bars::before {
+  content: $icon-bars;
+}
+
+.icon-times-circle::before {
+  content: $icon-times-circle;
+}
+
+.icon-times::before {
+  content: $icon-times;
+}
+
+.icon-chevron-up::before {
+  content: $icon-chevron-up;
+}
+
+.icon-angle-up::before {
+  content: $icon-angle-up;
+}
+
+.icon-app-carbon::before {
+  content: $icon-app-carbon;
+}
+
+.icon-app-wawste::before {
+  content: $icon-app-wawste;
+}
+
+.icon-angle-left::before {
+  content: $icon-angle-left;
+}
+
+.icon-angle-right::before {
+  content: $icon-angle-right;
+}
+
+.icon-chevron-left::before {
+  content: $icon-chevron-left;
+}
+
+.icon-chevron-right::before {
+  content: $icon-chevron-right;
+}
+
+.icon-eye::before {
+  content: $icon-eye;
+}
+
+.icon-eye-slash::before {
+  content: $icon-eye-slash;
+}
+
+.icon-hat-chef::before {
+  content: $icon-hat-chef;
 }
 

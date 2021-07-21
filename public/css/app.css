@@ -12600,7 +12600,7 @@ a.button:hover {
   overflow-y: auto;
 }
 
-/*--------------------------------
+/* --------------------------------
 
 sema-font Web Font
 Generated using nucleoapp.com
@@ -12609,8 +12609,8 @@ Generated using nucleoapp.com
 
 @font-face {
   font-family: "sema-font";
-  src: url(/fonts/sema-font.eot?89240c1f99198d38867da84b1b19a5d5);
-  src: url(/fonts/sema-font.eot?89240c1f99198d38867da84b1b19a5d5) format("embedded-opentype"), url(/fonts/sema-font.woff2?ab7973a15a1a83fae5c71b4041da6461) format("woff2"), url(/fonts/sema-font.woff?4992b95f6760b8ea579de456effc6f93) format("woff"), url(/fonts/sema-font.ttf?4e27a481a19a09fa09cf87e9ca6fe16c) format("truetype"), url(/fonts/sema-font.svg?060f3b1493dad508b0f607fe2779a16b) format("svg");
+  src: url(/fonts/sema-font.eot?a720a62ba5b476bac268407a9badfdd4);
+  src: url(/fonts/sema-font.eot?a720a62ba5b476bac268407a9badfdd4) format("embedded-opentype"), url(/fonts/sema-font.woff2?261c0e3debcd75176aa8c111ec6810b5) format("woff2"), url(/fonts/sema-font.woff?3bd80b3258c4a06ae3f7d5a7406da019) format("woff"), url(/fonts/sema-font.ttf?53aa8ca40493764286790d44bde6deff) format("truetype"), url(/fonts/sema-font.svg?d1163df2c024f6741d2d72c2020ec799) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -12622,6 +12622,8 @@ Generated using nucleoapp.com
 .icon {
   display: inline-block;
   font: normal normal normal 1em/1 "sema-font";
+  color: inherit;
+  flex-shrink: 0;
   speak: none;
   text-transform: none;
   /* Better Font Rendering */
@@ -12653,56 +12655,22 @@ Generated using nucleoapp.com
   font-size: 32px;
 }
 
-/*----------------------------------
-  add a square/circle background
------------------------------------*/
-
-.icon-bg-square,
-.icon-bg-circle {
-  padding: 0.35em;
-  background-color: #eee;
-}
-
-.icon-bg-circle {
-  border-radius: 50%;
-}
-
-/*------------------------------------
-  use icons as list item markers
--------------------------------------*/
-
-.icon-ul {
-  padding-left: 0;
-  list-style-type: none;
-}
-
-.icon-ul > li {
-  display: flex;
-  align-items: flex-start;
-  line-height: 1.4;
-}
-
-.icon-ul > li > .icon {
-  margin-right: 0.4em;
-  line-height: inherit;
-}
-
 /*------------------------
   spinning icons
 -------------------------*/
 
 .icon-is-spinning {
-  -webkit-animation: icon-spin 2s infinite linear;
-  animation: icon-spin 2s infinite linear;
+  -webkit-animation: icon-spin 1s infinite linear;
+          animation: icon-spin 1s infinite linear;
 }
 
 @-webkit-keyframes icon-spin {
   0% {
-    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
@@ -12721,28 +12689,23 @@ Generated using nucleoapp.com
 -------------------------*/
 
 .icon-rotate-90 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   transform: rotate(90deg);
 }
 
 .icon-rotate-180 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   transform: rotate(180deg);
 }
 
 .icon-rotate-270 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   transform: rotate(270deg);
 }
 
 .icon-flip-y {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
-  transform: scale(-1, 1);
+  transform: scaleY(-1);
 }
 
 .icon-flip-x {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-  transform: scale(1, -1);
+  transform: scaleX(-1);
 }
 
 /*------------------------
@@ -12879,6 +12842,106 @@ Generated using nucleoapp.com
 
 .icon-external-link::before {
   content: "\EA26";
+}
+
+.icon-filter::before {
+  content: "\EA27";
+}
+
+.icon-info-circle::before {
+  content: "\EA28";
+}
+
+.icon-magic::before {
+  content: "\EA29";
+}
+
+.icon-copy::before {
+  content: "\EA2A";
+}
+
+.icon-chart-pie::before {
+  content: "\EA2B";
+}
+
+.icon-check-circle::before {
+  content: "\EA2C";
+}
+
+.icon-check::before {
+  content: "\EA2D";
+}
+
+.icon-circle::before {
+  content: "\EA2E";
+}
+
+.icon-shopping-cart::before {
+  content: "\EA2F";
+}
+
+.icon-cart-plus::before {
+  content: "\EA30";
+}
+
+.icon-cart-arrow-down::before {
+  content: "\EA31";
+}
+
+.icon-bars::before {
+  content: "\EA32";
+}
+
+.icon-times-circle::before {
+  content: "\EA33";
+}
+
+.icon-times::before {
+  content: "\EA34";
+}
+
+.icon-chevron-up::before {
+  content: "\EA35";
+}
+
+.icon-angle-up::before {
+  content: "\EA36";
+}
+
+.icon-app-carbon::before {
+  content: "\EA37";
+}
+
+.icon-app-wawste::before {
+  content: "\EA38";
+}
+
+.icon-angle-left::before {
+  content: "\EA39";
+}
+
+.icon-angle-right::before {
+  content: "\EA3A";
+}
+
+.icon-chevron-left::before {
+  content: "\EA3B";
+}
+
+.icon-chevron-right::before {
+  content: "\EA3C";
+}
+
+.icon-eye::before {
+  content: "\EA3D";
+}
+
+.icon-eye-slash::before {
+  content: "\EA3E";
+}
+
+.icon-hat-chef::before {
+  content: "\EA3F";
 }
 
 .semaStyleEnd {

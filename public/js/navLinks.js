@@ -164,7 +164,7 @@ var render = function() {
           staticClass: "menu-item button icon sub-menu",
           attrs: { to: { name: "recipes-index" } }
         },
-        [_vm._v("\n        "), _c("span", [_vm._v("Recettes de chef")])]
+        [_vm._v("\n        "), _c("span", [_vm._v("Recettes de chef")])]
       )
     ],
     1
