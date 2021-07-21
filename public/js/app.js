@@ -35752,7 +35752,8 @@ var RecipesIndex = function RecipesIndex() {
         children: [{
           path: 'index',
           component: RecipesIndex,
-          name: 'recipes-index'
+          name: 'recipes-index',
+          props: true
         }]
       }, {
         path: '',

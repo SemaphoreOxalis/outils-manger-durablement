@@ -11,6 +11,7 @@
                          :class="getClasses(category.id)"
                          :key="category.id"
                          @click="filterProdByCategory(category.id)">
+                        <i v-if="category.id === 998" class="icon icon-hat-chef">&nbsp;</i>
                         {{ category.name }}
                     </div>
                 </div>
@@ -129,7 +130,7 @@ export default {
         },
         showProducts() {
             this.cats = JSON.parse(JSON.stringify(this.categories));
-            this.cats.push({name: '⭐ Recettes de chef', id: 998});
+            this.cats.push({name: 'Recettes de chef', id: 998});
             this.cats.push({name: '⭐ Spécial', id: 999});
             this.specialProducts.forEach((p) => {
                 p.category_id = 999;

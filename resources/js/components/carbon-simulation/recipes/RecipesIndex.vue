@@ -1,8 +1,15 @@
 <template>
     <div>
-        <div v-for="recipe in recipes"
+        <div class="d-flex align-items-center mb-5">
+            <span class="text-center">Filtrer les recettes : &nbsp;</span>
+            <input type="text" v-model="search" placeholder="Filtrer" style="max-width: 350px;">
+            <a @click="search=''" class="btn-ico alt tool" title="Effacer les filtres"><strong>✖</strong></a>
+        </div>
+
+        <div v-for="(recipe, i) in filteredRecipes"
              :key="recipe.id"
-             class="w-75 border-top border-secondary">
+             :class="{ 'border-top border-secondary': i !== 0 }"
+             class="w-75">
             <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center"><strong>{{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
                 <div class="d-flex">
@@ -35,20 +42,40 @@
 <script>
 import RecipesDataBase from "../../../helpers/carbon-simulation/database/RecipesDataBase";
 import ProductsDataBase from "../../../helpers/carbon-simulation/database/ProductsDataBase";
+import searchBar from "../../../helpers/carbon-simulation/searchBar";
+import recipesHelper from "../../../helpers/carbon-simulation/recipesHelper";
+import OriginsDataBase from "../../../helpers/carbon-simulation/database/OriginsDataBase";
 export default {
     mixins: [
         RecipesDataBase,
-        ProductsDataBase
+        ProductsDataBase,
+        searchBar,
+        recipesHelper,
+        OriginsDataBase,
     ],
     data() {
         return {
             recipes: [],
             products: [],
+            recipesAsProducts: [],
+            origins: [],
+            search: '',
+        }
+    },
+    computed: {
+        filteredRecipes() {
+            return this.searchWithSearchBar(this.recipesAsProducts);
         }
     },
     created() {
         this.fetchRecipes();
         this.fetchProducts();
+        this.fetchOrigins();
+    },
+    mounted() {
+        setTimeout(() => {
+            this.turnRecipesIntoProducts();
+        }, 500);
     },
     methods: {
         collapseClass: function () {

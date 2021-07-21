@@ -20,7 +20,7 @@
                 class="autocomplete-result"
                 :class="{ 'is-active': index === arrowCounter }">
                 {{ result.name }}<small v-if="result.comment"> - {{ result.comment }}</small>
-                <span v-if="result.type === 'recipe'" class="ml-5">⭐ Recette de chef</span>
+                <span v-if="result.type === 'recipe'" class="ml-5 float-right"><i class="icon icon-hat-chef">&nbsp;</i> Recette de chef</span>
             </li>
         </ul>
     </div>

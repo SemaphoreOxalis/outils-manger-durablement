@@ -62,6 +62,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 var draggable = function draggable() {
@@ -146,7 +147,7 @@ var draggable = function draggable() {
     showProducts: function showProducts() {
       this.cats = JSON.parse(JSON.stringify(this.categories));
       this.cats.push({
-        name: '⭐ Recettes de chef',
+        name: 'Recettes de chef',
         id: 998
       });
       this.cats.push({
@@ -251,6 +252,11 @@ var render = function() {
                     }
                   },
                   [
+                    category.id === 998
+                      ? _c("i", { staticClass: "icon icon-hat-chef" }, [
+                          _vm._v(" ")
+                        ])
+                      : _vm._e(),
                     _vm._v(
                       "\n                    " +
                         _vm._s(category.name) +

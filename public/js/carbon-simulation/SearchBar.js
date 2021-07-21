@@ -258,8 +258,9 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             result.type === "recipe"
-              ? _c("span", { staticClass: "ml-5" }, [
-                  _vm._v("⭐ Recette de chef")
+              ? _c("span", { staticClass: "ml-5 float-right" }, [
+                  _c("i", { staticClass: "icon icon-hat-chef" }, [_vm._v(" ")]),
+                  _vm._v(" Recette de chef")
                 ])
               : _vm._e()
           ]

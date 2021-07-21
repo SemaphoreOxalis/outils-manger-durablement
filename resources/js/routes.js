@@ -179,6 +179,7 @@ export default {
                                     path: 'index',
                                     component: RecipesIndex,
                                     name: 'recipes-index',
+                                    props: true,
                                 },
                             ]
                         },

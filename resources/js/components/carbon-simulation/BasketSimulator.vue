@@ -65,6 +65,7 @@ import OriginsDataBase from "../../helpers/carbon-simulation/database/OriginsDat
 import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorText";
 import DataBase from "../../helpers/DataBase";
 import RecipesDataBase from "../../helpers/carbon-simulation/database/RecipesDataBase";
+import recipesHelper from "../../helpers/carbon-simulation/recipesHelper";
 const SearchBar = () => import(
     /* webpackChunkName: "js/carbon-simulation/SearchBar" */
     './SearchBar'
@@ -98,6 +99,7 @@ export default {
         OriginsDataBase,
         BasketSimulatorText,
         DataBase,
+        recipesHelper,
     ],
     data() {
         return {
@@ -207,24 +209,6 @@ export default {
         loseFocusOnSearchBar() {
             events.$emit('clear-search-bar');
             this.focusOnSearchBar = false;
-        },
-
-        getOriginObject(from) {
-            return this.origins.filter(origin => origin.from === from)[0];
-        },
-
-        turnRecipesIntoProducts() {
-            this.recipes.forEach((recipe) => {
-                let prod = {...recipe};
-                prod.type = "recipe";
-                prod.comment = recipe.description;
-                recipe.products.forEach((product) => {
-                    product.origin = this.getOriginObject(product.pivot.origin);
-                    product.amount = product.pivot.amount;
-                    product.price = product.pivot.price;
-                });
-                this.recipesAsProducts.push(prod);
-            });
         },
     }
 }

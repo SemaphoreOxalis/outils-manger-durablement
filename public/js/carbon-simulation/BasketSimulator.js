@@ -19,13 +19,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../texts/carbonSimulator/BasketSimulatorText */ "./resources/texts/carbonSimulator/BasketSimulatorText.js");
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/RecipesDataBase */ "./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../helpers/carbon-simulation/recipesHelper */ "./resources/js/helpers/carbon-simulation/recipesHelper.js");
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -98,6 +93,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 var SearchBar = function SearchBar() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/SearchBar */ "js/carbon-simulation/SearchBar").then(__webpack_require__.bind(null, /*! ./SearchBar */ "./resources/js/components/carbon-simulation/SearchBar.vue"));
 };
@@ -121,7 +117,7 @@ var BasketsList = function BasketsList() {
     AddProductPopUp: AddProductPopUp,
     BasketsList: BasketsList
   },
-  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"], _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__["default"]],
   data: function data() {
     return {
       products: [],
@@ -240,28 +236,6 @@ var BasketsList = function BasketsList() {
     loseFocusOnSearchBar: function loseFocusOnSearchBar() {
       events.$emit('clear-search-bar');
       this.focusOnSearchBar = false;
-    },
-    getOriginObject: function getOriginObject(from) {
-      return this.origins.filter(function (origin) {
-        return origin.from === from;
-      })[0];
-    },
-    turnRecipesIntoProducts: function turnRecipesIntoProducts() {
-      var _this2 = this;
-
-      this.recipes.forEach(function (recipe) {
-        var prod = _objectSpread({}, recipe);
-
-        prod.type = "recipe";
-        prod.comment = recipe.description;
-        recipe.products.forEach(function (product) {
-          product.origin = _this2.getOriginObject(product.pivot.origin);
-          product.amount = product.pivot.amount;
-          product.price = product.pivot.price;
-        });
-
-        _this2.recipesAsProducts.push(prod);
-      });
     }
   }
 });
@@ -1084,6 +1058,50 @@ function postUnit(newUnit) {
 function destroyUnit(unitId) {
   return axios["delete"]('/api/units/' + unitId);
 }
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/recipesHelper.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/recipesHelper.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    turnRecipesIntoProducts: function turnRecipesIntoProducts() {
+      var _this = this;
+
+      this.recipes.forEach(function (recipe) {
+        var prod = _objectSpread({}, recipe);
+
+        prod.type = "recipe";
+        prod.comment = recipe.description;
+        recipe.products.forEach(function (product) {
+          product.origin = _this.getOriginObject(product.pivot.origin);
+          product.amount = product.pivot.amount;
+          product.price = product.pivot.price;
+        });
+
+        _this.recipesAsProducts.push(prod);
+      });
+    },
+    getOriginObject: function getOriginObject(from) {
+      return this.origins.filter(function (origin) {
+        return origin.from === from;
+      })[0];
+    }
+  }
+});
 
 /***/ }),
 
