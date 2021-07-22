@@ -95,8 +95,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
 
 
 
@@ -583,7 +581,7 @@ var render = function() {
             ? _c(
                 "a",
                 {
-                  staticClass: "btn-ico alt tool info-bubble",
+                  staticClass: "btn-ico alt tool",
                   attrs: { title: "Modifier cette liste" },
                   on: { click: _vm.doStuff }
                 },
@@ -595,18 +593,18 @@ var render = function() {
             ? _c(
                 "a",
                 {
-                  staticClass: "btn-ico alt tool info-bubble pb-1",
+                  staticClass: "btn-ico alt tool",
                   attrs: { title: "Vider cette liste" },
                   on: { click: _vm.clearBasket }
                 },
-                [_c("strong", [_vm._v("✖")])]
+                [_c("i", { staticClass: "icon icon-times-circle" })]
               )
             : _vm._e(),
           _vm._v(" "),
           _c(
             "a",
             {
-              staticClass: "btn-ico alt tool info-bubble",
+              staticClass: "btn-ico alt tool",
               attrs: { title: "Supprimer cette liste" },
               on: { click: _vm.deleteBasket }
             },

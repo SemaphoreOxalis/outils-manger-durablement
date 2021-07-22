@@ -1,17 +1,30 @@
 <template>
     <div>
-        <div class="d-flex align-items-center mb-5">
-            <span class="text-center">Filtrer les recettes : &nbsp;</span>
-            <input type="text" v-model="search" placeholder="Filtrer" style="max-width: 350px;">
-            <a @click="search=''" class="btn-ico alt tool" title="Effacer les filtres"><strong>✖</strong></a>
+        <div class="d-flex justify-content-between mb-5">
+            <div class="d-flex align-items-center w-75">
+                <span>Filtrer les recettes : &nbsp;</span>
+                <input type="text" v-model="search" style="max-width: 550px;" class="custom-input browser-default input">
+                <a @click="search=''" class="btn-ico alt tool" title="Effacer les filtres"><i class="icon icon-times-circle"></i></a>
+            </div>
+            <div>
+                <router-link :to="{ name: 'recipe-create'}" tag="span">
+                    <button class="button">Créer une nouvelle recette</button>
+                </router-link>
+            </div>
         </div>
 
         <div v-for="(recipe, i) in filteredRecipes"
              :key="recipe.id"
-             :class="{ 'border-top border-secondary': i !== 0 }"
-             class="w-75">
-            <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center"><strong>{{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
+             class="w-100 recipe-header-container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="w-50 d-flex align-items-center"><strong> &nbsp; {{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
+
+                <span v-if="recipe.guests" class="mr-5 w-25">pour {{ recipe.guests }} personnes</span>
+                <span v-else class="mr-5 w-25">NULL</span>
+
+                <span v-if="recipe.author" class="mr-5 w-25">Créé par {{ recipe.author }}</span>
+                <span v-else class="mr-5 w-25">NULL</span>
+
                 <div class="d-flex">
                     <a class="btn-ico alt tool"
                        data-toggle="collapse"
@@ -22,15 +35,17 @@
                        title="Détails">
                         <i :id="'collapse-icon-' + recipe.id" class="icon icon-eye"></i>
                     </a>
-                    <a @click="" class="btn-ico alt tool pb-1" title="Modifier"><i class="icon"></i></a>
+                    <router-link :to="{ name: 'recipe-edit', params: { recipe }}" tag="span">
+                        <a @click="" class="btn-ico alt tool pb-1" title="Modifier"><i class="icon"></i></a>
+                    </router-link>
                     <a @click="" class="btn-ico alt tool" title="Supprimer"></a>
                 </div>
             </div>
-            <div :class="'collapse w-75 collapse-' + recipe.id"
+            <div :class="'collapse w-75 mt-3 collapse-' + recipe.id"
                  :id="'body-' + recipe.id">
                 <ul>
                     <div v-for="product in recipe.products" :key="recipe.id+ '-' + product.id" class="ml-3 d-flex">
-                        <p class="w-50"><strong>{{ product.name }} &nbsp; </strong> {{ product.comment }}</p>
+                        <p class="w-50"><i class="icon icon-minus align-text-bottom"></i> &nbsp; <strong>{{ product.name }} &nbsp; </strong> {{ product.comment }}</p>
                         <p class="ml-5">{{ product.pivot.amount }} {{ product.unit.shortUnit }} - {{ product.pivot.price }} € - {{ product.pivot.origin }}</p>
                     </div>
                 </ul>
@@ -75,7 +90,7 @@ export default {
     mounted() {
         setTimeout(() => {
             this.turnRecipesIntoProducts();
-        }, 1000);
+        }, 500);
     },
     methods: {
         collapseClass: function () {

@@ -108,6 +108,16 @@ const RecipesIndex = () => import(
     './components/carbon-simulation/recipes/RecipesIndex.vue'
     );
 
+const RecipeCreate = () => import(
+    /* webpackChunkName: "js/carbon-simulation/RecipeCreate" */
+    './components/carbon-simulation/recipes/RecipeCreate.vue'
+    );
+
+const RecipeEdit = () => import(
+    /* webpackChunkName: "js/carbon-simulation/RecipeEdit" */
+    './components/carbon-simulation/recipes/RecipeEdit.vue'
+    );
+
 export default {
 
     // Redirection automatique en haut de la page lors de changement de vue
@@ -179,7 +189,17 @@ export default {
                                     path: 'index',
                                     component: RecipesIndex,
                                     name: 'recipes-index',
-                                    props: true,
+                                },
+                                {
+                                    path: 'create',
+                                    component: RecipeCreate,
+                                    name: 'recipe-create',
+                                },
+                                {
+                                    path: 'edit',
+                                    component: RecipeEdit,
+                                    name: 'recipe-edit',
+                                    props: true
                                 },
                             ]
                         },

@@ -155,7 +155,7 @@ export default {
         getClasses() {
             return [
                 'product-item',
-                this.isInBlock > 0 ? 'border-left-3' : ''
+                this.isInBlock > 0 ? 'border-left-3 border-right-3' : ''
             ];
         },
 
@@ -164,6 +164,7 @@ export default {
             return [
                 'special-product-header-container',
                 'border-left',
+                'border-right',
                 'border-3',
                 product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'
             ];

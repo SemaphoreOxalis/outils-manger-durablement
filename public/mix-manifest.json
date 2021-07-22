@@ -45,5 +45,7 @@
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
     "/vendors~tinymce.js": "/vendors~tinymce.js",
     "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~ddeeea5f.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~ddeeea5f.js",
-    "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~1979e6e4.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~1979e6e4.js"
+    "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~1979e6e4.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~1979e6e4.js",
+    "/js/carbon-simulation/RecipeEdit.js": "/js/carbon-simulation/RecipeEdit.js",
+    "/js/carbon-simulation/RecipeCreate.js": "/js/carbon-simulation/RecipeCreate.js"
 }

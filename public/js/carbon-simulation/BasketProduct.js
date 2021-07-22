@@ -163,11 +163,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getClasses: function getClasses() {
-      return ['product-item', this.isInBlock > 0 ? 'border-left-3' : ''];
+      return ['product-item', this.isInBlock > 0 ? 'border-left-3 border-right-3' : ''];
     },
     // BLOCK STUFF
     getSpecialClasses: function getSpecialClasses(product) {
-      return ['special-product-header-container', 'border-left', 'border-3', product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
+      return ['special-product-header-container', 'border-left', 'border-right', 'border-3', product.id.includes('start') ? 'border-top rounded-top special-product-top' : 'border-bottom rounded-bottom special-product-bottom'];
     },
     editTitle: function editTitle() {
       var _this = this;

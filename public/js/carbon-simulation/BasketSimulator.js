@@ -1123,11 +1123,7 @@ __webpack_require__.r(__webpack_exports__);
         var productName = _this.areWeLookingForBeefAndEggs(product.name);
 
         if (product.type === 'recipe') {
-          if (product.comment) {
-            return _this.searchByProduct(productName, _this.search) || _this.searchByComment(product.comment, _this.search) || _this.searchRecipe(product, _this.search);
-          }
-
-          return _this.searchByProduct(productName, _this.search) || _this.searchRecipe(product, _this.search);
+          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(product.comment, _this.search) || _this.searchByComment(product.author, _this.search) || _this.searchRecipe(product, _this.search);
         } else if (product.comment) {
           var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
 
@@ -1145,7 +1141,7 @@ __webpack_require__.r(__webpack_exports__);
       return unaccentedProd.toLowerCase().includes(search.toLowerCase());
     },
     searchByComment: function searchByComment(productComment, search) {
-      return productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search);
+      return productComment ? productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search) : false;
     },
     searchByUnaccentedComment: function searchByUnaccentedComment(productComment, search) {
       var unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");

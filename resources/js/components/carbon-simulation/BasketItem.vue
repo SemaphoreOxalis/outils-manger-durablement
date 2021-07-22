@@ -16,9 +16,9 @@
             </div>
             <div class="basket-toolbox">
                 <button class="button" @click="insertBlock">Insérer un bloc</button>
-                <a v-if="contains('prod')" @click="doStuff" class="btn-ico alt tool info-bubble" title="Modifier cette liste"></a>
-                <a v-if="contains('prod')" @click="clearBasket" class="btn-ico alt tool info-bubble pb-1" title="Vider cette liste"><strong>✖</strong></a>
-                <a @click="deleteBasket" class="btn-ico alt tool info-bubble" title="Supprimer cette liste"></a>
+                <a v-if="contains('prod')" @click="doStuff" class="btn-ico alt tool" title="Modifier cette liste"></a>
+                <a v-if="contains('prod')" @click="clearBasket" class="btn-ico alt tool" title="Vider cette liste"><i class="icon icon-times-circle"></i></a>
+                <a @click="deleteBasket" class="btn-ico alt tool" title="Supprimer cette liste"></a>
             </div>
         </div>
 
@@ -60,9 +60,7 @@
                        :basket-id="basket.id"
                        :blocks="blocks">
         </basket-result>
-
     </div>
-
 </template>
 
 <script>

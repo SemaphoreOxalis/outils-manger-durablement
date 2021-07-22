@@ -4,12 +4,9 @@ export default {
             return products.filter(product => {
                 let productName = this.areWeLookingForBeefAndEggs(product.name);
                 if(product.type === 'recipe') {
-                    if (product.comment) {
-                        return this.searchByProduct(productName, this.search)
-                            || this.searchByComment(product.comment, this.search)
-                            || this.searchRecipe(product, this.search);
-                    }
                     return this.searchByProduct(productName, this.search)
+                        || this.searchByComment(product.comment, this.search)
+                        || this.searchByComment(product.author, this.search)
                         || this.searchRecipe(product, this.search);
                 }
                 else if(product.comment) {
@@ -29,7 +26,7 @@ export default {
             return unaccentedProd.toLowerCase().includes(search.toLowerCase());
         },
         searchByComment(productComment, search) {
-            return productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search);
+            return productComment ? productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search) : false;
         },
         searchByUnaccentedComment(productComment, search) {
             let unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");

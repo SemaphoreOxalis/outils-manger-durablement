@@ -12003,6 +12003,10 @@ h1.header {
   color: var(--third-color);
 }
 
+a.btn-ico.alt.tool:hover {
+  text-decoration: none;
+}
+
 .btn-ico.alt.tool.info {
   display: inline-block;
   width: 1em;
@@ -12077,6 +12081,11 @@ h1.header {
   background-image: linear-gradient(180deg, rgba(17, 153, 142, 0.1), #fff);
 }
 
+.recipe-header-container {
+  border-top: 1px dotted var(--third-color);
+  background-image: linear-gradient(180deg, rgba(17, 153, 142, 0.1), #fff);
+}
+
 .special-product-header-container {
   display: flex;
   align-items: center;
@@ -12098,6 +12107,10 @@ h1.header {
 
 .border-left-3 {
   border-left: 3px solid var(--third-color) !important;
+}
+
+.border-right-3 {
+  border-right: 3px solid var(--third-color) !important;
 }
 
 .border-3 {
