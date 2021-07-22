@@ -13,7 +13,7 @@ export default {
     ],
     data() {
         return {
-            title: ''
+            title: `<div class="loader-spinner"></div>`
         }
     },
     async mounted() {

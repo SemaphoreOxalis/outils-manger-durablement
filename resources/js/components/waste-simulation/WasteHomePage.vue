@@ -90,8 +90,8 @@ export default {
             previousAuditDetectedInLocalStorage: false,
             previousAuditDate: null,
 
-            localStorageDisclaimer: '',
-            howToUse: '',
+            localStorageDisclaimer: `<div class="loader-spinner"></div>`,
+            howToUse: `<div class="loader-spinner"></div>`,
             button: null,
         }
     },

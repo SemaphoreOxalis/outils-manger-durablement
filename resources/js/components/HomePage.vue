@@ -40,8 +40,8 @@
         ],
         data() {
             return {
-                title: '',
-                text: ''
+                title: `<div class="loader-spinner"></div>`,
+                text: `<div class="loader-spinner"></div>`
             }
         },
         async mounted() {

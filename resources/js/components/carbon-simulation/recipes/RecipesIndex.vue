@@ -13,6 +13,7 @@
             </div>
         </div>
 
+        <div v-if="!filteredRecipes.length" class="loader-spinner"></div>
         <div v-for="(recipe, i) in filteredRecipes"
              :key="recipe.id"
              class="w-100 recipe-header-container">
@@ -90,7 +91,7 @@ export default {
     mounted() {
         setTimeout(() => {
             this.turnRecipesIntoProducts();
-        }, 500);
+        }, 1500);
     },
     methods: {
         collapseClass: function () {

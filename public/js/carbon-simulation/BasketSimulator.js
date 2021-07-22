@@ -137,7 +137,7 @@ var BasketsList = function BasketsList() {
       productAdded: {},
       productToAddWithDetails: {},
       focusOnSearchBar: false,
-      howTo: ''
+      howTo: "<div class=\"loader-spinner\"></div>"
     };
   },
   created: function created() {

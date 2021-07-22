@@ -32,7 +32,7 @@
 
         data() {
             return {
-                text: ''
+                text: `<div class="loader-spinner"></div>`
             }
         },
 

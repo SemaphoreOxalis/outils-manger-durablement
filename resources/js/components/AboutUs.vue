@@ -10,7 +10,7 @@ export default {
     ],
     data() {
         return {
-            about: ''
+            about: `<div class="loader-spinner"></div>`
         }
     },
     async mounted() {

@@ -226,7 +226,7 @@ export default {
             editingReferenceValues: false,
             defaultValues: true,
 
-            subtitle: '',
+            subtitle: `<div class="loader-spinner"></div>`,
         }
     },
 

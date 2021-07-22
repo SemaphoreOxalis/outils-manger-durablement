@@ -47,7 +47,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mixins: [_texts_wasteSimulator_HelpModalText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
-      text: ''
+      text: "<div class=\"loader-spinner\"></div>"
     };
   },
   methods: {

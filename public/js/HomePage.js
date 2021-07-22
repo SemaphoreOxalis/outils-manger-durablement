@@ -57,8 +57,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mixins: [_texts_HomePageText__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
-      title: '',
-      text: ''
+      title: "<div class=\"loader-spinner\"></div>",
+      text: "<div class=\"loader-spinner\"></div>"
     };
   },
   mounted: function mounted() {

@@ -125,7 +125,7 @@ export default {
             productToAddWithDetails: {},
             focusOnSearchBar: false,
 
-            howTo:'',
+            howTo: `<div class="loader-spinner"></div>`,
         }
     },
 

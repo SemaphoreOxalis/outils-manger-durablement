@@ -42,7 +42,7 @@
         },
         data() {
             return {
-                footer: '',
+                footer: `<div class="loader-spinner"></div>`,
             }
         },
         mounted() {

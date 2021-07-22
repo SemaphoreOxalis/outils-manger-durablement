@@ -140,9 +140,9 @@ var AuditItem = function AuditItem() {
       legendShown: false,
       auditResults: {},
       showResultsModal: false,
-      title: '',
-      howTo: '',
-      links: ''
+      title: "<div class=\"loader-spinner\"></div>",
+      howTo: "<div class=\"loader-spinner\"></div>",
+      links: "<div class=\"loader-spinner\"></div>"
     };
   },
   // A l'initialisation du composant (i.e quand on arrive sur la "page")

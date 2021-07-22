@@ -124,9 +124,9 @@ export default {
             auditResults: {},
             showResultsModal: false,
 
-            title: '',
-            howTo: '',
-            links: '',
+            title: `<div class="loader-spinner"></div>`,
+            howTo: `<div class="loader-spinner"></div>`,
+            links: `<div class="loader-spinner"></div>`,
         }
     },
 

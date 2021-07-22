@@ -64,8 +64,8 @@
                 previousBasketsDate: null,
                 previousBasketsDetectedInLocalStorage: false,
 
-                localStorageDisclaimer: '',
-                howToUse: '',
+                localStorageDisclaimer: `<div class="loader-spinner"></div>`,
+                howToUse: `<div class="loader-spinner"></div>`,
             }
         },
         created() {

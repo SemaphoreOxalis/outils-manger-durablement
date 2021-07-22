@@ -51,7 +51,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      footer: ''
+      footer: "<div class=\"loader-spinner\"></div>"
     };
   },
   mounted: function mounted() {

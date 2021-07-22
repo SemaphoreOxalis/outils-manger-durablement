@@ -241,7 +241,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // Booléens servant au feedback visuel lorsqu'on édite les valeurs de référence
       editingReferenceValues: false,
       defaultValues: true,
-      subtitle: ''
+      subtitle: "<div class=\"loader-spinner\"></div>"
     };
   },
   // A la création du composent (i.e quand on arrive sur la "page")

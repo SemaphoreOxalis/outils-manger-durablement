@@ -101,8 +101,8 @@ var HelpModal = function HelpModal() {
       // propriétés utilisées pour afficher (ou non) la possibilité de se rendre directement à l'audit enregistré en localStorage
       previousAuditDetectedInLocalStorage: false,
       previousAuditDate: null,
-      localStorageDisclaimer: '',
-      howToUse: '',
+      localStorageDisclaimer: "<div class=\"loader-spinner\"></div>",
+      howToUse: "<div class=\"loader-spinner\"></div>",
       button: null
     };
   },
