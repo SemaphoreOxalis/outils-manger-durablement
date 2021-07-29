@@ -37,7 +37,7 @@
                 </search-bar>
             </div>
 
-            <div class="d-flex justify-content-between mt-4">
+            <div class="d-flex justify-content-between my-4">
                 <div class="form-group w-25">
                     <label for="recipeName">Nom de la recette : </label>
                     <input v-model="recipe.name" type="text" required style="max-width: 350px;" id="recipeName"
@@ -54,7 +54,8 @@
                     <ul>
                         <li v-for="(product, index) in recipe.products" :key="recipe.id+ '-' + product.id">
                             <div class="ml-3 d-flex">
-                                <p class="w-25 mr-3 mt-auto"><strong>{{ product.name }} &nbsp; </strong> {{ product.comment }}</p>
+                                <p class="w-25 mr-3 mt-auto"><strong>{{ product.name }} &nbsp; </strong>
+                                    <small>{{ product.comment }}</small></p>
                                 <div class="w-75">
                                     <input type="number"
                                            class="ignore-draggable custom-input browser-default number-field input"
@@ -94,6 +95,18 @@
                     </ul>
                 </div>
             </div>
+
+            <button class="button"
+                    @click="updateRecipe(recipe)">
+                <i class="icon mr-2"></i>Sauvegarder la recette
+            </button>
+
+            <router-link :to="{ name: 'recipes-index'}" tag="span">
+                <button class="button alter">
+                    <i class="icon mr-2"></i>Retour aux recettes de chef
+                </button>
+            </router-link>
+
         </div>
     </div>
 </template>
@@ -134,7 +147,7 @@ export default {
     ],
     computed: {
         counter: function() {
-            if (this.recipe.products) {
+            if (this.recipe.products.length) {
                 return Math.max(...this.recipe.products.map(product => {
                     return product.id.substring(5); // "prod-" id prefix is 5 characters long
                 }));
@@ -169,6 +182,7 @@ export default {
         this.recipe = await this.getRecipeById(this.$attrs.id);
         this.recipe.products.forEach((p, i) => {
             p.origin = this.getOriginObject(p.pivot.origin);
+            p.productId = p.id;
             p.id = 'prod-' + (i + 1);
         });
     },
@@ -189,7 +203,7 @@ export default {
             this.showAddingModal = false;
             this.focusOnSearchBar = true;
             if (!product.price) { product.price = 0 ;}
-            this.recipe.products.push({...product, id: 'prod-' + (this.counter + 1), pivot: {amount: product.amount, price: product.price}, origin: product.origin});
+            this.recipe.products.push({...product, productId: product.productId, id: 'prod-' + (this.counter + 1), pivot: {amount: product.amount, price: product.price}, origin: product.origin});
         },
         showAddingProductModal(product) {
             this.loseFocusOnSearchBar();

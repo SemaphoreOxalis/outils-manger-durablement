@@ -7,7 +7,11 @@ export default {
         },
 
         updateRecipe(recipe) {
+            recipe.products.forEach(p => {
+                p.pivot.origin = p.origin.from;
+            })
             patchRecipe(recipe).then(response => {
+                this.$router.push({name: 'recipes-index', params : { search: recipe.name}})
                 flash(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
@@ -44,15 +48,11 @@ function getRecipes() {
 
 
 function patchRecipe(recipe) {
-    return axios.patch('/api/recipes/' + recipe.id, {
-        name: recipe.name,
-    });
+    return axios.patch('/api/recipes/' + recipe.id, recipe);
 }
 
 function postRecipe(newRecipe) {
-    return axios.post('/api/recipes', {
-        name: newRecipe.name,
-    });
+    return axios.post('/api/recipes', newRecipe);
 }
 
 function destroyRecipe(recipeId) {

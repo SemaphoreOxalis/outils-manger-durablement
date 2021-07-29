@@ -86,6 +86,9 @@ export default {
         this.fetchOrigins();
     },
     mounted() {
+        if(this.$route.params.search) {
+            this.search = this.$route.params.search;
+        }
         setTimeout(() => {
             this.turnRecipesIntoProducts();
         }, 1500);

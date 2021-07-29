@@ -79,7 +79,7 @@ export default {
         }
     },
     created() {
-        this.productToAdd = {...this.product, id: 'product_to_add_' + this.product.id, amount: '', price: '', origin: this.origins[2]};
+        this.productToAdd = {...this.product, productId: this.product.id, id: 'product_to_add_' + this.product.id, amount: '', price: '', origin: this.origins[2]};
         let self = this;
         Vue.nextTick().then(function () {
             self.$refs.qty.focus();

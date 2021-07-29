@@ -81,7 +81,7 @@
                 this.$emit('search-complete', this.results);
             },
             setResult(result) {
-                this.chosen = { ...result, id: 'chosen_product_' + result.id};
+                this.chosen = { ...result};
                 this.search = '';
                 this.isOpen = false;
 
