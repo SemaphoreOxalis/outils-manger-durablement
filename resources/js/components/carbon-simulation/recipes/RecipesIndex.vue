@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between mb-5">
             <div class="d-flex align-items-center w-75">
                 <span>Filtrer les recettes : &nbsp;</span>
-                <input type="text" v-model="search" style="max-width: 550px;" class="custom-input browser-default input">
+                <input type="text" v-model="search" style="max-width: 550px;" class="custom-input browser-default input" placeholder="Par nom de recette, description, ingrédient, auteur">
                 <a @click="search=''" class="btn-ico alt tool" title="Effacer les filtres"><i class="icon icon-times-circle"></i></a>
             </div>
             <div>
@@ -20,11 +20,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="w-50 d-flex align-items-center"><strong> &nbsp; {{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
 
-                <span v-if="recipe.guests" class="mr-5 w-25">pour {{ recipe.guests }} personnes</span>
-                <span v-else class="mr-5 w-25">NULL</span>
-
-                <span v-if="recipe.author" class="mr-5 w-25">Créé par {{ recipe.author }}</span>
-                <span v-else class="mr-5 w-25">NULL</span>
+                <span v-if="recipe.author" class="mr-5 w-25">Proposée par <a @click="search=recipe.author" href="#">{{ recipe.author }}</a></span>
 
                 <div class="d-flex">
                     <a class="btn-ico alt tool"
@@ -36,19 +32,20 @@
                        title="Détails">
                         <i :id="'collapse-icon-' + recipe.id" class="icon icon-eye"></i>
                     </a>
-                    <router-link :to="{ name: 'recipe-edit', params: { recipe }}" tag="span">
-                        <a @click="" class="btn-ico alt tool pb-1" title="Modifier"><i class="icon"></i></a>
+                    <router-link :to="'./edit/' + recipe.id" tag="span">
+                        <a @click="" class="btn-ico alt tool" title="Modifier"><i class="icon"></i></a>
                     </router-link>
+                    <a @click="" class="btn-ico alt tool" title="Dupliquer cette recette"><i class="icon"></i></a>
                     <a @click="" class="btn-ico alt tool" title="Supprimer"></a>
                 </div>
             </div>
             <div :class="'collapse w-75 mt-3 collapse-' + recipe.id"
                  :id="'body-' + recipe.id">
                 <ul>
-                    <div v-for="product in recipe.products" :key="recipe.id+ '-' + product.id" class="ml-3 d-flex">
+                    <li v-for="product in recipe.products" :key="recipe.id+ '-' + product.id" class="ml-3 d-flex">
                         <p class="w-50"><i class="icon icon-minus align-text-bottom"></i> &nbsp; <strong>{{ product.name }} &nbsp; </strong> {{ product.comment }}</p>
                         <p class="ml-5">{{ product.pivot.amount }} {{ product.unit.shortUnit }} - {{ product.pivot.price }} € - {{ product.pivot.origin }}</p>
-                    </div>
+                    </li>
                 </ul>
             </div>
         </div>

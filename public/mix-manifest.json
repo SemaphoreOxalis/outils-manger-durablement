@@ -26,6 +26,8 @@
     "/js/carbon-simulation/CarbonSimulatorLayout.js": "/js/carbon-simulation/CarbonSimulatorLayout.js",
     "/js/carbon-simulation/GroupedActionPopUp.js": "/js/carbon-simulation/GroupedActionPopUp.js",
     "/js/carbon-simulation/ProductList.js": "/js/carbon-simulation/ProductList.js",
+    "/js/carbon-simulation/RecipeCreate.js": "/js/carbon-simulation/RecipeCreate.js",
+    "/js/carbon-simulation/RecipeEdit.js": "/js/carbon-simulation/RecipeEdit.js",
     "/js/carbon-simulation/RecipesIndex.js": "/js/carbon-simulation/RecipesIndex.js",
     "/js/carbon-simulation/RecipesLayout.js": "/js/carbon-simulation/RecipesLayout.js",
     "/js/carbon-simulation/SearchBar.js": "/js/carbon-simulation/SearchBar.js",
@@ -44,8 +46,7 @@
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
     "/vendors~tinymce.js": "/vendors~tinymce.js",
-    "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~ddeeea5f.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~ddeeea5f.js",
-    "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~1979e6e4.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~1979e6e4.js",
-    "/js/carbon-simulation/RecipeEdit.js": "/js/carbon-simulation/RecipeEdit.js",
-    "/js/carbon-simulation/RecipeCreate.js": "/js/carbon-simulation/RecipeCreate.js"
+    "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~b4fb91e9.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~b4fb91e9.js",
+    "/js/carbon-simulation/BasketSimulator~js/carbon-simulation/RecipesIndex.js": "/js/carbon-simulation/BasketSimulator~js/carbon-simulation/RecipesIndex.js",
+    "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~cd2af839.js": "/vendors~js/AboutUs~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/WysiwygAdminPage~cd2af839.js"
 }

@@ -196,7 +196,7 @@ export default {
                                     name: 'recipe-create',
                                 },
                                 {
-                                    path: 'edit',
+                                    path: 'edit/:id',
                                     component: RecipeEdit,
                                     name: 'recipe-edit',
                                     props: true

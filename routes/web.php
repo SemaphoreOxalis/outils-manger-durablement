@@ -44,6 +44,7 @@ Route::post('/api/origins', 'OriginsController@store');
 Route::delete('/api/origins/{origin}', 'OriginsController@destroy');
 
 Route::get('/api/recipes', 'RecipesController@index');
+Route::get('/api/recipes/{recipe}', 'RecipesController@show');
 Route::patch('/api/recipes/{recipe}', 'RecipesController@update');
 Route::post('/api/recipes', 'RecipesController@store');
 Route::delete('/api/recipes/{recipe}', 'RecipesController@destroy');

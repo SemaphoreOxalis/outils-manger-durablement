@@ -29,6 +29,11 @@ export default {
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
+        },
+
+        async getRecipeById(recipeId) {
+            const {data:response} = await getRecipe(recipeId);
+            return response;
         }
     }
 }
@@ -52,4 +57,8 @@ function postRecipe(newRecipe) {
 
 function destroyRecipe(recipeId) {
     return axios.delete('/api/recipes/' + recipeId);
+}
+
+function getRecipe(recipeId) {
+    return axios.get('/api/recipes/' + recipeId);
 }
