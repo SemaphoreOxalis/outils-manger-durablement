@@ -38,6 +38,24 @@ export default {
         },
         searchRecipe(recipe, search) {
             return recipe.products.some(p => this.searchByProduct(p.name, search));
-        }
+        },
+
+        filterProductsByCategory(categoryId) {
+            this.selectedCategoryId = categoryId;
+            this.selectedBySearchBar = false;
+            this.selectedByCategory = true;
+        },
+        filterProductsBySearch() {
+            this.deselectCategories();
+            this.selectedBySearchBar = true;
+        },
+        deselectCategories() {
+            this.selectedCategoryId = null;
+            this.selectedByCategory = false;
+        },
+        loseFocusOnSearchBar() {
+            events.$emit('clear-search-bar');
+            this.focusOnSearchBar = false;
+        },
     }
 }

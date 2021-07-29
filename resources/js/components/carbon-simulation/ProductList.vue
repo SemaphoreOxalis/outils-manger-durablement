@@ -61,6 +61,7 @@ export default {
         selectedByCategory: Boolean,
         origins: Array,
         counters: Array,
+        showRecipes: Boolean,
     },
     data() {
         return {
@@ -130,14 +131,16 @@ export default {
         },
         showProducts() {
             this.cats = JSON.parse(JSON.stringify(this.categories));
-            this.cats.push({name: 'Recettes de chef', id: 998});
-            this.cats.push({name: '⭐ Spécial', id: 999});
-            this.specialProducts.forEach((p) => {
-                p.category_id = 999;
-            });
-            this.recipes.forEach((r) => {
-                r.category_id = 998;
-            });
+            if(this.showRecipes) {
+                this.cats.push({name: 'Recettes de chef', id: 998});
+                this.cats.push({name: '⭐ Spécial', id: 999});
+                this.specialProducts.forEach((p) => {
+                    p.category_id = 999;
+                });
+                this.recipes.forEach((r) => {
+                    r.category_id = 998;
+                });
+            }
         },
         hideProducts() {
             this.cats = [];

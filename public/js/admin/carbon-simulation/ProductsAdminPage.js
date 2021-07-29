@@ -1006,6 +1006,23 @@ __webpack_require__.r(__webpack_exports__);
       return recipe.products.some(function (p) {
         return _this2.searchByProduct(p.name, search);
       });
+    },
+    filterProductsByCategory: function filterProductsByCategory(categoryId) {
+      this.selectedCategoryId = categoryId;
+      this.selectedBySearchBar = false;
+      this.selectedByCategory = true;
+    },
+    filterProductsBySearch: function filterProductsBySearch() {
+      this.deselectCategories();
+      this.selectedBySearchBar = true;
+    },
+    deselectCategories: function deselectCategories() {
+      this.selectedCategoryId = null;
+      this.selectedByCategory = false;
+    },
+    loseFocusOnSearchBar: function loseFocusOnSearchBar() {
+      events.$emit('clear-search-bar');
+      this.focusOnSearchBar = false;
     }
   }
 });

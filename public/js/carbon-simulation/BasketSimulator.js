@@ -84,6 +84,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -178,19 +179,6 @@ var BasketsList = function BasketsList() {
     }))();
   },
   methods: {
-    filterProductsByCategory: function filterProductsByCategory(categoryId) {
-      this.selectedCategoryId = categoryId;
-      this.selectedBySearchBar = false;
-      this.selectedByCategory = true;
-    },
-    filterProductsBySearch: function filterProductsBySearch() {
-      this.deselectCategories();
-      this.selectedBySearchBar = true;
-    },
-    deselectCategories: function deselectCategories() {
-      this.selectedCategoryId = null;
-      this.selectedByCategory = false;
-    },
     showAddingProductModal: function showAddingProductModal(product) {
       this.getSelectedBaskets();
 
@@ -232,10 +220,6 @@ var BasketsList = function BasketsList() {
     },
     setInternalCounters: function setInternalCounters(basketI, counter) {
       this.internalCounters[basketI] = counter;
-    },
-    loseFocusOnSearchBar: function loseFocusOnSearchBar() {
-      events.$emit('clear-search-bar');
-      this.focusOnSearchBar = false;
     }
   }
 });
@@ -290,7 +274,8 @@ var render = function() {
               specialProducts: this.specialProducts,
               "selected-category-id": this.selectedCategoryId,
               "selected-by-category": this.selectedByCategory,
-              counters: this.internalCounters
+              counters: this.internalCounters,
+              "show-recipes": true
             },
             on: {
               "filter-products-by-category": _vm.filterProductsByCategory,
@@ -750,279 +735,6 @@ function destroyCategory(catId) {
 
 /***/ }),
 
-/***/ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js":
-/*!****************************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js ***!
-  \****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
-    fetchOrigins: function fetchOrigins() {
-      var _this = this;
-
-      getOrigins().then(function (response) {
-        _this.origins = response.data;
-      });
-    },
-    updateOrigin: function updateOrigin(origin) {
-      patchOrigin(origin).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    addOrigin: function addOrigin() {
-      var _this2 = this;
-
-      postOrigin(this.newOrigin).then(function (response) {
-        _this2.origins.push(response.data);
-
-        _this2.newOrigin = {};
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    deleteOrigin: function deleteOrigin(originId) {
-      var _this3 = this;
-
-      destroyOrigin(originId).then(function (response) {
-        flash(response.data);
-
-        _this3.refreshOrigins();
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    }
-  }
-});
-
-function getOrigins() {
-  return axios.get('/api/origins');
-}
-
-function patchOrigin(origin) {
-  return axios.patch('/api/origins/' + origin.id, {
-    from: origin.from,
-    distance: origin.distance,
-    carbonImpact: origin.carbonImpact,
-    carbonImpactPerKg: origin.carbonImpactPerKg
-  });
-}
-
-function postOrigin(newOrigin) {
-  return axios.post('/api/origins', {
-    from: newOrigin.from,
-    distance: newOrigin.distance,
-    carbonImpact: newOrigin.carbonImpact,
-    carbonImpactPerKg: newOrigin.carbonImpactPerKg
-  });
-}
-
-function destroyOrigin(originId) {
-  return axios["delete"]('/api/origins/' + originId);
-}
-
-/***/ }),
-
-/***/ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
-    fetchProducts: function fetchProducts() {
-      var _this = this;
-
-      getProducts().then(function (response) {
-        _this.products = response.data;
-      });
-    },
-    fetchSpecialProducts: function fetchSpecialProducts() {
-      var _this2 = this;
-
-      getSpecialProducts().then(function (response) {
-        _this2.specialProducts = response.data;
-      });
-    },
-    updateProduct: function updateProduct(product) {
-      patchProduct(product).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    addProduct: function addProduct() {
-      var _this3 = this;
-
-      postProduct(this.newProduct).then(function (response) {
-        _this3.products.push(response.data);
-
-        _this3.newProduct = {};
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    deleteProduct: function deleteProduct(productId) {
-      var _this4 = this;
-
-      destroyProduct(productId).then(function (response) {
-        flash(response.data);
-
-        _this4.refreshProducts();
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    }
-  }
-});
-
-function getProducts() {
-  return axios.get('/api/products');
-}
-
-function getSpecialProducts() {
-  return axios.get('/api/special-products');
-}
-
-function patchProduct(product) {
-  return axios.patch('/api/products/' + product.id, {
-    name: product.name,
-    unit_id: product.unit_id,
-    category_id: product.category_id,
-    comment: product.comment,
-    emissionFactor: product.emissionFactor
-  });
-}
-
-function postProduct(newProduct) {
-  return axios.post('/api/products', {
-    name: newProduct.name,
-    unit_id: newProduct.unit_id,
-    category_id: newProduct.category_id,
-    comment: newProduct.comment,
-    emissionFactor: newProduct.emissionFactor
-  });
-}
-
-function destroyProduct(productId) {
-  return axios["delete"]('/api/products/' + productId);
-}
-
-/***/ }),
-
-/***/ "./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js":
-/*!****************************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js ***!
-  \****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
-    fetchRecipes: function fetchRecipes() {
-      var _this = this;
-
-      getRecipes().then(function (response) {
-        _this.recipes = response.data;
-      });
-    },
-    updateRecipe: function updateRecipe(recipe) {
-      patchRecipe(recipe).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    addRecipe: function addRecipe() {
-      var _this2 = this;
-
-      postRecipe(this.newRecipe).then(function (response) {
-        _this2.recipes.push(response.data);
-
-        _this2.newRecipe = {};
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    deleteRecipe: function deleteRecipe(recipeId) {
-      destroyRecipe(recipeId).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    getRecipeById: function getRecipeById(recipeId) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _yield$getRecipe, response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return getRecipe(recipeId);
-
-              case 2:
-                _yield$getRecipe = _context.sent;
-                response = _yield$getRecipe.data;
-                return _context.abrupt("return", response);
-
-              case 5:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  }
-});
-
-function getRecipes() {
-  return axios.get('/api/recipes');
-}
-
-function patchRecipe(recipe) {
-  return axios.patch('/api/recipes/' + recipe.id, {
-    name: recipe.name
-  });
-}
-
-function postRecipe(newRecipe) {
-  return axios.post('/api/recipes', {
-    name: newRecipe.name
-  });
-}
-
-function destroyRecipe(recipeId) {
-  return axios["delete"]('/api/recipes/' + recipeId);
-}
-
-function getRecipe(recipeId) {
-  return axios.get('/api/recipes/' + recipeId);
-}
-
-/***/ }),
-
 /***/ "./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js":
 /*!**************************************************************************!*\
   !*** ./resources/js/helpers/carbon-simulation/database/UnitsDataBase.js ***!
@@ -1094,108 +806,6 @@ function postUnit(newUnit) {
 function destroyUnit(unitId) {
   return axios["delete"]('/api/units/' + unitId);
 }
-
-/***/ }),
-
-/***/ "./resources/js/helpers/carbon-simulation/recipesHelper.js":
-/*!*****************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/recipesHelper.js ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
-    turnRecipesIntoProducts: function turnRecipesIntoProducts() {
-      var _this = this;
-
-      this.recipes.forEach(function (recipe) {
-        var prod = _objectSpread({}, recipe);
-
-        prod.type = "recipe";
-        prod.comment = recipe.description;
-        recipe.products.forEach(function (product) {
-          product.origin = _this.getOriginObject(product.pivot.origin);
-          product.amount = product.pivot.amount;
-          product.price = product.pivot.price;
-        });
-
-        _this.recipesAsProducts.push(prod);
-      });
-    },
-    getOriginObject: function getOriginObject(from) {
-      return this.origins.filter(function (origin) {
-        return origin.from === from;
-      })[0];
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/helpers/carbon-simulation/searchBar.js":
-/*!*************************************************************!*\
-  !*** ./resources/js/helpers/carbon-simulation/searchBar.js ***!
-  \*************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
-    searchWithSearchBar: function searchWithSearchBar(products) {
-      var _this = this;
-
-      return products.filter(function (product) {
-        var productName = _this.areWeLookingForBeefAndEggs(product.name);
-
-        if (product.type === 'recipe') {
-          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(product.comment, _this.search) || _this.searchByComment(product.author, _this.search) || _this.searchRecipe(product, _this.search);
-        } else if (product.comment) {
-          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
-
-          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
-        } else return _this.searchByProduct(productName, _this.search);
-      });
-    },
-    // TODO : See if it works with IE
-    searchByProduct: function searchByProduct(productName, search) {
-      return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);
-    },
-    searchByUnaccentedProducts: function searchByUnaccentedProducts(productName, search) {
-      // from https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
-      var unaccentedProd = productName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-      return unaccentedProd.toLowerCase().includes(search.toLowerCase());
-    },
-    searchByComment: function searchByComment(productComment, search) {
-      return productComment ? productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search) : false;
-    },
-    searchByUnaccentedComment: function searchByUnaccentedComment(productComment, search) {
-      var unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-      return unaccentedComment.toLowerCase().includes(search.toLowerCase());
-    },
-    areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
-      // remplace œ par oe
-      return string.toLowerCase().replace(/[\u0153]/, "oe");
-    },
-    searchRecipe: function searchRecipe(recipe, search) {
-      var _this2 = this;
-
-      return recipe.products.some(function (p) {
-        return _this2.searchByProduct(p.name, search);
-      });
-    }
-  }
-});
 
 /***/ }),
 

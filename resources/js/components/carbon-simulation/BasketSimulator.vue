@@ -18,6 +18,7 @@
                           v-bind:selected-category-id="this.selectedCategoryId"
                           v-bind:selected-by-category="this.selectedByCategory"
                           v-bind:counters="this.internalCounters"
+                          v-bind:show-recipes="true"
                           @filter-products-by-category="filterProductsByCategory"
                           @deselect-category="deselectCategories"
                           @add-product-to-basket="showAddingProductModal">
@@ -151,20 +152,6 @@ export default {
     },
 
     methods: {
-        filterProductsByCategory(categoryId) {
-            this.selectedCategoryId = categoryId;
-            this.selectedBySearchBar = false;
-            this.selectedByCategory = true;
-        },
-        filterProductsBySearch() {
-            this.deselectCategories();
-            this.selectedBySearchBar = true;
-        },
-        deselectCategories() {
-            this.selectedCategoryId = null;
-            this.selectedByCategory = false;
-        },
-
         showAddingProductModal(product) {
             this.getSelectedBaskets();
             if(!this.selectedBaskets.length) {
@@ -204,11 +191,6 @@ export default {
         },
         setInternalCounters(basketI, counter) {
             this.internalCounters[basketI] = counter;
-        },
-
-        loseFocusOnSearchBar() {
-            events.$emit('clear-search-bar');
-            this.focusOnSearchBar = false;
         },
     }
 }
