@@ -1,5 +1,33 @@
 <template>
     <div>
+        <transition name="modal" v-if="showModal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container text-center" ref="modal">
+
+                        <div class="modal-body">
+                            <p>
+                                Êtes-vous sûr(e) de vouloir supprimer la recette "{{ affectedRecipe.name }}" ?
+                                Cette action est irréversible
+                            </p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="modal-default-button button"
+                                    @click="deleteRecipe(affectedRecipe.id)">
+                                OK
+                            </button>
+                            <button class="modal-default-button button alter"
+                                    @click="showModal = false">
+                                Annuler
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </transition>
+
         <div class="d-flex justify-content-between mb-5">
             <div class="d-flex align-items-center w-75">
                 <span>Filtrer les recettes : &nbsp;</span>
@@ -13,8 +41,9 @@
             </div>
         </div>
 
-        <div v-if="!filteredRecipes.length" class="loader-spinner"></div>
+        <div v-if="!recipesAsProducts.length" class="loader-spinner"></div>
         <div v-for="(recipe, i) in filteredRecipes"
+             v-else
              :key="recipe.id"
              class="w-100 recipe-header-container">
             <div class="d-flex justify-content-between align-items-center">
@@ -35,8 +64,8 @@
                     <router-link :to="'./edit/' + recipe.id" tag="span">
                         <a @click="" class="btn-ico alt tool" title="Modifier"><i class="icon"></i></a>
                     </router-link>
-                    <a @click="" class="btn-ico alt tool" title="Dupliquer cette recette"><i class="icon"></i></a>
-                    <a @click="" class="btn-ico alt tool" title="Supprimer"></a>
+                    <a @click="copyRecipe(recipe)" class="btn-ico alt tool" title="Dupliquer cette recette"><i class="icon"></i></a>
+                    <a @click="showDeleteModal(recipe)" class="btn-ico alt tool" title="Supprimer"></a>
                 </div>
             </div>
             <div :class="'collapse w-75 mt-3 collapse-' + recipe.id"
@@ -72,6 +101,8 @@ export default {
             products: [],
             recipesAsProducts: [],
             origins: [],
+            affectedRecipe: {},
+            showModal: false,
             search: '',
         }
     },
@@ -112,6 +143,26 @@ export default {
                 $(collapseIconId).addClass("icon-eye");
             });
         },
+        showDeleteModal(recipe) {
+            this.affectedRecipe = {... recipe};
+            this.showModal = true;
+        },
+        copyRecipe(recipe) {
+            this.affectedRecipe = {... recipe};
+            this.affectedRecipe.name = 'Copie de ' + this.affectedRecipe.name;
+            this.affectedRecipe.products.forEach((p, i) => {
+                p.productId = p.id;
+            });
+            this.addRecipe(this.affectedRecipe, true);
+            this.affectedRecipe = {};
+        },
+        refreshRecipes() {
+            this.fetchRecipes();
+            this.recipesAsProducts = [];
+            setTimeout(() => {
+                this.turnRecipesIntoProducts();
+            }, 1500);
+        }
     }
 }
 </script>

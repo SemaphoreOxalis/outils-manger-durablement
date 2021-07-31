@@ -11,17 +11,24 @@ export default {
                 p.pivot.origin = p.origin.from;
             })
             patchRecipe(recipe).then(response => {
-                this.$router.push({name: 'recipes-index', params : { search: recipe.name}})
+                this.$router.push({name: 'recipes-index', params : { search: recipe.name}});
                 flash(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
         },
 
-        addRecipe() {
-            postRecipe(this.newRecipe).then(response => {
-                this.recipes.push(response.data);
-                this.newRecipe = {};
+        addRecipe(newRecipe, copied) {
+            newRecipe.products.forEach(p => {
+                p.pivot.origin = p.origin.from;
+            })
+            postRecipe(newRecipe).then(response => {
+                if(copied) {
+                    this.refreshRecipes();
+                    this.search = newRecipe.name;
+                } else {
+                    this.$router.push({name: 'recipes-index', params : { search: newRecipe.name}});
+                }
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -30,6 +37,8 @@ export default {
         deleteRecipe(recipeId) {
             destroyRecipe(recipeId).then(response => {
                 flash(response.data);
+                this.showModal = false;
+                this.refreshRecipes();
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
