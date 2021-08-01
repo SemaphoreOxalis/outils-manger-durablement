@@ -107,6 +107,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     product: Object,
@@ -114,6 +117,7 @@ __webpack_require__.r(__webpack_exports__);
     index: Number,
     origins: Array,
     isInBlock: Number,
+    isEmpty: Boolean,
     isFirstBlockTitle: Boolean,
     isLastBlockTitle: Boolean
   },
@@ -152,6 +156,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     emptyBlock: function emptyBlock(id) {
       this.$emit('empty-block', id);
+    },
+    makeRecipe: function makeRecipe(id) {
+      this.$emit('make-recipe', id);
     },
     toggleFullProduct: function toggleFullProduct() {
       var collapseClass = this.collapseClass;
@@ -226,10 +233,10 @@ var render = function() {
                 _c("div", { staticClass: "text-block" }, [
                   _c("span", { staticClass: "product-name" }, [
                     _vm._v(_vm._s(_vm.product.name) + " "),
-                    _c("small", [_vm._v(_vm._s(_vm.product.origin.from))]),
                     _c("small", [
                       _vm._v(
-                        " - " +
+                        _vm._s(_vm.product.origin.from) +
+                          " - " +
                           _vm._s(_vm.product.amount) +
                           " " +
                           _vm._s(_vm.unit)
@@ -534,7 +541,7 @@ var render = function() {
                           _c(
                             "a",
                             {
-                              staticClass: "ignore-draggable edit-block",
+                              staticClass: "ignore-draggable edit-block mr-2",
                               attrs: { title: "Modifier le titre de ce bloc" },
                               on: { click: _vm.editTitle }
                             },
@@ -543,7 +550,11 @@ var render = function() {
                                 _vm._v("")
                               ])
                             ]
-                          )
+                          ),
+                          _vm._v(" "),
+                          _vm.product.comment
+                            ? _c("small", [_vm._v(_vm._s(_vm.product.comment))])
+                            : _vm._e()
                         ])
                   ])
                 ])
@@ -551,6 +562,25 @@ var render = function() {
             _vm._v(" "),
             _vm.product.id.includes("start")
               ? _c("div", { staticClass: "d-flex" }, [
+                  !_vm.isEmpty
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "btn-ico alt tool info-bubble",
+                          attrs: {
+                            title:
+                              "Créer une recette de Chef à partir de ce bloc"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.makeRecipe(_vm.product)
+                            }
+                          }
+                        },
+                        [_vm._v("")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
                   _c(
                     "a",
                     {

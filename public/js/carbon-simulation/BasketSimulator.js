@@ -168,9 +168,11 @@ var BasketsList = function BasketsList() {
             case 2:
               _this.howTo = _context.sent;
 
+              _this.setProductIds();
+
               _this.turnRecipesIntoProducts();
 
-            case 4:
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -220,6 +222,11 @@ var BasketsList = function BasketsList() {
     },
     setInternalCounters: function setInternalCounters(basketI, counter) {
       this.internalCounters[basketI] = counter;
+    },
+    setProductIds: function setProductIds() {
+      this.products.forEach(function (p) {
+        p.productId = p.id;
+      });
     }
   }
 });

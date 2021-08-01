@@ -5,7 +5,7 @@
 
                 <div class="d-flex">
                     <div class="text-block">
-                        <span class="product-name">{{ product.name }} <small>{{ product.origin.from }}</small><small> - {{ product.amount }}&nbsp;{{ unit }}</small></span>
+                        <span class="product-name">{{ product.name }} <small>{{ product.origin.from }} - {{ product.amount }}&nbsp;{{ unit }}</small></span>
                     </div>
                     <a v-if="product.comment" class="info-bubble product-info-bubble btn-ico alt tool info ml-2" :title="product.comment"></a>
                 </div>
@@ -76,7 +76,8 @@
                     <input v-if="edit" :id="titleId" v-model="product.name" class="ignore-draggable custom-input browser-default input" type="text" @keydown="processKey" @focusout="renamed">
                     <div v-else class="ignore-draggable">
                         <strong @click="editTitle" class="block-title">{{ product.name }}</strong>
-                        <a @click="editTitle" class="ignore-draggable edit-block" title="Modifier le titre de ce bloc"><i class="icon ml-2"></i></a>
+                        <a @click="editTitle" class="ignore-draggable edit-block mr-2" title="Modifier le titre de ce bloc"><i class="icon ml-2"></i></a>
+                        <small v-if="product.comment">{{ product.comment }}</small>
                     </div>
                 </div>
 
@@ -87,6 +88,8 @@
                 <a class="btn-ico alt tool info-bubble pb-1"
                    @click="emptyBlock(product)" title="Vider ce bloc (supprimer ses produits)"><strong>✖</strong></a>
                 -->
+                <a v-if="!isEmpty" class="btn-ico alt tool info-bubble"
+                   @click="makeRecipe(product)" title="Créer une recette de Chef à partir de ce bloc"></a>
                 <a class="btn-ico alt tool info-bubble"
                    @click="removeProduct(index)" title="Supprimer ce bloc"></a>
             </div>
@@ -104,6 +107,7 @@ export default {
         index: Number,
         origins: Array,
         isInBlock: Number,
+        isEmpty: Boolean,
         isFirstBlockTitle: Boolean,
         isLastBlockTitle: Boolean
     },
@@ -141,6 +145,9 @@ export default {
         },
         emptyBlock(id) {
             this.$emit('empty-block', id);
+        },
+        makeRecipe(id) {
+            this.$emit('make-recipe', id);
         },
         toggleFullProduct() {
             let collapseClass = this.collapseClass;

@@ -179,8 +179,16 @@ export default {
         this.fetchProducts();
         this.fetchCategories();
     },
-    async mounted() {
-
+    mounted() {
+        if(this.$route.params.recipe) {
+            let rec = this.$route.params.recipe;
+            rec.products.forEach(p => {
+                p.pivot = {};
+                p.pivot.amount = p.amount;
+                p.pivot.price = p.price;
+            });
+            this.recipe = rec;
+        }
     },
     methods: {
         saveRecipe(recipe) {

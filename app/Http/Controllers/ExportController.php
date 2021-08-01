@@ -235,6 +235,9 @@ class ExportController extends Controller {
                     } else {
                         if(str_contains($product['id'], 'start')) {
                             $sheet->setCellValue('A' . $line, $product['name']);
+                            if(isset($product['comment'])) {
+                                $sheet->setCellValue('B' . $line, $product['comment']);
+                            }
                             $sheet->getStyle('A' . $line)->getFont()->setBold(true);
                         } elseif (str_contains($product['id'], 'fnish')) {
                             $sheet->setCellValue('A' . $line, '----------');

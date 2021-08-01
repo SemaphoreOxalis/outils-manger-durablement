@@ -81,7 +81,7 @@ class RecipesController extends Controller
 
             return response('La recette "' . $recipe->name . '" a bien été créée', 202);
         } catch(\Exception $e) {
-            return response('Erreur de sauvegarde', 422);
+            return $e;
         }
     }
 

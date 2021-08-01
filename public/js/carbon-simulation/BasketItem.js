@@ -95,6 +95,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
 
 
 
@@ -288,6 +290,7 @@ var draggable = function draggable() {
         this.addProduct({
           id: 'block-start-' + id,
           name: recipe.name,
+          comment: recipe.comment,
           type: 'special'
         });
       }
@@ -383,6 +386,9 @@ var draggable = function draggable() {
       this.basket.products[index].isInBlock = result;
       return result;
     },
+    isEmpty: function isEmpty(blockIndex) {
+      return this.getCorrespondingIndex(this.basket.products[blockIndex]) - blockIndex === 1;
+    },
     previousBlockIndex: function previousBlockIndex(index) {
       var elmts = [];
       var found = 0;
@@ -457,6 +463,26 @@ var draggable = function draggable() {
       (_this$basket$products2 = this.basket.products).splice.apply(_this$basket$products2, [insertPlace - blockLength, 0].concat(_toConsumableArray(block)));
 
       this.saveBasket();
+    },
+    makeRecipe: function makeRecipe(blockStart) {
+      var end = this.getCorrespondingIndex(blockStart);
+      var begin = this.getCorrespondingIndex(this.basket.products[end]);
+      var p = [];
+
+      for (var i = begin + 1; i < end; i++) {
+        p.push(this.basket.products[i]);
+      }
+
+      var rec = {
+        name: blockStart.name,
+        products: p
+      };
+      this.$router.push({
+        name: 'recipe-create',
+        params: {
+          recipe: rec
+        }
+      });
     }
   }
 });
@@ -644,6 +670,7 @@ var render = function() {
               index: i,
               origins: _vm.origins,
               isInBlock: _vm.isInBlock(i),
+              isEmpty: _vm.isEmpty(i),
               isFirstBlockTitle: _vm.isFirstBlockTitle(i),
               isLastBlockTitle: _vm.isLastBlockTitle(i)
             },
@@ -652,6 +679,7 @@ var render = function() {
               "remove-product": _vm.removeProduct,
               "move-block-up": _vm.moveBlockUp,
               "move-block-down": _vm.moveBlockDown,
+              "make-recipe": _vm.makeRecipe,
               "empty-block": _vm.emptyBlock
             }
           })

@@ -148,6 +148,7 @@ export default {
 
     async mounted() {
         this.howTo = await this.fetchContent('Carbone - Mode d\'emploi');
+        this.setProductIds();
         this.turnRecipesIntoProducts();
     },
 
@@ -192,6 +193,11 @@ export default {
         setInternalCounters(basketI, counter) {
             this.internalCounters[basketI] = counter;
         },
+        setProductIds() {
+            this.products.forEach(p => {
+                p.productId = p.id;
+            });
+        }
     }
 }
 </script>

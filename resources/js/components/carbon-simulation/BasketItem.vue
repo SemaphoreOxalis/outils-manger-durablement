@@ -38,12 +38,14 @@
                             v-bind:index="i"
                             v-bind:origins="origins"
                             v-bind:isInBlock="isInBlock(i)"
+                            v-bind:isEmpty="isEmpty(i)"
                             v-bind:isFirstBlockTitle="isFirstBlockTitle(i)"
                             v-bind:isLastBlockTitle="isLastBlockTitle(i)"
                             @save-changes="saveBasket"
                             @remove-product="removeProduct"
                             @move-block-up="moveBlockUp"
                             @move-block-down="moveBlockDown"
+                            @make-recipe="makeRecipe"
                             @empty-block="emptyBlock">
             </basket-product>
         </draggable>
@@ -245,6 +247,7 @@ export default {
                 this.addProduct({
                     id: 'block-start-' + id,
                     name: recipe.name,
+                    comment: recipe.comment,
                     type: 'special',
                 });
             }
@@ -336,6 +339,9 @@ export default {
             this.basket.products[index].isInBlock = result;
             return result
         },
+        isEmpty(blockIndex) {
+            return this.getCorrespondingIndex(this.basket.products[blockIndex]) - blockIndex === 1;
+        },
         previousBlockIndex(index) {
             let elmts = [];
             let found = 0;
@@ -384,6 +390,19 @@ export default {
             let block = this.basket.products.splice(index, blockLength);
             this.basket.products.splice(insertPlace - blockLength, 0, ...block);
             this.saveBasket();
+        },
+        makeRecipe(blockStart) {
+            let end = this.getCorrespondingIndex(blockStart);
+            let begin = this.getCorrespondingIndex(this.basket.products[end]);
+            let p = [];
+            for(let i = begin + 1; i < end; i++) {
+                p.push(this.basket.products[i]);
+            }
+            let rec = {
+                name: blockStart.name,
+                products: p,
+            };
+            this.$router.push({name: 'recipe-create', params : { recipe: rec}});
         }
     }
 }
