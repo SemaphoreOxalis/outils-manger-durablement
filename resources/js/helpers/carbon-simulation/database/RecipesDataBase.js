@@ -1,7 +1,17 @@
+import DataBase from "../../DataBase";
 export default {
+    mixins: [
+        DataBase,
+    ],
     methods: {
         fetchRecipes() {
             getRecipes().then((response) => {
+                this.recipes = response.data;
+            });
+        },
+
+        fetchTrashedRecipes() {
+            getTrashedRecipes().then((response) => {
                 this.recipes = response.data;
             });
         },
@@ -23,6 +33,7 @@ export default {
                 p.pivot.origin = p.origin.from;
             })
             postRecipe(newRecipe).then(response => {
+                this.incrementRecipeCounter();
                 if(copied) {
                     this.refreshRecipes();
                     this.search = newRecipe.name;
@@ -55,6 +66,9 @@ function getRecipes() {
     return axios.get('/api/recipes');
 }
 
+function getTrashedRecipes() {
+    return axios.get('/api/trashed-recipes');
+}
 
 function patchRecipe(recipe) {
     return axios.patch('/api/recipes/' + recipe.id, recipe);

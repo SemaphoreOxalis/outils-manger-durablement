@@ -16,6 +16,10 @@
             <router-link to="/admin/carbon-simulator/origins" tag="span">
                 <button class="button alter">Origines</button>
             </router-link>
+
+            <router-link to="/admin/carbon-simulator/recipes" tag="span">
+                <button class="button alter">Recettes supprimées</button>
+            </router-link>
         </div>
         <router-view></router-view>
     </div>

@@ -573,6 +573,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this.counters.simulationsCounter = response.data[1].value;
         _this.counters.basketCounter = response.data[2].value;
         _this.counters.productsCounter = response.data[3].value;
+        _this.counters.recipesCounter = response.data[4].value;
       });
     },
     // ADMIN component
@@ -615,6 +616,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     incrementProductCounter: function incrementProductCounter() {
       incrementPC().then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    incrementRecipeCounter: function incrementRecipeCounter() {
+      incrementRC().then(function (response) {
         console.log(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
@@ -737,6 +745,10 @@ function incrementBC() {
 
 function incrementPC() {
   return axios.patch('/api/counters/4/increment');
+}
+
+function incrementRC() {
+  return axios.patch('/api/counters/5/increment');
 }
 
 /***/ }),

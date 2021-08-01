@@ -23,6 +23,11 @@ const ProductsAdminPage = () => import(
     './components/carbon-simulation/admin/ProductsAdminPage.vue'
     );
 
+const RecipesAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/RecipesAdminPage" */
+    './components/carbon-simulation/admin/RecipesAdminPage.vue'
+    );
+
 const CategoriesAdminPage = () => import(
     /* webpackChunkName: "js/admin/carbon-simulation/CategoriesAdminPage" */
     './components/carbon-simulation/admin/CategoriesAdminPage.vue'
@@ -248,6 +253,11 @@ export default {
                                 {
                                     path: 'origins',
                                     component: OriginsAdminPage,
+                                    name: 'origins'
+                                },
+                                {
+                                    path: 'recipes',
+                                    component: RecipesAdminPage,
                                     name: 'origins'
                                 },
                                 {

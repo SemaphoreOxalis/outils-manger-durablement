@@ -21,7 +21,8 @@
                     </div>
                 </div>
 
-                <p>{{ on_this_tool }} {{ this.counters.productsCounter }} {{ products_have_been_added_to }} {{ this.counters.basketCounter }} {{ bskets }}</p>
+                <p>{{ on_this_tool }} {{ this.counters.productsCounter }} {{ products_have_been_added_to }} {{ this.counters.basketCounter }} {{ bskets }},
+                    et {{ this.counters.recipesCounter }} recettes de Chef ont été proposées</p>
 
             </div>
 
@@ -59,7 +60,8 @@
             return {
                 counters: {
                     basketCounter: 0,
-                    productsCounter: 0
+                    productsCounter: 0,
+                    recipesCounter: 0,
                 },
                 previousBasketsDate: null,
                 previousBasketsDetectedInLocalStorage: false,

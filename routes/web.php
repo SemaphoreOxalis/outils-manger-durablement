@@ -48,6 +48,9 @@ Route::get('/api/recipes/{recipe}', 'RecipesController@show');
 Route::patch('/api/recipes/{recipe}', 'RecipesController@update');
 Route::post('/api/recipes', 'RecipesController@store');
 Route::delete('/api/recipes/{recipe}', 'RecipesController@destroy');
+Route::get('/api/trashed-recipes', 'RecipesController@trashed');
+Route::get('/api/trashed-recipes/{recipe}/restore', 'RecipesController@restore');
+Route::delete('/api/trashed-recipes/{recipe}/delete', 'RecipesController@hardDelete');
 
 // Compteurs
 Route::get('/api/counters', 'CountersController@index');

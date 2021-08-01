@@ -65,6 +65,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -76,7 +77,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       counters: {
         basketCounter: 0,
-        productsCounter: 0
+        productsCounter: 0,
+        recipesCounter: 0
       },
       previousBasketsDate: null,
       previousBasketsDetectedInLocalStorage: false,
@@ -232,7 +234,10 @@ var render = function() {
               " " +
               _vm._s(this.counters.basketCounter) +
               " " +
-              _vm._s(_vm.bskets)
+              _vm._s(_vm.bskets) +
+              ",\n                et " +
+              _vm._s(this.counters.recipesCounter) +
+              " recettes de Chef ont été proposées"
           )
         ])
       ]),

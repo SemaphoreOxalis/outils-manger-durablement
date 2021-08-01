@@ -8,9 +8,41 @@ use Illuminate\Http\Request;
 
 class RecipesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'show', 'store', 'update', 'destroy']);
+    }
+
     public function index()
     {
         return Recipe::orderBy('name')->get();
+    }
+
+    public function trashed()
+    {
+        return Recipe::onlyTrashed()->get();
+    }
+
+    public function restore($recipeId)
+    {
+        try {
+            $recipe = Recipe::withTrashed()->find($recipeId);
+            $recipe->restore();
+            return response('La recette a bien été restaurée', 202);
+        } catch(\Exception $e) {
+            return response('Erreur de sauvegarde', 422);
+        }
+    }
+
+    public function hardDelete($recipeId)
+    {
+        try {
+            $recipe = Recipe::withTrashed()->find($recipeId);
+            $recipe->forceDelete();
+            return response('La recette a bien été supprimée définitivement', 202);
+        } catch(\Exception $e) {
+            return response('Erreur de sauvegarde', 422);
+        }
     }
 
     public function show(Recipe $recipe)

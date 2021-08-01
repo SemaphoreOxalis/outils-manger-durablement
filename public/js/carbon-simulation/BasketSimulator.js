@@ -428,241 +428,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/helpers/DataBase.js":
-/*!******************************************!*\
-  !*** ./resources/js/helpers/DataBase.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HTMLSpecialCharsDecoder */ "./resources/js/helpers/HTMLSpecialCharsDecoder.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-// Intéractions avec la base de donnée
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  methods: {
-    // WASTE HOME-PAGE component
-    fetchCountersFromDB: function fetchCountersFromDB() {
-      var _this = this;
-
-      getCountersFromDB().then(function (response) {
-        _this.counters.auditsCounter = response.data[0].value;
-        _this.counters.simulationsCounter = response.data[1].value;
-        _this.counters.basketCounter = response.data[2].value;
-        _this.counters.productsCounter = response.data[3].value;
-      });
-    },
-    // ADMIN component
-    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
-      var _this2 = this;
-
-      getCountersFromDB().then(function (response) {
-        _this2.counters = response.data;
-      });
-    },
-    updateCounter: function updateCounter(counter) {
-      patchCounter(counter).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    //INPUT component
-    // RESULTS component
-    incrementAuditCounter: function incrementAuditCounter() {
-      incrementAC().then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    incrementSimulationCounter: function incrementSimulationCounter() {
-      incrementSC().then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    incrementBasketCounter: function incrementBasketCounter() {
-      incrementBC().then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    incrementProductCounter: function incrementProductCounter() {
-      incrementPC().then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    //CONTENTS
-    fetchContents: function fetchContents() {
-      var _this3 = this;
-
-      getContents().then(function (response) {
-        _this3.contents = response.data;
-        _this3.selectedContent = _this3.contents[0];
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    fetchImages: function fetchImages() {
-      var _this4 = this;
-
-      getImages().then(function (response) {
-        _this4.images = response.data;
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    deleteImage: function deleteImage(image) {
-      console.log(image);
-    },
-    updateContent: function updateContent(content) {
-      patchContent(content).then(function (response) {
-        flash(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    fetchFooter: function fetchFooter(type) {
-      var _this5 = this;
-
-      getFooter(type).then(function (response) {
-        _this5.footer = _this5.decode(response.data);
-      })["catch"](function (error) {
-        flash(error.response.data, 'danger');
-      });
-    },
-    fetchContent: function fetchContent(name) {
-      var _this6 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _yield$axios$get, response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return axios.get('/api/contents/' + name);
-
-              case 3:
-                _yield$axios$get = _context.sent;
-                response = _yield$axios$get.data;
-                return _context.abrupt("return", _this6.decode(response));
-
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](0);
-                flash(_context.t0.response.data, 'danger');
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[0, 8]]);
-      }))();
-    }
-  }
-}); // Situées ici, ces fonctions sont "privées"
-
-function getContents() {
-  return axios.get('/api/contents');
-}
-
-function getImages() {
-  return axios.get('/api/images');
-}
-
-function patchContent(content) {
-  return axios.patch('/api/contents/' + content.id, {
-    html_content: content.html_content,
-    original: content.original
-  });
-}
-
-function getFooter(type) {
-  return axios.get('/api/contents/footer/' + type);
-}
-
-function getCountersFromDB() {
-  return axios.get('/api/counters');
-}
-
-function patchCounter(counter) {
-  return axios.patch('/api/counters/' + counter.id, {
-    value: counter.value
-  });
-}
-
-function incrementAC() {
-  return axios.patch('/api/counters/1/increment');
-}
-
-function incrementSC() {
-  return axios.patch('/api/counters/2/increment');
-}
-
-function incrementBC() {
-  return axios.patch('/api/counters/3/increment');
-}
-
-function incrementPC() {
-  return axios.patch('/api/counters/4/increment');
-}
-
-/***/ }),
-
-/***/ "./resources/js/helpers/HTMLSpecialCharsDecoder.js":
-/*!*********************************************************!*\
-  !*** ./resources/js/helpers/HTMLSpecialCharsDecoder.js ***!
-  \*********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {
-    decode: function decode(string) {
-      var HTMLSpecialCharMap = {
-        '&amp;': '&',
-        '&#038;': "&",
-        '&lt;': '<',
-        '&gt;': '>',
-        '&quot;': '"',
-        '&#039;': "'",
-        '&#8217;': "’",
-        '&#8216;': "‘",
-        '&#8211;': "–",
-        '&#8212;': "—",
-        '&#8230;': "…",
-        '&#8221;': '”'
-      };
-      return string.replace(/\&[\w\d\#]{2,5}\;/g, function (i) {
-        return HTMLSpecialCharMap[i];
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js":
 /*!*******************************************************************************!*\
   !*** ./resources/js/helpers/carbon-simulation/database/CategoriesDataBase.js ***!
@@ -731,6 +496,175 @@ function postCategory(newCatName) {
 
 function destroyCategory(catId) {
   return axios["delete"]('/api/categories/' + catId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/OriginsDataBase.js ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchOrigins: function fetchOrigins() {
+      var _this = this;
+
+      getOrigins().then(function (response) {
+        _this.origins = response.data;
+      });
+    },
+    updateOrigin: function updateOrigin(origin) {
+      patchOrigin(origin).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addOrigin: function addOrigin() {
+      var _this2 = this;
+
+      postOrigin(this.newOrigin).then(function (response) {
+        _this2.origins.push(response.data);
+
+        _this2.newOrigin = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteOrigin: function deleteOrigin(originId) {
+      var _this3 = this;
+
+      destroyOrigin(originId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshOrigins();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getOrigins() {
+  return axios.get('/api/origins');
+}
+
+function patchOrigin(origin) {
+  return axios.patch('/api/origins/' + origin.id, {
+    from: origin.from,
+    distance: origin.distance,
+    carbonImpact: origin.carbonImpact,
+    carbonImpactPerKg: origin.carbonImpactPerKg
+  });
+}
+
+function postOrigin(newOrigin) {
+  return axios.post('/api/origins', {
+    from: newOrigin.from,
+    distance: newOrigin.distance,
+    carbonImpact: newOrigin.carbonImpact,
+    carbonImpactPerKg: newOrigin.carbonImpactPerKg
+  });
+}
+
+function destroyOrigin(originId) {
+  return axios["delete"]('/api/origins/' + originId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/ProductsDataBase.js ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchProducts: function fetchProducts() {
+      var _this = this;
+
+      getProducts().then(function (response) {
+        _this.products = response.data;
+      });
+    },
+    fetchSpecialProducts: function fetchSpecialProducts() {
+      var _this2 = this;
+
+      getSpecialProducts().then(function (response) {
+        _this2.specialProducts = response.data;
+      });
+    },
+    updateProduct: function updateProduct(product) {
+      patchProduct(product).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addProduct: function addProduct() {
+      var _this3 = this;
+
+      postProduct(this.newProduct).then(function (response) {
+        _this3.products.push(response.data);
+
+        _this3.newProduct = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteProduct: function deleteProduct(productId) {
+      var _this4 = this;
+
+      destroyProduct(productId).then(function (response) {
+        flash(response.data);
+
+        _this4.refreshProducts();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getProducts() {
+  return axios.get('/api/products');
+}
+
+function getSpecialProducts() {
+  return axios.get('/api/special-products');
+}
+
+function patchProduct(product) {
+  return axios.patch('/api/products/' + product.id, {
+    name: product.name,
+    unit_id: product.unit_id,
+    category_id: product.category_id,
+    comment: product.comment,
+    emissionFactor: product.emissionFactor
+  });
+}
+
+function postProduct(newProduct) {
+  return axios.post('/api/products', {
+    name: newProduct.name,
+    unit_id: newProduct.unit_id,
+    category_id: newProduct.category_id,
+    comment: newProduct.comment,
+    emissionFactor: newProduct.emissionFactor
+  });
+}
+
+function destroyProduct(productId) {
+  return axios["delete"]('/api/products/' + productId);
 }
 
 /***/ }),
@@ -806,6 +740,161 @@ function postUnit(newUnit) {
 function destroyUnit(unitId) {
   return axios["delete"]('/api/units/' + unitId);
 }
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/recipesHelper.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/recipesHelper.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    turnRecipesIntoProducts: function turnRecipesIntoProducts() {
+      var _this = this;
+
+      this.recipes.forEach(function (recipe) {
+        var prod = _objectSpread({}, recipe);
+
+        prod.type = "recipe";
+        prod.comment = recipe.description;
+        recipe.products.forEach(function (product) {
+          product.origin = _this.getOriginObject(product.pivot.origin);
+          product.amount = product.pivot.amount;
+          product.price = product.pivot.price;
+        });
+
+        _this.recipesAsProducts.push(prod);
+      });
+    },
+    getOriginObject: function getOriginObject(from) {
+      return this.origins.filter(function (origin) {
+        return origin.from === from;
+      })[0];
+    },
+    isEmpty: function isEmpty(obj) {
+      return Object.keys(obj).length === 0;
+    },
+    unit: function unit(product) {
+      if (product.unit.shortUnit !== 'kg' && product.pivot.amount >= 2) {
+        return product.unit.shortUnit + 's';
+      }
+
+      return product.unit.shortUnit;
+    },
+    removeProduct: function removeProduct(index) {
+      this.recipe.products.splice(index, 1);
+    },
+    addProductToRecipe: function addProductToRecipe(product) {
+      this.showAddingModal = false;
+      this.focusOnSearchBar = true;
+
+      if (!product.price) {
+        product.price = 0;
+      }
+
+      this.recipe.products.push(_objectSpread(_objectSpread({}, product), {}, {
+        productId: product.productId,
+        id: 'prod-' + (this.counter + 1),
+        pivot: {
+          amount: product.amount,
+          price: product.price
+        },
+        origin: product.origin
+      }));
+    },
+    showAddingProductModal: function showAddingProductModal(product) {
+      this.loseFocusOnSearchBar();
+      this.productAdded = product;
+      this.showAddingModal = true;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/searchBar.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/searchBar.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    searchWithSearchBar: function searchWithSearchBar(products) {
+      var _this = this;
+
+      return products.filter(function (product) {
+        var productName = _this.areWeLookingForBeefAndEggs(product.name);
+
+        if (product.type === 'recipe') {
+          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(product.comment, _this.search) || _this.searchByComment(product.author, _this.search) || _this.searchRecipe(product, _this.search);
+        } else if (product.comment) {
+          var productComment = _this.areWeLookingForBeefAndEggs(product.comment);
+
+          return _this.searchByProduct(productName, _this.search) || _this.searchByComment(productComment, _this.search);
+        } else return _this.searchByProduct(productName, _this.search);
+      });
+    },
+    // TODO : See if it works with IE
+    searchByProduct: function searchByProduct(productName, search) {
+      return productName.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedProducts(productName, search);
+    },
+    searchByUnaccentedProducts: function searchByUnaccentedProducts(productName, search) {
+      // from https://stackoverflow.com/questions/5700636/using-javascript-to-perform-text-matches-with-without-accented-characters
+      var unaccentedProd = productName.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return unaccentedProd.toLowerCase().includes(search.toLowerCase());
+    },
+    searchByComment: function searchByComment(productComment, search) {
+      return productComment ? productComment.toLowerCase().includes(search.toLowerCase()) || this.searchByUnaccentedComment(productComment, search) : false;
+    },
+    searchByUnaccentedComment: function searchByUnaccentedComment(productComment, search) {
+      var unaccentedComment = productComment.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return unaccentedComment.toLowerCase().includes(search.toLowerCase());
+    },
+    areWeLookingForBeefAndEggs: function areWeLookingForBeefAndEggs(string) {
+      // remplace œ par oe
+      return string.toLowerCase().replace(/[\u0153]/, "oe");
+    },
+    searchRecipe: function searchRecipe(recipe, search) {
+      var _this2 = this;
+
+      return recipe.products.some(function (p) {
+        return _this2.searchByProduct(p.name, search);
+      });
+    },
+    filterProductsByCategory: function filterProductsByCategory(categoryId) {
+      this.selectedCategoryId = categoryId;
+      this.selectedBySearchBar = false;
+      this.selectedByCategory = true;
+    },
+    filterProductsBySearch: function filterProductsBySearch() {
+      this.deselectCategories();
+      this.selectedBySearchBar = true;
+    },
+    deselectCategories: function deselectCategories() {
+      this.selectedCategoryId = null;
+      this.selectedByCategory = false;
+    },
+    loseFocusOnSearchBar: function loseFocusOnSearchBar() {
+      events.$emit('clear-search-bar');
+      this.focusOnSearchBar = false;
+    }
+  }
+});
 
 /***/ }),
 
