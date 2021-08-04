@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div v-if="!recipesAsProducts.length" class="loader-spinner"></div>
+        <div v-if="!recipesAsProducts.length && !loaded" class="loader-spinner"></div>
         <div v-for="(recipe, i) in filteredRecipes"
              v-else
              :key="recipe.id"
@@ -104,6 +104,7 @@ export default {
             affectedRecipe: {},
             showModal: false,
             search: '',
+            loaded: false,
         }
     },
     computed: {
@@ -122,7 +123,8 @@ export default {
         }
         setTimeout(() => {
             this.turnRecipesIntoProducts();
-        }, 1500);
+            this.loaded = true;
+        }, 1000);
     },
     methods: {
         collapseClass: function () {

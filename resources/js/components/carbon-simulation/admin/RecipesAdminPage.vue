@@ -2,7 +2,7 @@
     <div class="mt-4">
         <h4 class="mb-4">Recettes Supprimées</h4>
 
-        <div v-if="!recipes.length" class="loader-spinner"></div>
+        <div v-if="!recipes.length && !loaded" class="loader-spinner"></div>
         <div v-for="(recipe, i) in recipes"
              v-else
              :key="recipe.id"
@@ -49,10 +49,14 @@ export default {
     data() {
         return {
             recipes: [],
+            loaded: false,
         }
     },
     created() {
         this.fetchTrashedRecipes();
+    },
+    mounted() {
+        this.loaded = true;
     },
     methods: {
         refreshRecipes() {

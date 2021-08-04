@@ -562,7 +562,7 @@ var render = function() {
             _vm._v(" "),
             _vm.product.id.includes("start")
               ? _c("div", { staticClass: "d-flex" }, [
-                  !_vm.isEmpty
+                  !_vm.isEmpty && !_vm.product.comment
                     ? _c(
                         "a",
                         {

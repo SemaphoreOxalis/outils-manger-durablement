@@ -88,7 +88,7 @@
                 <a class="btn-ico alt tool info-bubble pb-1"
                    @click="emptyBlock(product)" title="Vider ce bloc (supprimer ses produits)"><strong>✖</strong></a>
                 -->
-                <a v-if="!isEmpty" class="btn-ico alt tool info-bubble"
+                <a v-if="!isEmpty && !product.comment" class="btn-ico alt tool info-bubble"
                    @click="makeRecipe(product)" title="Créer une recette de Chef à partir de ce bloc"></a>
                 <a class="btn-ico alt tool info-bubble"
                    @click="removeProduct(index)" title="Supprimer ce bloc"></a>
