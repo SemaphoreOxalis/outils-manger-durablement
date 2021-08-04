@@ -77,7 +77,9 @@ export default {
         restore(recipe) {
             if(confirm("Voulez vous vraiment restaurer la recette '" + recipe.name + "' ?")) {
                 axios.get('/api/trashed-recipes/' + recipe.id + '/restore').then(response => {
-                    this.$router.push({name: 'recipes-index', params : { search: recipe.name}});
+                    this.recipes = [];
+                    this.fetchTrashedRecipes();
+                    //this.$router.push({name: 'recipes-index', params : { search: recipe.name }});
                     flash(response.data);
                 }).catch(error => {
                     flash(error.response.data, 'danger');
