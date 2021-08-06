@@ -13,6 +13,7 @@
         </div>
 
         <footer class="mt-auto w-100" id="general-footer">
+            <p v-if="showCounters" class="text-center pt-2">{{ stats}}</p>
             <div v-html="footer"></div>
         </footer>
     </div>
@@ -29,23 +30,44 @@
         watch: {
             $route: function(to, from) {
                 if(to.path.startsWith('/waste-simulator')) {
+                    this.showCounters = true;
+                    this.fillCounters('waste')
                     this.fetchFooter('Footer Gaspi');
                 } else if (to.path.startsWith('/carbon-simulator')) {
+                    this.showCounters = true;
+                    this.fillCounters('carbon')
                     this.fetchFooter('Footer Carbone');
                 } else if (to.path.startsWith('/admin')) {
+                    this.showCounters = false;
                     this.fetchFooter('Footer Admin');
                 } else {
+                    this.showCounters = false;
                     this.fetchFooter('Footer General');
                 }
             }
         },
         data() {
             return {
+                showCounters: false,
+                counters: {},
+                stats: '',
                 footer: `<div class="loader-spinner"></div>`,
             }
         },
         mounted() {
+            this.fetchCountersFromDB();
             this.fetchFooter('Footer General');
+        },
+        methods: {
+            fillCounters(tool) {
+
+                if(tool === 'waste') {
+                    this.stats = 'Cet outil a été utilisé pour générer ' + this.counters.auditsCounter + ' audits et ' + this.counters.simulationsCounter + ' simulations';
+                }
+                if(tool === 'carbon') {
+                    this.stats = 'Sur cet outil, ' + this.counters.productsCounter + ' produits ont été ajoutés à ' + this.counters.basketCounter + ' listes de courses, et ' + this.counters.recipesCounter + ' recettes de Chef ont été proposées';
+                }
+            }
         }
     }
 </script>

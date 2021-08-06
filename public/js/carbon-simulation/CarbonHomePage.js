@@ -62,10 +62,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -75,11 +71,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mixins: [_texts_GeneralText__WEBPACK_IMPORTED_MODULE_1__["default"], _texts_carbonSimulator_HomePageText__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_5__["default"]],
   data: function data() {
     return {
-      counters: {
-        basketCounter: 0,
-        productsCounter: 0,
-        recipesCounter: 0
-      },
       previousBasketsDate: null,
       previousBasketsDetectedInLocalStorage: false,
       localStorageDisclaimer: "<div class=\"loader-spinner\"></div>",
@@ -88,7 +79,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   created: function created() {
     this.checkPreviousBasketsFromLocalStorage();
-    this.fetchCountersFromDB();
   },
   mounted: function mounted() {
     var _this = this;
@@ -222,24 +212,7 @@ var render = function() {
                 ]
               )
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            _vm._s(_vm.on_this_tool) +
-              " " +
-              _vm._s(this.counters.productsCounter) +
-              " " +
-              _vm._s(_vm.products_have_been_added_to) +
-              " " +
-              _vm._s(this.counters.basketCounter) +
-              " " +
-              _vm._s(_vm.bskets) +
-              ",\n                et " +
-              _vm._s(this.counters.recipesCounter) +
-              " recettes de Chef ont été proposées"
-          )
-        ])
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c(

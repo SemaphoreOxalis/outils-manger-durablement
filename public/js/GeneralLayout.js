@@ -31,6 +31,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -38,23 +39,44 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     $route: function $route(to, from) {
       if (to.path.startsWith('/waste-simulator')) {
+        this.showCounters = true;
+        this.fillCounters('waste');
         this.fetchFooter('Footer Gaspi');
       } else if (to.path.startsWith('/carbon-simulator')) {
+        this.showCounters = true;
+        this.fillCounters('carbon');
         this.fetchFooter('Footer Carbone');
       } else if (to.path.startsWith('/admin')) {
+        this.showCounters = false;
         this.fetchFooter('Footer Admin');
       } else {
+        this.showCounters = false;
         this.fetchFooter('Footer General');
       }
     }
   },
   data: function data() {
     return {
+      showCounters: false,
+      counters: {},
+      stats: '',
       footer: "<div class=\"loader-spinner\"></div>"
     };
   },
   mounted: function mounted() {
+    this.fetchCountersFromDB();
     this.fetchFooter('Footer General');
+  },
+  methods: {
+    fillCounters: function fillCounters(tool) {
+      if (tool === 'waste') {
+        this.stats = 'Cet outil a été utilisé pour générer ' + this.counters.auditsCounter + ' audits et ' + this.counters.simulationsCounter + ' simulations';
+      }
+
+      if (tool === 'carbon') {
+        this.stats = 'Sur cet outil, ' + this.counters.productsCounter + ' produits ont été ajoutés à ' + this.counters.basketCounter + ' listes de courses, et ' + this.counters.recipesCounter + ' recettes de Chef ont été proposées';
+      }
+    }
   }
 });
 
@@ -88,7 +110,15 @@ var render = function() {
       _c(
         "footer",
         { staticClass: "mt-auto w-100", attrs: { id: "general-footer" } },
-        [_c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } })]
+        [
+          _vm.showCounters
+            ? _c("p", { staticClass: "text-center pt-2" }, [
+                _vm._v(_vm._s(_vm.stats))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } })
+        ]
       )
     ]
   )

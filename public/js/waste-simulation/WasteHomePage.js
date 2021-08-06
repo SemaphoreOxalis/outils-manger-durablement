@@ -66,10 +66,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 // fenêtre modale d'aide
 
 
@@ -91,11 +87,6 @@ var HelpModal = function HelpModal() {
   // initialisation des données utilisées par le composant
   data: function data() {
     return {
-      // initialise les compteurs
-      counters: {
-        auditsCounter: 0,
-        simulationsCounter: 0
-      },
       // par défaut, la fenêtre modale est masquée
       showModal: false,
       // propriétés utilisées pour afficher (ou non) la possibilité de se rendre directement à l'audit enregistré en localStorage
@@ -109,7 +100,6 @@ var HelpModal = function HelpModal() {
   // A l'initialisation du composant
   created: function created() {
     this.checkPreviousAuditFromLocalStorage();
-    this.fetchCountersFromDB();
   },
   mounted: function mounted() {
     var _this = this;
@@ -276,21 +266,7 @@ var render = function() {
                   ]
                 )
               ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              _vm._s(_vm.cntrs.this_tool_has_generated) +
-                " " +
-                _vm._s(this.counters.auditsCounter) +
-                " " +
-                _vm._s(_vm.cntrs.audits) +
-                " " +
-                _vm._s(this.counters.simulationsCounter) +
-                " " +
-                _vm._s(_vm.cntrs.sims)
-            )
-          ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c(

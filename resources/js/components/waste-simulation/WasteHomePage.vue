@@ -24,14 +24,10 @@
                         </div>
                     </div>
                 </div>
-
-                <p>{{ cntrs.this_tool_has_generated }} {{ this.counters.auditsCounter }} {{ cntrs.audits }} {{ this.counters.simulationsCounter }} {{ cntrs.sims }}</p>
-
             </div>
 
             <div class="col p-4 m-4">
                 <div v-html="howToUse"></div>
-
 
                 <router-link to="input" tag="span">
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
@@ -77,12 +73,6 @@ export default {
     // initialisation des données utilisées par le composant
     data() {
         return {
-            // initialise les compteurs
-            counters: {
-                auditsCounter: 0,
-                simulationsCounter: 0
-            },
-
             // par défaut, la fenêtre modale est masquée
             showModal: false,
 
@@ -99,7 +89,6 @@ export default {
     // A l'initialisation du composant
     created() {
         this.checkPreviousAuditFromLocalStorage();
-        this.fetchCountersFromDB();
     },
 
     async mounted() {

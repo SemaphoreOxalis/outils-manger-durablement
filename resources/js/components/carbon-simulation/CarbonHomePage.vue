@@ -20,10 +20,6 @@
                         </div>
                     </div>
                 </div>
-
-                <p>{{ on_this_tool }} {{ this.counters.productsCounter }} {{ products_have_been_added_to }} {{ this.counters.basketCounter }} {{ bskets }},
-                    et {{ this.counters.recipesCounter }} recettes de Chef ont été proposées</p>
-
             </div>
 
             <div class="col p-4 m-4">
@@ -58,11 +54,6 @@
         ],
         data() {
             return {
-                counters: {
-                    basketCounter: 0,
-                    productsCounter: 0,
-                    recipesCounter: 0,
-                },
                 previousBasketsDate: null,
                 previousBasketsDetectedInLocalStorage: false,
 
@@ -72,7 +63,6 @@
         },
         created() {
             this.checkPreviousBasketsFromLocalStorage();
-            this.fetchCountersFromDB();
         },
         async mounted() {
             this.localStorageDisclaimer = await this.fetchContent('Disclaimer LocalStorage');
