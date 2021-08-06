@@ -38,7 +38,7 @@ export default {
         // RESULTS component
         incrementAuditCounter() {
             incrementAC().then(response => {
-                console.log(response.data);
+                // console.log(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -46,7 +46,7 @@ export default {
 
         incrementSimulationCounter() {
             incrementSC().then(response => {
-                console.log(response.data);
+                // console.log(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -54,7 +54,7 @@ export default {
 
         incrementBasketCounter() {
             incrementBC().then(response => {
-                console.log(response.data);
+                // console.log(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -62,7 +62,7 @@ export default {
 
         incrementProductCounter() {
             incrementPC().then(response => {
-                console.log(response.data);
+                // console.log(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -70,7 +70,7 @@ export default {
 
         incrementRecipeCounter() {
             incrementRC().then(response => {
-                console.log(response.data);
+                // console.log(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
@@ -92,10 +92,6 @@ export default {
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
-        },
-
-        deleteImage(image) {
-            console.log(image);
         },
 
         updateContent(content) {

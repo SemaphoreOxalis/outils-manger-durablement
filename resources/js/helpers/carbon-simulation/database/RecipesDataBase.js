@@ -40,11 +40,7 @@ export default {
                 this.incrementRecipeCounter();
                 if(copied) {
                     this.refreshRecipes();
-                    console.log('recipe-' + response.data);
-                    setTimeout(() => {
-                        let el = document.getElementById('recipe-' + response.data);
-                        el.scrollIntoView({behavior: "smooth"});
-                    }, 500);
+                    this.displayCopy(response.data);
                     //this.search = newRecipe.name;
                 } else {
                     if(stay) {

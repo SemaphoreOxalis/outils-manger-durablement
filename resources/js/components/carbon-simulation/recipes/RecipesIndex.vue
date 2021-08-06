@@ -170,7 +170,15 @@ export default {
             if(this.loaded && this.recipes.length) {
                 this.turnRecipesIntoProducts();
             }
-        }
+        },
+        displayCopy(id) {
+            setTimeout(() => {
+                let el = document.getElementById('recipe-' + id);
+                let cl = document.getElementById('body-' + id);
+                el.scrollIntoView({behavior: "smooth"});
+                $(cl).collapse('show');
+            }, 500);
+        },
     }
 }
 </script>

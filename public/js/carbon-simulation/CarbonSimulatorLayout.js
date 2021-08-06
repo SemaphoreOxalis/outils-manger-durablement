@@ -214,36 +214,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //INPUT component
     // RESULTS component
     incrementAuditCounter: function incrementAuditCounter() {
-      incrementAC().then(function (response) {
-        console.log(response.data);
+      incrementAC().then(function (response) {// console.log(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     incrementSimulationCounter: function incrementSimulationCounter() {
-      incrementSC().then(function (response) {
-        console.log(response.data);
+      incrementSC().then(function (response) {// console.log(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     incrementBasketCounter: function incrementBasketCounter() {
-      incrementBC().then(function (response) {
-        console.log(response.data);
+      incrementBC().then(function (response) {// console.log(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     incrementProductCounter: function incrementProductCounter() {
-      incrementPC().then(function (response) {
-        console.log(response.data);
+      incrementPC().then(function (response) {// console.log(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     incrementRecipeCounter: function incrementRecipeCounter() {
-      incrementRC().then(function (response) {
-        console.log(response.data);
+      incrementRC().then(function (response) {// console.log(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
@@ -267,9 +262,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
-    },
-    deleteImage: function deleteImage(image) {
-      console.log(image);
     },
     updateContent: function updateContent(content) {
       patchContent(content).then(function (response) {
