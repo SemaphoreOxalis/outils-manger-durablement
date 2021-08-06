@@ -9,9 +9,25 @@
                             @exit-without-adding="showAddingModal = false">
         </add-product-pop-up>
 
-        <div>
-            <h4 class="mb-3"><strong>{{ recipe.name }}</strong></h4>
+        <div class="form-group w-100 d-flex mb-4">
+            <div class="w-33 mr-1">
+                <label for="recipeName">Nom de la recette : </label>
+                <input v-model="recipe.name" type="text" required style="max-width: 350px;" id="recipeName"
+                       class="custom-input browser-default">
+            </div>
+            <div class="w-33 mr-1">
+                <label for="description">Description : </label>
+                <textarea v-model="recipe.description" type="text" style="max-width: 350px;" id="description"
+                          class="custom-input browser-default"></textarea>
+            </div>
+            <div class="w-33 mr-1">
+                <label for="author">Auteur : </label>
+                <input v-model="recipe.author" type="text" style="max-width: 350px;" id="author"
+                       class="custom-input browser-default">
+            </div>
+        </div>
 
+        <div>
             <div class="search-bar main-search">
                 <product-list v-bind:categories="this.categories"
                               v-bind:origins="this.origins"
@@ -31,39 +47,30 @@
                             :recipes="[]"
                             :specialProducts="[]"
                             :focus="this.focusOnSearchBar"
+                            :placeholder="'Taper le nom d\'un produit'"
                             @search-complete="filterProductsBySearch"
                             @product-chosen="showAddingProductModal"
                             @lose-focus="loseFocusOnSearchBar">
                 </search-bar>
             </div>
 
-            <div class="d-flex justify-content-between my-4">
-                <div class="form-group w-25">
-                    <label for="recipeName">Nom de la recette : </label>
-                    <input v-model="recipe.name" type="text" required style="max-width: 350px;" id="recipeName"
-                           class="custom-input browser-default">
-                    <label for="description">Description : </label>
-                    <textarea v-model="recipe.description" type="text" style="max-width: 350px;" id="description"
-                              class="custom-input browser-default"></textarea>
-                    <label for="author">Auteur : </label>
-                    <input v-model="recipe.author" type="text" style="max-width: 350px;" id="author"
-                           class="custom-input browser-default">
-                </div>
-                <div v-if="!isEmpty(recipe.products)" class="form-group w-75 pl-5">
+            <div class="d-flex justify-content-between mb-4">
+
+                <div v-if="!isEmpty(recipe.products)" class="form-group w-100 recipe-products">
                     <label class="mb-3">Produits : </label>
                     <ul>
                         <li v-for="(product, index) in recipe.products" :key="recipe.id+ '-' + product.id">
                             <div class="ml-3 d-flex">
-                                <p class="w-25 mr-3 mt-auto"><strong>{{ product.name }} &nbsp; </strong>
+                                <p class="w-50 mr-3 mt-auto"><strong>{{ product.name }} &nbsp; </strong>
                                     <small>{{ product.comment }}</small></p>
-                                <div class="w-75">
+                                <div class="w-50">
                                     <input type="number"
                                            class="ignore-draggable custom-input browser-default number-field input"
                                            style="max-width: 75px;"
                                            v-model="product.pivot.amount"
-                                           min="0" step="1"
+                                           min="0" step="0.001"
                                            required>
-                                    <div class="units mr-2">
+                                    <div class="units crud mr-2">
                                         {{ unit(product) }}
                                         <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
                                     </div>
@@ -72,7 +79,7 @@
                                            class="ignore-draggable custom-input browser-default number-field input"
                                            style="max-width: 75px;"
                                            v-model="product.pivot.price"
-                                           min="0" step="1"
+                                           min="0" step="0.01"
                                            required>
                                     <div class="units mr-2">€</div>
 
@@ -98,13 +105,16 @@
 
             <button class="button"
                     @click="saveRecipe(recipe)">
-                <i class="icon mr-2"></i>Sauvegarder la recette
+                <i class="icon mr-2"></i>Sauvegarder
+            </button>
+
+            <button class="button"
+                    @click="saveRecipeAndClose(recipe)">
+                <i class="icon mr-2"></i>Sauvegarder et fermer
             </button>
 
             <router-link :to="{ name: 'recipes-index'}" tag="span">
-                <button class="button alter">
-                    <i class="icon mr-2"></i>Retour aux recettes de chef
-                </button>
+                <button class="button alter">Fermer sans enregistrer</button>
             </router-link>
 
         </div>
@@ -191,9 +201,13 @@ export default {
         }
     },
     methods: {
-        saveRecipe(recipe) {
+        saveRecipeAndClose(recipe) {
             this.newRecipe = {... this.recipe};
             this.addRecipe(this.newRecipe);
+        },
+        saveRecipe(recipe) {
+            this.newRecipe = {... this.recipe};
+            this.addRecipe(this.newRecipe, false, true);
         }
     }
 }

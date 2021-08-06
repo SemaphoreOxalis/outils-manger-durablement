@@ -85,6 +85,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -288,7 +293,9 @@ var render = function() {
     _c("div", { staticClass: "custom-control switch center" }, [
       _c("label", [
         _vm._v(
-          "\n            " + _vm._s(_vm.switch_labels.compare_to_first) + " "
+          "\n                " +
+            _vm._s(_vm.switch_labels.compare_to_first) +
+            " "
         ),
         _c("input", {
           directives: [
@@ -330,7 +337,7 @@ var render = function() {
         }),
         _c("span", { staticClass: "lever" }),
         _vm._v(
-          " " + _vm._s(_vm.switch_labels.compare_to_previous) + "\n        "
+          " " + _vm._s(_vm.switch_labels.compare_to_previous) + "\n            "
         )
       ])
     ]),
@@ -340,7 +347,7 @@ var render = function() {
       { staticClass: "button ml-auto", on: { click: _vm.exportBaskets } },
       [
         _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(_vm._s(_vm.btn.export_btn) + "\n    ")
+        _vm._v(_vm._s(_vm.btn.export_btn) + "\n        ")
       ]
     )
   ])

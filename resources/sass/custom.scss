@@ -209,6 +209,7 @@ label {
     border-color: var(--main-color);
     border-radius: 0.5rem;
     color: var(--dark-color);
+    background: white;
     -webkit-border-radius: 0.5rem;
     -moz-border-radius: 0.5rem;
     -ms-border-radius: 0.5rem;
@@ -1170,6 +1171,12 @@ h1.header {
     background-image: linear-gradient(180deg, rgba(17, 153, 142, 0.1), #fff);
   }
 
+  .recipe-products {
+      background: white;
+      padding: 1rem;
+      border-radius: 1rem;
+  }
+
   .special-product-header-container {
       display: -webkit-box;
       display: -webkit-flex;
@@ -1358,6 +1365,10 @@ h1.header {
   .units {
     display: inline-block;
     align-self: center;
+  }
+
+  .units.crud {
+      min-width: 60px;
   }
 
   .custom-select.input {
@@ -1734,6 +1745,22 @@ a.button:hover {
     overflow-y: auto;
 }
 
+.sticky-link {
+  position: sticky;
+  bottom: 10px;
+}
+
+input::placeholder {
+    color: var(--dark-color);
+}
+
+.w-33 {
+    width: 33%;
+}
+
+textarea.custom-input {
+    height: 2.4rem;
+}
 
 // Load Spinner
 // thanks https://projects.lukehaas.me/css-loaders/

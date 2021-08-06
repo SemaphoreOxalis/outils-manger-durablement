@@ -9,6 +9,22 @@
                             @exit-without-adding="showAddingModal = false">
         </add-product-pop-up>
 
+        <div class="mb-3">
+            <router-link :to="{ name: 'recipes-index'}" tag="span">
+                <button class="button">Recettes de Chef</button>
+            </router-link>
+
+            <button data-target="mode_emploi" class="button alter modal-trigger" title="Mode d'emploi"><i class="icon icon-info-circle mr-2"></i>Mode d'emploi</button>
+            <div class="modal modal-fixed-footer" id="mode_emploi">
+                <div class="modal-content">
+                    <div v-html="howTo"></div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green button">{{ how_to.close_btn }}</a>
+                </div>
+            </div>
+        </div>
+
         <div class="search-bar main-search">
             <product-list v-bind:categories="this.categories"
                           v-bind:origins="this.origins"
@@ -28,25 +44,12 @@
                         :recipes="this.recipesAsProducts"
                         :specialProducts="this.specialProducts"
                         :focus="this.focusOnSearchBar"
+                        :placeholder="'Taper le nom d\'un produit ou d\'une recette'"
                         @search-complete="filterProductsBySearch"
                         @product-chosen="showAddingProductModal"
                         @lose-focus="loseFocusOnSearchBar">
             </search-bar>
-
-            <button data-target="mode_emploi" class="btn info modal-trigger info-bubble" title="Mode d'emploi">?</button>
-            <div class="modal modal-fixed-footer" id="mode_emploi">
-                <div class="modal-content">
-                    <div v-html="howTo"></div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green button">{{ how_to.close_btn }}</a>
-                </div>
-            </div>
         </div>
-
-        <router-link :to="{ name: 'recipes-index'}" tag="span">
-            <button class="button">Recettes de Chef</button>
-        </router-link>
 
         <baskets-list v-bind:origins="this.origins"
                       v-bind:categories="this.categories"

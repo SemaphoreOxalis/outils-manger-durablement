@@ -1,17 +1,16 @@
 <template>
     <div class="d-flex flex-column align-items-end vh-100">
-        <main class="container">
+        <main class="container mb-auto">
             <div class="py-4">
                 <router-view></router-view>
             </div>
-
-            <div class="text-center my-2 mb-4">
-                <a class="button"
-                   href="https://airtable.com/shrFZqKu6MuVIK5DZ" target="_blank">
-                    <i class="icon mr-2"></i>{{ feedback_text }}
-                </a>
-            </div>
         </main>
+
+        <div class="text-center mt-auto mb-2 sticky-link">
+            <a class="button alter" href="https://airtable.com/shrFZqKu6MuVIK5DZ" target="_blank">
+                <i class="icon mr-2"></i>J'ai une question <br> ou un retour à faire
+            </a>
+        </div>
 
         <footer class="mt-auto w-100" id="general-footer">
             <div v-html="footer"></div>

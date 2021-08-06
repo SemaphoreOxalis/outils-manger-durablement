@@ -31,7 +31,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -80,26 +79,11 @@ var render = function() {
     "div",
     { staticClass: "d-flex flex-column align-items-end vh-100" },
     [
-      _c("main", { staticClass: "container" }, [
-        _c("div", { staticClass: "py-4" }, [_c("router-view")], 1),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-center my-2 mb-4" }, [
-          _c(
-            "a",
-            {
-              staticClass: "button",
-              attrs: {
-                href: "https://airtable.com/shrFZqKu6MuVIK5DZ",
-                target: "_blank"
-              }
-            },
-            [
-              _c("i", { staticClass: "icon mr-2" }),
-              _vm._v(_vm._s(_vm.feedback_text) + "\n            ")
-            ]
-          )
-        ])
+      _c("main", { staticClass: "container mb-auto" }, [
+        _c("div", { staticClass: "py-4" }, [_c("router-view")], 1)
       ]),
+      _vm._v(" "),
+      _vm._m(0),
       _vm._v(" "),
       _c(
         "footer",
@@ -109,7 +93,31 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center mt-auto mb-2 sticky-link" }, [
+      _c(
+        "a",
+        {
+          staticClass: "button alter",
+          attrs: {
+            href: "https://airtable.com/shrFZqKu6MuVIK5DZ",
+            target: "_blank"
+          }
+        },
+        [
+          _c("i", { staticClass: "icon mr-2" }),
+          _vm._v("J'ai une question "),
+          _c("br"),
+          _vm._v(" ou un retour à faire\n        ")
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

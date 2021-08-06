@@ -70,7 +70,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return [];
       }
     },
-    focus: Boolean
+    focus: Boolean,
+    placeholder: String
   },
   data: function data() {
     return {
@@ -175,7 +176,7 @@ var render = function() {
         name: "query",
         id: "search",
         maxlength: "256",
-        placeholder: "Taper le nom de votre produit"
+        placeholder: _vm.placeholder
       },
       domProps: { value: _vm.search },
       on: {

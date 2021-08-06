@@ -4,7 +4,7 @@
                class="input search custom-input browser-default"
                v-model="search"
                maxlength="256"
-               placeholder="Taper le nom de votre produit"
+               :placeholder="placeholder"
                ref="searchBar"
                @input="onChange"
                @keydown.down="onArrowDown"
@@ -51,6 +51,7 @@
                 default: () => [],
             },
             focus: Boolean,
+            placeholder: String,
         },
         data() {
             return {

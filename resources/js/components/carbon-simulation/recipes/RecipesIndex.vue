@@ -28,24 +28,26 @@
             </div>
         </transition>
 
-        <div class="d-flex justify-content-between mb-5">
-            <div class="d-flex align-items-center w-75">
-                <span>Filtrer les recettes : &nbsp;</span>
-                <input type="text" v-model="search" style="max-width: 550px;" class="custom-input browser-default input" placeholder="Par nom de recette, description, ingrédient, auteur">
-                <a @click="search=''" class="btn-ico alt tool" title="Effacer les filtres"><i class="icon icon-times-circle"></i></a>
-            </div>
-            <div>
-                <router-link :to="{ name: 'recipe-create'}" tag="span">
-                    <button class="button">Créer une nouvelle recette</button>
-                </router-link>
-            </div>
+        <div class="mb-4 d-flex">
+            <router-link :to="{ name: 'recipe-create'}" tag="span">
+                <button class="button">Créer une nouvelle recette</button>
+            </router-link>
+            <router-link :to="{ name: 'basket-simulator'}" tag="span">
+                <button class="button alter">Retour aux listes</button>
+            </router-link>
+        </div>
+        <div class="d-flex align-items-center w-100 mb-2">
+            <span>Filtrer les recettes : &nbsp;</span>
+            <input type="text" v-model="search" style="max-width: 550px;" class="custom-input browser-default input" placeholder="Par nom de recette, description, ingrédient, auteur">
+            <a @click="search=''" class="button alter ml-2 align-self-baseline" title="Effacer les filtres">Réinitialiser</a>
         </div>
 
         <div v-if="!recipesAsProducts.length && !loaded" class="loader-spinner"></div>
         <div v-for="(recipe, i) in filteredRecipes"
              v-else
              :key="recipe.id"
-             class="w-100 recipe-header-container">
+             class="w-100 recipe-header-container"
+             :id="'recipe-' + recipe.id">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="w-50 d-flex align-items-center"><strong> &nbsp; {{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
 
@@ -104,12 +106,17 @@ export default {
             affectedRecipe: {},
             showModal: false,
             search: '',
-            loaded: false,
         }
     },
     computed: {
         filteredRecipes() {
             return this.searchWithSearchBar(this.recipesAsProducts);
+        },
+        loaded() {
+            if (this.recipes.length && this.products.length) {
+                this.turnRecipesIntoProducts();
+                return true;
+            }
         }
     },
     created() {
@@ -121,10 +128,6 @@ export default {
         if(this.$route.params.search) {
             this.search = this.$route.params.search;
         }
-        setTimeout(() => {
-            this.turnRecipesIntoProducts();
-            this.loaded = true;
-        }, 1000);
     },
     methods: {
         collapseClass: function () {
@@ -155,15 +158,16 @@ export default {
             this.affectedRecipe.products.forEach((p, i) => {
                 p.productId = p.id;
             });
-            this.addRecipe(this.affectedRecipe, true);
+            this.addRecipe(this.affectedRecipe, true, false);
             this.affectedRecipe = {};
         },
         refreshRecipes() {
-            this.fetchRecipes();
+            this.recipes = [];
             this.recipesAsProducts = [];
-            setTimeout(() => {
+            this.fetchRecipes();
+            if(this.loaded && this.recipes.length) {
                 this.turnRecipesIntoProducts();
-            }, 1500);
+            }
         }
     }
 }

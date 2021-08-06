@@ -1,6 +1,7 @@
 export default {
     methods: {
         turnRecipesIntoProducts() {
+            this.recipesAsProducts = [];
             this.recipes.forEach((recipe) => {
                 let prod = {...recipe};
                 prod.type = "recipe";

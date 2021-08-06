@@ -85,6 +85,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -270,49 +273,19 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "search-bar main-search" },
+        { staticClass: "mb-3" },
         [
-          _c("product-list", {
-            attrs: {
-              categories: this.categories,
-              origins: this.origins,
-              products: this.products,
-              recipes: this.recipesAsProducts,
-              specialProducts: this.specialProducts,
-              "selected-category-id": this.selectedCategoryId,
-              "selected-by-category": this.selectedByCategory,
-              counters: this.internalCounters,
-              "show-recipes": true
-            },
-            on: {
-              "filter-products-by-category": _vm.filterProductsByCategory,
-              "deselect-category": _vm.deselectCategories,
-              "add-product-to-basket": _vm.showAddingProductModal
-            }
-          }),
-          _vm._v(" "),
-          _c("search-bar", {
-            attrs: {
-              products: this.products,
-              recipes: this.recipesAsProducts,
-              specialProducts: this.specialProducts,
-              focus: this.focusOnSearchBar
-            },
-            on: {
-              "search-complete": _vm.filterProductsBySearch,
-              "product-chosen": _vm.showAddingProductModal,
-              "lose-focus": _vm.loseFocusOnSearchBar
-            }
-          }),
-          _vm._v(" "),
           _c(
-            "button",
-            {
-              staticClass: "btn info modal-trigger info-bubble",
-              attrs: { "data-target": "mode_emploi", title: "Mode d'emploi" }
-            },
-            [_vm._v("?")]
+            "router-link",
+            { attrs: { to: { name: "recipes-index" }, tag: "span" } },
+            [
+              _c("button", { staticClass: "button" }, [
+                _vm._v("Recettes de Chef")
+              ])
+            ]
           ),
+          _vm._v(" "),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "div",
@@ -342,9 +315,44 @@ var render = function() {
       ),
       _vm._v(" "),
       _c(
-        "router-link",
-        { attrs: { to: { name: "recipes-index" }, tag: "span" } },
-        [_c("button", { staticClass: "button" }, [_vm._v("Recettes de Chef")])]
+        "div",
+        { staticClass: "search-bar main-search" },
+        [
+          _c("product-list", {
+            attrs: {
+              categories: this.categories,
+              origins: this.origins,
+              products: this.products,
+              recipes: this.recipesAsProducts,
+              specialProducts: this.specialProducts,
+              "selected-category-id": this.selectedCategoryId,
+              "selected-by-category": this.selectedByCategory,
+              counters: this.internalCounters,
+              "show-recipes": true
+            },
+            on: {
+              "filter-products-by-category": _vm.filterProductsByCategory,
+              "deselect-category": _vm.deselectCategories,
+              "add-product-to-basket": _vm.showAddingProductModal
+            }
+          }),
+          _vm._v(" "),
+          _c("search-bar", {
+            attrs: {
+              products: this.products,
+              recipes: this.recipesAsProducts,
+              specialProducts: this.specialProducts,
+              focus: this.focusOnSearchBar,
+              placeholder: "Taper le nom d'un produit ou d'une recette"
+            },
+            on: {
+              "search-complete": _vm.filterProductsBySearch,
+              "product-chosen": _vm.showAddingProductModal,
+              "lose-focus": _vm.loseFocusOnSearchBar
+            }
+          })
+        ],
+        1
       ),
       _vm._v(" "),
       _c("baskets-list", {
@@ -359,7 +367,24 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "button alter modal-trigger",
+        attrs: { "data-target": "mode_emploi", title: "Mode d'emploi" }
+      },
+      [
+        _c("i", { staticClass: "icon icon-info-circle mr-2" }),
+        _vm._v("Mode d'emploi")
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -770,6 +795,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     turnRecipesIntoProducts: function turnRecipesIntoProducts() {
       var _this = this;
 
+      this.recipesAsProducts = [];
       this.recipes.forEach(function (recipe) {
         var prod = _objectSpread({}, recipe);
 

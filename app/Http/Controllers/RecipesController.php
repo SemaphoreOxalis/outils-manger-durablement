@@ -79,7 +79,7 @@ class RecipesController extends Controller
             });
             $recipe->products()->sync($products);
 
-            return response('La recette "' . $recipe->name . '" a bien été créée', 202);
+            return $recipe->id;
         } catch(\Exception $e) {
             return response('Erreur de sauvegarde', 422);
         }

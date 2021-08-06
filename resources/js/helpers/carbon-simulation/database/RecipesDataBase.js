@@ -16,19 +16,23 @@ export default {
             });
         },
 
-        updateRecipe(recipe) {
+        updateRecipe(recipe, close) {
             recipe.products.forEach(p => {
                 p.pivot.origin = p.origin.from;
             })
             patchRecipe(recipe).then(response => {
-                this.$router.push({name: 'recipes-index', params : { search: recipe.name}});
+                if (close) {
+                    this.$router.push({name: 'recipes-index', params : { search: recipe.name}});
+                } else {
+                    this.$router.go(0);
+                }
                 flash(response.data);
             }).catch(error => {
                 flash(error.response.data, 'danger');
             });
         },
 
-        addRecipe(newRecipe, copied) {
+        addRecipe(newRecipe, copied, stay) {
             newRecipe.products.forEach(p => {
                 p.pivot.origin = p.origin.from;
             })
@@ -36,12 +40,22 @@ export default {
                 this.incrementRecipeCounter();
                 if(copied) {
                     this.refreshRecipes();
-                    this.search = newRecipe.name;
+                    console.log('recipe-' + response.data);
+                    setTimeout(() => {
+                        let el = document.getElementById('recipe-' + response.data);
+                        el.scrollIntoView({behavior: "smooth"});
+                    }, 500);
+                    //this.search = newRecipe.name;
                 } else {
-                    this.$router.push({name: 'recipes-index', params : { search: newRecipe.name}});
+                    if(stay) {
+                        this.$router.push({name: 'recipe-edit', params : { id: response.data}});
+                    } else {
+                        this.$router.push({name: 'recipes-index', params : { search: newRecipe.name}});
+                    }
                 }
+                flash('Recette créée avec succès');
             }).catch(error => {
-                flash(error.response.data, 'danger');
+                flash('Erreur de sauvegarde', 'danger');
             });
         },
 
