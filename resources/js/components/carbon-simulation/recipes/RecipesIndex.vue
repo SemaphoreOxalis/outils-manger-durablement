@@ -42,9 +42,9 @@
             <a @click="search=''" class="button alter ml-2 align-self-baseline" title="Effacer les filtres">Réinitialiser</a>
         </div>
 
-        <div v-if="!recipesAsProducts.length && !loaded" class="loader-spinner"></div>
+        <div v-if="!loaded" class="loader-spinner"></div>
         <div v-for="(recipe, i) in filteredRecipes"
-             v-else
+             v-if="loaded"
              :key="recipe.id"
              class="w-100 recipe-header-container"
              :id="'recipe-' + recipe.id">
@@ -115,7 +115,9 @@ export default {
         loaded() {
             if (this.recipes.length && this.products.length) {
                 this.turnRecipesIntoProducts();
-                return true;
+                if(this.recipesAsProducts.length) {
+                    return true;
+                }
             }
         }
     },

@@ -55,6 +55,7 @@
             </div>
 
             <div class="d-flex justify-content-between mb-4">
+                <div v-if="isEmpty(recipe.products)"class="loader-spinner"></div>
                 <div v-if="!isEmpty(recipe.products)" class="form-group w-100 recipe-products">
                     <label class="mb-3">Produits : </label>
                     <ul>
