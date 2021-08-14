@@ -35866,8 +35866,8 @@ var RecipeEdit = function RecipeEdit() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! G:\Taf\outil-gaspi-yep\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! G:\Taf\outil-gaspi-yep\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Work\outil-CO2-gaspi\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Work\outil-CO2-gaspi\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
