@@ -13,7 +13,7 @@
         </div>
 
         <footer class="mt-auto w-100" id="general-footer">
-            <p v-if="showCounters" class="text-center pt-2">{{ stats}}</p>
+            <p v-if="showCounters" class="text-center pt-2" v-html="stats"></p>
             <div v-html="footer"></div>
         </footer>
     </div>
@@ -60,13 +60,20 @@
         },
         methods: {
             fillCounters(tool) {
-
                 if(tool === 'waste') {
-                    this.stats = 'Cet outil a été utilisé pour générer ' + this.counters.auditsCounter + ' audits et ' + this.counters.simulationsCounter + ' simulations';
+                    this.stats = `Cet outil a été utilisé pour générer ${this.counters.auditsCounter} audits
+                                    et ${this.counters.simulationsCounter} simulations`;
                 }
                 if(tool === 'carbon') {
-                    this.stats = 'Sur cet outil, ' + this.counters.productsCounter + ' produits ont été ajoutés à ' + this.counters.basketCounter + ' listes de courses, et ' + this.counters.recipesCounter + ' recettes de Chef ont été proposées';
+                    this.stats = `Sur cet outil, ${this.counters.productsCounter} produits ont été ajoutés à
+                                    <router-link :to="{ name: 'basket-simulator'}" tag="span">
+                                        ${this.counters.basketCounter} listes de courses</router-link>, et
+                                    <router-link :to="{ name: 'recipe-create'}" tag="span">
+                                        ${this.counters.recipesCounter} recettes de Chef</router-link> ont été proposées`;
                 }
+            },
+            renderCarbonSimStats() {
+
             }
         }
     }

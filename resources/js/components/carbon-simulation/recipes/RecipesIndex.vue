@@ -49,9 +49,9 @@
              class="w-100 recipe-header-container"
              :id="'recipe-' + recipe.id">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="w-50 d-flex align-items-center"><strong> &nbsp; {{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
+                <div class="w-75 d-flex align-items-center"><strong> &nbsp; {{ recipe.name }} &nbsp; </strong> {{ recipe.description }}</div>
 
-                <span v-if="recipe.author" class="mr-5 w-25">Proposée par <a @click="search=recipe.author" href="#">{{ recipe.author }}</a></span>
+                <span v-if="recipe.author" class="mr-5 w-15">Proposée par <a @click="search=recipe.author" href="#">{{ recipe.author }}</a></span>
 
                 <div class="d-flex">
                     <a class="btn-ico alt tool"
@@ -172,12 +172,16 @@ export default {
             }
         },
         displayCopy(id) {
-            setTimeout(() => {
-                let el = document.getElementById('recipe-' + id);
-                let cl = document.getElementById('body-' + id);
-                el.scrollIntoView({behavior: "smooth"});
-                $(cl).collapse('show');
-            }, 500);
+            $(function() {
+                setTimeout(() => {
+                    console.log('ready');
+                    let el = document.getElementById('recipe-' + id);
+                    let cl = document.getElementById('body-' + id);
+                    el.classList.add('copied-recipe');
+                    el.scrollIntoView({behavior: "smooth"});
+                    $(cl).collapse('show');
+                }, 1000); // Necessary for slower computers
+            });
         },
     }
 }

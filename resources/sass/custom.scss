@@ -1177,6 +1177,11 @@ h1.header {
       border-radius: 1rem;
   }
 
+  .copied-recipe {
+      border: 2px solid var(--third-color);
+      border-radius: 2px;
+  }
+
   .special-product-header-container {
       display: -webkit-box;
       display: -webkit-flex;
@@ -1756,6 +1761,14 @@ input::placeholder {
 
 .w-33 {
     width: 33%;
+}
+
+.w-15 {
+    width: 15%;
+}
+
+.w-10 {
+    width: 10%;
 }
 
 textarea.custom-input {

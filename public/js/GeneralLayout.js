@@ -70,13 +70,14 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fillCounters: function fillCounters(tool) {
       if (tool === 'waste') {
-        this.stats = 'Cet outil a été utilisé pour générer ' + this.counters.auditsCounter + ' audits et ' + this.counters.simulationsCounter + ' simulations';
+        this.stats = "Cet outil a \xE9t\xE9 utilis\xE9 pour g\xE9n\xE9rer ".concat(this.counters.auditsCounter, " audits\n                                et ").concat(this.counters.simulationsCounter, " simulations");
       }
 
       if (tool === 'carbon') {
-        this.stats = 'Sur cet outil, ' + this.counters.productsCounter + ' produits ont été ajoutés à ' + this.counters.basketCounter + ' listes de courses, et ' + this.counters.recipesCounter + ' recettes de Chef ont été proposées';
+        this.stats = "Sur cet outil, ".concat(this.counters.productsCounter, " produits ont \xE9t\xE9 ajout\xE9s \xE0\n                                <router-link :to=\"{ name: 'basket-simulator'}\" tag=\"span\">\n                                    ").concat(this.counters.basketCounter, " listes de courses</router-link>, et\n                                <router-link :to=\"{ name: 'recipe-create'}\" tag=\"span\">\n                                    ").concat(this.counters.recipesCounter, " recettes de Chef</router-link> ont \xE9t\xE9 propos\xE9es");
       }
-    }
+    },
+    renderCarbonSimStats: function renderCarbonSimStats() {}
   }
 });
 
@@ -112,9 +113,10 @@ var render = function() {
         { staticClass: "mt-auto w-100", attrs: { id: "general-footer" } },
         [
           _vm.showCounters
-            ? _c("p", { staticClass: "text-center pt-2" }, [
-                _vm._v(_vm._s(_vm.stats))
-              ])
+            ? _c("p", {
+                staticClass: "text-center pt-2",
+                domProps: { innerHTML: _vm._s(_vm.stats) }
+              })
             : _vm._e(),
           _vm._v(" "),
           _c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } })
