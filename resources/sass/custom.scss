@@ -1759,6 +1759,10 @@ input::placeholder {
     color: var(--dark-color);
 }
 
+.text-shrink {
+    font-stretch: ultra-condensed;
+}
+
 .w-33 {
     width: 33%;
 }

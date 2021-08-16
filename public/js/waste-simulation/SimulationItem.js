@@ -249,7 +249,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishesNumberDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -289,7 +289,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div shorter" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishCostDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -325,7 +325,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div shorter" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.dishWeightDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -363,7 +363,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div shorter" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.wasteTreatmentCostDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -401,7 +401,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div shorter" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteVolumeDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -439,7 +439,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.ratioDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -455,7 +455,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [_c("small", [_vm._v(_vm._s(_vm.foodWasteCostDelta))])]),
         _vm._v(" "),
         _c("div", {
@@ -473,7 +473,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "table-div" }, [
-      _c("div", { staticClass: "d-flex justify-content-around" }, [
+      _c("div", { staticClass: "d-flex justify-content-around text-shrink" }, [
         _c("div", [
           _c("small", [_vm._v(_vm._s(_vm.amountOfDishesWastedDelta))])
         ]),

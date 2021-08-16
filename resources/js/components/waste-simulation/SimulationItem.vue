@@ -9,7 +9,7 @@
                    required>
         </div>
         <div class="table-div">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ dishesNumberDelta }}</small></div>
                 <div v-html="getStyle(dishesNumberDeltaPercentage, true)"></div>
             </div>
@@ -21,7 +21,7 @@
                    min="1" step="1">
         </div>
         <div class="table-div shorter">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ dishCostDelta }}</small></div>
                 <div v-html="getStyle(dishCostDeltaPercentage, false)"></div>
             </div>
@@ -33,7 +33,7 @@
                    min="0.01" step="0.01">
         </div>
         <div class="table-div shorter">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ dishWeightDelta }}</small></div>
                 <div v-html="getStyle(dishWeightDeltaPercentage, false)"></div>
             </div>
@@ -45,7 +45,7 @@
                    min="1" step="1">
         </div>
         <div class="table-div shorter">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ wasteTreatmentCostDelta }}</small></div>
                 <div v-html="getStyle(wasteTreatmentCostDeltaPercentage, false)"></div>
             </div>
@@ -57,7 +57,7 @@
                    min="0.01" step="0.01">
         </div>
         <div class="table-div shorter">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ foodWasteVolumeDelta }}</small></div>
                 <div v-html="getStyle(foodWasteVolumeDeltaPercentage, false)"></div>
             </div>
@@ -70,21 +70,21 @@
         </div>
 
         <div class="table-div">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ ratioDelta }}</small></div>
                 <div v-html="getStyle(ratioDeltaPercentage, false)"></div>
             </div>
             <div class="strong align-with-inputs">{{ this.ratio }}</div>
         </div>
         <div class="table-div">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ foodWasteCostDelta }}</small></div>
                 <div v-html="getStyle(foodWasteCostDeltaPercentage, false)"></div>
             </div>
             <div class="strong align-with-inputs">{{ this.separateThousands(foodWasteCost) }}</div>
         </div>
         <div class="table-div">
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-around text-shrink">
                 <div><small>{{ amountOfDishesWastedDelta }}</small></div>
                 <div v-html="getStyle(amountOfDishesWastedDeltaPercentage, false)"></div>
             </div>
