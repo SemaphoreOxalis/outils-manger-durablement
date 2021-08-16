@@ -32,27 +32,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_texts_GeneralLayoutText__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_1__["default"]],
   watch: {
     $route: function $route(to, from) {
-      if (to.path.startsWith('/waste-simulator')) {
-        this.showCounters = true;
-        this.fillCounters('waste');
-        this.fetchFooter('Footer Gaspi');
-      } else if (to.path.startsWith('/carbon-simulator')) {
-        this.showCounters = true;
-        this.fillCounters('carbon');
-        this.fetchFooter('Footer Carbone');
-      } else if (to.path.startsWith('/admin')) {
-        this.showCounters = false;
-        this.fetchFooter('Footer Admin');
-      } else {
-        this.showCounters = false;
-        this.fetchFooter('Footer General');
-      }
+      this.chooseFooterToDisplay(to.path);
     }
   },
   data: function data() {
@@ -65,19 +61,26 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fetchCountersFromDB();
-    this.fetchFooter('Footer General');
+    this.chooseFooterToDisplay(this.$route.path);
   },
   methods: {
-    fillCounters: function fillCounters(tool) {
-      if (tool === 'waste') {
-        this.stats = "Cet outil a \xE9t\xE9 utilis\xE9 pour g\xE9n\xE9rer ".concat(this.counters.auditsCounter, " audits\n                                et ").concat(this.counters.simulationsCounter, " simulations");
+    chooseFooterToDisplay: function chooseFooterToDisplay(path) {
+      if (path.startsWith('/waste-simulator')) {
+        this.showCounters = true;
+        this.stats = 'gaspi';
+        this.fetchFooter('Footer Gaspi');
+      } else if (path.startsWith('/carbon-simulator')) {
+        this.showCounters = true;
+        this.stats = 'carbon';
+        this.fetchFooter('Footer Carbone');
+      } else if (path.startsWith('/admin')) {
+        this.showCounters = false;
+        this.fetchFooter('Footer Admin');
+      } else {
+        this.showCounters = false;
+        this.fetchFooter('Footer General');
       }
-
-      if (tool === 'carbon') {
-        this.stats = "Sur cet outil, ".concat(this.counters.productsCounter, " produits ont \xE9t\xE9 ajout\xE9s \xE0\n                                <router-link :to=\"{ name: 'basket-simulator'}\" tag=\"span\">\n                                    ").concat(this.counters.basketCounter, " listes de courses</router-link>, et\n                                <router-link :to=\"{ name: 'recipe-create'}\" tag=\"span\">\n                                    ").concat(this.counters.recipesCounter, " recettes de Chef</router-link> ont \xE9t\xE9 propos\xE9es");
-      }
-    },
-    renderCarbonSimStats: function renderCarbonSimStats() {}
+    }
   }
 });
 
@@ -112,11 +115,55 @@ var render = function() {
         "footer",
         { staticClass: "mt-auto w-100", attrs: { id: "general-footer" } },
         [
-          _vm.showCounters
-            ? _c("p", {
-                staticClass: "text-center pt-2",
-                domProps: { innerHTML: _vm._s(_vm.stats) }
-              })
+          _vm.stats === "gaspi"
+            ? _c("p", { staticClass: "text-center pt-2" }, [
+                _vm._v(
+                  "\n            Cet outil a été utilisé pour générer " +
+                    _vm._s(_vm.counters.auditsCounter) +
+                    " audits\n            et " +
+                    _vm._s(_vm.counters.simulationsCounter) +
+                    " simulations\n        "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.stats === "carbon"
+            ? _c(
+                "p",
+                { staticClass: "text-center pt-2" },
+                [
+                  _vm._v(
+                    "\n            Sur cet outil, " +
+                      _vm._s(_vm.counters.productsCounter) +
+                      " produits ont été ajoutés à\n            "
+                  ),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "basket-simulator" }, tag: "a" } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.counters.basketCounter) +
+                          " listes de courses"
+                      )
+                    ]
+                  ),
+                  _vm._v(", et\n            "),
+                  _c(
+                    "router-link",
+                    { attrs: { to: { name: "recipes-index" }, tag: "a" } },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.counters.recipesCounter) +
+                          " recettes de Chef"
+                      )
+                    ]
+                  ),
+                  _vm._v(" ont été proposées\n        ")
+                ],
+                1
+              )
             : _vm._e(),
           _vm._v(" "),
           _c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } })

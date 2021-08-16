@@ -13,7 +13,17 @@
         </div>
 
         <footer class="mt-auto w-100" id="general-footer">
-            <p v-if="showCounters" class="text-center pt-2" v-html="stats"></p>
+            <p v-if="stats === 'gaspi'" class="text-center pt-2">
+                Cet outil a été utilisé pour générer {{counters.auditsCounter}} audits
+                et {{counters.simulationsCounter}} simulations
+            </p>
+            <p v-if="stats === 'carbon'" class="text-center pt-2">
+                Sur cet outil, {{counters.productsCounter}} produits ont été ajoutés à
+                <router-link :to="{ name: 'basket-simulator'}" tag="a">
+                    {{counters.basketCounter}} listes de courses</router-link>, et
+                <router-link :to="{ name: 'recipes-index'}" tag="a">
+                    {{counters.recipesCounter}} recettes de Chef</router-link> ont été proposées
+            </p>
             <div v-html="footer"></div>
         </footer>
     </div>
@@ -29,21 +39,7 @@
         ],
         watch: {
             $route: function(to, from) {
-                if(to.path.startsWith('/waste-simulator')) {
-                    this.showCounters = true;
-                    this.fillCounters('waste')
-                    this.fetchFooter('Footer Gaspi');
-                } else if (to.path.startsWith('/carbon-simulator')) {
-                    this.showCounters = true;
-                    this.fillCounters('carbon')
-                    this.fetchFooter('Footer Carbone');
-                } else if (to.path.startsWith('/admin')) {
-                    this.showCounters = false;
-                    this.fetchFooter('Footer Admin');
-                } else {
-                    this.showCounters = false;
-                    this.fetchFooter('Footer General');
-                }
+                this.chooseFooterToDisplay(to.path);
             }
         },
         data() {
@@ -56,24 +52,25 @@
         },
         mounted() {
             this.fetchCountersFromDB();
-            this.fetchFooter('Footer General');
+            this.chooseFooterToDisplay(this.$route.path);
         },
         methods: {
-            fillCounters(tool) {
-                if(tool === 'waste') {
-                    this.stats = `Cet outil a été utilisé pour générer ${this.counters.auditsCounter} audits
-                                    et ${this.counters.simulationsCounter} simulations`;
+            chooseFooterToDisplay(path) {
+                if(path.startsWith('/waste-simulator')) {
+                    this.showCounters = true;
+                    this.stats = 'gaspi';
+                    this.fetchFooter('Footer Gaspi');
+                } else if (path.startsWith('/carbon-simulator')) {
+                    this.showCounters = true;
+                    this.stats = 'carbon';
+                    this.fetchFooter('Footer Carbone');
+                } else if (path.startsWith('/admin')) {
+                    this.showCounters = false;
+                    this.fetchFooter('Footer Admin');
+                } else {
+                    this.showCounters = false;
+                    this.fetchFooter('Footer General');
                 }
-                if(tool === 'carbon') {
-                    this.stats = `Sur cet outil, ${this.counters.productsCounter} produits ont été ajoutés à
-                                    <router-link :to="{ name: 'basket-simulator'}" tag="span">
-                                        ${this.counters.basketCounter} listes de courses</router-link>, et
-                                    <router-link :to="{ name: 'recipe-create'}" tag="span">
-                                        ${this.counters.recipesCounter} recettes de Chef</router-link> ont été proposées`;
-                }
-            },
-            renderCarbonSimStats() {
-
             }
         }
     }

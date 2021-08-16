@@ -188,7 +188,7 @@ export default {
                         {
                             path: 'recipes',
                             component: RecipesLayout,
-                            name: 'recipes',
+                            name: 'recipes-layout',
                             children: [
                                 {
                                     path: 'index',
@@ -258,7 +258,7 @@ export default {
                                 {
                                     path: 'recipes',
                                     component: RecipesAdminPage,
-                                    name: 'origins'
+                                    name: 'recipes'
                                 },
                                 {
                                     path: '',

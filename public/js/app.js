@@ -35760,7 +35760,7 @@ var RecipeEdit = function RecipeEdit() {
       }, {
         path: 'recipes',
         component: RecipesLayout,
-        name: 'recipes',
+        name: 'recipes-layout',
         children: [{
           path: 'index',
           component: RecipesIndex,
@@ -35818,7 +35818,7 @@ var RecipeEdit = function RecipeEdit() {
         }, {
           path: 'recipes',
           component: RecipesAdminPage,
-          name: 'origins'
+          name: 'recipes'
         }, {
           path: '',
           redirect: 'products'
