@@ -78,5 +78,25 @@ export default {
                 localStorage.setItem('baskets', baskets);
                 localStorage.setItem('basketsDate', basketsDate);
             },
+
+        // MISC
+
+            eraseLocalStorageIfVersionOlderThan(version, tool = '') {
+                if (!localStorage.hasOwnProperty('version')) {
+                        this.erase(tool);
+                } else {
+                    if(localStorage.getItem('version') !== version) {
+                        this.erase(tool);
+                    }
+                }
+                localStorage.setItem('version', App.version);
+            },
+            erase(tool) {
+                if(tool === 'basketSim') {
+                    localStorage.removeItem('baskets');
+                    localStorage.removeItem('basketsDate');
+                }
+                flash('Des données obsolètes ont été supprimées','warning');
+            }
     },
 }

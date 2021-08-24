@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'version' => '1.0.1',
+    'version' => '1.0.1', // Every change here should be echoed to all the occurrences of eraseLocalStorageIfVersionOlderThan(version)
 
     /*
     |--------------------------------------------------------------------------

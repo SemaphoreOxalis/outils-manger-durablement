@@ -1347,6 +1347,28 @@ __webpack_require__.r(__webpack_exports__);
       var baskets = JSON.stringify(this.baskets);
       localStorage.setItem('baskets', baskets);
       localStorage.setItem('basketsDate', basketsDate);
+    },
+    // MISC
+    eraseLocalStorageIfVersionOlderThan: function eraseLocalStorageIfVersionOlderThan(version) {
+      var tool = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+      if (!localStorage.hasOwnProperty('version')) {
+        this.erase(tool);
+      } else {
+        if (localStorage.getItem('version') !== version) {
+          this.erase(tool);
+        }
+      }
+
+      localStorage.setItem('version', App.version);
+    },
+    erase: function erase(tool) {
+      if (tool === 'basketSim') {
+        localStorage.removeItem('baskets');
+        localStorage.removeItem('basketsDate');
+      }
+
+      flash('Des données obsolètes ont été supprimées', 'warning');
     }
   }
 });

@@ -1,10 +1,5 @@
 <template>
     <div>
-<!--        <div class="alert fade show alert-danger my-5 d-flex justify-content-between"
-             role="alert">
-            <p class="my-auto">ATTENTION : suite à une Mise à Jour, il se peut que l'outil ne fonctionne pas sans que vous réinitialisiez vos listes</p>
-            <button class="ml-3 button">Je comprend, réinitialiser</button>
-        </div>-->
         <div class="baskets-list">
             <action-confirmation v-if="showConfirmationModal"
                                  :action="this.action"
@@ -137,6 +132,7 @@ export default {
         },
     },
     created() {
+        this.eraseLocalStorageIfVersionOlderThan(App.version ,'basketSim');
         if (localStorage.hasOwnProperty('baskets')) {
             this.baskets = JSON.parse(localStorage.getItem('baskets'));
         } else {

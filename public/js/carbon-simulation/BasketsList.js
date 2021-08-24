@@ -85,11 +85,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -154,6 +149,8 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     }
   },
   created: function created() {
+    this.eraseLocalStorageIfVersionOlderThan(App.version, 'basketSim');
+
     if (localStorage.hasOwnProperty('baskets')) {
       this.baskets = JSON.parse(localStorage.getItem('baskets'));
     } else {
@@ -293,9 +290,7 @@ var render = function() {
     _c("div", { staticClass: "custom-control switch center" }, [
       _c("label", [
         _vm._v(
-          "\n                " +
-            _vm._s(_vm.switch_labels.compare_to_first) +
-            " "
+          "\n            " + _vm._s(_vm.switch_labels.compare_to_first) + " "
         ),
         _c("input", {
           directives: [
@@ -337,7 +332,7 @@ var render = function() {
         }),
         _c("span", { staticClass: "lever" }),
         _vm._v(
-          " " + _vm._s(_vm.switch_labels.compare_to_previous) + "\n            "
+          " " + _vm._s(_vm.switch_labels.compare_to_previous) + "\n        "
         )
       ])
     ]),
@@ -347,7 +342,7 @@ var render = function() {
       { staticClass: "button ml-auto", on: { click: _vm.exportBaskets } },
       [
         _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(_vm._s(_vm.btn.export_btn) + "\n        ")
+        _vm._v(_vm._s(_vm.btn.export_btn) + "\n    ")
       ]
     )
   ])
@@ -595,6 +590,28 @@ __webpack_require__.r(__webpack_exports__);
       var baskets = JSON.stringify(this.baskets);
       localStorage.setItem('baskets', baskets);
       localStorage.setItem('basketsDate', basketsDate);
+    },
+    // MISC
+    eraseLocalStorageIfVersionOlderThan: function eraseLocalStorageIfVersionOlderThan(version) {
+      var tool = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+
+      if (!localStorage.hasOwnProperty('version')) {
+        this.erase(tool);
+      } else {
+        if (localStorage.getItem('version') !== version) {
+          this.erase(tool);
+        }
+      }
+
+      localStorage.setItem('version', App.version);
+    },
+    erase: function erase(tool) {
+      if (tool === 'basketSim') {
+        localStorage.removeItem('baskets');
+        localStorage.removeItem('basketsDate');
+      }
+
+      flash('Des données obsolètes ont été supprimées', 'warning');
     }
   }
 });
