@@ -13,6 +13,8 @@ class Recipe extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('amount', 'price', 'origin');
+        return $this->belongsToMany(Product::class)
+            ->withPivot('amount', 'price', 'origin', 'index')
+            ->orderBy('index', 'asc');
     }
 }

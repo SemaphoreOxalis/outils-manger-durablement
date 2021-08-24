@@ -62,6 +62,7 @@ class RecipesController extends Controller
                 'products.*.pivot.amount' => 'required|numeric',
                 'products.*.pivot.price' => 'required|numeric',
                 'products.*.pivot.origin' => 'required|string',
+                'products.*.pivot.index' => 'required|numeric',
             ]);
 
             $recipe = new Recipe;
@@ -75,12 +76,14 @@ class RecipesController extends Controller
                     'amount' => $p['pivot']['amount'],
                     'price' => $p['pivot']['price'],
                     'origin' => $p['pivot']['origin'],
+                    'index' => $p['pivot']['index'],
                 ]];
             });
             $recipe->products()->sync($products);
 
             return $recipe->id;
         } catch(\Exception $e) {
+            return $e;
             return response('Erreur de sauvegarde', 422);
         }
     }
@@ -98,12 +101,14 @@ class RecipesController extends Controller
                 'products.*.pivot.amount' => 'required|numeric',
                 'products.*.pivot.price' => 'required|numeric',
                 'products.*.pivot.origin' => 'required|string',
+                'products.*.pivot.index' => 'required|numeric',
             ]);
             $products = collect(request('products'))->mapWithKeys(function ($p) {
                 return [$p['productId'] => [
                     'amount' => $p['pivot']['amount'],
                     'price' => $p['pivot']['price'],
                     'origin' => $p['pivot']['origin'],
+                    'index' => $p['pivot']['index'],
                 ]];
             });
             $recipe->update(request(['name', 'description', 'author']));

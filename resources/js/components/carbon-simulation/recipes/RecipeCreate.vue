@@ -59,46 +59,53 @@
                 <div v-if="!isEmpty(recipe.products)" class="form-group w-100 recipe-products">
                     <label class="mb-3">Produits : </label>
                     <ul>
-                        <li v-for="(product, index) in recipe.products" :key="recipe.id+ '-' + product.id">
-                            <div class="ml-3 d-flex">
-                                <p class="w-50 mr-3 mt-auto"><strong>{{ product.name }} &nbsp; </strong>
-                                    <small>{{ product.comment }}</small></p>
-                                <div class="w-50">
-                                    <input type="number"
-                                           class="ignore-draggable custom-input browser-default number-field input"
-                                           style="max-width: 75px;"
-                                           v-model="product.pivot.amount"
-                                           min="0" step="0.1"
-                                           required>
-                                    <div class="units crud mr-2">
-                                        {{ unit(product) }}
-                                        <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
+                        <draggable v-model="recipe.products"
+                                   class="dragArea"
+                                   handle=".handle"
+                                   filter=".ignore-draggable"
+                                   :preventOnFilter="false"
+                                   :animation="150"
+                                   @change="saveProductsOrder">
+                            <li v-for="(product, index) in recipe.products" :key="recipe.id+ '-' + product.id" class="handle">
+                                <div class="ml-3 d-flex">
+                                    <p class="w-50 mr-3 mt-auto"><strong>{{ product.name }} &nbsp; </strong>
+                                        <small>{{ product.comment }}</small></p>
+                                    <div class="w-50">
+                                        <input type="number"
+                                               class="ignore-draggable custom-input browser-default number-field input"
+                                               style="max-width: 75px;"
+                                               v-model="product.pivot.amount"
+                                               min="0" step="0.1"
+                                               required>
+                                        <div class="units crud mr-2">
+                                            {{ unit(product) }}
+                                            <a class="info-bubble product-info-bubble btn-ico alt tool info" :title="product.unit.unit"></a>
+                                        </div>
+
+                                        <input type="number"
+                                               class="ignore-draggable custom-input browser-default number-field input"
+                                               style="max-width: 75px;"
+                                               v-model="product.pivot.price"
+                                               min="0" step="0.1"
+                                               required>
+                                        <div class="units mr-2">€</div>
+
+                                        <select v-model="product.origin"
+                                                :id="'origin-' + recipe.id + '-' + product.id"
+                                                class="custom-select input custom-input w-50"
+                                                :name="'origin-' + recipe.id + '-' + product.id"
+                                                :data-name="'Origine ' + recipe.id + '-' + product.id">
+                                            <option v-for="origin in origins" :value="origin">
+                                                {{ origin.from }}
+                                            </option>
+                                        </select>
+
+                                        <a class="btn-ico alt tool info-bubble d-inline ml-2"
+                                           @click="removeProduct(index)" title="Supprimer ce produit de la recette"></a>
                                     </div>
-
-                                    <input type="number"
-                                           class="ignore-draggable custom-input browser-default number-field input"
-                                           style="max-width: 75px;"
-                                           v-model="product.pivot.price"
-                                           min="0" step="0.1"
-                                           required>
-                                    <div class="units mr-2">€</div>
-
-                                    <select v-model="product.origin"
-                                            :id="'origin-' + recipe.id + '-' + product.id"
-                                            class="custom-select input custom-input w-50"
-                                            :name="'origin-' + recipe.id + '-' + product.id"
-                                            :data-name="'Origine ' + recipe.id + '-' + product.id">
-                                        <option v-for="origin in origins" :value="origin">
-                                            {{ origin.from }}
-                                        </option>
-                                    </select>
-
-                                    <a class="btn-ico alt tool info-bubble d-inline ml-2"
-                                       @click="removeProduct(index)" title="Supprimer ce produit de la recette"></a>
                                 </div>
-                            </div>
-
-                        </li>
+                            </li>
+                        </draggable>
                     </ul>
                 </div>
             </div>
@@ -140,12 +147,17 @@ const AddProductPopUp = () => import(
     /* webpackChunkName: "js/carbon-simulation/AddProductPopUp" */
     './../AddProductPopUp'
     );
+const draggable = () => import(
+    /* webpackChunkName: "js/draggable" */
+    'vuedraggable'
+    );
 
 export default {
     components: {
         SearchBar,
         ProductList,
         AddProductPopUp,
+        draggable,
     },
     mixins: [
         RecipesDataBase,
@@ -192,10 +204,11 @@ export default {
     mounted() {
         if(this.$route.params.recipe) {
             let rec = this.$route.params.recipe;
-            rec.products.forEach(p => {
+            rec.products.forEach((p, i) => {
                 p.pivot = {};
                 p.pivot.amount = p.amount;
                 p.pivot.price = p.price;
+                p.pivot.index = i;
             });
             this.recipe = rec;
         }
@@ -208,7 +221,7 @@ export default {
         saveRecipe(recipe) {
             this.newRecipe = {... this.recipe};
             this.addRecipe(this.newRecipe, false, true);
-        }
-    }
+        },
+    },
 }
 </script>

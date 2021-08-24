@@ -51,6 +51,7 @@ export default {
                 }
                 flash('Recette créée avec succès');
             }).catch(error => {
+                console.log(error);
                 flash('Erreur de sauvegarde', 'danger');
             });
         },

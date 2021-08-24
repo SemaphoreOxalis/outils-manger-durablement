@@ -827,6 +827,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     removeProduct: function removeProduct(index) {
       this.recipe.products.splice(index, 1);
+      this.saveProductsOrder();
     },
     addProductToRecipe: function addProductToRecipe(product) {
       this.showAddingModal = false;
@@ -841,7 +842,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: 'prod-' + (this.counter + 1),
         pivot: {
           amount: product.amount,
-          price: product.price
+          price: product.price,
+          index: this.recipe.products.length
         },
         origin: product.origin
       }));
@@ -850,6 +852,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.loseFocusOnSearchBar();
       this.productAdded = product;
       this.showAddingModal = true;
+    },
+    saveProductsOrder: function saveProductsOrder(e) {
+      this.recipe.products.forEach(function (p, i) {
+        p.pivot.index = i;
+      });
     }
   }
 });

@@ -241,9 +241,9 @@ export default {
                     name: 'Fin du bloc ' + id,
                     type: 'special',
                 });
-                recipe.products.forEach(p => {
+                [...recipe.products].reverse().forEach(p => {
                     this.addProduct(p, true);
-                })
+                });
                 this.addProduct({
                     id: 'block-start-' + id,
                     name: recipe.name,
@@ -293,7 +293,7 @@ export default {
         },
         insertBlock() {
             let id = this.blockCounter + 1;
-            if(this.isSelected && this.blocks.length < 11) {
+            if(this.blocks.length < 11) {
                 this.addProduct({ // in reverse order because they're prepended
                     id: 'block-fnish-' + id,
                     name: 'Fin du bloc ' + id,

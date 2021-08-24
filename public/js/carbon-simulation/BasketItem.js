@@ -284,9 +284,11 @@ var draggable = function draggable() {
           name: 'Fin du bloc ' + id,
           type: 'special'
         });
-        recipe.products.forEach(function (p) {
+
+        _toConsumableArray(recipe.products).reverse().forEach(function (p) {
           _this2.addProduct(p, true);
         });
+
         this.addProduct({
           id: 'block-start-' + id,
           name: recipe.name,
@@ -335,7 +337,7 @@ var draggable = function draggable() {
     insertBlock: function insertBlock() {
       var id = this.blockCounter + 1;
 
-      if (this.isSelected && this.blocks.length < 11) {
+      if (this.blocks.length < 11) {
         this.addProduct({
           // in reverse order because they're prepended
           id: 'block-fnish-' + id,

@@ -30,17 +30,23 @@ export default {
         },
         removeProduct(index) {
             this.recipe.products.splice(index, 1);
+            this.saveProductsOrder();
         },
         addProductToRecipe(product) {
             this.showAddingModal = false;
             this.focusOnSearchBar = true;
             if (!product.price) { product.price = 0 ;}
-            this.recipe.products.push({...product, productId: product.productId, id: 'prod-' + (this.counter + 1), pivot: {amount: product.amount, price: product.price}, origin: product.origin});
+            this.recipe.products.push({...product, productId: product.productId, id: 'prod-' + (this.counter + 1), pivot: {amount: product.amount, price: product.price, index: this.recipe.products.length}, origin: product.origin});
         },
         showAddingProductModal(product) {
             this.loseFocusOnSearchBar();
             this.productAdded = product;
             this.showAddingModal = true;
+        },
+        saveProductsOrder(e) {
+            this.recipe.products.forEach((p, i) => {
+                p.pivot.index = i;
+            });
         },
     }
 }
