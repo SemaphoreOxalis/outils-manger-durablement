@@ -47,5 +47,7 @@
     "/vendors~js/admin/WysiwygAdminPage.js": "/vendors~js/admin/WysiwygAdminPage.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js",
+    "/js/Changelog.js": "/js/Changelog.js",
+    "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~64016ed9.js": "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~64016ed9.js"
 }

@@ -14,6 +14,7 @@
     <script>
         window.App = {!! json_encode([
             'signedIn' => Auth::check(),
+            'version' => config('app.version'),
         ]) !!}
     </script>
 

@@ -42,6 +42,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -56,12 +65,14 @@ __webpack_require__.r(__webpack_exports__);
       showCounters: false,
       counters: {},
       stats: '',
-      footer: "<div class=\"loader-spinner\"></div>"
+      footer: "<div class=\"loader-spinner\"></div>",
+      version: ''
     };
   },
   mounted: function mounted() {
     this.fetchCountersFromDB();
     this.chooseFooterToDisplay(this.$route.path);
+    this.version = window.App.version;
   },
   methods: {
     chooseFooterToDisplay: function chooseFooterToDisplay(path) {
@@ -115,7 +126,7 @@ var render = function() {
         "footer",
         { staticClass: "mt-auto w-100", attrs: { id: "general-footer" } },
         [
-          _vm.stats === "gaspi"
+          _vm.stats === "gaspi" && _vm.showCounters
             ? _c("p", { staticClass: "text-center pt-2" }, [
                 _vm._v(
                   "\n            Cet outil a été utilisé pour générer " +
@@ -127,7 +138,7 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.stats === "carbon"
+          _vm.stats === "carbon" && _vm.showCounters
             ? _c(
                 "p",
                 { staticClass: "text-center pt-2" },
@@ -166,7 +177,21 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } })
+          _c("div", { domProps: { innerHTML: _vm._s(_vm.footer) } }),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-center" }, [
+            _c(
+              "small",
+              [
+                _c(
+                  "router-link",
+                  { attrs: { to: { name: "changelog" }, tag: "a" } },
+                  [_vm._v("Version " + _vm._s(_vm.version))]
+                )
+              ],
+              1
+            )
+          ])
         ]
       )
     ]

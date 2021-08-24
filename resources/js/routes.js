@@ -123,6 +123,11 @@ const RecipeEdit = () => import(
     './components/carbon-simulation/recipes/RecipeEdit.vue'
     );
 
+const Changelog = () => import(
+    /* webpackChunkName: "js/Changelog" */
+    './components/Changelog.vue'
+    );
+
 export default {
 
     // Redirection automatique en haut de la page lors de changement de vue
@@ -286,6 +291,11 @@ export default {
                     path: '/about',
                     component: AboutUs,
                     name: 'about-us'
+                },
+                {
+                    path: '/changelog',
+                    component: Changelog,
+                    name: 'changelog'
                 },
             ]
         },
