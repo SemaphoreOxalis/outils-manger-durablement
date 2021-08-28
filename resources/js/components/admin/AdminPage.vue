@@ -18,6 +18,10 @@
                 <router-link to="/admin/wysiwyg" tag="span">
                     <button class="button alter">Wysiwyg</button>
                 </router-link>
+
+                <router-link to="/admin/logs" tag="span">
+                    <button class="button alter">logs</button>
+                </router-link>
             </div>
             <router-view></router-view>
         </div>

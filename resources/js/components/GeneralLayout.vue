@@ -8,7 +8,7 @@
 
         <!-- Bouton "J'ai une question ou un retour -->
         <div class="text-center mt-auto mb-2 sticky-link">
-            <a class="button alter" href="https://airtable.com/shrFZqKu6MuVIK5DZ" target="_blank">
+            <a class="button alter" href="https://airtable.com/shrFZqKu6MuVIK5DZ" target="_blank" @click="logClickOnFeedback">
                 <i class="icon mr-2"></i>J'ai une question <br> ou un retour à faire
             </a>
         </div>
@@ -82,6 +82,9 @@
                     this.showCounters = false;
                     this.fetchFooter('Footer General');
                 }
+            },
+            logClickOnFeedback() {
+                this.log('Bouton de retour cliqué');
             }
         }
     }

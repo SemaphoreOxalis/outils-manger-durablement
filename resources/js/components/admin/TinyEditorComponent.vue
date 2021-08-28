@@ -109,10 +109,10 @@ export default {
         //console.log(tinyConfig.getConfig());
     },
 
-    // beforeDestroy() {
+    beforeDestroy() {
     //     this.editor.save();
-    //     this.editor.remove();
-    // }
+         this.editor.remove();
+    }
 }
 </script>
 

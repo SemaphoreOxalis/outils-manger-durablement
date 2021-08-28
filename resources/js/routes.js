@@ -53,6 +53,11 @@ const WysiwygAdminPage = () => import(
     './components/admin/WysiwygAdminPage.vue'
     );
 
+const Logs = () => import(
+    /* webpackChunkName: "js/admin/Logs" */
+    './components/admin/Logs.vue'
+    );
+
 const NotFound = () => import(
     /* webpackChunkName: "js/NotFound" */
     './components/NotFound.vue'
@@ -280,6 +285,11 @@ export default {
                             path: 'wysiwyg',
                             component: WysiwygAdminPage,
                             name: 'wysiwyg',
+                        },
+                        {
+                            path: 'logs',
+                            component: Logs,
+                            name: 'logs',
                         },
                         {
                             path: '',

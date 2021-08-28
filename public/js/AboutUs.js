@@ -172,6 +172,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
+    log: function log(message) {
+      var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      writeLog(message, details).then(function (response) {// console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
     // WASTE HOME-PAGE component
     fetchCountersFromDB: function fetchCountersFromDB() {
       var _this = this;
@@ -301,6 +308,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
+
+function writeLog(message, details) {
+  return axios.post('/api/logs', {
+    message: message,
+    details: details
+  });
+}
 
 function getContents() {
   return axios.get('/api/contents');

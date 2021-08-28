@@ -286,6 +286,8 @@ var draggable = function draggable() {
         });
 
         _toConsumableArray(recipe.products).reverse().forEach(function (p) {
+          p.productId = p.id;
+
           _this2.addProduct(p, true);
         });
 

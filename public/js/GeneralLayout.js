@@ -91,6 +91,9 @@ __webpack_require__.r(__webpack_exports__);
         this.showCounters = false;
         this.fetchFooter('Footer General');
       }
+    },
+    logClickOnFeedback: function logClickOnFeedback() {
+      this.log('Bouton de retour cliqué');
     }
   }
 });
@@ -120,7 +123,25 @@ var render = function() {
         _c("div", { staticClass: "py-4" }, [_c("router-view")], 1)
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "text-center mt-auto mb-2 sticky-link" }, [
+        _c(
+          "a",
+          {
+            staticClass: "button alter",
+            attrs: {
+              href: "https://airtable.com/shrFZqKu6MuVIK5DZ",
+              target: "_blank"
+            },
+            on: { click: _vm.logClickOnFeedback }
+          },
+          [
+            _c("i", { staticClass: "icon mr-2" }),
+            _vm._v("J'ai une question "),
+            _c("br"),
+            _vm._v(" ou un retour à faire\n        ")
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "footer",
@@ -197,31 +218,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center mt-auto mb-2 sticky-link" }, [
-      _c(
-        "a",
-        {
-          staticClass: "button alter",
-          attrs: {
-            href: "https://airtable.com/shrFZqKu6MuVIK5DZ",
-            target: "_blank"
-          }
-        },
-        [
-          _c("i", { staticClass: "icon mr-2" }),
-          _vm._v("J'ai une question "),
-          _c("br"),
-          _vm._v(" ou un retour à faire\n        ")
-        ]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -320,6 +317,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_HTMLSpecialCharsDecoder__WEBPACK_IMPORTED_MODULE_1__["default"]],
   methods: {
+    log: function log(message) {
+      var details = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      writeLog(message, details).then(function (response) {// console.log(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
     // WASTE HOME-PAGE component
     fetchCountersFromDB: function fetchCountersFromDB() {
       var _this = this;
@@ -449,6 +453,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   }
 }); // Situées ici, ces fonctions sont "privées"
+
+function writeLog(message, details) {
+  return axios.post('/api/logs', {
+    message: message,
+    details: details
+  });
+}
 
 function getContents() {
   return axios.get('/api/contents');

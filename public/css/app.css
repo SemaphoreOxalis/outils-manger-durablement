@@ -12671,6 +12671,15 @@ textarea.custom-input {
   height: 2.4rem;
 }
 
+.logs {
+  margin-top: 30px;
+  height: 70vh;
+  overflow: auto;
+  border: 1px solid var(--dark-color);
+  border-radius: 1rem;
+  padding: 5px;
+}
+
 .loader-spinner {
   color: var(--second-color);
   font-size: 10px;

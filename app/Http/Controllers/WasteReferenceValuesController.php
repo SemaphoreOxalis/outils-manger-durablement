@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\WasteReferenceValue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class WasteReferenceValuesController extends Controller {
 
@@ -29,6 +30,7 @@ class WasteReferenceValuesController extends Controller {
             return response('Vos modifications ont été enregistrées', 202);
         } catch (\Exception $e)
         {
+            Log::error('Erreur (wasteRefValues.update)', ['error' => $e, 'request' => $request]);
             return response('Veuillez entrer une valeur comprise entre 0 et 100', 422);
         }
     }

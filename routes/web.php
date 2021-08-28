@@ -52,6 +52,10 @@ Route::get('/api/trashed-recipes', 'RecipesController@trashed');
 Route::get('/api/trashed-recipes/{recipe}/restore', 'RecipesController@restore');
 Route::delete('/api/trashed-recipes/{recipe}/delete', 'RecipesController@hardDelete');
 
+// Logs
+Route::get('/api/logs', 'LogsController@index');
+Route::post('/api/logs', 'LogsController@log');
+
 // Compteurs
 Route::get('/api/counters', 'CountersController@index');
 Route::patch('/api/counters/{counter}', 'CountersController@update');
@@ -74,7 +78,6 @@ Route::post('/export-baskets', 'ExportController@exportBaskets');
 // ATTENTION :  tout utilisateur enregistré dispose des droits d'administrateur et peux donc accéder aux pages admin
 //Auth::routes();
 Auth::routes(['register' => false]);
-
 
 
 // ROUTES FRONT-END

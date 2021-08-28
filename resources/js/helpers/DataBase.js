@@ -8,6 +8,14 @@ export default {
     ],
     methods: {
 
+        log(message, details = {}) {
+            writeLog(message, details).then(response => {
+                // console.log(response.data);
+            }).catch(error => {
+                flash(error.response.data, 'danger');
+            });
+        },
+
         // WASTE HOME-PAGE component
         fetchCountersFromDB() {
             getCountersFromDB().then((response) => {
@@ -122,6 +130,13 @@ export default {
 }
 
 // Situées ici, ces fonctions sont "privées"
+
+function writeLog(message, details) {
+    return axios.post('/api/logs', {
+        message: message,
+        details: details,
+    });
+}
 
 function getContents() {
     return axios.get('/api/contents');

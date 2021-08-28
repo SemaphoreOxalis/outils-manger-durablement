@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Content;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ContentController extends Controller
@@ -34,11 +35,13 @@ class ContentController extends Controller
                 'html_content' => 'required|string',
                 'original' => 'required|string',
             ]);
+            $oldContent = $content;
 
             $content->update([
                 'html_content' => htmlspecialchars($request->input('html_content'), ENT_QUOTES),
                 'original' => htmlspecialchars($request->input('original'), ENT_QUOTES)
             ]);
+            Log::channel('custom')->info('Contenu modifié', ['oldContent' => $oldContent, 'newContent' => $content]);
 
             return response('Vos modifications ont été enregistrées', 202);
         } catch (\Exception $e)

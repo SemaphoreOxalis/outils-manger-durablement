@@ -39,6 +39,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   // déclaration de dépendance à ces bibliothèques de fonctions
@@ -117,6 +121,16 @@ var render = function() {
                   [
                     _c("button", { staticClass: "button alter" }, [
                       _vm._v("Wysiwyg")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  { attrs: { to: "/admin/logs", tag: "span" } },
+                  [
+                    _c("button", { staticClass: "button alter" }, [
+                      _vm._v("logs")
                     ])
                   ]
                 )

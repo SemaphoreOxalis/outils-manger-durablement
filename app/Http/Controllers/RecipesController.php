@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Recipe;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class RecipesController extends Controller
 {
@@ -28,8 +29,10 @@ class RecipesController extends Controller
         try {
             $recipe = Recipe::withTrashed()->find($recipeId);
             $recipe->restore();
+            Log::channel('custom')->info('Recette restaurée', ['recipe' => $recipe]);
             return response('La recette a bien été restaurée', 202);
         } catch(\Exception $e) {
+            Log::error('Erreur (recipes.restore)', ['error' => $e, 'id' => $recipeId]);
             return response('Erreur de sauvegarde', 422);
         }
     }
@@ -38,9 +41,11 @@ class RecipesController extends Controller
     {
         try {
             $recipe = Recipe::withTrashed()->find($recipeId);
+            Log::channel('custom')->notice('Recette supprimée définitivement', ['recipe' => $recipe]);
             $recipe->forceDelete();
             return response('La recette a bien été supprimée définitivement', 202);
         } catch(\Exception $e) {
+            Log::error('Erreur (recipes.hardDelete)', ['error' => $e, 'id' => $recipeId]);
             return response('Erreur de sauvegarde', 422);
         }
     }
@@ -81,9 +86,11 @@ class RecipesController extends Controller
             });
             $recipe->products()->sync($products);
 
+            Log::channel('custom')->info('Recette créée', ['recipe' => $recipe]);
+
             return $recipe->id;
         } catch(\Exception $e) {
-            return $e;
+            Log::error('Erreur (recipes.store)', ['error' => $e, 'request' => $request]);
             return response('Erreur de sauvegarde', 422);
         }
     }
@@ -114,9 +121,12 @@ class RecipesController extends Controller
             $recipe->update(request(['name', 'description', 'author']));
             $recipe->products()->sync($products);
 
+            Log::channel('custom')->info('Recette modifiée', ['recipe' => $recipe]);
+
             return response('La recette "' . $recipe->name . '" a bien été modifiée', 202);
         } catch (\Exception $e)
         {
+            Log::error('Erreur (recipes.update)', ['error' => $e, 'request' => $request, 'recipe' =>$recipe]);
             return response('Erreur de sauvegarde', 422);
         }
     }
@@ -125,9 +135,11 @@ class RecipesController extends Controller
     {
         try {
             $name = $recipe->name;
+            Log::channel('custom')->info('Recette supprimée', ['recipe' => $recipe]);
             $recipe->delete();
             return response('La recette "' . $name . '" a bien été supprimée', 202);
         } catch(\Exception $e) {
+            Log::error('Erreur (recipes.destroy)', ['error' => $e, 'recipe' => $recipe]);
             return response('Erreur de sauvegarde', 422);
         }
     }

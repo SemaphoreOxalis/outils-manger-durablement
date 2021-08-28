@@ -242,6 +242,7 @@ export default {
                     type: 'special',
                 });
                 [...recipe.products].reverse().forEach(p => {
+                    p.productId = p.id;
                     this.addProduct(p, true);
                 });
                 this.addProduct({
