@@ -4,6 +4,13 @@
 
         <p>{{ howTo.youCanDoStuffWith }} {{ howTo.origins }} {{ howTo.fieldsCantBeNull }}</p>
 
+        <div class="my-2 d-flex justify-content-around pr-3">
+            <p><strong>Origine</strong></p>
+            <p><strong>Distance (km)</strong></p>
+            <p><strong>Impact Carbone</strong></p>
+            <p><strong>Impact Carbone par Km</strong></p>
+        </div>
+
         <div v-for="origin in origins"
              :key="origin.id">
 

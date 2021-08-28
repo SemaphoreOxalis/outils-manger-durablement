@@ -7,6 +7,15 @@
         <input type="text" v-model="search" placeholder="Rechercher un produit.." style="max-width: 350px;">
         <button @click="search=''" style="display: inline-block;">X</button>
 
+        <div class="my-2 d-flex justify-content-around pr-1">
+            <p><strong>Nom</strong></p>
+            <p><strong>Commentaire</strong></p>
+            <p class="mx-3"></p>
+            <p><strong>Unité</strong></p>
+            <p><strong>Catégorie</strong></p>
+            <p><strong>Taux d'émission carbone</strong></p>
+        </div>
+
         <div v-for="product in filteredProducts"
              :key="product.id">
 

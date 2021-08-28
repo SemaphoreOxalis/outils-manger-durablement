@@ -73,6 +73,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -176,6 +185,8 @@ var render = function() {
         },
         [_vm._v("X")]
       ),
+      _vm._v(" "),
+      _vm._m(0),
       _vm._v(" "),
       _vm._l(_vm.filteredProducts, function(product) {
         return _c("div", { key: product.id }, [
@@ -529,7 +540,30 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "my-2 d-flex justify-content-around pr-1" },
+      [
+        _c("p", [_c("strong", [_vm._v("Nom")])]),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Commentaire")])]),
+        _vm._v(" "),
+        _c("p", { staticClass: "mx-3" }),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Unité")])]),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Catégorie")])]),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Taux d'émission carbone")])])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

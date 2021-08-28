@@ -51,6 +51,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -109,6 +116,8 @@ var render = function() {
             _vm._s(_vm.howTo.fieldsCantBeNull)
         )
       ]),
+      _vm._v(" "),
+      _vm._m(0),
       _vm._v(" "),
       _vm._l(_vm.origins, function(origin) {
         return _c("div", { key: origin.id }, [
@@ -342,7 +351,26 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "my-2 d-flex justify-content-around pr-3" },
+      [
+        _c("p", [_c("strong", [_vm._v("Origine")])]),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Distance (km)")])]),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Impact Carbone")])]),
+        _vm._v(" "),
+        _c("p", [_c("strong", [_vm._v("Impact Carbone par Km")])])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

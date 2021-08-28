@@ -17,6 +17,10 @@
                 <button class="button alter">Origines</button>
             </router-link>
 
+            <router-link to="/admin/carbon-simulator/equivalences" tag="span">
+                <button class="button alter">Equivalences</button>
+            </router-link>
+
             <router-link to="/admin/carbon-simulator/recipes" tag="span">
                 <button class="button alter">Recettes supprimées</button>
             </router-link>
