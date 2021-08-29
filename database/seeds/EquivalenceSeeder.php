@@ -13,9 +13,16 @@ class EquivalenceSeeder extends Seeder
     {
         DB::table('equivalences')->insert([
             'name' => 'Voiture',
-            'rate' => 0.253,
+            'rate' => 3.953,
             'unit' => 'kms en voiture',
             'source' => 'https://datagir.ademe.fr/blog/transport/impact-carbone-mobilite-eco-deplacement.md',
+        ]);
+
+        DB::table('equivalences')->insert([
+            'name' => 'Ordures',
+            'rate' => 2.591,
+            'unit' => 'kgs d\'ordures ménagères',
+            'source' => 'https://monconvertisseurco2.fr',
         ]);
     }
 }

@@ -20,6 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/RecipesDataBase */ "./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../helpers/carbon-simulation/recipesHelper */ "./resources/js/helpers/carbon-simulation/recipesHelper.js");
+/* harmony import */ var _helpers_carbon_simulation_database_EquivalencesDataBase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/EquivalencesDataBase */ "./resources/js/helpers/carbon-simulation/database/EquivalencesDataBase.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -88,6 +89,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
 
 
 
@@ -121,7 +124,7 @@ var BasketsList = function BasketsList() {
     AddProductPopUp: AddProductPopUp,
     BasketsList: BasketsList
   },
-  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"], _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__["default"]],
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_carbon_simulation_database_EquivalencesDataBase__WEBPACK_IMPORTED_MODULE_10__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"], _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__["default"]],
   data: function data() {
     return {
       products: [],
@@ -131,6 +134,7 @@ var BasketsList = function BasketsList() {
       categories: [],
       units: [],
       origins: [],
+      equivalences: [],
       selectedCategoryId: null,
       selectedByCategory: false,
       selectedBySearchBar: false,
@@ -152,6 +156,7 @@ var BasketsList = function BasketsList() {
     this.fetchCategories();
     this.fetchUnits();
     this.fetchOrigins();
+    this.fetchEquivalences();
     this.getInternalCounters();
     $(document).ready(function () {
       $('.modal').modal();
@@ -359,6 +364,7 @@ var render = function() {
         attrs: {
           origins: this.origins,
           categories: this.categories,
+          equivalences: this.equivalences,
           "product-to-add": this.productToAddWithDetails
         },
         on: { "selected-baskets": _vm.setSelectedBaskets }
@@ -528,6 +534,84 @@ function postCategory(newCatName) {
 
 function destroyCategory(catId) {
   return axios["delete"]('/api/categories/' + catId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/EquivalencesDataBase.js":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/EquivalencesDataBase.js ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchEquivalences: function fetchEquivalences() {
+      var _this = this;
+
+      getEquivalences().then(function (response) {
+        _this.equivalences = response.data;
+      });
+    },
+    updateEquivalence: function updateEquivalence(equivalence) {
+      patchEquivalence(equivalence).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addEquivalence: function addEquivalence() {
+      var _this2 = this;
+
+      postEquivalence(this.newEquivalence).then(function (response) {
+        _this2.equivalences.push(response.data);
+
+        _this2.newEquivalence = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteEquivalence: function deleteEquivalence(equivalenceId) {
+      var _this3 = this;
+
+      destroyEquivalence(equivalenceId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshEquivalences();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getEquivalences() {
+  return axios.get('/api/equivalences');
+}
+
+function patchEquivalence(equivalence) {
+  return axios.patch('/api/equivalences/' + equivalence.id, {
+    name: equivalence.name,
+    rate: equivalence.rate,
+    unit: equivalence.unit,
+    source: equivalence.source
+  });
+}
+
+function postEquivalence(newEquivalence) {
+  return axios.post('/api/equivalences', {
+    name: newEquivalence.name,
+    rate: newEquivalence.rate,
+    unit: newEquivalence.unit,
+    source: newEquivalence.source
+  });
+}
+
+function destroyEquivalence(equivalenceId) {
+  return axios["delete"]('/api/equivalences/' + equivalenceId);
 }
 
 /***/ }),

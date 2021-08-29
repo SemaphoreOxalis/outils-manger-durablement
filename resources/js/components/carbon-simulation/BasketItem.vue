@@ -59,6 +59,7 @@
                        :compare-to-previous-basket="compareToPreviousBasket"
                        :products="basket.products"
                        :categories="categories"
+                       :equivalences="equivalences"
                        :basket-id="basket.id"
                        :blocks="blocks">
         </basket-result>
@@ -99,6 +100,7 @@ export default {
         index: Number,
         origins: Array,
         categories: Array,
+        equivalences: Array,
         productToAdd: Object,
         previousBasket: Object,
         firstBasket: Object,

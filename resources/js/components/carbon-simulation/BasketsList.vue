@@ -22,6 +22,7 @@
                          v-bind:index="i"
                          v-bind:origins="origins"
                          v-bind:categories="categories"
+                         v-bind:equivalences="equivalences"
                          v-bind:product-to-add="productToAdd"
                          v-bind:previous-basket="previousBasket(i)"
                          v-bind:first-basket="firstBasket"
@@ -95,6 +96,7 @@ export default {
     props: {
         origins: Array,
         categories: Array,
+        equivalences: Array,
         productToAdd: Object,
     },
     data() {

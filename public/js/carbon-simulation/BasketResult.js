@@ -159,6 +159,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -171,6 +184,7 @@ __webpack_require__.r(__webpack_exports__);
     basket: Object,
     products: Array,
     categories: Array,
+    equivalences: Array,
     basketId: String,
     isFirst: Boolean,
     previousBasket: Object,
@@ -190,11 +204,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      if (this.equivalent < 2) {
-        return "km en voiture";
-      }
-
-      return "kms en voiture";
+      return this.selectedEquivalence.unit;
     }
   },
   watch: {
@@ -226,6 +236,8 @@ __webpack_require__.r(__webpack_exports__);
       chartViewMoney: false,
       results: {},
       comparedBasket: {},
+      guests: 1,
+      selectedEquivalence: {},
       equivalent: null
     };
   },
@@ -236,9 +248,18 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     setTimeout(function () {
+      _this.selectedEquivalence = _this.equivalences[0];
+
       _this.updateResults();
 
       _this.createChart(_this.basketId + '-chart');
+
+      var select = '#results-select-' + _this.basketId;
+      var span = '#hidden-span-' + _this.basketId;
+      $(select).change(function () {
+        $(select).width($(span).html($(select).find(':selected').text()).width() + 8);
+      });
+      $(select).width($(span).html(_this.equivalences[0].unit).width() + 8);
     }, 1500);
     events.$on('update-results', this.updateResults);
   },
@@ -314,13 +335,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateEquivalence: function updateEquivalence() {
-      if (this.globalCarbonImpact.impact < 0.253) {
-        // en dessous ça ne fais pas un km
+      if (this.globalCarbonImpact.impact < 1 / this.selectedEquivalence.rate) {
+        // en dessous ça ne fais pas une "unité" de l'équivalence
         this.equivalent = 'négligeable';
       } else {
-        this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact / 0.253); // faire 10 000 km en voiture c’est émettre 2.53 tonnes de CO2
-        // "la voiture moyenne émettant 0,253 kg CO2e/km"
-        // Source: ADEME https://datagir.ademe.fr/blog/transport/impact-carbone-mobilite-eco-deplacement.md
+        this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact * this.selectedEquivalence.rate);
       }
     },
     updateInternalBlocks: function updateInternalBlocks() {
@@ -345,12 +364,14 @@ __webpack_require__.r(__webpack_exports__);
     sendResults: function sendResults() {
       this.results.cats = this.cats;
       this.results.blocks = this.blcks;
-      this.results.equivalence = this.equivalent + ' ' + this.equivalentUnit;
+      this.results.equivalent = this.equivalent;
+      this.results.equivalentUnit = this.equivalentUnit;
       this.results.co2PerEuro = this.globalCO2PerEuroFormatted + ' ' + this.globalCO2PerEuroUnit;
       this.results.globalProductImpact = this.globalProductImpact.impact;
       this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
       this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
       this.results.globalMoneySpend = this.globalMoneySpend;
+      this.results.guests = this.guests;
       events.$emit('save-baskets-results', this.index, this.results);
     },
     getDelta: function getDelta(basketCarbon, previousBasketCarbon) {
@@ -976,13 +997,121 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "results-comment" }, [
                 _c("div", [
+                  _vm._v("\n                            Soit, pour "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.guests,
+                        expression: "guests"
+                      }
+                    ],
+                    staticClass: "browser-default results-select guests",
+                    attrs: {
+                      type: "number",
+                      min: "1",
+                      step: "1",
+                      oninput:
+                        "this.style.width = ((this.value.length + 1) * 7) + 'px';"
+                    },
+                    domProps: { value: _vm.guests },
+                    on: {
+                      change: _vm.updateResults,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.guests = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v("\n                            personne"),
+                  _vm.guests > 1 ? _c("span", [_vm._v("s")]) : _vm._e(),
+                  _vm._v(
+                    ",\n                            " +
+                      _vm._s(
+                        this.roundToTwoDecimal(
+                          _vm.globalCarbonImpact.formatted / _vm.guests
+                        )
+                      ) +
+                      " " +
+                      _vm._s(_vm.globalCarbonImpact.unit) +
+                      " par personne\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", [
                   _vm._v(
                     _vm._s(_vm.impact.carbon) +
                       " : " +
-                      _vm._s(_vm.equivalent) +
-                      " " +
-                      _vm._s(_vm.equivalentUnit)
-                  )
+                      _vm._s(this.separateThousands(_vm.equivalent)) +
+                      "\n                            "
+                  ),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedEquivalence,
+                          expression: "selectedEquivalence"
+                        }
+                      ],
+                      staticClass: "results-select",
+                      attrs: { id: "results-select-" + _vm.basketId },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedEquivalence = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          _vm.updateResults
+                        ]
+                      }
+                    },
+                    _vm._l(_vm.equivalences, function(eq) {
+                      return _c("option", { domProps: { value: eq } }, [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(eq.unit) +
+                            "\n                                "
+                        )
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _vm.guests > 1
+                    ? _c("span", [
+                        _vm._v(
+                          " (" +
+                            _vm._s(
+                              this.separateThousands(
+                                this.roundToOneDecimal(
+                                  _vm.equivalent / _vm.guests
+                                )
+                              )
+                            ) +
+                            " par personne)"
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", {
+                    staticClass: "hidden-span",
+                    attrs: { id: "hidden-span-" + _vm.basketId }
+                  })
                 ])
               ])
             ])
@@ -1455,18 +1584,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     divideIfNecessary: function divideIfNecessary(amount) {
       if (amount >= 1000) {
-        return this.roundToTwoDecimal(amount / 1000);
+        return this.roundToOneDecimal(amount / 1000);
       }
 
       return this.roundToOneDecimal(amount);
     },
     getUnit: function getUnit(amount) {
-      if (amount > 2000) {
-        return 'tonnes de CO2';
-      }
-
       if (amount >= 1000) {
-        return 'tonne de CO2';
+        return 'T de CO2';
       }
 
       return 'kgCO2';

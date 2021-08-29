@@ -85,6 +85,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -115,6 +116,7 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
   props: {
     origins: Array,
     categories: Array,
+    equivalences: Array,
     productToAdd: Object
   },
   data: function data() {
@@ -247,6 +249,7 @@ var render = function() {
               index: i,
               origins: _vm.origins,
               categories: _vm.categories,
+              equivalences: _vm.equivalences,
               "product-to-add": _vm.productToAdd,
               "previous-basket": _vm.previousBasket(i),
               "first-basket": _vm.firstBasket,

@@ -97,6 +97,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -125,6 +126,7 @@ var draggable = function draggable() {
     index: Number,
     origins: Array,
     categories: Array,
+    equivalences: Array,
     productToAdd: Object,
     previousBasket: Object,
     firstBasket: Object,
@@ -702,6 +704,7 @@ var render = function() {
               "compare-to-previous-basket": _vm.compareToPreviousBasket,
               products: _vm.basket.products,
               categories: _vm.categories,
+              equivalences: _vm.equivalences,
               "basket-id": _vm.basket.id,
               blocks: _vm.blocks
             }

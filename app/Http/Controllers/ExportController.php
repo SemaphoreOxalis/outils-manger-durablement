@@ -295,7 +295,14 @@ class ExportController extends Controller {
                 $sheet->setCellValue('C' . $line, $basket['results']['globalTransportationImpact'] . ' kgCO2');
                 $sheet->setCellValue('D' . $line, $basket['results']['globalCarbonImpact'] . ' kgCO2');
                 $sheet->setCellValue('E' . $line, $basket['globalCarbonDelta']);
-                $sheet->setCellValue('F' . $line, $basket['results']['equivalence']);
+                if($basket['results']['guests'] > 1) {
+                    $sheet->setCellValue('F' . ($line - 3), 'pour ' . $basket['results']['guests'] . ' personnes');
+                    $sheet->setCellValue('F' . ($line - 2), round(($basket['results']['globalProductImpact'] / $basket['results']['guests']), 3) . ' KgCO2 par personne');
+                    $sheet->setCellValue('F' . ($line - 1), $basket['results']['equivalent'] . ' ' . $basket['results']['equivalentUnit']);
+                    $sheet->setCellValue('F' . $line, round(($basket['results']['equivalent'] / $basket['results']['guests']), 2) . ' ' . $basket['results']['equivalentUnit'] . ' par personne');
+                } else {
+                    $sheet->setCellValue('F' . $line, $basket['results']['equivalent'] . ' ' . $basket['results']['equivalentUnit']);
+                }
 
                 $sheet->setCellValue('H' . $line, 'Total');
                 $sheet->getStyle('H' . $line)->getFont()->setBold(true);

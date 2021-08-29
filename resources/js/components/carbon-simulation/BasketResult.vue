@@ -73,7 +73,20 @@
                             <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
                         </div>
                         <div class="results-comment">
-                            <div>{{ impact.carbon }} : {{ equivalent }} {{ equivalentUnit }}</div>
+                            <div>
+                                Soit, pour <input type="number" class="browser-default results-select guests" min="1" step="1" v-model="guests" oninput="this.style.width = ((this.value.length + 1) * 7) + 'px';" @change="updateResults">
+                                personne<span v-if="guests > 1">s</span>,
+                                {{ this.roundToTwoDecimal(globalCarbonImpact.formatted / guests) }}&nbsp;{{ globalCarbonImpact.unit }} par personne
+                            </div>
+                            <div>{{ impact.carbon }} : {{ this.separateThousands(equivalent) }}
+                                <select v-model="selectedEquivalence" @change="updateResults" class="results-select" :id="'results-select-' + basketId">
+                                    <option v-for="eq in equivalences" v-bind:value="eq">
+                                        {{ eq.unit }}
+                                    </option>
+                                </select>
+                                <span v-if="guests > 1"> ({{ this.separateThousands(this.roundToOneDecimal(equivalent / guests)) }}&nbsp;par&nbsp;personne)</span>
+                                <span class="hidden-span" :id="'hidden-span-' + basketId"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -161,6 +174,7 @@ export default {
         basket: Object,
         products: Array,
         categories: Array,
+        equivalences: Array,
         basketId: String,
         isFirst: Boolean,
         previousBasket: Object,
@@ -179,10 +193,7 @@ export default {
             if (this.equivalent === 'négligeable') {
                 return;
             }
-            if (this.equivalent < 2) {
-                return "km en voiture";
-            }
-            return "kms en voiture";
+            return this.selectedEquivalence.unit;
         },
     },
     watch: {
@@ -220,6 +231,8 @@ export default {
 
             comparedBasket: {},
 
+            guests: 1,
+            selectedEquivalence: {},
             equivalent: null,
         }
     },
@@ -228,8 +241,15 @@ export default {
     },
     mounted() {
         setTimeout(() => {
+            this.selectedEquivalence = this.equivalences[0];
             this.updateResults();
             this.createChart(this.basketId + '-chart');
+            let select = '#results-select-' + this.basketId;
+            let span = '#hidden-span-' + this.basketId;
+            $(select).change(function() {
+               $(select).width($(span).html($(select).find(':selected').text()).width() + 8);
+            });
+            $(select).width($(span).html(this.equivalences[0].unit).width() + 8);
         }, 1500);
         events.$on('update-results', this.updateResults);
     },
@@ -298,13 +318,10 @@ export default {
             });
         },
         updateEquivalence() {
-            if (this.globalCarbonImpact.impact < 0.253) { // en dessous ça ne fais pas un km
+            if (this.globalCarbonImpact.impact < (1 / this.selectedEquivalence.rate)) { // en dessous ça ne fais pas une "unité" de l'équivalence
                 this.equivalent = 'négligeable';
             } else {
-                this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact / 0.253);
-                // faire 10 000 km en voiture c’est émettre 2.53 tonnes de CO2
-                // "la voiture moyenne émettant 0,253 kg CO2e/km"
-                // Source: ADEME https://datagir.ademe.fr/blog/transport/impact-carbone-mobilite-eco-deplacement.md
+                this.equivalent = this.roundToOneDecimal(this.globalCarbonImpact.impact * this.selectedEquivalence.rate);
             }
         },
         updateInternalBlocks() {
@@ -320,12 +337,14 @@ export default {
         sendResults() {
             this.results.cats = this.cats;
             this.results.blocks = this.blcks;
-            this.results.equivalence = this.equivalent + ' ' + this.equivalentUnit;
+            this.results.equivalent = this.equivalent;
+            this.results.equivalentUnit = this.equivalentUnit;
             this.results.co2PerEuro = this.globalCO2PerEuroFormatted + ' ' +  this.globalCO2PerEuroUnit;
             this.results.globalProductImpact = this.globalProductImpact.impact;
             this.results.globalTransportationImpact = this.globalTransportationImpact.impact;
             this.results.globalCarbonImpact = this.globalCarbonImpact.impact;
             this.results.globalMoneySpend = this.globalMoneySpend;
+            this.results.guests = this.guests;
             events.$emit('save-baskets-results', this.index, this.results);
         },
 

@@ -144,16 +144,13 @@ export default {
 
         divideIfNecessary(amount) {
             if (amount >= 1000) {
-                return this.roundToTwoDecimal(amount / 1000);
+                return this.roundToOneDecimal(amount / 1000);
             }
             return this.roundToOneDecimal(amount);
         },
         getUnit(amount) {
-            if (amount > 2000) {
-                return 'tonnes de CO2';
-            }
             if (amount >= 1000) {
-                return 'tonne de CO2';
+                return 'T de CO2';
             }
             return 'kgCO2';
         },

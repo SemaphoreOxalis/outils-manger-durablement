@@ -53,6 +53,7 @@
 
         <baskets-list v-bind:origins="this.origins"
                       v-bind:categories="this.categories"
+                      v-bind:equivalences="this.equivalences"
                       v-bind:product-to-add="this.productToAddWithDetails"
                       @selected-baskets="setSelectedBaskets">
         </baskets-list>
@@ -70,6 +71,7 @@ import BasketSimulatorText from "../../../texts/carbonSimulator/BasketSimulatorT
 import DataBase from "../../helpers/DataBase";
 import RecipesDataBase from "../../helpers/carbon-simulation/database/RecipesDataBase";
 import recipesHelper from "../../helpers/carbon-simulation/recipesHelper";
+import EquivalencesDataBase from "../../helpers/carbon-simulation/database/EquivalencesDataBase";
 const SearchBar = () => import(
     /* webpackChunkName: "js/carbon-simulation/SearchBar" */
     './SearchBar'
@@ -101,6 +103,7 @@ export default {
         CategoriesDataBase,
         UnitsDataBase,
         OriginsDataBase,
+        EquivalencesDataBase,
         BasketSimulatorText,
         DataBase,
         recipesHelper,
@@ -114,6 +117,7 @@ export default {
             categories: [],
             units: [],
             origins: [],
+            equivalences: [],
 
             selectedCategoryId: null,
             selectedByCategory: false,
@@ -141,6 +145,7 @@ export default {
         this.fetchCategories();
         this.fetchUnits();
         this.fetchOrigins();
+        this.fetchEquivalences();
 
         this.getInternalCounters();
 
