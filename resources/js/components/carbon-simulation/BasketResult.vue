@@ -76,15 +76,20 @@
                             <div>
                                 Soit, pour <input type="number" class="browser-default results-select guests" min="1" step="1" v-model="guests" oninput="this.style.width = ((this.value.length + 1) * 7) + 'px';" @change="updateResults">
                                 personne<span v-if="guests > 1">s</span>,
-                                {{ this.roundToTwoDecimal(globalCarbonImpact.formatted / guests) }}&nbsp;{{ globalCarbonImpact.unit }} par personne
+                                {{ this.roundToTwoDecimal(globalCarbonImpact.formatted / guests) }}&nbsp;{{ globalCarbonImpact.unit }} par personne.
                             </div>
-                            <div>{{ impact.carbon }} : {{ this.separateThousands(equivalent) }}
+                            <div class="d-flex justify-content-center">
+                                <span>Equivalent : {{ this.separateThousands(equivalent) }}</span>
                                 <select v-model="selectedEquivalence" @change="updateResults" class="results-select" :id="'results-select-' + basketId">
                                     <option v-for="eq in equivalences" v-bind:value="eq">
                                         {{ eq.unit }}
                                     </option>
                                 </select>
-                                <span v-if="guests > 1"> ({{ this.separateThousands(this.roundToOneDecimal(equivalent / guests)) }}&nbsp;par&nbsp;personne)</span>
+                                <a v-if="selectedEquivalence.source" class="info-bubble product-info-bubble btn-ico alt tool info ml-2 align-self-baseline">
+                                    <span><a :href="selectedEquivalence.source" target="_blank"><strong class="icon">Source&nbsp;</strong></a></span>
+                                </a>
+                                <br>
+                                <span v-if="guests > 1"> ({{ this.separateThousands(this.roundToOneDecimal(equivalent / guests)) }} par personne)</span>
                                 <span class="hidden-span" :id="'hidden-span-' + basketId"></span>
                             </div>
                         </div>

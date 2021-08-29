@@ -1241,7 +1241,7 @@ h1.header {
   }
 
   .results-container {
-    min-height: (659.033px); // maximum height of this element with 12 blocks
+    min-height: 659.033px; // maximum height of this element with 12 blocks
     margin-top: 2rem;
     align-self: start;
   }
@@ -1620,6 +1620,10 @@ h1.header {
     min-height: 76px;
   }
 
+  .results-comment a {
+    font-style: normal;
+  }
+
   .results-select {
       display: inline-block;
       width: fit-content;
@@ -1635,8 +1639,16 @@ h1.header {
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      box-shadow: var(--third-color) 0px 0.1rem 0px 0px;
+      box-shadow: var(--third-color) 0 0.1rem 0 0px;
       transition: box-shadow 300ms ease-out 0s;
+  }
+
+  .results-select::-ms-expand {
+      display: none;
+  }
+
+  .results-select:invalid {
+      box-shadow: var(--error-color) 0 0.25rem 0 0px;
   }
 
   .results-select.guests {
@@ -1650,16 +1662,8 @@ h1.header {
       margin: 0;
   }
 
-  .results-select:invalid {
-      box-shadow: var(--error-color) 0px 0.25rem 0px 0px;
-  }
-
   .hidden-span {
       visibility: hidden;
-      display: none;
-  }
-
-  .results-select::-ms-expand {
       display: none;
   }
 

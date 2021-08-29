@@ -172,6 +172,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1037,17 +1042,18 @@ var render = function() {
                       ) +
                       " " +
                       _vm._s(_vm.globalCarbonImpact.unit) +
-                      " par personne\n                        "
+                      " par personne.\n                        "
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", [
-                  _vm._v(
-                    _vm._s(_vm.impact.carbon) +
-                      " : " +
-                      _vm._s(this.separateThousands(_vm.equivalent)) +
-                      "\n                            "
-                  ),
+                _c("div", { staticClass: "d-flex justify-content-center" }, [
+                  _c("span", [
+                    _vm._v(
+                      "Equivalent : " +
+                        _vm._s(this.separateThousands(_vm.equivalent))
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "select",
                     {
@@ -1092,6 +1098,37 @@ var render = function() {
                     0
                   ),
                   _vm._v(" "),
+                  _vm.selectedEquivalence.source
+                    ? _c(
+                        "a",
+                        {
+                          staticClass:
+                            "info-bubble product-info-bubble btn-ico alt tool info ml-2 align-self-baseline"
+                        },
+                        [
+                          _vm._v("\n                                "),
+                          _c("span", [
+                            _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: _vm.selectedEquivalence.source,
+                                  target: "_blank"
+                                }
+                              },
+                              [
+                                _c("strong", { staticClass: "icon" }, [
+                                  _vm._v("Source ")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
                   _vm.guests > 1
                     ? _c("span", [
                         _vm._v(
@@ -1103,7 +1140,7 @@ var render = function() {
                                 )
                               )
                             ) +
-                            " par personne)"
+                            " par personne)"
                         )
                       ])
                     : _vm._e(),
