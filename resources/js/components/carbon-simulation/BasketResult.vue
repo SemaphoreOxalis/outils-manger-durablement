@@ -89,9 +89,9 @@
                                     <span><a :href="selectedEquivalence.source" target="_blank"><strong class="icon">Source&nbsp;</strong></a></span>
                                 </a>
                                 <br>
-                                <span v-if="guests > 1"> ({{ this.separateThousands(this.roundToOneDecimal(equivalent / guests)) }} par personne)</span>
                                 <span class="hidden-span" :id="'hidden-span-' + basketId"></span>
                             </div>
+                            <div v-if="guests > 1"> ({{ this.separateThousands(this.roundToOneDecimal(equivalent / guests)) }} par personne)</div>
                         </div>
                     </div>
                 </div>

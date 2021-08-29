@@ -1129,27 +1129,27 @@ var render = function() {
                   _vm._v(" "),
                   _c("br"),
                   _vm._v(" "),
-                  _vm.guests > 1
-                    ? _c("span", [
-                        _vm._v(
-                          " (" +
-                            _vm._s(
-                              this.separateThousands(
-                                this.roundToOneDecimal(
-                                  _vm.equivalent / _vm.guests
-                                )
-                              )
-                            ) +
-                            " par personne)"
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
                   _c("span", {
                     staticClass: "hidden-span",
                     attrs: { id: "hidden-span-" + _vm.basketId }
                   })
-                ])
+                ]),
+                _vm._v(" "),
+                _vm.guests > 1
+                  ? _c("div", [
+                      _vm._v(
+                        " (" +
+                          _vm._s(
+                            this.separateThousands(
+                              this.roundToOneDecimal(
+                                _vm.equivalent / _vm.guests
+                              )
+                            )
+                          ) +
+                          " par personne)"
+                      )
+                    ])
+                  : _vm._e()
               ])
             ])
           ]
