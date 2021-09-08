@@ -1118,7 +1118,7 @@ var render = function() {
                               },
                               [
                                 _c("strong", { staticClass: "icon" }, [
-                                  _vm._v("Source ")
+                                  _vm._v(" Source")
                                 ])
                               ]
                             )

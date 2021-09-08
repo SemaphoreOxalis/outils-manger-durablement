@@ -95,6 +95,8 @@ DEBUGBAR_ENABLED=false
     * Décommentez la ligne `Auth::routes();`
     * Commentez la ligne `Auth::routes(['register' => false]);`
 
+* :pencil2: Créez le fichier `storage/logs/log.log`
+
 * :cop: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
 
 * :pencil2: Ré-éditez le fichier routes/web.php :

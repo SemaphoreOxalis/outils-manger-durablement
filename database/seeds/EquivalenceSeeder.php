@@ -22,7 +22,7 @@ class EquivalenceSeeder extends Seeder
             'name' => 'Ordures',
             'rate' => 2.591,
             'unit' => 'kgs d\'ordures ménagères',
-            'source' => 'https://monconvertisseurco2.fr',
+            'source' => 'https://monconvertisseurco2.fr/?co2=1000&equivalents=22066',
         ]);
     }
 }

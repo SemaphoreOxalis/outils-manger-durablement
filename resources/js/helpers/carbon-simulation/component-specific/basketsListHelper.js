@@ -32,6 +32,7 @@ export default {
             if(name === '') {
                 name = 'liste ' + (this.basketsCounter + 1);
             }
+            this.log('Nouvelle liste créée', { name: name })
             return {
                 id: 'basket-' + (this.basketsCounter + 1),
                 name: name,

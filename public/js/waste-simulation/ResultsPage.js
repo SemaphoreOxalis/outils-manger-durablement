@@ -153,6 +153,9 @@ var AuditItem = function AuditItem() {
     if (this.userInput) {
       this.incrementAuditCounter();
       this.handleUserInput();
+      this.log('GASPI : Nouvel audit', {
+        input: this.userInput
+      });
       setTimeout(function () {
         _this.showResultsModal = true;
       }, 500);

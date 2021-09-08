@@ -1,6 +1,11 @@
 // helper pour le composant AuditSimulationList.vue
 
+import DataBase from "../../DataBase";
+
 export default {
+    mixins: [
+        DataBase,
+    ],
     methods: {
 
         // Met à jour la liste des simulations avec les données strictement nécessaires au fonctionnement de l'application
@@ -76,6 +81,7 @@ export default {
                 }
             );
             this.saveChangesToLocalStorage();
+            this.log('GASPI : Nouvelle simulation')
             this.$nextTick(() => {
                events.$emit('validate-simulations');
             });

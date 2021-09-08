@@ -137,6 +137,7 @@ export default {
         if (this.userInput) {
             this.incrementAuditCounter();
             this.handleUserInput();
+            this.log('GASPI : Nouvel audit', { input: this.userInput })
             setTimeout(() => {
                 this.showResultsModal = true;
             }, 500);

@@ -415,8 +415,11 @@ function makeBasketsExportAjaxCall(exportData) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DataBase__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../DataBase */ "./resources/js/helpers/DataBase.js");
 // helper pour le composant AuditSimulationList.vue
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_DataBase__WEBPACK_IMPORTED_MODULE_0__["default"]],
   methods: {
     // Met à jour la liste des simulations avec les données strictement nécessaires au fonctionnement de l'application
     updateSimulationsList: function updateSimulationsList(simulation) {
@@ -479,6 +482,7 @@ __webpack_require__.r(__webpack_exports__);
         ratio: this.dataSource.ratio
       });
       this.saveChangesToLocalStorage();
+      this.log('GASPI : Nouvelle simulation');
       this.$nextTick(function () {
         events.$emit('validate-simulations');
       });

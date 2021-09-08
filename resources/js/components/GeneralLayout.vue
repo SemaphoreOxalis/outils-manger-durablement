@@ -32,7 +32,7 @@
 
             <!-- Lien vers le changelog -->
             <p class="text-center">
-                <small><router-link :to="{ name: 'changelog'}" tag="a">Version {{ version }}</router-link></small>
+                <small><router-link :to="{ name: 'changelog'}" tag="a">Changelog</router-link></small>
             </p>
         </footer>
     </div>
@@ -57,13 +57,11 @@
                 counters: {},
                 stats: '',
                 footer: `<div class="loader-spinner"></div>`,
-                version: '',
             }
         },
         mounted() {
             this.fetchCountersFromDB();
             this.chooseFooterToDisplay(this.$route.path);
-            this.version = window.App.version;
         },
         methods: {
             chooseFooterToDisplay(path) {

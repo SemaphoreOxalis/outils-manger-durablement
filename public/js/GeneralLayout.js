@@ -65,14 +65,12 @@ __webpack_require__.r(__webpack_exports__);
       showCounters: false,
       counters: {},
       stats: '',
-      footer: "<div class=\"loader-spinner\"></div>",
-      version: ''
+      footer: "<div class=\"loader-spinner\"></div>"
     };
   },
   mounted: function mounted() {
     this.fetchCountersFromDB();
     this.chooseFooterToDisplay(this.$route.path);
-    this.version = window.App.version;
   },
   methods: {
     chooseFooterToDisplay: function chooseFooterToDisplay(path) {
@@ -207,7 +205,7 @@ var render = function() {
                 _c(
                   "router-link",
                   { attrs: { to: { name: "changelog" }, tag: "a" } },
-                  [_vm._v("Version " + _vm._s(_vm.version))]
+                  [_vm._v("Changelog")]
                 )
               ],
               1

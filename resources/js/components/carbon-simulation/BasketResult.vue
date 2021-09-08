@@ -86,7 +86,7 @@
                                     </option>
                                 </select>
                                 <a v-if="selectedEquivalence.source" class="info-bubble product-info-bubble btn-ico alt tool info ml-2 align-self-baseline">
-                                    <span><a :href="selectedEquivalence.source" target="_blank"><strong class="icon">Source&nbsp;</strong></a></span>
+                                    <span><a :href="selectedEquivalence.source" target="_blank"><strong class="icon">&nbsp;Source</strong></a></span>
                                 </a>
                                 <br>
                                 <span class="hidden-span" :id="'hidden-span-' + basketId"></span>
