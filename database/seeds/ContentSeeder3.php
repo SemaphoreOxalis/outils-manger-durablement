@@ -14,6 +14,7 @@ class ContentSeeder3 extends Seeder
         DB::table('contents')->insert([
             'name' => 'Changelog',
             'html_content' => '<div class="text-center">
+                                <h1 class="my-5">Version 1.0.1</h1>
                                 <h5 class="mt-5">Version 2.0 - prévue pour fin 09/2021</h5>
                                     <ul>
                                         <li>fonctionnalité "Recettes de Chef"</li>
@@ -28,6 +29,7 @@ class ContentSeeder3 extends Seeder
                                 <h5 class="mt-5">Version 1.0 - 01/2021</h5>
                             </div>',
             'original' => '<div class="text-center">
+                                <h1 class="my-5">Version 1.0.1</h1>
                             <h5 class="mt-5">Version 2.0 - prévue pour fin 09/2021</h5>
                                 <ul>
                                     <li>fonctionnalité "Recettes de Chef"</li>

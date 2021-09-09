@@ -50,5 +50,6 @@
     "/vendors~js/admin/WysiwygAdminPage.js": "/vendors~js/admin/WysiwygAdminPage.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js",
+    "/js/carbon-simulation/ProductRequest.js": "/js/carbon-simulation/ProductRequest.js"
 }

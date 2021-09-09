@@ -29,7 +29,8 @@
 
         <div>
             <div class="search-bar main-search">
-                <product-list v-bind:categories="this.categories"
+                <product-list class="w-25 align-self-end"
+                              v-bind:categories="this.categories"
                               v-bind:origins="this.origins"
                               v-bind:products="this.products"
                               v-bind:recipes="[]"
@@ -43,7 +44,8 @@
                               @add-product-to-basket="showAddingProductModal">
                 </product-list>
 
-                <search-bar :products="this.products"
+                <search-bar class="w-50 mr-1 align-self-end"
+                            :products="this.products"
                             :recipes="[]"
                             :specialProducts="[]"
                             :focus="this.focusOnSearchBar"
@@ -52,6 +54,8 @@
                             @product-chosen="showAddingProductModal"
                             @lose-focus="loseFocusOnSearchBar">
                 </search-bar>
+
+                <product-request class="ml-auto"></product-request>
             </div>
 
             <div class="d-flex justify-content-between mb-4">
@@ -151,6 +155,10 @@ const draggable = () => import(
     /* webpackChunkName: "js/draggable" */
     'vuedraggable'
     );
+const ProductRequest = () => import(
+    /* webpackChunkName: "js/carbon-simulation/ProductRequest" */
+    './../ProductRequest'
+    );
 
 export default {
     components: {
@@ -158,6 +166,7 @@ export default {
         ProductList,
         AddProductPopUp,
         draggable,
+        ProductRequest
     },
     mixins: [
         RecipesDataBase,

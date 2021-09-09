@@ -44,6 +44,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 // from https://www.digitalocean.com/community/tutorials/vuejs-vue-autocomplete-component
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -72,6 +76,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     focus: Boolean,
     placeholder: String
+  },
+  computed: {
+    noResults: function noResults() {
+      if (this.results.length === 0 && this.isOpen) {
+        events.$emit('glow');
+        return true;
+      } else {
+        events.$emit('unglow');
+        return false;
+      }
+    }
   },
   data: function data() {
     return {
@@ -237,35 +252,52 @@ var render = function() {
         ],
         staticClass: "autocomplete-results"
       },
-      _vm._l(_vm.results, function(result, index) {
-        return _c(
-          "li",
-          {
-            key: index,
-            staticClass: "autocomplete-result",
-            class: { "is-active": index === _vm.arrowCounter },
-            on: {
-              click: function($event) {
-                return _vm.setResult(result)
+      [
+        _vm._l(_vm.results, function(result, index) {
+          return _c(
+            "li",
+            {
+              key: index,
+              staticClass: "autocomplete-result",
+              class: { "is-active": index === _vm.arrowCounter },
+              on: {
+                click: function($event) {
+                  return _vm.setResult(result)
+                }
               }
-            }
-          },
-          [
-            _vm._v("\n            " + _vm._s(result.name)),
-            result.comment
-              ? _c("small", [_vm._v(" - " + _vm._s(result.comment))])
-              : _vm._e(),
-            _vm._v(" "),
-            result.type === "recipe"
-              ? _c("span", { staticClass: "ml-5 float-right" }, [
-                  _c("i", { staticClass: "icon icon-hat-chef" }, [_vm._v(" ")]),
-                  _vm._v(" Recette de chef")
-                ])
-              : _vm._e()
-          ]
-        )
-      }),
-      0
+            },
+            [
+              _vm._v("\n            " + _vm._s(result.name)),
+              result.comment
+                ? _c("small", [_vm._v(" - " + _vm._s(result.comment))])
+                : _vm._e(),
+              _vm._v(" "),
+              result.type === "recipe"
+                ? _c("span", { staticClass: "ml-5 float-right" }, [
+                    _c("i", { staticClass: "icon icon-hat-chef" }, [
+                      _vm._v(" ")
+                    ]),
+                    _vm._v(" Recette de chef")
+                  ])
+                : _vm._e()
+            ]
+          )
+        }),
+        _vm._v(" "),
+        _vm.noResults
+          ? _c("li", { staticClass: "d-flex mt-2" }, [
+              _c("p", { staticClass: "px-2" }, [
+                _vm._v("Nous n'avons pas trouvé "),
+                _c("strong", [_vm._v('"' + _vm._s(_vm.search) + '"')]),
+                _vm._v(
+                  ' dans notre base, utilisez le bouton "demande de produit"\n            '
+                ),
+                _c("i", { staticClass: "icon icon-long-arrow-up mx-2" })
+              ])
+            ])
+          : _vm._e()
+      ],
+      2
     )
   ])
 }

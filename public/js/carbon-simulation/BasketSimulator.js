@@ -90,6 +90,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -117,12 +118,17 @@ var BasketsList = function BasketsList() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketsList */ "js/carbon-simulation/BasketsList").then(__webpack_require__.bind(null, /*! ./BasketsList */ "./resources/js/components/carbon-simulation/BasketsList.vue"));
 };
 
+var ProductRequest = function ProductRequest() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/ProductRequest */ "js/carbon-simulation/ProductRequest").then(__webpack_require__.bind(null, /*! ./ProductRequest */ "./resources/js/components/carbon-simulation/ProductRequest.vue"));
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     SearchBar: SearchBar,
     ProductList: ProductList,
     AddProductPopUp: AddProductPopUp,
-    BasketsList: BasketsList
+    BasketsList: BasketsList,
+    ProductRequest: ProductRequest
   },
   mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_carbon_simulation_database_EquivalencesDataBase__WEBPACK_IMPORTED_MODULE_10__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"], _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__["default"]],
   data: function data() {
@@ -314,7 +320,9 @@ var render = function() {
                 )
               ])
             ]
-          )
+          ),
+          _vm._v(" "),
+          _c("product-request")
         ],
         1
       ),

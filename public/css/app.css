@@ -11146,6 +11146,45 @@ label {
   line-height: 25px;
 }
 
+@-webkit-keyframes glowing {
+  0% {
+    background-color: #fff;
+    box-shadow: 0 0 5px #fff;
+  }
+
+  50% {
+    background-color: var(--main-color);
+    box-shadow: 0 0 20px var(--main-color);
+  }
+
+  100% {
+    background-color: #fff;
+    box-shadow: 0 0 5px #fff;
+  }
+}
+
+@keyframes glowing {
+  0% {
+    background-color: #fff;
+    box-shadow: 0 0 5px #fff;
+  }
+
+  50% {
+    background-color: var(--main-color);
+    box-shadow: 0 0 20px var(--main-color);
+  }
+
+  100% {
+    background-color: #fff;
+    box-shadow: 0 0 5px #fff;
+  }
+}
+
+.button.glow {
+  -webkit-animation: glowing 1300ms infinite;
+          animation: glowing 1300ms infinite;
+}
+
 /**********/
 
 /* INPUTS */

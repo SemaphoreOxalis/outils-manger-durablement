@@ -23,6 +23,7 @@
                     <a href="#!" class="modal-close waves-effect waves-green button">{{ how_to.close_btn }}</a>
                 </div>
             </div>
+            <product-request></product-request>
         </div>
 
         <div class="search-bar main-search">
@@ -88,13 +89,18 @@ const BasketsList = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketsList" */
     './BasketsList'
     );
+const ProductRequest = () => import(
+    /* webpackChunkName: "js/carbon-simulation/ProductRequest" */
+    './ProductRequest'
+    );
 
 export default {
     components: {
         SearchBar,
         ProductList,
         AddProductPopUp,
-        BasketsList
+        BasketsList,
+        ProductRequest,
     },
     mixins: [
         searchBar,
@@ -205,7 +211,7 @@ export default {
             this.products.forEach(p => {
                 p.productId = p.id;
             });
-        }
+        },
     }
 }
 </script>

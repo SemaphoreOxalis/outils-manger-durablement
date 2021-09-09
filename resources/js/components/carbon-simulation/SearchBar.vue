@@ -22,6 +22,10 @@
                 {{ result.name }}<small v-if="result.comment"> - {{ result.comment }}</small>
                 <span v-if="result.type === 'recipe'" class="ml-5 float-right"><i class="icon icon-hat-chef">&nbsp;</i> Recette de chef</span>
             </li>
+            <li v-if="noResults" class="d-flex mt-2">
+                <p class="px-2">Nous n'avons pas trouvé <strong>"{{ search }}"</strong> dans notre base, utilisez le bouton "demande de produit"
+                <i class="icon icon-long-arrow-up mx-2"></i></p>
+            </li>
         </ul>
     </div>
 </template>
@@ -52,6 +56,17 @@
             },
             focus: Boolean,
             placeholder: String,
+        },
+        computed: {
+            noResults: function () {
+                if(this.results.length === 0 && this.isOpen) {
+                    events.$emit('glow');
+                    return true;
+                } else {
+                    events.$emit('unglow');
+                    return false;
+                }
+            },
         },
         data() {
             return {
