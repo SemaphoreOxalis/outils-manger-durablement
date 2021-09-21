@@ -32,7 +32,7 @@
 
             <!-- Lien vers le changelog -->
             <p class="text-center">
-                <small><router-link :to="{ name: 'changelog'}" tag="a">Changelog</router-link></small>
+                <small><router-link :to="{ name: 'changelog'}" tag="a">Journal des modifications</router-link></small>
             </p>
         </footer>
     </div>

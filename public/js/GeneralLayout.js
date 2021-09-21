@@ -205,7 +205,7 @@ var render = function() {
                 _c(
                   "router-link",
                   { attrs: { to: { name: "changelog" }, tag: "a" } },
-                  [_vm._v("Changelog")]
+                  [_vm._v("Journal des modifications")]
                 )
               ],
               1

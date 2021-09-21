@@ -174,11 +174,13 @@ var render = function() {
                     "div",
                     { staticClass: "text-left big-button-line-height" },
                     [
-                      _c("small", [_vm._v(_vm._s(_vm.btns.i_am_simulating))]),
+                      _c("small", [_vm._v("Je simule le")]),
+                      _vm._v(" "),
+                      _c("strong", [_vm._v(_vm._s(_vm.btns.carbon_impact))]),
                       _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
-                      _c("strong", [_vm._v(_vm._s(_vm.btns.carbon_impact))])
+                      _c("small", [_vm._v("de mes repas")])
                     ]
                   )
                 ]

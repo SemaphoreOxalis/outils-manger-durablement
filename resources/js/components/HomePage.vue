@@ -21,7 +21,7 @@
                     <button class="button big-button d-flex p-4 m-2 justify-content-center">
                         <div class="icon align-self-center mr-4"></div>
                         <div class="text-left big-button-line-height">
-                            <small>{{ btns.i_am_simulating }}</small> <br> <strong>{{ btns.carbon_impact }}</strong>
+                            <small>Je simule le</small> <strong>{{ btns.carbon_impact }}</strong> <br> <small>de mes repas</small>
                         </div>
                     </button>
                 </router-link>
