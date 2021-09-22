@@ -3,7 +3,6 @@
 export default {
     methods: {
         exportSimulations() {
-
             // Demande aux composants concernés de lui envoyer leurs données complètes
             events.$emit('get-full-simulations-info-for-export');
 
@@ -15,8 +14,6 @@ export default {
 
             // appel AJAX vers le côté Laravel (ExportController.php)
             makeSimsExportAjaxCall(this.export).then(response => {
-
-                //TODO: make it compatible with IE11
                 let headers = response.headers;
                 let blob = new Blob([response.data], {type: headers['Content-type']});
                 let link = document.createElement('a');
@@ -24,15 +21,11 @@ export default {
                 link.download = "Rapport-gaspillage_" + Date.now() + ".xlsx"
                 link.click();
             }).catch(e => {
-                console.log(e);
                 flash('Une erreur est survenue', 'danger');
             });
         },
 
         exportBaskets() {
-            // Demande aux composants concernés de lui envoyer leurs données complètes
-            events.$emit('get-full-simulations-info-for-export');
-
             // Création de l'objet à envoyer au back-end
             this.export.mode = this.compareToPreviousBasket ? 'Chaque liste est comparée à la précédente' : 'Les listes sont comparées à la première';
             this.export.baskets = this.baskets;
@@ -40,7 +33,6 @@ export default {
 
             // appel AJAX vers le côté Laravel (ExportController.php)
             makeBasketsExportAjaxCall(this.export).then(response => {
-
                 let headers = response.headers;
                 let blob = new Blob([response.data], {type: headers['Content-type']});
                 let link = document.createElement('a');
@@ -48,9 +40,24 @@ export default {
                 link.download = "Rapport-carbone_" + Date.now() + ".xlsx"
                 link.click();
             }).catch(e => {
-                console.log(e);
                 flash('Une erreur est survenue', 'danger');
             });
+        },
+
+        saveBaskets() {
+            try {
+                let date = new Date().toLocaleDateString().replace(/\//g, "-");
+                let blob = new Blob([JSON.stringify(this.selectedBaskets)], {type: 'text/carbon'});
+                let name = this.selectedBaskets[0].name;
+
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = name + "_" + date + ".carbon";
+                link.click();
+            } catch(e) {
+                console.log(e);
+                flash('Une erreur est survenue', 'danger');
+            }
         }
     }
 };

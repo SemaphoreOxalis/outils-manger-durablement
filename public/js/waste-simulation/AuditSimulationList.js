@@ -353,7 +353,6 @@ __webpack_require__.r(__webpack_exports__);
       this["export"].simulations = this.simulations; // appel AJAX vers le côté Laravel (ExportController.php)
 
       makeSimsExportAjaxCall(this["export"]).then(function (response) {
-        //TODO: make it compatible with IE11
         var headers = response.headers;
         var blob = new Blob([response.data], {
           type: headers['Content-type']
@@ -363,14 +362,11 @@ __webpack_require__.r(__webpack_exports__);
         link.download = "Rapport-gaspillage_" + Date.now() + ".xlsx";
         link.click();
       })["catch"](function (e) {
-        console.log(e);
         flash('Une erreur est survenue', 'danger');
       });
     },
     exportBaskets: function exportBaskets() {
-      // Demande aux composants concernés de lui envoyer leurs données complètes
-      events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
-
+      // Création de l'objet à envoyer au back-end
       this["export"].mode = this.compareToPreviousBasket ? 'Chaque liste est comparée à la précédente' : 'Les listes sont comparées à la première';
       this["export"].baskets = this.baskets;
       this["export"].date = this.getBasketsDateFromLocalStorage(); // appel AJAX vers le côté Laravel (ExportController.php)
@@ -385,9 +381,24 @@ __webpack_require__.r(__webpack_exports__);
         link.download = "Rapport-carbone_" + Date.now() + ".xlsx";
         link.click();
       })["catch"](function (e) {
-        console.log(e);
         flash('Une erreur est survenue', 'danger');
       });
+    },
+    saveBaskets: function saveBaskets() {
+      try {
+        var date = new Date().toLocaleDateString().replace(/\//g, "-");
+        var blob = new Blob([JSON.stringify(this.selectedBaskets)], {
+          type: 'text/carbon'
+        });
+        var name = this.selectedBaskets[0].name;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = name + "_" + date + ".carbon";
+        link.click();
+      } catch (e) {
+        console.log(e);
+        flash('Une erreur est survenue', 'danger');
+      }
     }
   }
 });

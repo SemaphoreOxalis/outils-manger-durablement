@@ -86,6 +86,19 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -340,14 +353,46 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c(
-      "button",
-      { staticClass: "button ml-auto", on: { click: _vm.exportBaskets } },
-      [
-        _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-        _vm._v(_vm._s(_vm.btn.export_btn) + "\n    ")
-      ]
-    )
+    _c("div", { staticClass: "d-flex" }, [
+      _c(
+        "button",
+        {
+          class: this.selectedBaskets.length ? "button" : "button alter",
+          attrs: {
+            title: this.selectedBaskets.length
+              ? ""
+              : "Aucune liste sélctionnée",
+            disabled: !this.selectedBaskets.length
+          },
+          on: { click: _vm.saveBaskets }
+        },
+        [
+          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+          _vm._v("Sauvegarder sur votre pc\n        ")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "button alter ml-2",
+          on: { click: function($event) {} }
+        },
+        [
+          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+          _vm._v("Charger depuis votre pc\n        ")
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "button ml-2", on: { click: _vm.exportBaskets } },
+        [
+          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+          _vm._v(_vm._s(_vm.btn.export_btn) + "\n        ")
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -469,7 +514,6 @@ __webpack_require__.r(__webpack_exports__);
       this["export"].simulations = this.simulations; // appel AJAX vers le côté Laravel (ExportController.php)
 
       makeSimsExportAjaxCall(this["export"]).then(function (response) {
-        //TODO: make it compatible with IE11
         var headers = response.headers;
         var blob = new Blob([response.data], {
           type: headers['Content-type']
@@ -479,14 +523,11 @@ __webpack_require__.r(__webpack_exports__);
         link.download = "Rapport-gaspillage_" + Date.now() + ".xlsx";
         link.click();
       })["catch"](function (e) {
-        console.log(e);
         flash('Une erreur est survenue', 'danger');
       });
     },
     exportBaskets: function exportBaskets() {
-      // Demande aux composants concernés de lui envoyer leurs données complètes
-      events.$emit('get-full-simulations-info-for-export'); // Création de l'objet à envoyer au back-end
-
+      // Création de l'objet à envoyer au back-end
       this["export"].mode = this.compareToPreviousBasket ? 'Chaque liste est comparée à la précédente' : 'Les listes sont comparées à la première';
       this["export"].baskets = this.baskets;
       this["export"].date = this.getBasketsDateFromLocalStorage(); // appel AJAX vers le côté Laravel (ExportController.php)
@@ -501,9 +542,24 @@ __webpack_require__.r(__webpack_exports__);
         link.download = "Rapport-carbone_" + Date.now() + ".xlsx";
         link.click();
       })["catch"](function (e) {
-        console.log(e);
         flash('Une erreur est survenue', 'danger');
       });
+    },
+    saveBaskets: function saveBaskets() {
+      try {
+        var date = new Date().toLocaleDateString().replace(/\//g, "-");
+        var blob = new Blob([JSON.stringify(this.selectedBaskets)], {
+          type: 'text/carbon'
+        });
+        var name = this.selectedBaskets[0].name;
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = name + "_" + date + ".carbon";
+        link.click();
+      } catch (e) {
+        console.log(e);
+        flash('Une erreur est survenue', 'danger');
+      }
     }
   }
 });

@@ -519,7 +519,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       baskets: 'Listes',
       add_new_basket: 'Nouvelle liste vide',
-      add_to_this_basket: 'Ajouter dans cette liste',
+      add_to_this_basket: 'Sélectionner cette liste',
       placeholders: {
         type_in_your_product: 'Tapez le nom de votre produit puis sélectionnez-le avec la souris ou les touches de votre clavier',
         search_prod: 'Rechercher un produit'

@@ -49,10 +49,23 @@
             </label>
         </div>
 
-        <button class="button ml-auto"
-                @click="exportBaskets">
-            <i class="icon mr-2"></i>{{ btn.export_btn }}
-        </button>
+        <div class="d-flex">
+            <button :class="this.selectedBaskets.length ? 'button' : 'button alter'"
+                    :title="this.selectedBaskets.length ? '' : 'Aucune liste sélctionnée'"
+                    :disabled="!this.selectedBaskets.length"
+                    @click="saveBaskets">
+                <i class="icon mr-2"></i>Sauvegarder sur votre pc
+            </button>
+            <button class="button alter ml-2"
+                    @click="">
+                <i class="icon mr-2"></i>Charger depuis votre pc
+            </button>
+            <button class="button ml-2"
+                    @click="exportBaskets">
+                <i class="icon mr-2"></i>{{ btn.export_btn }}
+            </button>
+        </div>
+
     </div>
 </template>
 
