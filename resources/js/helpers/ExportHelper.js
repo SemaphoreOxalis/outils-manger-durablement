@@ -44,15 +44,12 @@ export default {
             });
         },
 
-        saveBaskets() {
+        saveBaskets(fileName) {
             try {
-                let date = new Date().toLocaleDateString().replace(/\//g, "-");
                 let blob = new Blob([JSON.stringify(this.selectedBaskets)], {type: 'text/carbon'});
-                let name = this.selectedBaskets[0].name;
-
                 let link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
-                link.download = name + "_" + date + ".carbon";
+                link.download = fileName + ".carbon";
                 link.click();
             } catch(e) {
                 console.log(e);

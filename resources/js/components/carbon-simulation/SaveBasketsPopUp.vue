@@ -14,15 +14,19 @@
                     </div>
 
                     <div class="modal-footer">
-                        <p>Cliquez sur OK pour sauvegarder les listes sélectionnées dans un fichier .carbon que vous pourrez stocker sur votre ordinateur</p>
-                        <button class="modal-default-button button"
-                                @click="saveBaskets">
-                            OK
-                        </button>
-                        <button class="modal-default-button button alter"
-                                @click="cancel">
-                            Annuler
-                        </button>
+                        <label>Nom du fichier :</label>
+                        <input type="text" class="custom-input browser-default" v-model="fileName">
+                        <span>.carbon</span>
+                        <div class="mt-2">
+                            <button class="modal-default-button button"
+                                    @click="saveBaskets">
+                                OK
+                            </button>
+                            <button class="modal-default-button button alter"
+                                    @click="cancel">
+                                Annuler
+                            </button>
+                        </div>
                     </div>
 
                 </div>
@@ -37,9 +41,17 @@ export default {
         baskets: Array,
         selectedBaskets: Array,
     },
+    data() {
+        return {
+            fileName: '',
+        }
+    },
+    mounted() {
+        this.fileName = this.selectedBaskets[0].name + "_" + new Date().toLocaleDateString().replace(/\//g, "-");
+    },
     methods: {
         saveBaskets() {
-            this.$emit('save-baskets');
+            this.$emit('save-baskets', this.fileName);
             this.$emit('exit-without-saving');
         },
         cancel() {

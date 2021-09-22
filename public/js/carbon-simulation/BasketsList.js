@@ -577,16 +577,14 @@ __webpack_require__.r(__webpack_exports__);
         flash('Une erreur est survenue', 'danger');
       });
     },
-    saveBaskets: function saveBaskets() {
+    saveBaskets: function saveBaskets(fileName) {
       try {
-        var date = new Date().toLocaleDateString().replace(/\//g, "-");
         var blob = new Blob([JSON.stringify(this.selectedBaskets)], {
           type: 'text/carbon'
         });
-        var name = this.selectedBaskets[0].name;
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = name + "_" + date + ".carbon";
+        link.download = fileName + ".carbon";
         link.click();
       } catch (e) {
         console.log(e);
