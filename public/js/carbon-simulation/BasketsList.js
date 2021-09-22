@@ -99,6 +99,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -111,7 +118,7 @@ var BasketItem = function BasketItem() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/BasketItem */ "js/carbon-simulation/BasketItem").then(__webpack_require__.bind(null, /*! ./BasketItem */ "./resources/js/components/carbon-simulation/BasketItem.vue"));
 };
 
-var ActionConfirmation = function ActionConfirmation() {
+var ActionConfirmationPopUp = function ActionConfirmationPopUp() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/ActionConfirmation */ "js/carbon-simulation/ActionConfirmation").then(__webpack_require__.bind(null, /*! ./ActionConfirmation */ "./resources/js/components/carbon-simulation/ActionConfirmation.vue"));
 };
 
@@ -119,11 +126,16 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/GroupedActionPopUp */ "js/carbon-simulation/GroupedActionPopUp").then(__webpack_require__.bind(null, /*! ./GroupedActionPopUp */ "./resources/js/components/carbon-simulation/GroupedActionPopUp.vue"));
 };
 
+var SaveBasketsPopUp = function SaveBasketsPopUp() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/SaveBasketsPopUp */ "js/carbon-simulation/SaveBasketsPopUp").then(__webpack_require__.bind(null, /*! ./SaveBasketsPopUp */ "./resources/js/components/carbon-simulation/SaveBasketsPopUp.vue"));
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BasketItem: BasketItem,
-    ActionConfirmation: ActionConfirmation,
-    GroupedActionPopUp: GroupedActionPopUp
+    ActionConfirmationPopUp: ActionConfirmationPopUp,
+    GroupedActionPopUp: GroupedActionPopUp,
+    SaveBasketsPopUp: SaveBasketsPopUp
   },
   mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: {
@@ -136,10 +148,11 @@ var GroupedActionPopUp = function GroupedActionPopUp() {
     return {
       baskets: [],
       showConfirmationModal: false,
+      showGroupedActionModal: false,
+      showSavingBasketsModal: false,
       action: '',
       affectedBasket: {},
       affectedBasketIndex: -1,
-      showGroupedActionModal: false,
       compareToPreviousBasket: false,
       "export": {}
     };
@@ -226,7 +239,7 @@ var render = function() {
       { staticClass: "baskets-list" },
       [
         _vm.showConfirmationModal
-          ? _c("action-confirmation", {
+          ? _c("action-confirmation-pop-up", {
               attrs: {
                 action: this.action,
                 "affected-basket": this.affectedBasket,
@@ -250,6 +263,21 @@ var render = function() {
                 "exit-without-grouped-action": function($event) {
                   _vm.showGroupedActionModal = false
                 }
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showSavingBasketsModal
+          ? _c("save-baskets-pop-up", {
+              attrs: {
+                baskets: this.baskets,
+                "selected-baskets": this.selectedBaskets
+              },
+              on: {
+                "exit-without-saving": function($event) {
+                  _vm.showSavingBasketsModal = false
+                },
+                "save-baskets": _vm.saveBaskets
               }
             })
           : _vm._e(),
@@ -364,11 +392,15 @@ var render = function() {
               : "Aucune liste sélctionnée",
             disabled: !this.selectedBaskets.length
           },
-          on: { click: _vm.saveBaskets }
+          on: {
+            click: function($event) {
+              _vm.showSavingBasketsModal = true
+            }
+          }
         },
         [
           _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-          _vm._v("Sauvegarder sur votre pc\n        ")
+          _vm._v("Sauvegarder les listes sélectionnées\n        ")
         ]
       ),
       _vm._v(" "),

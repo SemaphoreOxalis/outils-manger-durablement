@@ -1,20 +1,27 @@
 <template>
     <div>
         <div class="baskets-list">
-            <action-confirmation v-if="showConfirmationModal"
+            <action-confirmation-pop-up v-if="showConfirmationModal"
                                  :action="this.action"
                                  :affected-basket="this.affectedBasket"
                                  :affected-basket-index="this.affectedBasketIndex"
                                  @exit-without-action="showConfirmationModal = false"
                                  @delete="deleteBasket"
                                  @clear="clearBasket">
-            </action-confirmation>
+            </action-confirmation-pop-up>
 
             <grouped-action-pop-up v-if="showGroupedActionModal"
                                    :affected-basket-index="this.affectedBasketIndex"
                                    @francify-basket="francifyBasket"
                                    @exit-without-grouped-action="showGroupedActionModal = false">
             </grouped-action-pop-up>
+
+            <save-baskets-pop-up v-if="showSavingBasketsModal"
+                                 :baskets="this.baskets"
+                                 :selected-baskets="this.selectedBaskets"
+                                 @exit-without-saving="showSavingBasketsModal = false"
+                                 @save-baskets="saveBaskets">
+            </save-baskets-pop-up>
 
             <basket-item v-for="(basket, i) in this.baskets"
                          v-bind:key="basket.id"
@@ -53,8 +60,8 @@
             <button :class="this.selectedBaskets.length ? 'button' : 'button alter'"
                     :title="this.selectedBaskets.length ? '' : 'Aucune liste sélctionnée'"
                     :disabled="!this.selectedBaskets.length"
-                    @click="saveBaskets">
-                <i class="icon mr-2"></i>Sauvegarder sur votre pc
+                    @click="showSavingBasketsModal = true">
+                <i class="icon mr-2"></i>Sauvegarder les listes sélectionnées
             </button>
             <button class="button alter ml-2"
                     @click="">
@@ -82,7 +89,7 @@ const BasketItem = () => import(
     /* webpackChunkName: "js/carbon-simulation/BasketItem" */
     './BasketItem'
     );
-const ActionConfirmation = () => import(
+const ActionConfirmationPopUp = () => import(
     /* webpackChunkName: "js/carbon-simulation/ActionConfirmation" */
     './ActionConfirmation'
     );
@@ -90,12 +97,17 @@ const GroupedActionPopUp = () => import(
     /* webpackChunkName: "js/carbon-simulation/GroupedActionPopUp" */
     './GroupedActionPopUp'
     );
+const SaveBasketsPopUp = () => import(
+    /* webpackChunkName: "js/carbon-simulation/SaveBasketsPopUp" */
+    './SaveBasketsPopUp'
+    );
 
 export default {
     components: {
         BasketItem,
-        ActionConfirmation,
-        GroupedActionPopUp
+        ActionConfirmationPopUp,
+        GroupedActionPopUp,
+        SaveBasketsPopUp,
     },
     mixins: [
         LocalStorageHelper,
@@ -117,13 +129,12 @@ export default {
             baskets: [],
 
             showConfirmationModal: false,
+            showGroupedActionModal: false,
+            showSavingBasketsModal: false,
             action: '',
             affectedBasket: {},
             affectedBasketIndex: -1,
-
-            showGroupedActionModal: false,
             compareToPreviousBasket: false,
-
             export: {},
         }
     },
