@@ -517,7 +517,7 @@ var render = function() {
       _c("div", { staticClass: "basket-header" }, [
         _c(
           "div",
-          { staticClass: "basket-select custom-control custom-checkbox" },
+          { staticClass: "basket-select top custom-control custom-checkbox" },
           [
             _c("input", {
               directives: [

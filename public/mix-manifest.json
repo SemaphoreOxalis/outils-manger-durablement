@@ -30,12 +30,14 @@
     "/js/carbon-simulation/CarbonHomePage~js/waste-simulation/WasteHomePage.js": "/js/carbon-simulation/CarbonHomePage~js/waste-simulation/WasteHomePage.js",
     "/js/carbon-simulation/CarbonSimulatorLayout.js": "/js/carbon-simulation/CarbonSimulatorLayout.js",
     "/js/carbon-simulation/GroupedActionPopUp.js": "/js/carbon-simulation/GroupedActionPopUp.js",
+    "/js/carbon-simulation/LoadBasketsPopUp.js": "/js/carbon-simulation/LoadBasketsPopUp.js",
     "/js/carbon-simulation/ProductList.js": "/js/carbon-simulation/ProductList.js",
     "/js/carbon-simulation/ProductRequest.js": "/js/carbon-simulation/ProductRequest.js",
     "/js/carbon-simulation/RecipeCreate.js": "/js/carbon-simulation/RecipeCreate.js",
     "/js/carbon-simulation/RecipeEdit.js": "/js/carbon-simulation/RecipeEdit.js",
     "/js/carbon-simulation/RecipesIndex.js": "/js/carbon-simulation/RecipesIndex.js",
     "/js/carbon-simulation/RecipesLayout.js": "/js/carbon-simulation/RecipesLayout.js",
+    "/js/carbon-simulation/SaveBasketsPopUp.js": "/js/carbon-simulation/SaveBasketsPopUp.js",
     "/js/carbon-simulation/SearchBar.js": "/js/carbon-simulation/SearchBar.js",
     "/js/flashMsg.js": "/js/flashMsg.js",
     "/js/navLinks.js": "/js/navLinks.js",
@@ -51,6 +53,5 @@
     "/vendors~js/admin/WysiwygAdminPage.js": "/vendors~js/admin/WysiwygAdminPage.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js",
-    "/js/carbon-simulation/SaveBasketsPopUp.js": "/js/carbon-simulation/SaveBasketsPopUp.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js"
 }

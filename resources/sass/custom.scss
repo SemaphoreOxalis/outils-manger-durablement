@@ -1406,7 +1406,6 @@ h1.header {
   /* Checkbox panier */
   /*******************/
   .basket-select {
-    position: absolute;
     left: 0%;
     top: 0%;
     right: 0%;
@@ -1425,13 +1424,16 @@ h1.header {
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
     background-color: #fff;
+    font-weight: 700;
+    text-align: center;
     -webkit-transform: translate(0px, -3rem);
     -ms-transform: translate(0px, -3rem);
     transform: translate(0px, -3rem);
-    font-weight: 700;
-    text-align: center;
     -moz-transform: translate(0px, -3rem);
     -o-transform: translate(0px, -3rem);
+  }
+  .basket-select.top {
+      position: absolute;
   }
 
   input.custom-control-input{
@@ -1761,7 +1763,7 @@ h1.header {
     transform: scale(0) rotate(-12deg);
     transition: all .25s;
     opacity: 0;
-    z-index: 10;
+    z-index: 1080;
 }
 
 .info-bubble:hover span, .info-bubble:focus span {

@@ -1,7 +1,7 @@
 <template>
     <div class="basket">
         <div class="basket-header">
-            <div class="basket-select custom-control custom-checkbox">
+            <div class="basket-select top custom-control custom-checkbox">
                 <input type="checkbox"
                        v-model="basket.isSelected"
                        class="custom-control-input"> <label class="custom-control-label">{{ add_to_this_basket }}</label>

@@ -46,16 +46,30 @@ export default {
 
         saveBaskets(fileName) {
             try {
-                let blob = new Blob([JSON.stringify(this.selectedBaskets)], {type: 'text/carbon'});
+                this.showSavingBasketsModal = false;
+                let blob = new Blob([JSON.stringify(this.selectedBaskets)]);
+                let file = new File([blob], fileName, {type: 'text/carbon'});
                 let link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
+                link.href = window.URL.createObjectURL(file);
                 link.download = fileName + ".carbon";
+                this.log('Listes Sauvegardées', {fileName: fileName + ".carbon"});
+
                 link.click();
             } catch(e) {
                 console.log(e);
                 flash('Une erreur est survenue', 'danger');
             }
-        }
+        },
+
+        loadBaskets(baskets) {
+            this.showLoadBasketsModal = false;
+            baskets.forEach(basket => {
+                basket.id = 'basket-' + (this.basketsCounter + 1);
+                this.baskets.push(basket);
+                this.log('Nouvelle liste chargée', {name: basket.name });
+                this.saveBasketsToLocalStorage();
+            });
+        },
     }
 };
 

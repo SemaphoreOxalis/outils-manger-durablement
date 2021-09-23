@@ -386,17 +386,38 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveBaskets: function saveBaskets(fileName) {
       try {
-        var blob = new Blob([JSON.stringify(this.selectedBaskets)], {
+        this.showSavingBasketsModal = false;
+        var blob = new Blob([JSON.stringify(this.selectedBaskets)]);
+        var file = new File([blob], fileName, {
           type: 'text/carbon'
         });
         var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
+        link.href = window.URL.createObjectURL(file);
         link.download = fileName + ".carbon";
+        this.log('Listes Sauvegardées', {
+          fileName: fileName + ".carbon"
+        });
         link.click();
       } catch (e) {
         console.log(e);
         flash('Une erreur est survenue', 'danger');
       }
+    },
+    loadBaskets: function loadBaskets(baskets) {
+      var _this = this;
+
+      this.showLoadBasketsModal = false;
+      baskets.forEach(function (basket) {
+        basket.id = 'basket-' + (_this.basketsCounter + 1);
+
+        _this.baskets.push(basket);
+
+        _this.log('Nouvelle liste chargée', {
+          name: basket.name
+        });
+
+        _this.saveBasketsToLocalStorage();
+      });
     }
   }
 });

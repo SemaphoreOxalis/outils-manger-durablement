@@ -12312,7 +12312,6 @@ a.btn-ico.alt.tool:hover {
 /*******************/
 
 .basket-select {
-  position: absolute;
   left: 0%;
   top: 0%;
   right: 0%;
@@ -12325,11 +12324,15 @@ a.btn-ico.alt.tool:hover {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   background-color: #fff;
-  transform: translate(0px, -3rem);
   font-weight: 700;
   text-align: center;
+  transform: translate(0px, -3rem);
   -moz-transform: translate(0px, -3rem);
   -o-transform: translate(0px, -3rem);
+}
+
+.basket-select.top {
+  position: absolute;
 }
 
 input.custom-control-input {
@@ -12658,7 +12661,7 @@ ul.nav.nav-tabs {
   transform: scale(0) rotate(-12deg);
   transition: all 0.25s;
   opacity: 0;
-  z-index: 10;
+  z-index: 1080;
 }
 
 .info-bubble:hover span,

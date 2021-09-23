@@ -23,6 +23,11 @@
                                  @save-baskets="saveBaskets">
             </save-baskets-pop-up>
 
+            <load-baskets-pop-up v-if="showLoadBasketsModal"
+                                 @exit-without-loading="showLoadBasketsModal = false"
+                                 @load-baskets="loadBaskets">
+            </load-baskets-pop-up>
+
             <basket-item v-for="(basket, i) in this.baskets"
                          v-bind:key="basket.id"
                          v-bind:basket="basket"
@@ -64,7 +69,7 @@
                 <i class="icon mr-2"></i>Sauvegarder les listes sélectionnées
             </button>
             <button class="button alter ml-2"
-                    @click="">
+                    @click="showLoadBasketsModal = true">
                 <i class="icon mr-2"></i>Charger depuis votre pc
             </button>
             <button class="button ml-2"
@@ -101,6 +106,10 @@ const SaveBasketsPopUp = () => import(
     /* webpackChunkName: "js/carbon-simulation/SaveBasketsPopUp" */
     './SaveBasketsPopUp'
     );
+const LoadBasketsPopUp = () => import(
+    /* webpackChunkName: "js/carbon-simulation/LoadBasketsPopUp" */
+    './LoadBasketsPopUp'
+    );
 
 export default {
     components: {
@@ -108,6 +117,7 @@ export default {
         ActionConfirmationPopUp,
         GroupedActionPopUp,
         SaveBasketsPopUp,
+        LoadBasketsPopUp,
     },
     mixins: [
         LocalStorageHelper,
@@ -131,6 +141,7 @@ export default {
             showConfirmationModal: false,
             showGroupedActionModal: false,
             showSavingBasketsModal: false,
+            showLoadBasketsModal: false,
             action: '',
             affectedBasket: {},
             affectedBasketIndex: -1,

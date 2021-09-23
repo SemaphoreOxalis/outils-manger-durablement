@@ -106,6 +106,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -130,12 +135,17 @@ var SaveBasketsPopUp = function SaveBasketsPopUp() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/SaveBasketsPopUp */ "js/carbon-simulation/SaveBasketsPopUp").then(__webpack_require__.bind(null, /*! ./SaveBasketsPopUp */ "./resources/js/components/carbon-simulation/SaveBasketsPopUp.vue"));
 };
 
+var LoadBasketsPopUp = function LoadBasketsPopUp() {
+  return __webpack_require__.e(/*! import() | js/carbon-simulation/LoadBasketsPopUp */ "js/carbon-simulation/LoadBasketsPopUp").then(__webpack_require__.bind(null, /*! ./LoadBasketsPopUp */ "./resources/js/components/carbon-simulation/LoadBasketsPopUp.vue"));
+};
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BasketItem: BasketItem,
     ActionConfirmationPopUp: ActionConfirmationPopUp,
     GroupedActionPopUp: GroupedActionPopUp,
-    SaveBasketsPopUp: SaveBasketsPopUp
+    SaveBasketsPopUp: SaveBasketsPopUp,
+    LoadBasketsPopUp: LoadBasketsPopUp
   },
   mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: {
@@ -150,6 +160,7 @@ var SaveBasketsPopUp = function SaveBasketsPopUp() {
       showConfirmationModal: false,
       showGroupedActionModal: false,
       showSavingBasketsModal: false,
+      showLoadBasketsModal: false,
       action: '',
       affectedBasket: {},
       affectedBasketIndex: -1,
@@ -282,6 +293,17 @@ var render = function() {
             })
           : _vm._e(),
         _vm._v(" "),
+        _vm.showLoadBasketsModal
+          ? _c("load-baskets-pop-up", {
+              on: {
+                "exit-without-loading": function($event) {
+                  _vm.showLoadBasketsModal = false
+                },
+                "load-baskets": _vm.loadBaskets
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
         _vm._l(this.baskets, function(basket, i) {
           return _c("basket-item", {
             key: basket.id,
@@ -408,7 +430,11 @@ var render = function() {
         "button",
         {
           staticClass: "button alter ml-2",
-          on: { click: function($event) {} }
+          on: {
+            click: function($event) {
+              _vm.showLoadBasketsModal = true
+            }
+          }
         },
         [
           _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
@@ -579,17 +605,38 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveBaskets: function saveBaskets(fileName) {
       try {
-        var blob = new Blob([JSON.stringify(this.selectedBaskets)], {
+        this.showSavingBasketsModal = false;
+        var blob = new Blob([JSON.stringify(this.selectedBaskets)]);
+        var file = new File([blob], fileName, {
           type: 'text/carbon'
         });
         var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
+        link.href = window.URL.createObjectURL(file);
         link.download = fileName + ".carbon";
+        this.log('Listes Sauvegardées', {
+          fileName: fileName + ".carbon"
+        });
         link.click();
       } catch (e) {
         console.log(e);
         flash('Une erreur est survenue', 'danger');
       }
+    },
+    loadBaskets: function loadBaskets(baskets) {
+      var _this = this;
+
+      this.showLoadBasketsModal = false;
+      baskets.forEach(function (basket) {
+        basket.id = 'basket-' + (_this.basketsCounter + 1);
+
+        _this.baskets.push(basket);
+
+        _this.log('Nouvelle liste chargée', {
+          name: basket.name
+        });
+
+        _this.saveBasketsToLocalStorage();
+      });
     }
   }
 });
