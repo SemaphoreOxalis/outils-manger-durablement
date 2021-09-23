@@ -1,29 +1,32 @@
 - [Outil Gaspi](#recycle-outil-gaspi-recycle)
+  * [Technologies nécessaires](#technologies-nécessaires_hammer)
   * [Installation](#installation-floppy_disk)
   * [Mise à jour](#mise-à-jour-ambulance)
-    + [Mise à jour des textes uniquement](#speech_balloon-mise-à-jour-des-textes-uniquement)
   * [Architecture](#architecture-building_construction)
     + [Configuration](#wrench-configuration)
     + [Authentification](#key-authentification)
     + [Base de données](#card_file_box-base-de-données)
     + [Routes](#vertical_traffic_light-routes)
-    + [Back-end](#factory-back-end)
     + [Front-end](#iphone-front-end)
       - [Vues PHP](#vues-php)
       - [Vues Vue.js](#vues-vuejs)
       - [Initialisation de Vue.js](#initialisation-de-vuejs)
     + [Style et polices](#art-style-et-polices)
-    + [Divers](#slot_machine-divers)
   * [Détail des fichiers et dossiers](#détail-des-fichiers-et-dossiers-clipboard)
   
   
 # :recycle: Outil Gaspi :recycle:
-  
-  
+
+
+## Technologies nécessaires :hammer:
+
+* php : ^7.2.5
+* Node.js
+
 ## Installation :floppy_disk:
 
 * :computer: Dans le terminal du serveur, à la racine, tapez :
-    * `git clone https://github.com/SemaphoreOxalis/outil-gaspi outil-gaspi.sc4semadmin.universe.wf` (2e argument = sous-domaine qui hébergera l'appli (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`))
+    * `git clone https://github.com/SemaphoreOxalis/outil-gaspi {dossier d'installation}` (2e argument = sous-domaine qui hébergera l'appli)
 
 #### :warning: **IMPORTANT** :warning:
 * :lock: créer le sous-domaine sur CPanel et faire pointer la racine sur le dossier `/public`.
@@ -43,7 +46,7 @@ APP_NAME="Outil CO2 Gaspi"
 APP_ENV=production
 APP_KEY=
 APP_DEBUG=false
-APP_URL=outil-gaspi.sc4semadmin.universe.wf
+APP_URL={{ URL OU SERA HEBERGEE L'APPLI }}
 
 LOG_CHANNEL=stack
 
@@ -91,11 +94,11 @@ DEBUGBAR_ENABLED=false
     * `composer update` (si l'instruction précédente renvoie une erreur)
     * `php artisan migrate:fresh` (crée les tables de la base de données - tapez 'yes' si on vous le demande)
 
+* :pencil2: Créez le fichier `storage/logs/log.log`
+
 * :pencil2: Editez le fichier `routes/web.php` :
     * Décommentez la ligne `Auth::routes();`
     * Commentez la ligne `Auth::routes(['register' => false]);`
-
-* :pencil2: Créez le fichier `storage/logs/log.log`
 
 * :cop: Naviguez jusqu'à l'URL du site (par exemple ici `outil-gaspi.sc4semadmin.universe.wf`), ajoutez `/register` à l'URL et créez un utilisateur (cet utilisateur sera administrateur de l'application et pourra modifier la base de données)
 
@@ -124,12 +127,7 @@ Si le code a été mis à jour sur GitHub, voici la procédure pour mettre à jo
     * `composer install --optimize-autoloader --no-dev`
     * `npm install`
 
-* :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`, sans la commande `npm run prod` (l'appli est déjà en production)
-  
-### :speech_balloon: Mise à jour des textes uniquement 
-
-* :pencil2: éditez à votre guise les textes contenus dans les fichiers situés dans `resources/texts` (la plupart des textes de l'application sont stockés ici, seuls quelques rares textes sont du côté serveur, en PHP (login....))
-  
+* :leftwards_arrow_with_hook: reprendre ensuite la procédure d'installation à partir de l'étape `php artisan config:cache`.
   
 ## Architecture :building_construction:
 
@@ -160,12 +158,6 @@ La majorité de la logique de l'application est gérée par Vue.js en front-end,
 * Front-end (ces routes correspondent à des composants Vue)
     * Elles sont dans le fichier `resources/js/routes.js`
 
-### :factory: Back-end
-
-Ici se trouvent les fichiers principaux constituant notre API
-* `app/Http/Controllers/WasteReferenceValuesController.php` s'occupe de récupérer et de modifier les valeurs de référence
-* `app/Http/Controllers/ExportController.php` s'occupe de l'export des simulations au format .xlsx
-
 ### :iphone: Front-end
 
 #### Vues PHP
@@ -176,13 +168,7 @@ La "page" de notre Single-Page-Application est un template Laravel divisé en de
 #### Vues Vue.js
 Ce ne sont pas à proprement parler des "vues" mais des composants Vue. Cependant, ils constituent les "pages" au travers desquelles il est possible de naviguer
 Elles sont situées dans `resources/js/components` et sont constitués de `Composants.vue`, qui constituent les pages de notre application (chaque composant dispose de son propre template HTML et de sa propre logique sous forme de balise `script`)
-Par souci de lisibilité et de factorisation, du code a été extrait de ces composants dans le fichier `resources/js/helpers`, dont voici la structure: (vous pouvez retrouver quel composant utilise quel "helper" en regardant ce qu'il importe)
-* `helpers` contient de la logique générale à l'application, utilisée par pratiquement tous les composants (formatage des dates, des nombres, etc...)
-    * `waste-simulation` sont des fichiers spécifiques à l'outil de simulation de gaspillage
-        * `calculations` regroupe les fichiers s'occupant des calculs effectuées pour les simulations
-        * `component-specific` regroupe du code spécifique à certains composants, qui en alourdissaient la lecture
-        * `validation` contient la logique responsable de valider ou non les saisies des utilisateurs
-    * `carbon-simulation` a la même structure
+Par souci de lisibilité et de factorisation, du code a été extrait de ces composants dans le dossier `resources/js/helpers`, dont voici la structure: (vous pouvez retrouver quel composant utilise quel "helper" en regardant ce qu'il importe)
 
 #### Initialisation de Vue.js
 En plus de ces fichiers, dans `resources/js/`, vous pouvez trouver
@@ -191,11 +177,6 @@ En plus de ces fichiers, dans `resources/js/`, vous pouvez trouver
 
 ### :art: Style et polices
 Tout se trouve dans les dossiers `resources/fonts` et `resources/sass`, notamment dans le fichier `resources/sass/app.scss` qui importe les autres fichiers utiles (dont évidemment nos `custom.scss` et `icons.scss`). Tout ceci sera compilé dans le fichier `public/css/app.css` lors de l'exécution du script `npm run prod` lors de la phase d'installation (si elle a été correctement effectuée, le dossier `public` est à la racine du site et les internautes n'ont donc accès qu'à celui-ci)
-
-### :slot_machine: Divers
-* :sparkles: Les images se trouvent déjà dans `public/images` 
-* :earth_africa: La traduction de messages d'erreurs et système se trouve dans `resources/lang` 
-  
   
 ## Détail des fichiers et dossiers :clipboard:
 Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Laravel/Vue mais n'ont pas été modifiés, ou ne devraient pas l'être  
@@ -204,7 +185,7 @@ Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Lar
   
 
 * `app` : contient le code back-end de notre API (dont l'authentification gérée par Laravel)
-    * `Http/Controllers` : contient plus spécifiquement le code nécessaire à traiter les données de référence et à la fonction export
+    * `Http/Controllers` : controlleurs pour les différentes entités utilisées
 * :no_entry: `bootstrap` : généré par Laravel, contient le fichier `app.php` qui lance l'application et le dossier `cache` pour optimisation
 * :warning: `config` : contient des fichiers de configuration
 * :warning: `database` : contient la base de données et la logique ce celle-ci
@@ -223,7 +204,7 @@ Les fichiers et dossiers non affichés dans cette liste sont nécessaires à Lar
     * `views` : vues Laravel (conteneur de l'application)
 * :warning: `routes` : contient les définitions de routes de l'application 
     * `web.php` : routeur back-end Laravel : contient les routes vers notre API et pour l'authentification
-* `storage` : Non utilisé. Logs et fichiers envoyés par les utilisateurs
+* `storage` : Utilisé pour les logs
 * `tests` : Non utilisé. Contient les fichiers de tests (NDD : J'essaierai de faire du TDD pour la deuxième appli)
 * :no_entry: `vendor` : Contient les dépendances PHP
 * fichiers à la racine :
