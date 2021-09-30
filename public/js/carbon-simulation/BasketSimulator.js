@@ -186,7 +186,30 @@ var ProductRequest = function ProductRequest() {
 
               _this.turnRecipesIntoProducts();
 
-            case 5:
+              $(document).ready(function () {
+                var introJs = __webpack_require__(/*! intro.js */ "./node_modules/intro.js/intro.js");
+
+                introJs().setOptions({
+                  disableInteraction: true,
+                  nextLabel: "Suivant",
+                  prevLabel: "Retour",
+                  doneLabel: "J'ai compris",
+                  hidePrev: true,
+                  steps: [{
+                    title: 'Welcome',
+                    intro: 'Hello World! 👋'
+                  }, {
+                    element: document.querySelector('#how-to'),
+                    intro: 'This step focuses on an image'
+                  }, {
+                    title: 'Farewell!',
+                    element: document.querySelector('#save-baskets'),
+                    intro: 'And this is our final step!'
+                  }]
+                }).start();
+              });
+
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -393,7 +416,10 @@ var staticRenderFns = [
         attrs: { "data-target": "mode_emploi", title: "Mode d'emploi" }
       },
       [
-        _c("i", { staticClass: "icon icon-info-circle mr-2" }),
+        _c("i", {
+          staticClass: "icon icon-info-circle mr-2",
+          attrs: { id: "how-to" }
+        }),
         _vm._v("Mode d'emploi")
       ]
     )

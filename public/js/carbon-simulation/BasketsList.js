@@ -111,6 +111,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
 
 
 
@@ -412,7 +413,8 @@ var render = function() {
             title: this.selectedBaskets.length
               ? ""
               : "Aucune liste sélctionnée",
-            disabled: !this.selectedBaskets.length
+            disabled: !this.selectedBaskets.length,
+            id: "save-baskets"
           },
           on: {
             click: function($event) {

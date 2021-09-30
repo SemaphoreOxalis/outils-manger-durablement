@@ -65,6 +65,7 @@
             <button :class="this.selectedBaskets.length ? 'button' : 'button alter'"
                     :title="this.selectedBaskets.length ? '' : 'Aucune liste sélctionnée'"
                     :disabled="!this.selectedBaskets.length"
+                    id="save-baskets"
                     @click="showSavingBasketsModal = true">
                 <i class="icon mr-2"></i>Sauvegarder les listes sélectionnées
             </button>

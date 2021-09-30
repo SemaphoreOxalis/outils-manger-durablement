@@ -14,7 +14,7 @@
                 <button class="button">Recettes de Chef</button>
             </router-link>
 
-            <button data-target="mode_emploi" class="button alter modal-trigger" title="Mode d'emploi"><i class="icon icon-info-circle mr-2"></i>Mode d'emploi</button>
+            <button data-target="mode_emploi" class="button alter modal-trigger" title="Mode d'emploi"><i class="icon icon-info-circle mr-2" id="how-to"></i>Mode d'emploi</button>
             <div class="modal modal-fixed-footer" id="mode_emploi">
                 <div class="modal-content">
                     <div v-html="howTo"></div>
@@ -164,6 +164,29 @@ export default {
         this.howTo = await this.fetchContent('Carbone - Mode d\'emploi');
         this.setProductIds();
         this.turnRecipesIntoProducts();
+        $(document).ready(() => {
+            const introJs = require("intro.js");
+            introJs().setOptions({
+                disableInteraction: true,
+                nextLabel: "Suivant",
+                prevLabel: "Retour",
+                doneLabel: "J'ai compris",
+                hidePrev: true,
+                steps: [{
+                    title: 'Welcome',
+                    intro: 'Hello World! 👋'
+                    },
+                    {
+                        element: document.querySelector('#how-to'),
+                        intro: 'This step focuses on an image'
+                    },
+                    {
+                        title: 'Farewell!',
+                        element: document.querySelector('#save-baskets'),
+                        intro: 'And this is our final step!'
+                    }]
+            }).start();
+        });
     },
 
     methods: {
