@@ -9,7 +9,7 @@
                     </div>
                     <div class="modal-body pt-5 mt-5">
                         <div v-for="basket in baskets"
-                             class="basket-select custom-control custom-checkbox text-left ml-5">
+                             class="basket-select custom-control custom-checkbox text-left ml-5 pl-5">
                             <input type="checkbox"
                                    v-model="basket.isSelected"
                                    class="custom-control-input"> <label class="custom-control-label">{{ basket.name }}</label>

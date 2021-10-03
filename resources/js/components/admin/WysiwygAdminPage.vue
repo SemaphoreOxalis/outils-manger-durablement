@@ -85,7 +85,7 @@ export default {
                     this.showModal = false;
                 })
                 .catch(err => {
-                    console.log('Something went wrong', err);
+                    flash('Erreur');
                 });
         },
     },

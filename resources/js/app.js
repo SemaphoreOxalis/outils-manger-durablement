@@ -48,6 +48,18 @@ window.flash = function (message, level = 'success') {
     window.events.$emit('flash', { message, level});
 }
 
+// Only way to actually check if grand-grand-....-grand-child components DOM rendered without a dirty setTimeout
+// ($nextTick fires too soon sometimes)
+window.waitForElementToRenderThen = function(element, callback) {
+    let observer = new MutationObserver(() => {
+        if (document.contains(document.querySelector(element))) {
+            observer.disconnect();
+            callback();
+        }
+    });
+    observer.observe(document, {attributes: true, childList: true, subtree:true});
+}
+
 // Initialisation de Vue
 const app = new Vue({
     el: '#app',

@@ -31,7 +31,7 @@
                                     <div class="step-title waves-effect">Sélectionnez les listes à importer</div>
                                     <div class="step-content pt-5">
                                         <div v-for="basket in fileData"
-                                             class="basket-select custom-control custom-checkbox text-left ml-5 overflow-visible">
+                                             class="basket-select custom-control custom-checkbox text-left ml-5 pl-5 overflow-visible">
                                             <input type="checkbox"
                                                    v-model="basket.isSelected"
                                                    class="custom-control-input">

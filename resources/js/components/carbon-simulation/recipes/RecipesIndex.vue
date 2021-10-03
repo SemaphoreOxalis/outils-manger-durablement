@@ -174,7 +174,6 @@ export default {
         displayCopy(id) {
             $(function() {
                 setTimeout(() => {
-                    console.log('ready');
                     let el = document.getElementById('recipe-' + id);
                     let cl = document.getElementById('body-' + id);
                     el.classList.add('copied-recipe');

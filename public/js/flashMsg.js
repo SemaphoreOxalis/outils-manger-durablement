@@ -63,7 +63,7 @@ __webpack_require__.r(__webpack_exports__);
 
       setTimeout(function () {
         _this2.show = false;
-      }, 3000);
+      }, 6000);
     }
   }
 });

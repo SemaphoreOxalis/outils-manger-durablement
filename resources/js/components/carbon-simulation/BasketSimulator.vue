@@ -159,13 +159,7 @@ export default {
         this.turnRecipesIntoProducts();
         this.introJs = require("intro.js");
         if(this.displayIntro) {
-            let observer = new MutationObserver(() => {         // Only way to actually check if it's rendered without a dirty setTimeout ($nextTick fires too soon)
-                if (document.contains(document.querySelector('.results-comment'))) {
-                    observer.disconnect();
-                    this.startIntro();
-                }
-            });
-            observer.observe(document, {attributes: true, childList: true, subtree:true});
+            waitForElementToRenderThen('.results-comment', this.startIntro);
         }
     },
 
@@ -227,14 +221,14 @@ export default {
                     intro: ''
                 },
                     {
-                        element: document.querySelector('.search-bar'),
-                        position: 'bottom',
-                        intro: 'Commencez par ajouter des produits ou des recettes à votre liste de courses via le menu ou en faisant une recherche'
-                    },
-                    {
                         element: document.querySelector('.basket-select'),
                         position: 'bottom',
-                        intro: 'Les produits et les recettes seront ajoutées à toutes les listes sélectionnées'
+                        intro: 'Commencez par sélectionner la ou les listes dans lesquelles vous souhaitez ajouter des produits'
+                    },
+                    {
+                        element: document.querySelector('.search-bar'),
+                        position: 'bottom',
+                        intro: 'Utilisez la barre de recherche pour ajouter des produits ou des recettes à votre/vos liste/s'
                     },
                     {
                         element: document.querySelector('.product-item'),

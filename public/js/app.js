@@ -35549,6 +35549,22 @@ window.flash = function (message) {
     message: message,
     level: level
   });
+}; // Only way to actually check if grand-grand-....-grand-child components DOM rendered without a dirty setTimeout
+// ($nextTick fires too soon sometimes)
+
+
+window.waitForElementToRenderThen = function (element, callback) {
+  var observer = new MutationObserver(function () {
+    if (document.contains(document.querySelector(element))) {
+      observer.disconnect();
+      callback();
+    }
+  });
+  observer.observe(document, {
+    attributes: true,
+    childList: true,
+    subtree: true
+  });
 }; // Initialisation de Vue
 
 

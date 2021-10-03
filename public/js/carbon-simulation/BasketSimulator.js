@@ -167,7 +167,6 @@ var ProductRequest = function ProductRequest() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var observer;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -179,19 +178,7 @@ var ProductRequest = function ProductRequest() {
               _this.introJs = __webpack_require__(/*! intro.js */ "./node_modules/intro.js/intro.js");
 
               if (_this.displayIntro) {
-                observer = new MutationObserver(function () {
-                  // Only way to actually check if it's rendered without a dirty setTimeout ($nextTick fires too soon)
-                  if (document.contains(document.querySelector('.results-comment'))) {
-                    observer.disconnect();
-
-                    _this.startIntro();
-                  }
-                });
-                observer.observe(document, {
-                  attributes: true,
-                  childList: true,
-                  subtree: true
-                });
+                waitForElementToRenderThen('.results-comment', _this.startIntro);
               }
 
             case 4:
@@ -261,13 +248,13 @@ var ProductRequest = function ProductRequest() {
           title: 'Mode d\'emploi',
           intro: ''
         }, {
-          element: document.querySelector('.search-bar'),
-          position: 'bottom',
-          intro: 'Commencez par ajouter des produits ou des recettes à votre liste de courses via le menu ou en faisant une recherche'
-        }, {
           element: document.querySelector('.basket-select'),
           position: 'bottom',
-          intro: 'Les produits et les recettes seront ajoutées à toutes les listes sélectionnées'
+          intro: 'Commencez par sélectionner la ou les listes dans lesquelles vous souhaitez ajouter des produits'
+        }, {
+          element: document.querySelector('.search-bar'),
+          position: 'bottom',
+          intro: 'Utilisez la barre de recherche pour ajouter des produits ou des recettes à votre/vos liste/s'
         }, {
           element: document.querySelector('.product-item'),
           position: 'right',
