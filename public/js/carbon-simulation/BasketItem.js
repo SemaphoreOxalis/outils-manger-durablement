@@ -577,7 +577,7 @@ var render = function() {
                 expression: "basket.name"
               }
             ],
-            staticClass: "input custom-input browser-default",
+            staticClass: "input custom-input browser-default basket-name-input",
             attrs: { type: "text", required: "" },
             domProps: { value: _vm.basket.name },
             on: {
@@ -594,7 +594,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "btn-ico info-bubble",
+              staticClass: "btn-ico info-bubble copy-basket",
               attrs: { title: "Dupliquer cette liste" },
               on: { click: _vm.copyBasket }
             },
@@ -605,7 +605,10 @@ var render = function() {
         _c("div", { staticClass: "basket-toolbox" }, [
           _c(
             "button",
-            { staticClass: "button", on: { click: _vm.insertBlock } },
+            {
+              staticClass: "button insert-block",
+              on: { click: _vm.insertBlock }
+            },
             [_vm._v("Insérer un bloc")]
           ),
           _vm._v(" "),
@@ -625,7 +628,7 @@ var render = function() {
             ? _c(
                 "a",
                 {
-                  staticClass: "btn-ico alt tool",
+                  staticClass: "btn-ico alt tool empty-basket",
                   attrs: { title: "Vider cette liste" },
                   on: { click: _vm.clearBasket }
                 },
@@ -636,7 +639,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "btn-ico alt tool",
+              staticClass: "btn-ico alt tool delete-basket",
               attrs: { title: "Supprimer cette liste" },
               on: { click: _vm.deleteBasket }
             },

@@ -14,15 +14,8 @@
                 <button class="button">Recettes de Chef</button>
             </router-link>
 
-            <button data-target="mode_emploi" class="button alter modal-trigger" title="Mode d'emploi"><i class="icon icon-info-circle mr-2" id="how-to"></i>Mode d'emploi</button>
-            <div class="modal modal-fixed-footer" id="mode_emploi">
-                <div class="modal-content">
-                    <div v-html="howTo"></div>
-                </div>
-                <div class="modal-footer">
-                    <a href="#!" class="modal-close waves-effect waves-green button">{{ how_to.close_btn }}</a>
-                </div>
-            </div>
+            <button class="button alter" title="Mode d'emploi" @click="startIntro"><i class="icon icon-info-circle mr-2" id="how-to"></i>Mode d'emploi</button>
+
             <product-request></product-request>
         </div>
 
@@ -52,7 +45,8 @@
             </search-bar>
         </div>
 
-        <baskets-list v-bind:origins="this.origins"
+        <baskets-list v-bind:products="this.products"
+                      v-bind:origins="this.origins"
                       v-bind:categories="this.categories"
                       v-bind:equivalences="this.equivalences"
                       v-bind:product-to-add="this.productToAddWithDetails"
@@ -140,6 +134,9 @@ export default {
             focusOnSearchBar: false,
 
             howTo: `<div class="loader-spinner"></div>`,
+            introJs: {},
+            introOptions: {},
+            displayIntro: Boolean,
         }
     },
 
@@ -154,39 +151,22 @@ export default {
         this.fetchEquivalences();
 
         this.getInternalCounters();
-
-        $(document).ready(() => {
-            $('.modal').modal();
-        });
+        this.displayIntro = !localStorage.hasOwnProperty('baskets');
     },
 
     async mounted() {
-        this.howTo = await this.fetchContent('Carbone - Mode d\'emploi');
         this.setProductIds();
         this.turnRecipesIntoProducts();
-        $(document).ready(() => {
-            const introJs = require("intro.js");
-            introJs().setOptions({
-                disableInteraction: true,
-                nextLabel: "Suivant",
-                prevLabel: "Retour",
-                doneLabel: "J'ai compris",
-                hidePrev: true,
-                steps: [{
-                    title: 'Welcome',
-                    intro: 'Hello World! 👋'
-                    },
-                    {
-                        element: document.querySelector('#how-to'),
-                        intro: 'This step focuses on an image'
-                    },
-                    {
-                        title: 'Farewell!',
-                        element: document.querySelector('#save-baskets'),
-                        intro: 'And this is our final step!'
-                    }]
-            }).start();
-        });
+        this.introJs = require("intro.js");
+        if(this.displayIntro) {
+            let observer = new MutationObserver(() => {         // Only way to actually check if it's rendered without a dirty setTimeout ($nextTick fires too soon)
+                if (document.contains(document.querySelector('.results-comment'))) {
+                    observer.disconnect();
+                    this.startIntro();
+                }
+            });
+            observer.observe(document, {attributes: true, childList: true, subtree:true});
+        }
     },
 
     methods: {
@@ -234,6 +214,98 @@ export default {
             this.products.forEach(p => {
                 p.productId = p.id;
             });
+        },
+        prepareIntro() {
+            this.introOptions = {
+                disableInteraction: true,
+                nextLabel: "Suivant",
+                prevLabel: "Retour",
+                doneLabel: "J'ai compris",
+                hidePrev: true,
+                steps: [{
+                    title: 'Mode d\'emploi',
+                    intro: ''
+                },
+                    {
+                        element: document.querySelector('.search-bar'),
+                        position: 'bottom',
+                        intro: 'Commencez par ajouter des produits ou des recettes à votre liste de courses via le menu ou en faisant une recherche'
+                    },
+                    {
+                        element: document.querySelector('.basket-select'),
+                        position: 'bottom',
+                        intro: 'Les produits et les recettes seront ajoutées à toutes les listes sélectionnées'
+                    },
+                    {
+                        element: document.querySelector('.product-item'),
+                        position: 'right',
+                        intro: 'Vous pouvez alors modifier les valeurs saisies précédemment'
+                    },
+                    {
+                        element: document.querySelector('.results-container'),
+                        position: 'right',
+                        intro: 'Vous constaterez alors en temps réel votre bilan carbone résumé sous votre liste'
+                    },
+                    {
+                        element: document.querySelector('.add-basket'),
+                        position: 'bottom',
+                        intro: 'Vous pouvez ajouter des listes'
+                    },
+                    {
+                        element: document.querySelector('.basket-name-input'),
+                        position: 'bottom',
+                        intro: 'Les renommer'
+                    },
+                    {
+                        element: document.querySelector('.copy-basket'),
+                        position: 'bottom',
+                        intro: 'Les dupliquer'
+                    },
+                    {
+                        element: document.querySelector('.empty-basket'),
+                        position: 'bottom',
+                        intro: 'Les vider de leurs produits'
+                    },
+                    {
+                        element: document.querySelector('.delete-basket'),
+                        position: 'bottom',
+                        intro: 'Ou les supprimer entièrement'
+                    },
+                    {
+                        element: document.querySelector('.insert-block'),
+                        position: 'bottom',
+                        intro: 'Vous pouvez insérer dans votre liste un "bloc" que vous pourrez renommer et transformer en Recette de Chef'
+                    },
+                    {
+                        element: document.querySelector('.guests-number'),
+                        position: 'up',
+                        intro: 'Vous pouvez ajuster le nombre de convives et bénéficier de statistiques par personne'
+                    },
+                    {
+                        element: document.querySelector('.change-equivalence'),
+                        position: 'up',
+                        intro: 'Vous pouvez également choisir une équivalence carbone plus pertinente'
+                    },
+                    {
+                        element: document.querySelector('.local-save'),
+                        position: 'up',
+                        intro: 'Ces boutons vous permettent de sauvegarder vos listes sur un fichier que vous pourrez alors stocker sur votre ordinateur ou partager'
+                    },
+                    {
+                        element: document.querySelector('.export-baskets'),
+                        position: 'up',
+                        intro: 'Enfin, cet outil vous donne la possibilité d\'exporter vos listes au format tableur, qui contiendra tous les détails'
+                    },
+                    {
+                        title: 'C\'est terminé !',
+                        intro: 'Nous espérons que cet outil vous sera utile. N\'hésitez pas à nous faire part de vos retours 👍'
+                    }]
+            };
+            this.introJs().setOptions(this.introOptions).start();
+        },
+        startIntro() {
+            $('#body-basket-1-prod-1').addClass('show');
+            this.prepareIntro();
         },
     }
 }

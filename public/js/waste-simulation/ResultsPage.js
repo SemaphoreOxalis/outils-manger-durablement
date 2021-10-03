@@ -702,7 +702,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   }
-}); // Situées ici, ces fonctions sont "privées"
+});
 
 function writeLog(message, details) {
   return axios.post('/api/logs', {

@@ -9,16 +9,16 @@
             <div class="basket-name">
                 <input v-model="basket.name"
                        @change="saveBasket"
-                       class="input custom-input browser-default"
+                       class="input custom-input browser-default basket-name-input"
                        type="text"
                        required>
-                <a @click="copyBasket" class="btn-ico info-bubble" title="Dupliquer cette liste"></a>
+                <a @click="copyBasket" class="btn-ico info-bubble copy-basket" title="Dupliquer cette liste"></a>
             </div>
             <div class="basket-toolbox">
-                <button class="button" @click="insertBlock">Insérer un bloc</button>
+                <button class="button insert-block" @click="insertBlock">Insérer un bloc</button>
                 <a v-if="contains('prod')" @click="doStuff" class="btn-ico alt tool" title="Modifier cette liste"></a>
-                <a v-if="contains('prod')" @click="clearBasket" class="btn-ico alt tool" title="Vider cette liste"><i class="icon icon-times-circle"></i></a>
-                <a @click="deleteBasket" class="btn-ico alt tool" title="Supprimer cette liste"></a>
+                <a v-if="contains('prod')" @click="clearBasket" class="btn-ico alt tool empty-basket" title="Vider cette liste"><i class="icon icon-times-circle"></i></a>
+                <a @click="deleteBasket" class="btn-ico alt tool delete-basket" title="Supprimer cette liste"></a>
             </div>
         </div>
 

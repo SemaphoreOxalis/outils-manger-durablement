@@ -129,8 +129,6 @@ export default {
     }
 }
 
-// Situées ici, ces fonctions sont "privées"
-
 function writeLog(message, details) {
     return axios.post('/api/logs', {
         message: message,

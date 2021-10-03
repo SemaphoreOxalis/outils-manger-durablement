@@ -62,18 +62,19 @@
         </div>
 
         <div class="d-flex">
-            <button :class="this.selectedBaskets.length ? 'button' : 'button alter'"
-                    :title="this.selectedBaskets.length ? '' : 'Aucune liste sélctionnée'"
-                    :disabled="!this.selectedBaskets.length"
-                    id="save-baskets"
-                    @click="showSavingBasketsModal = true">
-                <i class="icon mr-2"></i>Sauvegarder les listes sélectionnées
-            </button>
-            <button class="button alter ml-2"
-                    @click="showLoadBasketsModal = true">
-                <i class="icon mr-2"></i>Charger depuis votre pc
-            </button>
-            <button class="button ml-2"
+            <div class="d-flex local-save">
+                <button :class="this.selectedBaskets.length ? 'button' : 'button alter'"
+                        :title="this.selectedBaskets.length ? '' : 'Aucune liste sélectionnée'"
+                        :disabled="!this.selectedBaskets.length"
+                        @click="showSavingBasketsModal = true">
+                    <i class="icon mr-2"></i>Sauvegarder les listes sélectionnées
+                </button>
+                <button class="button alter ml-2"
+                        @click="showLoadBasketsModal = true">
+                    <i class="icon mr-2"></i>Charger depuis votre pc
+                </button>
+            </div>
+            <button class="button ml-2 export-baskets"
                     @click="exportBaskets">
                 <i class="icon mr-2"></i>{{ btn.export_btn }}
             </button>
@@ -130,10 +131,23 @@ export default {
         DataBase
     ],
     props: {
+        products: Array,
         origins: Array,
         categories: Array,
         equivalences: Array,
         productToAdd: Object,
+    },
+    watch: {
+        products (loadedProds) {
+            if(loadedProds.length) {
+                this.insertPlaceholderProduct();
+            }
+        },
+        origins (loadedOrigins) {
+            if(loadedOrigins.length) {
+                this.insertPlaceholderProduct();
+            }
+        },
     },
     data() {
         return {
@@ -148,6 +162,7 @@ export default {
             affectedBasketIndex: -1,
             compareToPreviousBasket: false,
             export: {},
+            emptyListOnStartup: Boolean,
         }
     },
     computed: {
@@ -172,9 +187,12 @@ export default {
     created() {
         this.eraseLocalStorageIfVersionOlderThan(App.version ,'basketSim');
         if (localStorage.hasOwnProperty('baskets')) {
+            this.emptyListOnStartup = false;
             this.baskets = JSON.parse(localStorage.getItem('baskets'));
         } else {
+            this.emptyListOnStartup = true;
             this.addBasket('votre liste');
+            this.insertPlaceholderProduct();
         }
         events.$on('send-selected-baskets', this.sendSelectedBaskets);
         events.$on('save-baskets-results', this.saveBasketsResults);
@@ -205,6 +223,19 @@ export default {
         isSelected(i) {
             if(this.baskets[i]) {
                 return this.baskets[i].isSelected;
+            }
+        },
+
+        insertPlaceholderProduct() {
+            if(this.emptyListOnStartup && this.origins.length && this.products.length) {
+                let placeholderProd = { ...this.products.find(prod => prod.id === 3),
+                    productId: 3,
+                    id: 'prod-1',
+                    amount: '10',
+                    price: '2',
+                    origin: this.origins[2]};
+                this.baskets[0].products.push(placeholderProd);
+                this.saveBasketsToLocalStorage();
             }
         }
     }

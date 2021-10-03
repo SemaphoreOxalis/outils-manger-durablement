@@ -1001,7 +1001,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "results-comment" }, [
-                _c("div", [
+                _c("div", { staticClass: "guests-number" }, [
                   _vm._v("\n                            Soit, pour "),
                   _c("input", {
                     directives: [
@@ -1046,94 +1046,101 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "d-flex justify-content-center" }, [
-                  _c("span", [
-                    _vm._v(
-                      "Equivalent : " +
-                        _vm._s(this.separateThousands(_vm.equivalent))
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.selectedEquivalence,
-                          expression: "selectedEquivalence"
-                        }
-                      ],
-                      staticClass: "results-select",
-                      attrs: { id: "results-select-" + _vm.basketId },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedEquivalence = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                          _vm.updateResults
-                        ]
-                      }
-                    },
-                    _vm._l(_vm.equivalences, function(eq) {
-                      return _c("option", { domProps: { value: eq } }, [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(eq.unit) +
-                            "\n                                "
-                        )
-                      ])
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _vm.selectedEquivalence.source
-                    ? _c(
-                        "a",
-                        {
-                          staticClass:
-                            "info-bubble product-info-bubble btn-ico alt tool info ml-2 align-self-baseline"
-                        },
-                        [
-                          _vm._v("\n                                "),
-                          _c("span", [
-                            _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: _vm.selectedEquivalence.source,
-                                  target: "_blank"
-                                }
-                              },
-                              [
-                                _c("strong", { staticClass: "icon" }, [
-                                  _vm._v(" Source")
-                                ])
-                              ]
-                            )
-                          ])
-                        ]
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-flex justify-content-center change-equivalence"
+                  },
+                  [
+                    _c("span", [
+                      _vm._v(
+                        "Equivalent : " +
+                          _vm._s(this.separateThousands(_vm.equivalent))
                       )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("span", {
-                    staticClass: "hidden-span",
-                    attrs: { id: "hidden-span-" + _vm.basketId }
-                  })
-                ]),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedEquivalence,
+                            expression: "selectedEquivalence"
+                          }
+                        ],
+                        staticClass: "results-select",
+                        attrs: { id: "results-select-" + _vm.basketId },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectedEquivalence = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            },
+                            _vm.updateResults
+                          ]
+                        }
+                      },
+                      _vm._l(_vm.equivalences, function(eq) {
+                        return _c("option", { domProps: { value: eq } }, [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(eq.unit) +
+                              "\n                                "
+                          )
+                        ])
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _vm.selectedEquivalence.source
+                      ? _c(
+                          "a",
+                          {
+                            staticClass:
+                              "info-bubble product-info-bubble btn-ico alt tool info ml-2 align-self-baseline"
+                          },
+                          [
+                            _vm._v("\n                                "),
+                            _c("span", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href: _vm.selectedEquivalence.source,
+                                    target: "_blank"
+                                  }
+                                },
+                                [
+                                  _c("strong", { staticClass: "icon" }, [
+                                    _vm._v(" Source")
+                                  ])
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("span", {
+                      staticClass: "hidden-span",
+                      attrs: { id: "hidden-span-" + _vm.basketId }
+                    })
+                  ]
+                ),
                 _vm._v(" "),
                 _vm.guests > 1
                   ? _c("div", [

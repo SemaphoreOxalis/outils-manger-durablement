@@ -85,12 +85,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -151,7 +145,10 @@ var ProductRequest = function ProductRequest() {
       productAdded: {},
       productToAddWithDetails: {},
       focusOnSearchBar: false,
-      howTo: "<div class=\"loader-spinner\"></div>"
+      howTo: "<div class=\"loader-spinner\"></div>",
+      introJs: {},
+      introOptions: {},
+      displayIntro: Boolean
     };
   },
   created: function created() {
@@ -164,52 +161,40 @@ var ProductRequest = function ProductRequest() {
     this.fetchOrigins();
     this.fetchEquivalences();
     this.getInternalCounters();
-    $(document).ready(function () {
-      $('.modal').modal();
-    });
+    this.displayIntro = !localStorage.hasOwnProperty('baskets');
   },
   mounted: function mounted() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var observer;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return _this.fetchContent('Carbone - Mode d\'emploi');
-
-            case 2:
-              _this.howTo = _context.sent;
-
               _this.setProductIds();
 
               _this.turnRecipesIntoProducts();
 
-              $(document).ready(function () {
-                var introJs = __webpack_require__(/*! intro.js */ "./node_modules/intro.js/intro.js");
+              _this.introJs = __webpack_require__(/*! intro.js */ "./node_modules/intro.js/intro.js");
 
-                introJs().setOptions({
-                  disableInteraction: true,
-                  nextLabel: "Suivant",
-                  prevLabel: "Retour",
-                  doneLabel: "J'ai compris",
-                  hidePrev: true,
-                  steps: [{
-                    title: 'Welcome',
-                    intro: 'Hello World! 👋'
-                  }, {
-                    element: document.querySelector('#how-to'),
-                    intro: 'This step focuses on an image'
-                  }, {
-                    title: 'Farewell!',
-                    element: document.querySelector('#save-baskets'),
-                    intro: 'And this is our final step!'
-                  }]
-                }).start();
-              });
+              if (_this.displayIntro) {
+                observer = new MutationObserver(function () {
+                  // Only way to actually check if it's rendered without a dirty setTimeout ($nextTick fires too soon)
+                  if (document.contains(document.querySelector('.results-comment'))) {
+                    observer.disconnect();
 
-            case 6:
+                    _this.startIntro();
+                  }
+                });
+                observer.observe(document, {
+                  attributes: true,
+                  childList: true,
+                  subtree: true
+                });
+              }
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -264,6 +249,83 @@ var ProductRequest = function ProductRequest() {
       this.products.forEach(function (p) {
         p.productId = p.id;
       });
+    },
+    prepareIntro: function prepareIntro() {
+      this.introOptions = {
+        disableInteraction: true,
+        nextLabel: "Suivant",
+        prevLabel: "Retour",
+        doneLabel: "J'ai compris",
+        hidePrev: true,
+        steps: [{
+          title: 'Mode d\'emploi',
+          intro: ''
+        }, {
+          element: document.querySelector('.search-bar'),
+          position: 'bottom',
+          intro: 'Commencez par ajouter des produits ou des recettes à votre liste de courses via le menu ou en faisant une recherche'
+        }, {
+          element: document.querySelector('.basket-select'),
+          position: 'bottom',
+          intro: 'Les produits et les recettes seront ajoutées à toutes les listes sélectionnées'
+        }, {
+          element: document.querySelector('.product-item'),
+          position: 'right',
+          intro: 'Vous pouvez alors modifier les valeurs saisies précédemment'
+        }, {
+          element: document.querySelector('.results-container'),
+          position: 'right',
+          intro: 'Vous constaterez alors en temps réel votre bilan carbone résumé sous votre liste'
+        }, {
+          element: document.querySelector('.add-basket'),
+          position: 'bottom',
+          intro: 'Vous pouvez ajouter des listes'
+        }, {
+          element: document.querySelector('.basket-name-input'),
+          position: 'bottom',
+          intro: 'Les renommer'
+        }, {
+          element: document.querySelector('.copy-basket'),
+          position: 'bottom',
+          intro: 'Les dupliquer'
+        }, {
+          element: document.querySelector('.empty-basket'),
+          position: 'bottom',
+          intro: 'Les vider de leurs produits'
+        }, {
+          element: document.querySelector('.delete-basket'),
+          position: 'bottom',
+          intro: 'Ou les supprimer entièrement'
+        }, {
+          element: document.querySelector('.insert-block'),
+          position: 'bottom',
+          intro: 'Vous pouvez insérer dans votre liste un "bloc" que vous pourrez renommer et transformer en Recette de Chef'
+        }, {
+          element: document.querySelector('.guests-number'),
+          position: 'up',
+          intro: 'Vous pouvez ajuster le nombre de convives et bénéficier de statistiques par personne'
+        }, {
+          element: document.querySelector('.change-equivalence'),
+          position: 'up',
+          intro: 'Vous pouvez également choisir une équivalence carbone plus pertinente'
+        }, {
+          element: document.querySelector('.local-save'),
+          position: 'up',
+          intro: 'Ces boutons vous permettent de sauvegarder vos listes sur un fichier que vous pourrez alors stocker sur votre ordinateur ou partager'
+        }, {
+          element: document.querySelector('.export-baskets'),
+          position: 'up',
+          intro: 'Enfin, cet outil vous donne la possibilité d\'exporter vos listes au format tableur, qui contiendra tous les détails'
+        }, {
+          title: 'C\'est terminé !',
+          intro: 'Nous espérons que cet outil vous sera utile. N\'hésitez pas à nous faire part de vos retours 👍'
+        }]
+      };
+      this.introJs().setOptions(this.introOptions).start();
+    },
+    startIntro: function startIntro() {
+      $('#body-basket-1-prod-1').addClass('show');
+      this.prepareIntro();
     }
   }
 });
@@ -319,29 +381,19 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _vm._m(0),
-          _vm._v(" "),
           _c(
-            "div",
+            "button",
             {
-              staticClass: "modal modal-fixed-footer",
-              attrs: { id: "mode_emploi" }
+              staticClass: "button alter",
+              attrs: { title: "Mode d'emploi" },
+              on: { click: _vm.startIntro }
             },
             [
-              _c("div", { staticClass: "modal-content" }, [
-                _c("div", { domProps: { innerHTML: _vm._s(_vm.howTo) } })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "modal-close waves-effect waves-green button",
-                    attrs: { href: "#!" }
-                  },
-                  [_vm._v(_vm._s(_vm.how_to.close_btn))]
-                )
-              ])
+              _c("i", {
+                staticClass: "icon icon-info-circle mr-2",
+                attrs: { id: "how-to" }
+              }),
+              _vm._v("Mode d'emploi")
             ]
           ),
           _vm._v(" "),
@@ -393,6 +445,7 @@ var render = function() {
       _vm._v(" "),
       _c("baskets-list", {
         attrs: {
+          products: this.products,
           origins: this.origins,
           categories: this.categories,
           equivalences: this.equivalences,
@@ -404,27 +457,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "button alter modal-trigger",
-        attrs: { "data-target": "mode_emploi", title: "Mode d'emploi" }
-      },
-      [
-        _c("i", {
-          staticClass: "icon icon-info-circle mr-2",
-          attrs: { id: "how-to" }
-        }),
-        _vm._v("Mode d'emploi")
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

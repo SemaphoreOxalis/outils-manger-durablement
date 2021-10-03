@@ -73,12 +73,12 @@
                             <div v-if="!isFirst" class="results-div" v-html="getStyle(carbonDelta)"></div>
                         </div>
                         <div class="results-comment">
-                            <div>
+                            <div class="guests-number">
                                 Soit, pour <input type="number" class="browser-default results-select guests" min="1" step="1" v-model="guests" oninput="this.style.width = ((this.value.length + 1) * 7) + 'px';" @change="updateResults">
                                 personne<span v-if="guests > 1">s</span>,
                                 {{ this.roundToTwoDecimal(globalCarbonImpact.formatted / guests) }}&nbsp;{{ globalCarbonImpact.unit }} par personne.
                             </div>
-                            <div class="d-flex justify-content-center">
+                            <div class="d-flex justify-content-center change-equivalence">
                                 <span>Equivalent : {{ this.separateThousands(equivalent) }}</span>
                                 <select v-model="selectedEquivalence" @change="updateResults" class="results-select" :id="'results-select-' + basketId">
                                     <option v-for="eq in equivalences" v-bind:value="eq">

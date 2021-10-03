@@ -16,6 +16,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/DateFormatter */ "./resources/js/helpers/DateFormatter.js");
 /* harmony import */ var _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../helpers/ExportHelper */ "./resources/js/helpers/ExportHelper.js");
 /* harmony import */ var _helpers_DataBase__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../helpers/DataBase */ "./resources/js/helpers/DataBase.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -28,6 +34,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
+//
 //
 //
 //
@@ -150,10 +157,23 @@ var LoadBasketsPopUp = function LoadBasketsPopUp() {
   },
   mixins: [_helpers_LocalStorageHelper__WEBPACK_IMPORTED_MODULE_0__["default"], _helpers_carbon_simulation_groupedActionFilters__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_component_specific_basketsListHelper__WEBPACK_IMPORTED_MODULE_2__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_DateFormatter__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_ExportHelper__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_6__["default"]],
   props: {
+    products: Array,
     origins: Array,
     categories: Array,
     equivalences: Array,
     productToAdd: Object
+  },
+  watch: {
+    products: function products(loadedProds) {
+      if (loadedProds.length) {
+        this.insertPlaceholderProduct();
+      }
+    },
+    origins: function origins(loadedOrigins) {
+      if (loadedOrigins.length) {
+        this.insertPlaceholderProduct();
+      }
+    }
   },
   data: function data() {
     return {
@@ -166,7 +186,8 @@ var LoadBasketsPopUp = function LoadBasketsPopUp() {
       affectedBasket: {},
       affectedBasketIndex: -1,
       compareToPreviousBasket: false,
-      "export": {}
+      "export": {},
+      emptyListOnStartup: Boolean
     };
   },
   computed: {
@@ -192,9 +213,12 @@ var LoadBasketsPopUp = function LoadBasketsPopUp() {
     this.eraseLocalStorageIfVersionOlderThan(App.version, 'basketSim');
 
     if (localStorage.hasOwnProperty('baskets')) {
+      this.emptyListOnStartup = false;
       this.baskets = JSON.parse(localStorage.getItem('baskets'));
     } else {
+      this.emptyListOnStartup = true;
       this.addBasket('votre liste');
+      this.insertPlaceholderProduct();
     }
 
     events.$on('send-selected-baskets', this.sendSelectedBaskets);
@@ -223,6 +247,22 @@ var LoadBasketsPopUp = function LoadBasketsPopUp() {
     isSelected: function isSelected(i) {
       if (this.baskets[i]) {
         return this.baskets[i].isSelected;
+      }
+    },
+    insertPlaceholderProduct: function insertPlaceholderProduct() {
+      if (this.emptyListOnStartup && this.origins.length && this.products.length) {
+        var placeholderProd = _objectSpread(_objectSpread({}, this.products.find(function (prod) {
+          return prod.id === 3;
+        })), {}, {
+          productId: 3,
+          id: 'prod-1',
+          amount: '10',
+          price: '2',
+          origin: this.origins[2]
+        });
+
+        this.baskets[0].products.push(placeholderProd);
+        this.saveBasketsToLocalStorage();
       }
     }
   }
@@ -405,48 +445,52 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "d-flex" }, [
-      _c(
-        "button",
-        {
-          class: this.selectedBaskets.length ? "button" : "button alter",
-          attrs: {
-            title: this.selectedBaskets.length
-              ? ""
-              : "Aucune liste sélctionnée",
-            disabled: !this.selectedBaskets.length,
-            id: "save-baskets"
+      _c("div", { staticClass: "d-flex local-save" }, [
+        _c(
+          "button",
+          {
+            class: this.selectedBaskets.length ? "button" : "button alter",
+            attrs: {
+              title: this.selectedBaskets.length
+                ? ""
+                : "Aucune liste sélectionnée",
+              disabled: !this.selectedBaskets.length
+            },
+            on: {
+              click: function($event) {
+                _vm.showSavingBasketsModal = true
+              }
+            }
           },
-          on: {
-            click: function($event) {
-              _vm.showSavingBasketsModal = true
+          [
+            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+            _vm._v("Sauvegarder les listes sélectionnées\n            ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "button alter ml-2",
+            on: {
+              click: function($event) {
+                _vm.showLoadBasketsModal = true
+              }
             }
-          }
-        },
-        [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-          _vm._v("Sauvegarder les listes sélectionnées\n        ")
-        ]
-      ),
+          },
+          [
+            _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
+            _vm._v("Charger depuis votre pc\n            ")
+          ]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "button alter ml-2",
-          on: {
-            click: function($event) {
-              _vm.showLoadBasketsModal = true
-            }
-          }
+          staticClass: "button ml-2 export-baskets",
+          on: { click: _vm.exportBaskets }
         },
-        [
-          _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
-          _vm._v("Charger depuis votre pc\n        ")
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "button ml-2", on: { click: _vm.exportBaskets } },
         [
           _c("i", { staticClass: "icon mr-2" }, [_vm._v("")]),
           _vm._v(_vm._s(_vm.btn.export_btn) + "\n        ")
