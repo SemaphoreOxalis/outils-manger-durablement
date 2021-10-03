@@ -54,8 +54,5 @@
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/carbon-simulation/BasketSimulator.js": "/vendors~js/carbon-simulation/BasketSimulator.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js",
-    "/js/carbon-simulation/CarbonHomePage~js/waste-simulation/InputPage~js/waste-simulation/ResultsPage~js~90696876.js": "/js/carbon-simulation/CarbonHomePage~js/waste-simulation/InputPage~js/waste-simulation/ResultsPage~js~90696876.js",
-    "/js/admin/carbon-simulation/RecipesAdminPage~js/carbon-simulation/RecipeCreate~js/carbon-simulation/R~982ffc1e.js": "/js/admin/carbon-simulation/RecipesAdminPage~js/carbon-simulation/RecipeCreate~js/carbon-simulation/R~982ffc1e.js",
-    "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~e2103768.js": "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~e2103768.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js"
 }
