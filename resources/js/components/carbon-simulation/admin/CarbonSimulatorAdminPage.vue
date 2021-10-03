@@ -24,6 +24,10 @@
             <router-link to="/admin/carbon-simulator/recipes" tag="span">
                 <button class="button alter">Recettes supprimées</button>
             </router-link>
+
+            <router-link to="/admin/carbon-simulator/intro" tag="span">
+                <button class="button alter">Intro</button>
+            </router-link>
         </div>
         <router-view></router-view>
     </div>

@@ -54,5 +54,7 @@
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/carbon-simulation/BasketSimulator.js": "/vendors~js/carbon-simulation/BasketSimulator.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js",
+    "/js/admin/carbon-simulation/IntroAdminPage.js": "/js/admin/carbon-simulation/IntroAdminPage.js",
+    "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~a33e60b0.js": "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~a33e60b0.js"
 }

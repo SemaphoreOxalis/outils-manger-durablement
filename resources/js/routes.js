@@ -48,6 +48,11 @@ const EquivalencesAdminPage = () => import(
     './components/carbon-simulation/admin/EquivalencesAdminPage.vue'
     );
 
+const IntroAdminPage = () => import(
+    /* webpackChunkName: "js/admin/carbon-simulation/IntroAdminPage" */
+    './components/carbon-simulation/admin/IntroAdminPage.vue'
+    );
+
 const CountersAdminPage = () => import(
     /* webpackChunkName: "js/admin/CountersAdminPage" */
     './components/admin/CountersAdminPage.vue'
@@ -279,6 +284,11 @@ export default {
                                     path: 'recipes',
                                     component: RecipesAdminPage,
                                     name: 'recipes'
+                                },
+                                {
+                                    path: 'intro',
+                                    component: IntroAdminPage,
+                                    name: 'intro'
                                 },
                                 {
                                     path: '',

@@ -21,6 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/RecipesDataBase */ "./resources/js/helpers/carbon-simulation/database/RecipesDataBase.js");
 /* harmony import */ var _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../helpers/carbon-simulation/recipesHelper */ "./resources/js/helpers/carbon-simulation/recipesHelper.js");
 /* harmony import */ var _helpers_carbon_simulation_database_EquivalencesDataBase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/EquivalencesDataBase */ "./resources/js/helpers/carbon-simulation/database/EquivalencesDataBase.js");
+/* harmony import */ var _helpers_carbon_simulation_database_IntroStepsDatabase__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../helpers/carbon-simulation/database/IntroStepsDatabase */ "./resources/js/helpers/carbon-simulation/database/IntroStepsDatabase.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -96,6 +97,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 var SearchBar = function SearchBar() {
   return __webpack_require__.e(/*! import() | js/carbon-simulation/SearchBar */ "js/carbon-simulation/SearchBar").then(__webpack_require__.bind(null, /*! ./SearchBar */ "./resources/js/components/carbon-simulation/SearchBar.vue"));
 };
@@ -124,7 +126,7 @@ var ProductRequest = function ProductRequest() {
     BasketsList: BasketsList,
     ProductRequest: ProductRequest
   },
-  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_carbon_simulation_database_EquivalencesDataBase__WEBPACK_IMPORTED_MODULE_10__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"], _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__["default"]],
+  mixins: [_helpers_carbon_simulation_searchBar__WEBPACK_IMPORTED_MODULE_1__["default"], _helpers_carbon_simulation_database_ProductsDataBase__WEBPACK_IMPORTED_MODULE_2__["default"], _helpers_carbon_simulation_database_RecipesDataBase__WEBPACK_IMPORTED_MODULE_8__["default"], _helpers_carbon_simulation_database_CategoriesDataBase__WEBPACK_IMPORTED_MODULE_3__["default"], _helpers_carbon_simulation_database_UnitsDataBase__WEBPACK_IMPORTED_MODULE_4__["default"], _helpers_carbon_simulation_database_OriginsDataBase__WEBPACK_IMPORTED_MODULE_5__["default"], _helpers_carbon_simulation_database_EquivalencesDataBase__WEBPACK_IMPORTED_MODULE_10__["default"], _helpers_carbon_simulation_database_IntroStepsDatabase__WEBPACK_IMPORTED_MODULE_11__["default"], _texts_carbonSimulator_BasketSimulatorText__WEBPACK_IMPORTED_MODULE_6__["default"], _helpers_DataBase__WEBPACK_IMPORTED_MODULE_7__["default"], _helpers_carbon_simulation_recipesHelper__WEBPACK_IMPORTED_MODULE_9__["default"]],
   data: function data() {
     return {
       products: [],
@@ -135,6 +137,7 @@ var ProductRequest = function ProductRequest() {
       units: [],
       origins: [],
       equivalences: [],
+      steps: [],
       selectedCategoryId: null,
       selectedByCategory: false,
       selectedBySearchBar: false,
@@ -171,6 +174,10 @@ var ProductRequest = function ProductRequest() {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
+              _context.next = 2;
+              return _this.fetchSteps();
+
+            case 2:
               _this.setProductIds();
 
               _this.turnRecipesIntoProducts();
@@ -181,7 +188,7 @@ var ProductRequest = function ProductRequest() {
                 waitForElementToRenderThen('.results-comment', _this.startIntro);
               }
 
-            case 4:
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -238,80 +245,28 @@ var ProductRequest = function ProductRequest() {
       });
     },
     prepareIntro: function prepareIntro() {
+      var introSteps = [];
+      this.steps.forEach(function (step) {
+        introSteps.push({
+          title: step.title,
+          intro: step.text,
+          element: step.element,
+          position: step.position
+        });
+      });
       this.introOptions = {
         disableInteraction: true,
         nextLabel: "Suivant",
         prevLabel: "Retour",
         doneLabel: "J'ai compris",
         hidePrev: true,
-        steps: [{
-          title: 'Mode d\'emploi',
-          intro: ''
-        }, {
-          element: document.querySelector('.basket-select'),
-          position: 'bottom',
-          intro: 'Commencez par sélectionner la ou les listes dans lesquelles vous souhaitez ajouter des produits'
-        }, {
-          element: document.querySelector('.search-bar'),
-          position: 'bottom',
-          intro: 'Utilisez la barre de recherche pour ajouter des produits ou des recettes à votre/vos liste/s'
-        }, {
-          element: document.querySelector('.product-item'),
-          position: 'right',
-          intro: 'Vous pouvez alors modifier les valeurs saisies précédemment'
-        }, {
-          element: document.querySelector('.results-container'),
-          position: 'right',
-          intro: 'Vous constaterez alors en temps réel votre bilan carbone résumé sous votre liste'
-        }, {
-          element: document.querySelector('.add-basket'),
-          position: 'bottom',
-          intro: 'Vous pouvez ajouter des listes'
-        }, {
-          element: document.querySelector('.basket-name-input'),
-          position: 'bottom',
-          intro: 'Les renommer'
-        }, {
-          element: document.querySelector('.copy-basket'),
-          position: 'bottom',
-          intro: 'Les dupliquer'
-        }, {
-          element: document.querySelector('.empty-basket'),
-          position: 'bottom',
-          intro: 'Les vider de leurs produits'
-        }, {
-          element: document.querySelector('.delete-basket'),
-          position: 'bottom',
-          intro: 'Ou les supprimer entièrement'
-        }, {
-          element: document.querySelector('.insert-block'),
-          position: 'bottom',
-          intro: 'Vous pouvez insérer dans votre liste un "bloc" que vous pourrez renommer et transformer en Recette de Chef'
-        }, {
-          element: document.querySelector('.guests-number'),
-          position: 'up',
-          intro: 'Vous pouvez ajuster le nombre de convives et bénéficier de statistiques par personne'
-        }, {
-          element: document.querySelector('.change-equivalence'),
-          position: 'up',
-          intro: 'Vous pouvez également choisir une équivalence carbone plus pertinente'
-        }, {
-          element: document.querySelector('.local-save'),
-          position: 'up',
-          intro: 'Ces boutons vous permettent de sauvegarder vos listes sur un fichier que vous pourrez alors stocker sur votre ordinateur ou partager'
-        }, {
-          element: document.querySelector('.export-baskets'),
-          position: 'up',
-          intro: 'Enfin, cet outil vous donne la possibilité d\'exporter vos listes au format tableur, qui contiendra tous les détails'
-        }, {
-          title: 'C\'est terminé !',
-          intro: 'Nous espérons que cet outil vous sera utile. N\'hésitez pas à nous faire part de vos retours 👍'
-        }]
+        steps: introSteps
       };
       this.introJs().setOptions(this.introOptions).start();
     },
     startIntro: function startIntro() {
       $('#body-basket-1-prod-1').addClass('show');
+      $('#collapse-icon-basket-1-prod-1').addClass('reversed');
       this.prepareIntro();
     }
   }
@@ -666,6 +621,140 @@ function postEquivalence(newEquivalence) {
 
 function destroyEquivalence(equivalenceId) {
   return axios["delete"]('/api/equivalences/' + equivalenceId);
+}
+
+/***/ }),
+
+/***/ "./resources/js/helpers/carbon-simulation/database/IntroStepsDatabase.js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/helpers/carbon-simulation/database/IntroStepsDatabase.js ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    fetchSteps: function fetchSteps() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _yield$axios$get, response;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return axios.get('/api/steps/');
+
+              case 3:
+                _yield$axios$get = _context.sent;
+                response = _yield$axios$get.data;
+                _this.steps = response;
+                _context.next = 11;
+                break;
+
+              case 8:
+                _context.prev = 8;
+                _context.t0 = _context["catch"](0);
+                flash(_context.t0.response.data, 'danger');
+
+              case 11:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    updateStep: function updateStep(step) {
+      patchStep(step).then(function (response) {
+        flash(response.data);
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    addStep: function addStep() {
+      var _this2 = this;
+
+      this.newStep.index = this.steps.length;
+      postStep(this.newStep).then(function (response) {
+        _this2.steps.push(response.data);
+
+        _this2.newStep = {};
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    },
+    deleteStep: function deleteStep(stepId) {
+      var _this3 = this;
+
+      destroyStep(stepId).then(function (response) {
+        flash(response.data);
+
+        _this3.refreshSteps();
+      })["catch"](function (error) {
+        flash(error.response.data, 'danger');
+      });
+    }
+  }
+});
+
+function getSteps() {
+  return _getSteps.apply(this, arguments);
+}
+
+function _getSteps() {
+  _getSteps = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            return _context2.abrupt("return", axios.get('/api/steps'));
+
+          case 1:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2);
+  }));
+  return _getSteps.apply(this, arguments);
+}
+
+function patchStep(step) {
+  return axios.patch('/api/steps/' + step.id, {
+    title: step.title,
+    text: step.text,
+    element: step.element,
+    position: step.position,
+    index: step.index
+  });
+}
+
+function postStep(newStep) {
+  return axios.post('/api/steps', {
+    title: newStep.title,
+    text: newStep.text,
+    element: newStep.element,
+    position: newStep.position,
+    index: newStep.index
+  });
+}
+
+function destroyStep(stepId) {
+  return axios["delete"]('/api/steps/' + stepId);
 }
 
 /***/ }),

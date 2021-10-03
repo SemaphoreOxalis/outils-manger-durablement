@@ -42,6 +42,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -130,6 +134,12 @@ var render = function() {
                 _vm._v("Recettes supprimées")
               ])
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { attrs: { to: "/admin/carbon-simulator/intro", tag: "span" } },
+            [_c("button", { staticClass: "button alter" }, [_vm._v("Intro")])]
           )
         ],
         1

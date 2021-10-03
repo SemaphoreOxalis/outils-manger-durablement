@@ -67,6 +67,7 @@ import DataBase from "../../helpers/DataBase";
 import RecipesDataBase from "../../helpers/carbon-simulation/database/RecipesDataBase";
 import recipesHelper from "../../helpers/carbon-simulation/recipesHelper";
 import EquivalencesDataBase from "../../helpers/carbon-simulation/database/EquivalencesDataBase";
+import IntroStepsDatabase from "../../helpers/carbon-simulation/database/IntroStepsDatabase";
 const SearchBar = () => import(
     /* webpackChunkName: "js/carbon-simulation/SearchBar" */
     './SearchBar'
@@ -104,6 +105,7 @@ export default {
         UnitsDataBase,
         OriginsDataBase,
         EquivalencesDataBase,
+        IntroStepsDatabase,
         BasketSimulatorText,
         DataBase,
         recipesHelper,
@@ -118,6 +120,7 @@ export default {
             units: [],
             origins: [],
             equivalences: [],
+            steps: [],
 
             selectedCategoryId: null,
             selectedByCategory: false,
@@ -155,6 +158,7 @@ export default {
     },
 
     async mounted() {
+        await this.fetchSteps();
         this.setProductIds();
         this.turnRecipesIntoProducts();
         this.introJs = require("intro.js");
@@ -210,95 +214,28 @@ export default {
             });
         },
         prepareIntro() {
+            let introSteps = [];
+            this.steps.forEach(step => {
+                introSteps.push({
+                    title: step.title,
+                    intro: step.text,
+                    element: step.element,
+                    position: step.position,
+                });
+            });
             this.introOptions = {
                 disableInteraction: true,
                 nextLabel: "Suivant",
                 prevLabel: "Retour",
                 doneLabel: "J'ai compris",
                 hidePrev: true,
-                steps: [{
-                    title: 'Mode d\'emploi',
-                    intro: ''
-                },
-                    {
-                        element: document.querySelector('.basket-select'),
-                        position: 'bottom',
-                        intro: 'Commencez par sélectionner la ou les listes dans lesquelles vous souhaitez ajouter des produits'
-                    },
-                    {
-                        element: document.querySelector('.search-bar'),
-                        position: 'bottom',
-                        intro: 'Utilisez la barre de recherche pour ajouter des produits ou des recettes à votre/vos liste/s'
-                    },
-                    {
-                        element: document.querySelector('.product-item'),
-                        position: 'right',
-                        intro: 'Vous pouvez alors modifier les valeurs saisies précédemment'
-                    },
-                    {
-                        element: document.querySelector('.results-container'),
-                        position: 'right',
-                        intro: 'Vous constaterez alors en temps réel votre bilan carbone résumé sous votre liste'
-                    },
-                    {
-                        element: document.querySelector('.add-basket'),
-                        position: 'bottom',
-                        intro: 'Vous pouvez ajouter des listes'
-                    },
-                    {
-                        element: document.querySelector('.basket-name-input'),
-                        position: 'bottom',
-                        intro: 'Les renommer'
-                    },
-                    {
-                        element: document.querySelector('.copy-basket'),
-                        position: 'bottom',
-                        intro: 'Les dupliquer'
-                    },
-                    {
-                        element: document.querySelector('.empty-basket'),
-                        position: 'bottom',
-                        intro: 'Les vider de leurs produits'
-                    },
-                    {
-                        element: document.querySelector('.delete-basket'),
-                        position: 'bottom',
-                        intro: 'Ou les supprimer entièrement'
-                    },
-                    {
-                        element: document.querySelector('.insert-block'),
-                        position: 'bottom',
-                        intro: 'Vous pouvez insérer dans votre liste un "bloc" que vous pourrez renommer et transformer en Recette de Chef'
-                    },
-                    {
-                        element: document.querySelector('.guests-number'),
-                        position: 'up',
-                        intro: 'Vous pouvez ajuster le nombre de convives et bénéficier de statistiques par personne'
-                    },
-                    {
-                        element: document.querySelector('.change-equivalence'),
-                        position: 'up',
-                        intro: 'Vous pouvez également choisir une équivalence carbone plus pertinente'
-                    },
-                    {
-                        element: document.querySelector('.local-save'),
-                        position: 'up',
-                        intro: 'Ces boutons vous permettent de sauvegarder vos listes sur un fichier que vous pourrez alors stocker sur votre ordinateur ou partager'
-                    },
-                    {
-                        element: document.querySelector('.export-baskets'),
-                        position: 'up',
-                        intro: 'Enfin, cet outil vous donne la possibilité d\'exporter vos listes au format tableur, qui contiendra tous les détails'
-                    },
-                    {
-                        title: 'C\'est terminé !',
-                        intro: 'Nous espérons que cet outil vous sera utile. N\'hésitez pas à nous faire part de vos retours 👍'
-                    }]
+                steps: introSteps,
             };
             this.introJs().setOptions(this.introOptions).start();
         },
         startIntro() {
             $('#body-basket-1-prod-1').addClass('show');
+            $('#collapse-icon-basket-1-prod-1').addClass('reversed');
             this.prepareIntro();
         },
     }
