@@ -143,4 +143,14 @@ class RecipesController extends Controller
             return response('Erreur de sauvegarde', 422);
         }
     }
+
+    public function count()
+    {
+        try {
+            return Recipe::count();
+        } catch(\Exception $e) {
+            Log::error('Erreur (recipes.count)', ['error' => $e]);
+            return response('Erreur de sauvegarde', 422);
+        }
+    }
 }

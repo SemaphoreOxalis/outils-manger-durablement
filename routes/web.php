@@ -54,6 +54,7 @@ Route::post('/api/steps', 'IntroStepsController@store');
 Route::delete('/api/steps/{step}', 'IntroStepsController@destroy');
 
 Route::get('/api/recipes', 'RecipesController@index');
+Route::get('/api/recipes/count', 'RecipesController@count');
 Route::get('/api/recipes/{recipe}', 'RecipesController@show');
 Route::patch('/api/recipes/{recipe}', 'RecipesController@update');
 Route::post('/api/recipes', 'RecipesController@store');

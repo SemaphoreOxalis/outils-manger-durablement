@@ -586,12 +586,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this.counters.recipesCounter = response.data[4].value;
       });
     },
-    // ADMIN component
-    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+    fetchRecipesNumber: function fetchRecipesNumber() {
       var _this2 = this;
 
+      axios.get('/api/recipes/count').then(function (response) {
+        _this2.recipesNumber = response.data;
+      });
+    },
+    // ADMIN component
+    fetchCountersValueFromDB: function fetchCountersValueFromDB() {
+      var _this3 = this;
+
       getCountersFromDB().then(function (response) {
-        _this2.counters = response.data;
+        _this3.counters = response.data;
       });
     },
     updateCounter: function updateCounter(counter) {
@@ -635,20 +642,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     //CONTENTS
     fetchContents: function fetchContents() {
-      var _this3 = this;
+      var _this4 = this;
 
       getContents().then(function (response) {
-        _this3.contents = response.data;
-        _this3.selectedContent = _this3.contents[0];
+        _this4.contents = response.data;
+        _this4.selectedContent = _this4.contents[0];
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     fetchImages: function fetchImages() {
-      var _this4 = this;
+      var _this5 = this;
 
       getImages().then(function (response) {
-        _this4.images = response.data;
+        _this5.images = response.data;
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
@@ -661,16 +668,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     fetchFooter: function fetchFooter(type) {
-      var _this5 = this;
+      var _this6 = this;
 
       getFooter(type).then(function (response) {
-        _this5.footer = _this5.decode(response.data);
+        _this6.footer = _this6.decode(response.data);
       })["catch"](function (error) {
         flash(error.response.data, 'danger');
       });
     },
     fetchContent: function fetchContent(name) {
-      var _this6 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var _yield$axios$get, response;
@@ -686,7 +693,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 _yield$axios$get = _context.sent;
                 response = _yield$axios$get.data;
-                return _context.abrupt("return", _this6.decode(response));
+                return _context.abrupt("return", _this7.decode(response));
 
               case 8:
                 _context.prev = 8;

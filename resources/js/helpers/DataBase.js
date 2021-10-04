@@ -27,6 +27,12 @@ export default {
             });
         },
 
+        fetchRecipesNumber() {
+            axios.get('/api/recipes/count').then(response => {
+                this.recipesNumber = response.data;
+            });
+        },
+
         // ADMIN component
         fetchCountersValueFromDB() {
             getCountersFromDB().then((response) => {

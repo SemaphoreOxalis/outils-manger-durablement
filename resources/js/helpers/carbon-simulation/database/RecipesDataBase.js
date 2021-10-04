@@ -50,6 +50,7 @@ export default {
                     }
                 }
                 flash('Recette créée avec succès');
+                events.$emit('increment-recipes-number');
             }).catch(error => {
                 flash('Erreur de sauvegarde', 'danger');
             });

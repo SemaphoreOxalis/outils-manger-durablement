@@ -24,7 +24,7 @@
                 <router-link :to="{ name: 'basket-simulator'}" tag="a">
                     {{counters.basketCounter}} listes de courses</router-link>, et
                 <router-link :to="{ name: 'recipes-index'}" tag="a">
-                    {{counters.recipesCounter}} recettes de Chef</router-link> ont été proposées
+                    {{recipesNumber}} recettes de Chef</router-link> ont été proposées
             </p>
 
             <!-- Footer tel que dans le wysiwyg admin -->
@@ -55,13 +55,18 @@
             return {
                 showCounters: false,
                 counters: {},
+                recipesNumber: Number,
                 stats: '',
                 footer: `<div class="loader-spinner"></div>`,
             }
         },
         mounted() {
             this.fetchCountersFromDB();
+            this.fetchRecipesNumber();
             this.chooseFooterToDisplay(this.$route.path);
+            events.$on('increment-recipes-number', () => {
+                this.recipesNumber += 1;
+            });
         },
         methods: {
             chooseFooterToDisplay(path) {

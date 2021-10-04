@@ -13,6 +13,7 @@
     "/js/admin/carbon-simulation/CarbonSimulatorAdminPage.js": "/js/admin/carbon-simulation/CarbonSimulatorAdminPage.js",
     "/js/admin/carbon-simulation/CategoriesAdminPage.js": "/js/admin/carbon-simulation/CategoriesAdminPage.js",
     "/js/admin/carbon-simulation/EquivalencesAdminPage.js": "/js/admin/carbon-simulation/EquivalencesAdminPage.js",
+    "/js/admin/carbon-simulation/IntroAdminPage.js": "/js/admin/carbon-simulation/IntroAdminPage.js",
     "/js/admin/carbon-simulation/OriginsAdminPage.js": "/js/admin/carbon-simulation/OriginsAdminPage.js",
     "/js/admin/carbon-simulation/ProductsAdminPage.js": "/js/admin/carbon-simulation/ProductsAdminPage.js",
     "/js/admin/carbon-simulation/RecipesAdminPage.js": "/js/admin/carbon-simulation/RecipesAdminPage.js",
@@ -49,12 +50,10 @@
     "/js/waste-simulation/SimulationItem.js": "/js/waste-simulation/SimulationItem.js",
     "/js/waste-simulation/WasteHomePage.js": "/js/waste-simulation/WasteHomePage.js",
     "/js/waste-simulation/wasteSimulator.js": "/js/waste-simulation/wasteSimulator.js",
-    "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~64016ed9.js": "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~64016ed9.js",
+    "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~a33e60b0.js": "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~a33e60b0.js",
     "/vendors~js/admin/WysiwygAdminPage.js": "/vendors~js/admin/WysiwygAdminPage.js",
     "/vendors~js/carbon-simulation/BasketResult.js": "/vendors~js/carbon-simulation/BasketResult.js",
     "/vendors~js/carbon-simulation/BasketSimulator.js": "/vendors~js/carbon-simulation/BasketSimulator.js",
     "/vendors~js/draggable.js": "/vendors~js/draggable.js",
-    "/vendors~tinymce.js": "/vendors~tinymce.js",
-    "/js/admin/carbon-simulation/IntroAdminPage.js": "/js/admin/carbon-simulation/IntroAdminPage.js",
-    "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~a33e60b0.js": "/vendors~js/AboutUs~js/Changelog~js/GeneralLayout~js/HomePage~js/admin/CountersAdminPage~js/admin/Wys~a33e60b0.js"
+    "/vendors~tinymce.js": "/vendors~tinymce.js"
 }
