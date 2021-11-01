@@ -11,7 +11,7 @@ class RecipesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index', 'show', 'store', 'update', 'destroy']);
+        $this->middleware('auth')->except(['index', 'show', 'store', 'update', 'destroy', 'count']);
     }
 
     public function index()
