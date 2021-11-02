@@ -4,10 +4,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <!-- SEO / OpenGraph -->
+    <meta name="description" content="Applications de sensibilisation aux changements de pratique de production alimentaire en restauration collective.">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.manger-durablement.fr/">
+    <meta property="og:title" content="Applications - Manger durablement">
+    <meta property="og:description" content="Applications de sensibilisation aux changements de pratique de production alimentaire en restauration collective.">
+    <meta property="og:image" content="https://www.manger-durablement.fr/storage/images/og-carbon.jpg">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.manger-durablement.fr/">
+    <meta property="twitter:title" content="Applications - Manger durablement">
+    <meta property="twitter:description" content="Applications de sensibilisation aux changements de pratique de production alimentaire en restauration collective.">
+    <meta property="twitter:image" content="https://www.manger-durablement.fr/storage/images/og-carbon.jpg">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
