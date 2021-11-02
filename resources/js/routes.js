@@ -150,6 +150,7 @@ export default {
       return { x: 0, y: 0 };
     },
 
+
     // Permet la navigation sans rechargement de page
     mode: 'history',
 
@@ -163,11 +164,17 @@ export default {
                 {
                     path: '/',
                     component: HomePage,
-                    name: 'home-page'
+                    name: 'home-page',
+                    meta: {
+                        title: 'Manger Durablement - Applications de sensibilisation'
+                    }
                 },
                 {
                     path: 'waste-simulator',
                     component: WasteSimulatorLayout,
+                    meta: {
+                        title: 'Restogaspi - Combien Jetez-vous ? - Manger Durablement'
+                    },
                     children: [
                         {
                             path: 'home',
@@ -177,12 +184,18 @@ export default {
                         {
                             path: 'input',
                             component: InputPage,
-                            name: 'input-page'
+                            name: 'input-page',
+                            meta: {
+                                title: 'Audit - Restogaspi - Combien Jetez-vous ? - Manger Durablement'
+                            },
                         },
                         {
                             path: 'results',
                             component: ResultsPage,
                             name: 'results-page',
+                            meta: {
+                                title: 'Résultats - Restogaspi - Combien Jetez-vous ? - Manger Durablement'
+                            },
                             props: true
                         },
                         {
@@ -194,6 +207,9 @@ export default {
                 {
                     path: 'carbon-simulator',
                     component: CarbonSimulatorLayout,
+                    meta: {
+                        title: 'Carbon Meal - Estimate It ! - Manger Durablement'
+                    },
                     children: [
                         {
                             path: 'home',
@@ -203,12 +219,18 @@ export default {
                         {
                             path: 'basket-simulator',
                             component: BasketSimulator,
-                            name: 'basket-simulator'
+                            name: 'basket-simulator',
+                            meta: {
+                                title: 'Listes - Carbon Meal - Manger Durablement'
+                            },
                         },
                         {
                             path: 'recipes',
                             component: RecipesLayout,
                             name: 'recipes-layout',
+                            meta: {
+                                title: 'Recettes de Chef - Carbon Meal - Manger Durablement'
+                            },
                             children: [
                                 {
                                     path: 'index',
@@ -219,11 +241,17 @@ export default {
                                     path: 'create',
                                     component: RecipeCreate,
                                     name: 'recipe-create',
+                                    meta: {
+                                        title: 'Nouvelle Recette de Chef - Carbon Meal - Manger Durablement'
+                                    },
                                 },
                                 {
                                     path: 'edit/:id',
                                     component: RecipeEdit,
                                     name: 'recipe-edit',
+                                    meta: {
+                                        title: 'Modifier Recette de Chef - Carbon Meal - Manger Durablement'
+                                    },
                                     props: true
                                 },
                             ]
@@ -244,6 +272,9 @@ export default {
                         } else {
                             window.location.href = '/login'
                         }
+                    },
+                    meta: {
+                        title: 'Manger Durablement - Admin'
                     },
                     children: [
                         {
@@ -320,19 +351,28 @@ export default {
                 {
                     path: '/about',
                     component: AboutUs,
-                    name: 'about-us'
+                    name: 'about-us',
+                    meta: {
+                        title: 'Mentions légales / Confidentialité - Manger Durablement'
+                    },
                 },
                 {
                     path: '/changelog',
                     component: Changelog,
-                    name: 'changelog'
+                    name: 'changelog',
+                    meta: {
+                        title: 'Journal des modifications - Manger Durablement'
+                    },
                 },
             ]
         },
 
         {
             path: '*',
-            component: NotFound
+            component: NotFound,
+            meta: {
+                title: 'Cette page n\'existe pas - Manger Durablement'
+            },
         }
     ]
 }

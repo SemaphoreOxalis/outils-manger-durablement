@@ -35565,12 +35565,56 @@ window.waitForElementToRenderThen = function (element, callback) {
     childList: true,
     subtree: true
   });
-}; // Initialisation de Vue
+}; // Afin de pouvoir modifier les tags <meta> depuis Vue
 
+
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_routes__WEBPACK_IMPORTED_MODULE_2__["default"]);
+router.beforeEach(function (to, from, next) {
+  // This goes through the matched routes from last to first, finding the closest route with a title.
+  // e.g., if we have `/some/deep/nested/route` and `/some`, `/deep`, and `/nested` have titles,
+  // `/nested`'s will be chosen.
+  var nearestWithTitle = to.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.title;
+  }); // Find the nearest route element with meta tags.
+
+  var nearestWithMeta = to.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.metaTags;
+  });
+  var previousNearestWithMeta = from.matched.slice().reverse().find(function (r) {
+    return r.meta && r.meta.metaTags;
+  }); // If a route with a title was found, set the document (page) title to that value.
+
+  if (nearestWithTitle) {
+    document.title = nearestWithTitle.meta.title;
+  } else if (previousNearestWithMeta) {
+    document.title = previousNearestWithMeta.meta.title;
+  } // Remove any stale meta tags from the document using the key attribute we set below.
+
+
+  Array.from(document.querySelectorAll('[data-vue-router-controlled]')).map(function (el) {
+    return el.parentNode.removeChild(el);
+  }); // Skip rendering meta tags if there are none.
+
+  if (!nearestWithMeta) return next(); // Turn the meta tag definitions into actual elements in the head.
+
+  nearestWithMeta.meta.metaTags.map(function (tagDef) {
+    var tag = document.createElement('meta');
+    Object.keys(tagDef).forEach(function (key) {
+      tag.setAttribute(key, tagDef[key]);
+    }); // We use this to track which meta tags we create so we don't interfere with other ones.
+
+    tag.setAttribute('data-vue-router-controlled', '');
+    return tag;
+  }) // Add the meta tags to the document head.
+  .forEach(function (tag) {
+    return document.head.appendChild(tag);
+  });
+  next();
+}); // Initialisation de Vue
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"](_routes__WEBPACK_IMPORTED_MODULE_2__["default"]),
+  router: router,
   components: {
     'navigation-links': function navigationLinks() {
       return __webpack_require__.e(/*! import() | js/navLinks */ "js/navLinks").then(__webpack_require__.bind(null, /*! ./components/NavigationLinks.vue */ "./resources/js/components/NavigationLinks.vue"));
@@ -35757,10 +35801,16 @@ var Changelog = function Changelog() {
     children: [{
       path: '/',
       component: HomePage,
-      name: 'home-page'
+      name: 'home-page',
+      meta: {
+        title: 'Manger Durablement - Applications de sensibilisation'
+      }
     }, {
       path: 'waste-simulator',
       component: WasteSimulatorLayout,
+      meta: {
+        title: 'Restogaspi - Combien Jetez-vous ? - Manger Durablement'
+      },
       children: [{
         path: 'home',
         component: WasteHomePage,
@@ -35768,11 +35818,17 @@ var Changelog = function Changelog() {
       }, {
         path: 'input',
         component: InputPage,
-        name: 'input-page'
+        name: 'input-page',
+        meta: {
+          title: 'Audit - Restogaspi - Combien Jetez-vous ? - Manger Durablement'
+        }
       }, {
         path: 'results',
         component: ResultsPage,
         name: 'results-page',
+        meta: {
+          title: 'Résultats - Restogaspi - Combien Jetez-vous ? - Manger Durablement'
+        },
         props: true
       }, {
         path: '',
@@ -35781,6 +35837,9 @@ var Changelog = function Changelog() {
     }, {
       path: 'carbon-simulator',
       component: CarbonSimulatorLayout,
+      meta: {
+        title: 'Carbon Meal - Estimate It ! - Manger Durablement'
+      },
       children: [{
         path: 'home',
         component: CarbonHomePage,
@@ -35788,11 +35847,17 @@ var Changelog = function Changelog() {
       }, {
         path: 'basket-simulator',
         component: BasketSimulator,
-        name: 'basket-simulator'
+        name: 'basket-simulator',
+        meta: {
+          title: 'Listes - Carbon Meal - Manger Durablement'
+        }
       }, {
         path: 'recipes',
         component: RecipesLayout,
         name: 'recipes-layout',
+        meta: {
+          title: 'Recettes de Chef - Carbon Meal - Manger Durablement'
+        },
         children: [{
           path: 'index',
           component: RecipesIndex,
@@ -35800,11 +35865,17 @@ var Changelog = function Changelog() {
         }, {
           path: 'create',
           component: RecipeCreate,
-          name: 'recipe-create'
+          name: 'recipe-create',
+          meta: {
+            title: 'Nouvelle Recette de Chef - Carbon Meal - Manger Durablement'
+          }
         }, {
           path: 'edit/:id',
           component: RecipeEdit,
           name: 'recipe-edit',
+          meta: {
+            title: 'Modifier Recette de Chef - Carbon Meal - Manger Durablement'
+          },
           props: true
         }]
       }, {
@@ -35823,6 +35894,9 @@ var Changelog = function Changelog() {
         } else {
           window.location.href = '/login';
         }
+      },
+      meta: {
+        title: 'Manger Durablement - Admin'
       },
       children: [{
         path: 'waste-simulator',
@@ -35882,15 +35956,24 @@ var Changelog = function Changelog() {
     }, {
       path: '/about',
       component: AboutUs,
-      name: 'about-us'
+      name: 'about-us',
+      meta: {
+        title: 'Mentions légales / Confidentialité - Manger Durablement'
+      }
     }, {
       path: '/changelog',
       component: Changelog,
-      name: 'changelog'
+      name: 'changelog',
+      meta: {
+        title: 'Journal des modifications - Manger Durablement'
+      }
     }]
   }, {
     path: '*',
-    component: NotFound
+    component: NotFound,
+    meta: {
+      title: 'Cette page n\'existe pas - Manger Durablement'
+    }
   }]
 });
 
