@@ -92,11 +92,11 @@
                                                v-model="product.pivot.price"
                                                min="0" step="0.01"
                                                required>
-                                        <div class="units mr-2">€</div>
+                                        <div class="units mr-2">€ au total</div>
 
                                         <select v-model="product.origin"
                                                 :id="'origin-' + recipe.id + '-' + product.id"
-                                                class="custom-select input custom-input w-50"
+                                                class="custom-select input custom-input w-33"
                                                 :name="'origin-' + recipe.id + '-' + product.id"
                                                 :data-name="'Origine ' + recipe.id + '-' + product.id">
                                             <option v-for="origin in origins" :value="origin">

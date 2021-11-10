@@ -75,7 +75,7 @@
                 <ul>
                     <li v-for="product in recipe.products" :key="recipe.id+ '-' + product.id" class="ml-3 d-flex">
                         <p class="w-50"><i class="icon icon-minus align-text-bottom"></i> &nbsp; <strong>{{ product.name }} &nbsp; </strong> {{ product.comment }}</p>
-                        <p class="ml-5">{{ product.pivot.amount }} {{ product.unit.shortUnit }} - {{ product.pivot.price }} € - {{ product.pivot.origin }}</p>
+                        <p class="ml-5">{{ product.pivot.amount }} {{ product.unit.shortUnit }} - {{ product.pivot.price }} € au total - {{ product.pivot.origin }}</p>
                     </li>
                 </ul>
             </div>
