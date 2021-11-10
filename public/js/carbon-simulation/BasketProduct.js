@@ -387,7 +387,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("div", { staticClass: "units" }, [_vm._v("€")]),
+              _c("div", { staticClass: "units" }, [_vm._v("€ au total")]),
               _vm._v(" "),
               _c(
                 "label",

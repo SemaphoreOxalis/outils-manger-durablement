@@ -79,7 +79,7 @@
                                                class="ignore-draggable custom-input browser-default number-field input"
                                                style="max-width: 75px;"
                                                v-model="product.pivot.amount"
-                                               min="0" step="0.1"
+                                               min="0" step="0.001"
                                                required>
                                         <div class="units crud mr-2">
                                             {{ unit(product) }}
@@ -90,7 +90,7 @@
                                                class="ignore-draggable custom-input browser-default number-field input"
                                                style="max-width: 75px;"
                                                v-model="product.pivot.price"
-                                               min="0" step="0.1"
+                                               min="0" step="0.01"
                                                required>
                                         <div class="units mr-2">€</div>
 

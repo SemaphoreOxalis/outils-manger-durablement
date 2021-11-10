@@ -12278,6 +12278,7 @@ a.btn-ico.alt.tool:hover {
 .units {
   display: inline-block;
   align-self: center;
+  font-size: 0.8em;
 }
 
 .units.crud {

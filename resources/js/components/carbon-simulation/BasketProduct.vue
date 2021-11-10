@@ -45,7 +45,7 @@
                        min="0" step="1"
                        required
                        @change="save">
-                <div class="units">€</div>
+                <div class="units">€ au total</div>
 
                 <label :for="'origin-' + basketId + '-' + product.id" class="center">Origine</label>
                 <select v-model="product.origin"
